@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { toast } from "sonner"
 import { HeroSection } from "@/components/landing/hero-section"
 import { HighlightsSection } from "@/components/landing/highlights-section"
@@ -9,8 +9,8 @@ import { SiteHeader } from "@/components/landing/site-header"
 import { ClosingCta } from "@/components/landing/closing-cta"
 import { WelcomeOverlay } from "@/components/welcome-overlay"
 import { useDonationAmount } from "@/hooks/use-donation-amount"
-import { useCheckoutStatus } from "@/hooks/use-checkout-status"
 import { createDonationSession } from "@/lib/donation-client"
+import { CheckoutStatusListener } from "@/components/checkout-status-listener"
 
 export default function Home() {
   const [showWelcome, setShowWelcome] = useState(true)
@@ -47,6 +47,9 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-4 py-10 font-sans text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50">
+      <Suspense fallback={null}>
+        <CheckoutStatusListener />
+      </Suspense>
       <WelcomeOverlay visible={showWelcome} />
       <main className="relative z-0 mx-auto flex w-full max-w-6xl flex-col gap-16">
         <SiteHeader />

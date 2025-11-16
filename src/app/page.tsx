@@ -72,3 +72,38 @@ export default function Home() {
     </div>
   )
 }
+function useCheckoutStatus(): void {
+  useEffect(() => {
+    if (typeof window === "undefined") return
+
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const status = params.get("checkout_status")
+
+      if (!status) return
+
+      if (status === "success") {
+        toast.success("Paiement effectué.", {
+          description: "Merci pour votre don — votre transaction a été acceptée.",
+        })
+      } else if (status === "canceled") {
+        toast.error("Paiement annulé.", {
+          description: "Le paiement a été annulé. Vous pouvez réessayer.",
+        })
+      } else {
+        toast.error("Statut de paiement inconnu.")
+      }
+
+      // Remove the query param so the toast doesn't reappear on refresh
+      params.delete("checkout_status")
+      const newSearch = params.toString()
+      const newUrl =
+        window.location.pathname + (newSearch ? `?${newSearch}` : "") + window.location.hash
+      window.history.replaceState({}, document.title, newUrl)
+    } catch (err) {
+      // noop - don't block the app if URL parsing fails
+      console.error(err)
+    }
+  }, [])
+}
+

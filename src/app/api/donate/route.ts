@@ -10,7 +10,7 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL
 const stripe =
   stripeSecretKey &&
   new Stripe(stripeSecretKey, {
-    apiVersion: "2024-06-20",
+    apiVersion: "2025-10-29.clover",
   })
 
 export async function POST(request: NextRequest) {

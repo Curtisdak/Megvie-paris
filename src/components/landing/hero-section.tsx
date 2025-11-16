@@ -4,6 +4,7 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { DonationControls } from "@/components/landing/donation-controls"
+import { JoinServiceDialog } from "@/components/landing/join-service-dialog"
 import { heroStats } from "@/lib/donation"
 import { fadeInUp } from "@/lib/motion"
 
@@ -34,7 +35,7 @@ export function HeroSection({
     >
       <div className="flex flex-col justify-center gap-6">
         <p className="text-sm font-medium uppercase tracking-[0.3em] text-amber-600">
-          Une eglise pour Paris
+          Une eglise pour Vous
         </p>
         <h2 className="text-4xl font-semibold leading-tight">
           Un lieu de priere, de compassion et d&apos;inspiration pour toute la
@@ -65,13 +66,7 @@ export function HeroSection({
               ? "Redirection en cours..."
               : `faire un don de ${formattedAmount}`}
           </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="h-14 rounded-full border-zinc-300 bg-transparent px-8 text-lg dark:border-zinc-700"
-          >
-            Rejoindre un culte
-          </Button>
+          <JoinServiceDialog />
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
           {heroStats.map((stat) => (
@@ -96,7 +91,7 @@ export function HeroSection({
         className="relative overflow-hidden rounded-[32px] border border-zinc-200 shadow-2xl dark:border-zinc-800"
       >
         <Image
-          src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80"
+          src="https://images.unsplash.com/photo-1620763935115-3e08804489ca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Communautes en priere"
           width={1200}
           height={800}

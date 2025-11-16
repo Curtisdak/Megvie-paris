@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 
@@ -18,9 +19,11 @@ export function SiteHeader() {
         </p>
       </div>
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" className="rounded-full">
-          Nous contacter
-        </Button>
+        <Link href="/contact" className="rounded-full">
+          <Button variant="ghost" size="sm" className="rounded-full">
+            Nous contacter
+          </Button>
+        </Link>
         <ThemeToggle />
       </div>
     </header>

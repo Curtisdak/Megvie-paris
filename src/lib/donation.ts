@@ -14,28 +14,40 @@ export const donationHighlights = [
 ]
 
 export const heroStats = [
-  { label: "Familles accompagnees", value: "250+" },
-  { label: "Benevoles engages", value: "120" },
-  { label: "Ans de ministere", value: "18" },
+  { label: "Familles accompagnees", value: "8+" },
+  { label: "Benevoles engages", value: "10" },
+  { label: "Ans de ministere", value: "20" },
 ]
 
 export const leaders: Leader[] = [
   {
-    name: "Pasteur David M.",
-    role: "Pasteur principal",
+    name: " Christain Kodja",
+    role: " Révérend",
     image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
   },
   {
-    name: "Sarah L.",
-    role: "Responsable louange",
+    name: "Adrien Yao",
+    role: "Pasteur principal",
     image:
       "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=600&q=80",
   },
   {
-    name: "Joel A.",
-    role: "Directeur jeunesse",
+    name: "Blay",
+    role: "Prophète",
     image:
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80",
   },
+  {
+  name: "Prisca Kodja",
+  role: "Pasteur",
+  image:
+    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80",
+},
+{
+  name: "Mathieu",
+  role: "Président de la jeunesse",
+  image:
+    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80",
+},
 ]

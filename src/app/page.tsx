@@ -8,6 +8,7 @@ import { LeadersSection } from "@/components/landing/leaders-section"
 import { SiteHeader } from "@/components/landing/site-header"
 import { ClosingCta } from "@/components/landing/closing-cta"
 import { WelcomeOverlay } from "@/components/welcome-overlay"
+import { Footer } from "@/components/footer"
 import { useDonationAmount } from "@/hooks/use-donation-amount"
 import { createDonationSession } from "@/lib/donation-client"
 import { CheckoutStatusListener } from "@/components/checkout-status-listener"
@@ -51,7 +52,7 @@ export default function Home() {
         <CheckoutStatusListener />
       </Suspense>
       <WelcomeOverlay visible={showWelcome} />
-      <main className="relative z-0 mx-auto flex w-full max-w-6xl flex-col gap-16">
+      <main className="relative z-0 mx-auto flex w-full max-w-6xl flex-col gap-10">
         <SiteHeader />
         <HeroSection
           amount={amount}
@@ -68,6 +69,7 @@ export default function Home() {
           formattedAmount={formattedAmount}
           onDonate={handleDonationClick}
         />
+        <Footer />
       </main>
     </div>
   )
@@ -106,4 +108,3 @@ function useCheckoutStatus(): void {
     }
   }, [])
 }
-

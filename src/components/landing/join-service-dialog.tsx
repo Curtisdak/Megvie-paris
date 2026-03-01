@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/dialog"
 
 const campusAddress = {
-  label: "MegVie Paris - Campus Central",
-  street: "21 Rue de la Paix, 75002 Paris",
-  schedule: "Dimanche · 10h30 & 14h00",
+  label: "MegVie Paris",
+  street: "4 rue de Chanzy, 94170 Le Perreux-sur-Marne",
+  schedule: "Dimanche · 14:30-16:30",
   mapUrl:
-    "https://www.google.com/maps/search/?api=1&query=21+Rue+de+la+Paix,+75002+Paris",
+    "https://www.google.com/maps/search/?api=1&query=4+rue+de+Chanzy,+94170+Le+Perreux-sur-Marne",
 }
 
 export function JoinServiceDialog() {
@@ -45,7 +45,7 @@ export function JoinServiceDialog() {
         </DialogHeader>
         <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-5 dark:border-amber-400/30 dark:bg-amber-400/10">
           <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-700">
-            Campus principal
+            Lieux principal
           </p>
           <p className="mt-2 text-lg font-semibold text-zinc-900 dark:text-white">
             {campusAddress.label}

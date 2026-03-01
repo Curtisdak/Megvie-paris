@@ -22,7 +22,7 @@ export default function Home() {
   useCheckoutStatus()
 
   useEffect(() => {
-    const timeoutId = window.setTimeout(() => setShowWelcome(false), 3000)
+    const timeoutId = window.setTimeout(() => setShowWelcome(false), 1000)
     return () => window.clearTimeout(timeoutId)
   }, [])
 

@@ -20,26 +20,30 @@ import { Footer } from "@/components/footer"
 const contactChannels = [
   {
     label: "WhatsApp",
-    description: "Discuter rapidement avec l'equipe.",
-    url: "https://wa.me/33123456789",
+    description: "Ecrivez-nous directement sur WhatsApp.",
+    detail: "+33 6 26 96 92 65",
+    url: "https://wa.me/33626969265",
     icon: MessageCircle,
   },
   {
     label: "YouTube",
-    description: "Regarder les cultes et enseignements.",
-    url: "https://youtube.com",
+    description: "Regardez les cultes et les enseignements.",
+    detail: "youtube.com/@megviepariscs",
+    url: "https://youtube.com/@megviepariscs?si=LS0xiQMo0DJ6aaf0",
     icon: Youtube,
   },
   {
     label: "Facebook",
-    description: "Rejoindre la communaute en ligne.",
-    url: "https://facebook.com",
+    description: "Suivez la communaute MegVie Paris.",
+    detail: "facebook.com/share/18SHZxpsW4",
+    url: "https://www.facebook.com/share/18SHZxpsW4/?mibextid=wwXIfr",
     icon: Facebook,
   },
   {
     label: "Email",
-    description: "Envoyer un message detaille.",
-    url: "mailto:contact@megvieparis.org",
+    description: "Envoyez-nous un message detaille.",
+    detail: "megvieparis2024@gmail.com",
+    url: "mailto:megvieparis2024@gmail.com",
     icon: Mail,
   },
 ]
@@ -105,11 +109,22 @@ export default function ContactPage() {
             orienter.
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
-            <Button className="rounded-full bg-amber-600 px-8 text-white hover:bg-amber-500">
+            <Button
+              className="rounded-full bg-amber-600 px-8 text-white hover:bg-amber-500"
+              onClick={() => handleChannelClick("https://wa.me/33626969265")}
+            >
               Prendre rendez-vous
             </Button>
-            <Button variant="outline" className="rounded-full border-zinc-300">
-              Voir les prochains cultes
+            <Button
+              variant="outline"
+              className="rounded-full border-zinc-300"
+              onClick={() =>
+                handleChannelClick(
+                  "https://youtube.com/@megviepariscs?si=LS0xiQMo0DJ6aaf0",
+                )
+              }
+            >
+              Voir les cultes
             </Button>
           </div>
         </motion.section>
@@ -151,6 +166,9 @@ export default function ContactPage() {
                       <p className="text-sm text-amber-900/80 dark:text-amber-100/80">
                         {channel.description}
                       </p>
+                      <p className="mt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                        {channel.detail}
+                      </p>
                     </div>
                     <span className="rounded-full bg-amber-100 p-2 text-amber-700 dark:bg-amber-400/20 dark:text-amber-200">
                       <Icon className="h-5 w-5" />
@@ -163,8 +181,8 @@ export default function ContactPage() {
               <p className="font-semibold text-zinc-900 dark:text-white">
                 Adresse du campus
               </p>
-              <p>21 Rue de la Paix, 75002 Paris</p>
-              <p>Dimanche · 10h30 & 14h00</p>
+              <p>4 rue de Chanzy, 94170 Le Perreux-sur-Marne</p>
+              <p>Dimanche · 14:30-16:30</p>
             </div>
           </motion.section>
 

@@ -11,7 +11,7 @@ export function Footer() {
       <p className="mt-1">
         Created by{" "}
         <Link
-          href="https://serik-website-git-main-curtisdaks-projects.vercel.app/"
+          href="https://serik-website.vercel.app"
           target="_blank"
           rel="noreferrer"
           className="font-medium text-amber-600 hover:underline dark:text-amber-300"

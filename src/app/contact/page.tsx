@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { toast } from "sonner"
 import {
+  ArrowUpRight,
   Facebook,
   Mail,
   MessageCircle,
@@ -45,6 +46,21 @@ const contactChannels = [
     detail: "megvieparis2024@gmail.com",
     url: "mailto:megvieparis2024@gmail.com",
     icon: Mail,
+  },
+]
+
+const contactHighlights = [
+  {
+    label: "WhatsApp",
+    value: "Reponse rapide",
+  },
+  {
+    label: "Email",
+    value: "Message detaille",
+  },
+  {
+    label: "Dimanche",
+    value: "14:30-16:30",
   },
 ]
 
@@ -136,19 +152,42 @@ export default function ContactPage() {
             transition={{ duration: 0.5 }}
             className="space-y-6 rounded-[32px] border border-amber-100 bg-white/90 p-6 shadow-lg dark:border-amber-400/30 dark:bg-zinc-900/80"
           >
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-amber-700 dark:text-amber-200">
-                Reseaux & messageries
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold">
-                Choisissez votre canal prefere.
-              </h2>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
-                Rejoignez-nous pour discuter instantanement, suivre les cultes
-                ou nous ecrire en detail.
-              </p>
+            <div
+              id="reseaux"
+              className="rounded-[28px] border border-amber-100 bg-amber-50/70 p-5 dark:border-amber-400/20 dark:bg-amber-400/10 sm:p-6"
+            >
+              <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-xl">
+                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-amber-700 dark:text-amber-200">
+                    Reseaux & messageries
+                  </p>
+                  <h2 className="mt-3 text-2xl font-semibold text-zinc-900 dark:text-white">
+                    Choisissez le moyen le plus simple pour nous joindre.
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                    Contactez-nous rapidement sur WhatsApp, suivez les cultes
+                    en ligne ou envoyez-nous un message detaille.
+                  </p>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[320px]">
+                  {contactHighlights.map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-2xl border border-white/70 bg-white/90 px-4 py-3 text-sm shadow-sm dark:border-white/10 dark:bg-zinc-950/40"
+                    >
+                      <p className="font-semibold text-zinc-900 dark:text-white">
+                        {item.label}
+                      </p>
+                      <p className="mt-1 text-zinc-600 dark:text-zinc-300">
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               {contactChannels.map((channel) => {
                 const Icon = channel.icon
                 return (
@@ -157,21 +196,27 @@ export default function ContactPage() {
                     whileHover={{ y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleChannelClick(channel.url)}
-                    className="flex items-center justify-between rounded-3xl border border-amber-100/70 bg-white/80 px-5 py-4 text-left shadow-sm transition hover:border-amber-200 dark:border-amber-400/40 dark:bg-zinc-950/40"
+                    className="flex h-full flex-col items-start justify-between gap-4 rounded-3xl border border-amber-100/70 bg-white/80 px-5 py-5 text-left shadow-sm transition hover:border-amber-200 hover:shadow-md dark:border-amber-400/40 dark:bg-zinc-950/40"
                   >
-                    <div>
-                      <p className="text-lg font-semibold text-amber-800 dark:text-amber-100">
-                        {channel.label}
-                      </p>
-                      <p className="text-sm text-amber-900/80 dark:text-amber-100/80">
-                        {channel.description}
-                      </p>
-                      <p className="mt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                        {channel.detail}
-                      </p>
+                    <div className="flex w-full items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="text-lg font-semibold text-amber-800 dark:text-amber-100">
+                          {channel.label}
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-amber-900/80 dark:text-amber-100/80">
+                          {channel.description}
+                        </p>
+                        <p className="mt-2 break-words text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                          {channel.detail}
+                        </p>
+                      </div>
+                      <span className="shrink-0 rounded-full bg-amber-100 p-2 text-amber-700 dark:bg-amber-400/20 dark:text-amber-200">
+                        <Icon className="h-5 w-5" />
+                      </span>
                     </div>
-                    <span className="rounded-full bg-amber-100 p-2 text-amber-700 dark:bg-amber-400/20 dark:text-amber-200">
-                      <Icon className="h-5 w-5" />
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-200">
+                      Ouvrir
+                      <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </motion.button>
                 )

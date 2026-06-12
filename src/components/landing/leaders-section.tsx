@@ -1,13 +1,63 @@
 "use client"
 
+import { useRef, useState, type TouchEvent } from "react"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { leaders } from "@/lib/donation"
 import { fadeInUp } from "@/lib/motion"
+import { cn } from "@/lib/utils"
+
+const leaderCommitments = ["Accueil", "Priere", "Enseignement"]
 
 export function LeadersSection() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const touchStartX = useRef<number | null>(null)
+
   if (leaders.length === 0) {
     return null
+  }
+
+  const activeLeader = leaders[activeIndex]
+  const hasMultipleLeaders = leaders.length > 1
+  const totalLeadersLabel = String(leaders.length).padStart(2, "0")
+
+  const showLeader = (nextIndex: number) => {
+    setActiveIndex((nextIndex + leaders.length) % leaders.length)
+  }
+
+  const showPreviousLeader = () => {
+    showLeader(activeIndex - 1)
+  }
+
+  const showNextLeader = () => {
+    showLeader(activeIndex + 1)
+  }
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null
+  }
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null) {
+      return
+    }
+
+    const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX.current
+    const swipeDistance = touchStartX.current - touchEndX
+    touchStartX.current = null
+
+    if (Math.abs(swipeDistance) < 40) {
+      return
+    }
+
+    if (swipeDistance > 0) {
+      showNextLeader()
+      return
+    }
+
+    showPreviousLeader()
   }
 
   return (
@@ -17,57 +67,156 @@ export function LeadersSection() {
       viewport={{ once: true, amount: 0.25 }}
       variants={fadeInUp}
       transition={{ duration: 0.6 }}
-      className="rounded-3xl border border-zinc-200 bg-white/90 p-6 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-8"
+      className="overflow-hidden rounded-3xl border border-zinc-200 bg-white/95 p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-8"
+      aria-label="Leaders de MegVie Paris"
     >
-      <div className="max-w-2xl">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-600">
-          Nos leaders
-        </p>
-        <h3 className="mt-3 text-3xl font-semibold text-zinc-900 dark:text-white">
-          Une equipe au service de la communaute.
-        </h3>
-        <p className="mt-3 text-base text-zinc-600 dark:text-zinc-300">
-          Rencontrez les responsables qui accompagnent MegVie Paris dans la
-          priere, l&apos;accueil et l&apos;enseignement.
-        </p>
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-600">
+            Nos leaders
+          </p>
+          <h3 className="mt-3 text-2xl font-semibold text-zinc-900 dark:text-white sm:text-3xl">
+            Une equipe au service de la communaute.
+          </h3>
+          <p className="mt-3 text-base leading-7 text-zinc-600 dark:text-zinc-300">
+            Rencontrez les responsables qui accompagnent MegVie Paris dans la
+            priere, l&apos;accueil et l&apos;enseignement.
+          </p>
+        </div>
+
+        {hasMultipleLeaders ? (
+          <div className="flex items-center gap-2">
+            <span
+              className="rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-800 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100"
+              aria-live="polite"
+            >
+              {String(activeIndex + 1).padStart(2, "0")} /{" "}
+              {totalLeadersLabel}
+            </span>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="rounded-full border-zinc-200 bg-white/90 text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950/60 dark:text-zinc-100 dark:hover:bg-zinc-900"
+              onClick={showPreviousLeader}
+              aria-label="Afficher le leader precedent"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="rounded-full border-zinc-200 bg-white/90 text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950/60 dark:text-zinc-100 dark:hover:bg-zinc-900"
+              onClick={showNextLeader}
+              aria-label="Afficher le leader suivant"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : null}
       </div>
 
-      <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        {leaders.map((leader, index) => (
+      <div
+        className="mt-6 overflow-hidden rounded-[28px] border border-zinc-200 bg-zinc-950 shadow-xl dark:border-zinc-800 sm:mt-8"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Presentation des leaders"
+      >
+        <AnimatePresence mode="wait">
           <motion.article
-            key={leader.name}
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.35, delay: index * 0.06 }}
-            className="overflow-hidden rounded-[28px] border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950/60"
+            key={activeLeader.name}
+            initial={{ opacity: 0, x: 32 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -32 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="grid min-h-[540px] bg-zinc-950 text-white lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]"
+            aria-live="polite"
           >
-            <div className="relative aspect-[4/5] bg-zinc-100 dark:bg-zinc-900">
+            <div className="relative min-h-[330px] overflow-hidden bg-zinc-900 sm:min-h-[420px] lg:min-h-[560px]">
               <Image
-                src={leader.image}
-                alt={leader.name}
+                src={activeLeader.image}
+                alt={activeLeader.name}
                 fill
-                sizes="(min-width: 1280px) 22vw, (min-width: 640px) 45vw, 100vw"
+                sizes="(min-width: 1024px) 42vw, 100vw"
                 className="object-cover object-top"
-                priority={index === 0}
+                priority={activeIndex === 0}
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-zinc-950/10 lg:to-zinc-950/65" />
             </div>
 
-            <div className="space-y-2 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-600 dark:text-amber-300">
-                {leader.role}
-              </p>
-              <h4 className="text-xl font-semibold text-zinc-900 dark:text-white">
-                {leader.name}
-              </h4>
-              <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-                Disponible pour accueillir, prier et accompagner la
-                communaute.
-              </p>
+            <div className="flex min-h-[330px] flex-col justify-between p-5 sm:p-8 lg:p-10">
+              <div>
+                <p className="inline-flex rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-amber-100">
+                  {activeLeader.role}
+                </p>
+                <h4 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">
+                  {activeLeader.name}
+                </h4>
+                <p className="mt-5 max-w-xl text-base leading-7 text-zinc-200 sm:text-lg">
+                  Disponible pour accueillir, prier et accompagner la
+                  communaute avec attention et fidelite.
+                </p>
+              </div>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                {leaderCommitments.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-medium text-zinc-100"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.article>
-        ))}
+        </AnimatePresence>
       </div>
+
+      {hasMultipleLeaders ? (
+        <div className="mt-4 flex gap-3 overflow-x-auto pb-1 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
+          {leaders.map((leader, index) => {
+            const isActive = index === activeIndex
+
+            return (
+              <button
+                key={leader.name}
+                type="button"
+                className={cn(
+                  "flex min-h-20 min-w-[13rem] items-center gap-3 rounded-2xl border p-2 text-left transition focus-visible:ring-[3px] focus-visible:ring-amber-500/40 focus-visible:outline-none sm:min-w-0",
+                  isActive
+                    ? "border-amber-300 bg-amber-50 text-amber-950 shadow-sm dark:border-amber-300/60 dark:bg-amber-300/15 dark:text-amber-50"
+                    : "border-zinc-200 bg-white text-zinc-700 hover:border-amber-200 hover:bg-amber-50/60 dark:border-zinc-800 dark:bg-zinc-950/50 dark:text-zinc-200 dark:hover:border-amber-300/30 dark:hover:bg-amber-300/10"
+                )}
+                onClick={() => showLeader(index)}
+                aria-current={isActive}
+                aria-label={`Afficher ${leader.name}`}
+              >
+                <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-900">
+                  <Image
+                    src={leader.image}
+                    alt=""
+                    fill
+                    sizes="56px"
+                    className="object-cover object-top"
+                  />
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-semibold">
+                    {leader.name}
+                  </span>
+                  <span className="mt-1 block truncate text-xs text-zinc-500 dark:text-zinc-400">
+                    {leader.role}
+                  </span>
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      ) : null}
     </motion.section>
   )
 }

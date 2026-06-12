@@ -15,7 +15,7 @@ import {
 const campusAddress = {
   label: "MegVie Paris",
   street: "4 rue de Chanzy, 94170 Le Perreux-sur-Marne",
-  schedule: "Dimanche · 14:30-16:30",
+  schedule: "Dimanche - 14:30-16:30",
   mapUrl:
     "https://www.google.com/maps/search/?api=1&query=4+rue+de+Chanzy,+94170+Le+Perreux-sur-Marne",
 }
@@ -27,7 +27,7 @@ export function JoinServiceDialog() {
         <Button
           variant="outline"
           size="lg"
-          className="h-14 rounded-full border-zinc-300 bg-transparent px-8 text-lg dark:border-zinc-700"
+          className="h-14 w-full rounded-full border-zinc-300 bg-transparent px-8 text-base dark:border-zinc-700 sm:w-auto sm:text-lg"
         >
           Rejoindre un culte
         </Button>

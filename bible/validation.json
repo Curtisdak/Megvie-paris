@@ -1,0 +1,190 @@
+{
+  "counts": {
+    "books": 66,
+    "chapters": 1189,
+    "verses": 31170,
+    "headings": 1913,
+    "cross_references": 12562,
+    "inline_cross_references": 9751,
+    "section_cross_references": 2811,
+    "footnotes": 0,
+    "introduction_paragraphs": 697
+  },
+  "source_marker_counts": {
+    "inline_cross_reference_markers_x": 9751,
+    "footnote_markers_f": 0
+  },
+  "samples": {
+    "genesis_1_1": {
+      "translation_id": "lsg1910",
+      "book_id": "GEN",
+      "book_number": 1,
+      "book_name": "Genèse",
+      "testament": "OT",
+      "id": "LSG1910-GEN-001-001",
+      "chapter": 1,
+      "verse": 1,
+      "reference": "Genèse 1:1",
+      "text": "Au commencement, Dieu créa les cieux et la terre.",
+      "section_heading": "Création du monde",
+      "headings": [
+        {
+          "id": "LSG1910-GEN-HDG-0003",
+          "marker": "ms1",
+          "scope": "major_section",
+          "level": 1,
+          "text": "LES TEMPS ANCIENS"
+        },
+        {
+          "id": "LSG1910-GEN-HDG-0004",
+          "marker": "ms2",
+          "scope": "major_section",
+          "level": 2,
+          "text": "DEPUIS LA CRÉATION JUSQU’À ABRAHAM"
+        },
+        {
+          "id": "LSG1910-GEN-HDG-0005",
+          "marker": "s",
+          "scope": "section",
+          "level": 1,
+          "text": "Création du monde"
+        }
+      ],
+      "cross_references": [
+        {
+          "id": "LSG1910-GEN-001-001-XREF-01",
+          "kind": "inline",
+          "marker": "x",
+          "source_reference": "Genèse 1:1",
+          "origin_text": "1:1",
+          "target_text": "Job 38:4. Ps 33:6; 89:12; 136:5. Ac 14:15; 17:24. Hé 11:3.",
+          "caller": "+"
+        }
+      ],
+      "section_cross_references": [
+        {
+          "id": "LSG1910-GEN-SREF-0001",
+          "kind": "major_range",
+          "marker": "mr",
+          "source_reference": "Genèse ch. 1-11",
+          "origin_text": "Ch. 1 à 11",
+          "target_text": "9. (Ac 17:24-28.)",
+          "caller": ""
+        },
+        {
+          "id": "LSG1910-GEN-SREF-0002",
+          "kind": "section",
+          "marker": "r",
+          "source_reference": "Genèse 1:1",
+          "origin_text": "V. 1",
+          "target_text": "cf. Né 9:6. (Ps 124:8. Jé 32:17; 10:12.) Ro 1:20. Ap 4:11. Jn 1:1-3.",
+          "caller": ""
+        }
+      ],
+      "footnotes": []
+    },
+    "john_3_16": {
+      "translation_id": "lsg1910",
+      "book_id": "JHN",
+      "book_number": 43,
+      "book_name": "Jean",
+      "testament": "NT",
+      "id": "LSG1910-JHN-003-016",
+      "chapter": 3,
+      "verse": 16,
+      "reference": "Jean 3:16",
+      "text": "Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle.",
+      "section_heading": "Entretien de Jésus avec Nicodème",
+      "headings": [
+        {
+          "id": "LSG1910-JHN-HDG-0026",
+          "marker": "s",
+          "scope": "section",
+          "level": 1,
+          "text": "Entretien de Jésus avec Nicodème"
+        }
+      ],
+      "cross_references": [
+        {
+          "id": "LSG1910-JHN-003-016-XREF-01",
+          "kind": "inline",
+          "marker": "x",
+          "source_reference": "Jean 3:16",
+          "origin_text": "3:16",
+          "target_text": "Ro 5:8; 8:31. 1 Jn 4:9.",
+          "caller": "+"
+        },
+        {
+          "id": "LSG1910-JHN-003-016-XREF-02",
+          "kind": "inline",
+          "marker": "x",
+          "source_reference": "Jean 3:16",
+          "origin_text": "3:16",
+          "target_text": "Lu 19:10. Jn 3:36. 1 Jn 5:10.",
+          "caller": "+"
+        }
+      ],
+      "section_cross_references": [],
+      "footnotes": []
+    },
+    "inline_cross_reference": {
+      "id": "LSG1910-GEN-001-001-XREF-01",
+      "translation_id": "lsg1910",
+      "book_id": "GEN",
+      "book_number": 1,
+      "book_name": "Genèse",
+      "testament": "OT",
+      "kind": "inline",
+      "marker": "x",
+      "chapter_start": 1,
+      "verse_start": 1,
+      "chapter_end": 1,
+      "verse_end": 1,
+      "source_reference": "Genèse 1:1",
+      "caller": "+",
+      "origin_text": "1:1",
+      "target_text": "Job 38:4. Ps 33:6; 89:12; 136:5. Ac 14:15; 17:24. Hé 11:3.",
+      "raw": "\\x + \\xo 1:1 \\xt Job 38:4. Ps 33:6; 89:12; 136:5. Ac 14:15; 17:24. Hé 11:3. \\x*",
+      "sort_order": 19
+    },
+    "section_cross_reference": {
+      "id": "LSG1910-GEN-SREF-0001",
+      "translation_id": "lsg1910",
+      "book_id": "GEN",
+      "book_number": 1,
+      "book_name": "Genèse",
+      "testament": "OT",
+      "kind": "major_range",
+      "marker": "mr",
+      "chapter_start": 1,
+      "verse_start": null,
+      "chapter_end": 11,
+      "verse_end": null,
+      "source_reference": "Genèse ch. 1-11",
+      "caller": "",
+      "origin_text": "Ch. 1 à 11",
+      "target_text": "9. (Ac 17:24-28.)",
+      "raw": "Ch. 1 à 11: 9. (Ac 17:24-28.)",
+      "sort_order": 15
+    },
+    "heading": {
+      "id": "LSG1910-GEN-HDG-0003",
+      "translation_id": "lsg1910",
+      "book_id": "GEN",
+      "book_number": 1,
+      "book_name": "Genèse",
+      "testament": "OT",
+      "marker": "ms1",
+      "marker_level": 1,
+      "scope": "major_section",
+      "text": "LES TEMPS ANCIENS",
+      "anchor_chapter": 1,
+      "starts_at_chapter": 1,
+      "starts_at_verse": 1,
+      "starts_at_reference": "Genèse 1:1",
+      "sort_order": 13
+    },
+    "footnote": null
+  },
+  "note": "This LSG1910 source contains no USFM \\f ... \\f* footnote markers. footnotes.json is empty and the schema/importer support future footnote data."
+}

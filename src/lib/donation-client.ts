@@ -5,11 +5,14 @@ export async function createDonationSession(amount: number) {
     body: JSON.stringify({ amount }),
   })
 
-  if (!response.ok) {
-    throw new Error("Erreur cote serveur")
-  }
+  const data = (await response.json().catch(() => null)) as {
+    url?: string
+    error?: string
+  } | null
 
-  const data = (await response.json()) as { url?: string }
+  if (!response.ok) {
+    throw new Error(data?.error ?? "Erreur cote serveur")
+  }
 
   if (!data?.url) {
     throw new Error("URL de paiement introuvable")

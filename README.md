@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+THIS LINK HIS FOR BIBLE DOWNLOAD https://github.com/BibleCorps/FRA-B-LSG1910-PD-UBS.git
+
 ## Getting Started
 
 First, run the development server:
@@ -15,6 +17,25 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Stripe donations
+
+Create `.env.local` from `.env.local.example` and set:
+
+```bash
+STRIPE_SECRET_KEY=sk_test_xxxxx
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+Use `sk_test_...` for local testing and `sk_live_...` in production. A
+`pk_live_...` key is publishable and must not be used as `STRIPE_SECRET_KEY`.
+
+## PWA and daily verse notifications
+
+The app can be installed on Android and iPhone as a PWA and supports opt-in
+daily Bible verse push notifications. See
+[docs/PWA_PUSH_SETUP.md](docs/PWA_PUSH_SETUP.md) for Supabase, VAPID, cron, and
+device testing setup.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

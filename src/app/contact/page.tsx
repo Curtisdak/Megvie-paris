@@ -15,8 +15,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { BackButton } from "@/components/back-button"
-import { Footer } from "@/components/footer"
 
 const contactChannels = [
   {
@@ -102,29 +100,26 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-4 py-12 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50">
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-10">
-        <div className="flex justify-start">
-          <BackButton />
-        </div>
+    <div className="app-edge-to-edge min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 py-5 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:py-12">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 sm:gap-10">
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="rounded-[32px] border border-amber-100 bg-gradient-to-br from-amber-100 via-white to-amber-50 p-8 text-zinc-900 shadow-xl dark:border-amber-400/30 dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-900 dark:text-zinc-50"
+          className="rounded-[28px] border border-amber-100 bg-gradient-to-br from-amber-100 via-white to-amber-50 p-5 text-zinc-900 shadow-xl dark:border-amber-400/30 dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-900 dark:text-zinc-50 sm:rounded-[32px] sm:p-8"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.5em] text-amber-700 dark:text-amber-200">
             Contact
           </p>
-          <h1 className="mt-4 text-4xl font-semibold leading-tight">
+          <h1 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
             Parlons ensemble de ce que Dieu prepare pour MegVie Paris.
           </h1>
-          <p className="mt-3 max-w-2xl text-lg text-zinc-600 dark:text-zinc-300">
+          <p className="mt-3 max-w-2xl text-base leading-7 text-zinc-600 dark:text-zinc-300 sm:text-lg">
             Besoin de priere, d&apos;informations ou envie de vous impliquer ?
             Notre equipe pastorale et nos benevoles sont disponibles pour vous
             orienter.
           </p>
-          <div className="mt-6 flex flex-wrap gap-4">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
             <Button
               className="rounded-full bg-amber-600 px-8 text-white hover:bg-amber-500"
               onClick={() => handleChannelClick("https://wa.me/33626969265")}
@@ -150,18 +145,18 @@ export default function ContactPage() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-6 rounded-[32px] border border-amber-100 bg-white/90 p-6 shadow-lg dark:border-amber-400/30 dark:bg-zinc-900/80"
+            className="space-y-5 rounded-[28px] border border-amber-100 bg-white/90 p-5 shadow-lg dark:border-amber-400/30 dark:bg-zinc-900/80 sm:space-y-6 sm:rounded-[32px] sm:p-6"
           >
             <div
               id="reseaux"
-              className="rounded-[28px] border border-amber-100 bg-amber-50/70 p-5 dark:border-amber-400/20 dark:bg-amber-400/10 sm:p-6"
+              className="rounded-[24px] border border-amber-100 bg-amber-50/70 p-4 dark:border-amber-400/20 dark:bg-amber-400/10 sm:rounded-[28px] sm:p-6"
             >
               <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-xl">
                   <p className="text-xs font-semibold uppercase tracking-[0.4em] text-amber-700 dark:text-amber-200">
                     Reseaux & messageries
                   </p>
-                  <h2 className="mt-3 text-2xl font-semibold text-zinc-900 dark:text-white">
+                  <h2 className="mt-3 text-xl font-semibold text-zinc-900 dark:text-white sm:text-2xl">
                     Choisissez le moyen le plus simple pour nous joindre.
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
@@ -227,7 +222,7 @@ export default function ContactPage() {
                 Adresse du campus
               </p>
               <p>4 rue de Chanzy, 94170 Le Perreux-sur-Marne</p>
-              <p>Dimanche · 14:30-16:30</p>
+              <p>Dimanche - 14:30-16:30</p>
             </div>
           </motion.section>
 
@@ -235,7 +230,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-4 rounded-[32px] border border-zinc-200/70 bg-white/90 p-6 shadow-lg dark:border-zinc-800/70 dark:bg-zinc-900/85"
+            className="space-y-4 rounded-[28px] border border-zinc-200/70 bg-white/90 p-5 shadow-lg dark:border-zinc-800/70 dark:bg-zinc-900/85 sm:rounded-[32px] sm:p-6"
           >
             <div className="flex items-center gap-3 rounded-2xl border border-amber-100/60 bg-amber-50/60 px-4 py-3 text-sm text-amber-900 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-100">
               <PhoneCall className="h-5 w-5 text-amber-600 dark:text-amber-200" />
@@ -309,7 +304,6 @@ export default function ContactPage() {
             </form>
           </motion.section>
         </div>
-        <Footer />
       </main>
     </div>
   )

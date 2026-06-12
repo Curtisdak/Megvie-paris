@@ -46,7 +46,7 @@ export function ClosingCta({
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-600">
             Soutenir la mission
           </p>
-          <h3 className="mt-3 text-3xl font-semibold text-zinc-900 dark:text-white">
+          <h3 className="mt-3 text-2xl font-semibold text-zinc-900 dark:text-white sm:text-3xl">
             Un geste simple pour soutenir MegVie Paris.
           </h3>
           <p className="mt-3 text-base leading-7 text-zinc-600 dark:text-zinc-300">
@@ -55,7 +55,7 @@ export function ClosingCta({
             contactez-nous si vous avez une question.
           </p>
 
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-wrap gap-2 sm:gap-3">
             {reassuranceItems.map((item) => {
               const Icon = item.icon
 
@@ -76,7 +76,7 @@ export function ClosingCta({
           <p className="text-sm font-medium text-amber-800 dark:text-amber-100">
             Montant selectionne
           </p>
-          <p className="mt-2 text-4xl font-semibold text-amber-700 dark:text-amber-200">
+          <p className="mt-2 text-3xl font-semibold text-amber-700 dark:text-amber-200 sm:text-4xl">
             {formattedAmount}
           </p>
           <p className="mt-3 text-sm leading-6 text-amber-900/80 dark:text-amber-100/80">

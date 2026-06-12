@@ -12,15 +12,15 @@ export function HighlightsSection() {
       viewport={{ once: true, amount: 0.3 }}
       variants={fadeInUp}
       transition={{ duration: 0.6 }}
-      className="rounded-3xl border border-zinc-200 bg-white/90 p-8 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80"
+      className="rounded-3xl border border-zinc-200 bg-white/90 p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-8"
     >
       <p className="text-sm font-semibold uppercase tracking-[0.25em] text-amber-600">
         Pourquoi donner ?
       </p>
-      <h3 className="mt-3 text-3xl font-semibold">
+      <h3 className="mt-3 text-2xl font-semibold sm:text-3xl">
         Chaque don cree une nouvelle histoire de grace.
       </h3>
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      <div className="mt-6 grid gap-4 md:mt-8 md:grid-cols-3">
         {donationHighlights.map((item) => (
           <div
             key={item}

@@ -1,0 +1,22 @@
+{
+  "id": "lsg1910",
+  "name": "Louis Segond 1910",
+  "abbreviation": "LSG1910",
+  "language": "fr",
+  "language_name": "French / français",
+  "canon": "Protestant 66-book canon",
+  "license": "Public Domain",
+  "source_note": "Parsed from Louis Segond 1910 SFM/USFM-style source files. Verse text is clean; headings, cross-references, and footnote structures are retained.",
+  "generated_at_utc": "2026-06-10T03:41:12+00:00",
+  "counts": {
+    "books": 66,
+    "chapters": 1189,
+    "verses": 31170,
+    "headings": 1913,
+    "cross_references": 12562,
+    "inline_cross_references": 9751,
+    "section_cross_references": 2811,
+    "footnotes": 0,
+    "introduction_paragraphs": 697
+  }
+}

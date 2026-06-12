@@ -1,0 +1,662 @@
+[
+  {
+    "id": "GEN",
+    "book_number": 1,
+    "testament": "OT",
+    "name": "Genèse",
+    "name_english": "Genesis",
+    "header": "",
+    "chapter_count": 50,
+    "verse_count": 1533
+  },
+  {
+    "id": "EXO",
+    "book_number": 2,
+    "testament": "OT",
+    "name": "Exode",
+    "name_english": "Exodus",
+    "header": "",
+    "chapter_count": 40,
+    "verse_count": 1213
+  },
+  {
+    "id": "LEV",
+    "book_number": 3,
+    "testament": "OT",
+    "name": "Lévitique",
+    "name_english": "Leviticus",
+    "header": "",
+    "chapter_count": 27,
+    "verse_count": 859
+  },
+  {
+    "id": "NUM",
+    "book_number": 4,
+    "testament": "OT",
+    "name": "Nombres",
+    "name_english": "Numbers",
+    "header": "",
+    "chapter_count": 36,
+    "verse_count": 1288
+  },
+  {
+    "id": "DEU",
+    "book_number": 5,
+    "testament": "OT",
+    "name": "Deutéronome",
+    "name_english": "Deuteronomy",
+    "header": "",
+    "chapter_count": 34,
+    "verse_count": 959
+  },
+  {
+    "id": "JOS",
+    "book_number": 6,
+    "testament": "OT",
+    "name": "Josué",
+    "name_english": "Joshua",
+    "header": "",
+    "chapter_count": 24,
+    "verse_count": 658
+  },
+  {
+    "id": "JDG",
+    "book_number": 7,
+    "testament": "OT",
+    "name": "Juges",
+    "name_english": "Judges",
+    "header": "",
+    "chapter_count": 21,
+    "verse_count": 618
+  },
+  {
+    "id": "RUT",
+    "book_number": 8,
+    "testament": "OT",
+    "name": "Ruth",
+    "name_english": "Ruth",
+    "header": "RUTH",
+    "chapter_count": 4,
+    "verse_count": 85
+  },
+  {
+    "id": "1SA",
+    "book_number": 9,
+    "testament": "OT",
+    "name": "1 Samuel",
+    "name_english": "1 Samuel",
+    "header": "",
+    "chapter_count": 31,
+    "verse_count": 811
+  },
+  {
+    "id": "2SA",
+    "book_number": 10,
+    "testament": "OT",
+    "name": "2 Samuel",
+    "name_english": "2 Samuel",
+    "header": "",
+    "chapter_count": 24,
+    "verse_count": 695
+  },
+  {
+    "id": "1KI",
+    "book_number": 11,
+    "testament": "OT",
+    "name": "1 Rois",
+    "name_english": "1 Kings",
+    "header": "",
+    "chapter_count": 22,
+    "verse_count": 817
+  },
+  {
+    "id": "2KI",
+    "book_number": 12,
+    "testament": "OT",
+    "name": "2 Rois",
+    "name_english": "2 Kings",
+    "header": "",
+    "chapter_count": 25,
+    "verse_count": 719
+  },
+  {
+    "id": "1CH",
+    "book_number": 13,
+    "testament": "OT",
+    "name": "1 Chroniques",
+    "name_english": "1 Chronicles",
+    "header": "",
+    "chapter_count": 29,
+    "verse_count": 942
+  },
+  {
+    "id": "2CH",
+    "book_number": 14,
+    "testament": "OT",
+    "name": "2 Chroniques",
+    "name_english": "2 Chronicles",
+    "header": "",
+    "chapter_count": 36,
+    "verse_count": 822
+  },
+  {
+    "id": "EZR",
+    "book_number": 15,
+    "testament": "OT",
+    "name": "Esdras",
+    "name_english": "Ezra",
+    "header": "",
+    "chapter_count": 10,
+    "verse_count": 280
+  },
+  {
+    "id": "NEH",
+    "book_number": 16,
+    "testament": "OT",
+    "name": "Néhémie",
+    "name_english": "Nehemiah",
+    "header": "",
+    "chapter_count": 13,
+    "verse_count": 406
+  },
+  {
+    "id": "EST",
+    "book_number": 17,
+    "testament": "OT",
+    "name": "Esther",
+    "name_english": "Esther",
+    "header": "",
+    "chapter_count": 10,
+    "verse_count": 167
+  },
+  {
+    "id": "JOB",
+    "book_number": 18,
+    "testament": "OT",
+    "name": "Job",
+    "name_english": "Job",
+    "header": "",
+    "chapter_count": 42,
+    "verse_count": 1069
+  },
+  {
+    "id": "PSA",
+    "book_number": 19,
+    "testament": "OT",
+    "name": "Psaumes",
+    "name_english": "Psalms",
+    "header": "",
+    "chapter_count": 150,
+    "verse_count": 2527
+  },
+  {
+    "id": "PRO",
+    "book_number": 20,
+    "testament": "OT",
+    "name": "Proverbes",
+    "name_english": "Proverbs",
+    "header": "",
+    "chapter_count": 31,
+    "verse_count": 915
+  },
+  {
+    "id": "ECC",
+    "book_number": 21,
+    "testament": "OT",
+    "name": "Ecclésiaste",
+    "name_english": "Ecclesiastes",
+    "header": "",
+    "chapter_count": 12,
+    "verse_count": 222
+  },
+  {
+    "id": "SNG",
+    "book_number": 22,
+    "testament": "OT",
+    "name": "Cantique des cantiques",
+    "name_english": "Song of Songs",
+    "header": "",
+    "chapter_count": 8,
+    "verse_count": 117
+  },
+  {
+    "id": "ISA",
+    "book_number": 23,
+    "testament": "OT",
+    "name": "Ésaïe",
+    "name_english": "Isaiah",
+    "header": "",
+    "chapter_count": 66,
+    "verse_count": 1291
+  },
+  {
+    "id": "JER",
+    "book_number": 24,
+    "testament": "OT",
+    "name": "Jérémie",
+    "name_english": "Jeremiah",
+    "header": "",
+    "chapter_count": 52,
+    "verse_count": 1364
+  },
+  {
+    "id": "LAM",
+    "book_number": 25,
+    "testament": "OT",
+    "name": "Lamentations",
+    "name_english": "Lamentations",
+    "header": "",
+    "chapter_count": 5,
+    "verse_count": 154
+  },
+  {
+    "id": "EZK",
+    "book_number": 26,
+    "testament": "OT",
+    "name": "Ézékiel",
+    "name_english": "Ezekiel",
+    "header": "",
+    "chapter_count": 48,
+    "verse_count": 1273
+  },
+  {
+    "id": "DAN",
+    "book_number": 27,
+    "testament": "OT",
+    "name": "Daniel",
+    "name_english": "Daniel",
+    "header": "",
+    "chapter_count": 12,
+    "verse_count": 357
+  },
+  {
+    "id": "HOS",
+    "book_number": 28,
+    "testament": "OT",
+    "name": "Osée",
+    "name_english": "Hosea",
+    "header": "",
+    "chapter_count": 14,
+    "verse_count": 197
+  },
+  {
+    "id": "JOL",
+    "book_number": 29,
+    "testament": "OT",
+    "name": "Joël",
+    "name_english": "Joel",
+    "header": "",
+    "chapter_count": 3,
+    "verse_count": 73
+  },
+  {
+    "id": "AMO",
+    "book_number": 30,
+    "testament": "OT",
+    "name": "Amos",
+    "name_english": "Amos",
+    "header": "",
+    "chapter_count": 9,
+    "verse_count": 146
+  },
+  {
+    "id": "OBA",
+    "book_number": 31,
+    "testament": "OT",
+    "name": "Abdias",
+    "name_english": "Obadiah",
+    "header": "",
+    "chapter_count": 1,
+    "verse_count": 21
+  },
+  {
+    "id": "JON",
+    "book_number": 32,
+    "testament": "OT",
+    "name": "Jonas",
+    "name_english": "Jonah",
+    "header": "",
+    "chapter_count": 4,
+    "verse_count": 48
+  },
+  {
+    "id": "MIC",
+    "book_number": 33,
+    "testament": "OT",
+    "name": "Michée",
+    "name_english": "Micah",
+    "header": "",
+    "chapter_count": 7,
+    "verse_count": 105
+  },
+  {
+    "id": "NAM",
+    "book_number": 34,
+    "testament": "OT",
+    "name": "Nahum",
+    "name_english": "Nahum",
+    "header": "",
+    "chapter_count": 3,
+    "verse_count": 47
+  },
+  {
+    "id": "HAB",
+    "book_number": 35,
+    "testament": "OT",
+    "name": "Habacuc",
+    "name_english": "Habakkuk",
+    "header": "",
+    "chapter_count": 3,
+    "verse_count": 56
+  },
+  {
+    "id": "ZEP",
+    "book_number": 36,
+    "testament": "OT",
+    "name": "Sophonie",
+    "name_english": "Zephaniah",
+    "header": "",
+    "chapter_count": 3,
+    "verse_count": 53
+  },
+  {
+    "id": "HAG",
+    "book_number": 37,
+    "testament": "OT",
+    "name": "Aggée",
+    "name_english": "Haggai",
+    "header": "",
+    "chapter_count": 2,
+    "verse_count": 38
+  },
+  {
+    "id": "ZEC",
+    "book_number": 38,
+    "testament": "OT",
+    "name": "Zacharie",
+    "name_english": "Zechariah",
+    "header": "",
+    "chapter_count": 14,
+    "verse_count": 211
+  },
+  {
+    "id": "MAL",
+    "book_number": 39,
+    "testament": "OT",
+    "name": "Malachie",
+    "name_english": "Malachi",
+    "header": "",
+    "chapter_count": 4,
+    "verse_count": 55
+  },
+  {
+    "id": "MAT",
+    "book_number": 40,
+    "testament": "NT",
+    "name": "Matthieu",
+    "name_english": "Matthew",
+    "header": "",
+    "chapter_count": 28,
+    "verse_count": 1071
+  },
+  {
+    "id": "MRK",
+    "book_number": 41,
+    "testament": "NT",
+    "name": "Marc",
+    "name_english": "Mark",
+    "header": "",
+    "chapter_count": 16,
+    "verse_count": 680
+  },
+  {
+    "id": "LUK",
+    "book_number": 42,
+    "testament": "NT",
+    "name": "Luc",
+    "name_english": "Luke",
+    "header": "",
+    "chapter_count": 24,
+    "verse_count": 1151
+  },
+  {
+    "id": "JHN",
+    "book_number": 43,
+    "testament": "NT",
+    "name": "Jean",
+    "name_english": "John",
+    "header": "",
+    "chapter_count": 21,
+    "verse_count": 879
+  },
+  {
+    "id": "ACT",
+    "book_number": 44,
+    "testament": "NT",
+    "name": "Actes",
+    "name_english": "Acts",
+    "header": "",
+    "chapter_count": 28,
+    "verse_count": 1006
+  },
+  {
+    "id": "ROM",
+    "book_number": 45,
+    "testament": "NT",
+    "name": "Romains",
+    "name_english": "Romans",
+    "header": "",
+    "chapter_count": 16,
+    "verse_count": 433
+  },
+  {
+    "id": "1CO",
+    "book_number": 46,
+    "testament": "NT",
+    "name": "1 Corinthiens",
+    "name_english": "1 Corinthians",
+    "header": "",
+    "chapter_count": 16,
+    "verse_count": 437
+  },
+  {
+    "id": "2CO",
+    "book_number": 47,
+    "testament": "NT",
+    "name": "2 Corinthiens",
+    "name_english": "2 Corinthians",
+    "header": "",
+    "chapter_count": 13,
+    "verse_count": 256
+  },
+  {
+    "id": "GAL",
+    "book_number": 48,
+    "testament": "NT",
+    "name": "Galates",
+    "name_english": "Galatians",
+    "header": "",
+    "chapter_count": 6,
+    "verse_count": 149
+  },
+  {
+    "id": "EPH",
+    "book_number": 49,
+    "testament": "NT",
+    "name": "Éphésiens",
+    "name_english": "Ephesians",
+    "header": "",
+    "chapter_count": 6,
+    "verse_count": 155
+  },
+  {
+    "id": "PHP",
+    "book_number": 50,
+    "testament": "NT",
+    "name": "Philippiens",
+    "name_english": "Philippians",
+    "header": "",
+    "chapter_count": 4,
+    "verse_count": 104
+  },
+  {
+    "id": "COL",
+    "book_number": 51,
+    "testament": "NT",
+    "name": "Colossiens",
+    "name_english": "Colossians",
+    "header": "",
+    "chapter_count": 4,
+    "verse_count": 95
+  },
+  {
+    "id": "1TH",
+    "book_number": 52,
+    "testament": "NT",
+    "name": "1 Thessaloniciens",
+    "name_english": "1 Thessalonians",
+    "header": "",
+    "chapter_count": 5,
+    "verse_count": 89
+  },
+  {
+    "id": "2TH",
+    "book_number": 53,
+    "testament": "NT",
+    "name": "2 Thessaloniciens",
+    "name_english": "2 Thessalonians",
+    "header": "",
+    "chapter_count": 3,
+    "verse_count": 47
+  },
+  {
+    "id": "1TI",
+    "book_number": 54,
+    "testament": "NT",
+    "name": "1 Timothée",
+    "name_english": "1 Timothy",
+    "header": "",
+    "chapter_count": 6,
+    "verse_count": 113
+  },
+  {
+    "id": "2TI",
+    "book_number": 55,
+    "testament": "NT",
+    "name": "2 Timothée",
+    "name_english": "2 Timothy",
+    "header": "",
+    "chapter_count": 4,
+    "verse_count": 83
+  },
+  {
+    "id": "TIT",
+    "book_number": 56,
+    "testament": "NT",
+    "name": "Tite",
+    "name_english": "Titus",
+    "header": "",
+    "chapter_count": 3,
+    "verse_count": 46
+  },
+  {
+    "id": "PHM",
+    "book_number": 57,
+    "testament": "NT",
+    "name": "Philémon",
+    "name_english": "Philemon",
+    "header": "",
+    "chapter_count": 1,
+    "verse_count": 25
+  },
+  {
+    "id": "HEB",
+    "book_number": 58,
+    "testament": "NT",
+    "name": "Hébreux",
+    "name_english": "Hebrews",
+    "header": "",
+    "chapter_count": 13,
+    "verse_count": 303
+  },
+  {
+    "id": "JAS",
+    "book_number": 59,
+    "testament": "NT",
+    "name": "Jacques",
+    "name_english": "James",
+    "header": "",
+    "chapter_count": 5,
+    "verse_count": 108
+  },
+  {
+    "id": "1PE",
+    "book_number": 60,
+    "testament": "NT",
+    "name": "1 Pierre",
+    "name_english": "1 Peter",
+    "header": "",
+    "chapter_count": 5,
+    "verse_count": 105
+  },
+  {
+    "id": "2PE",
+    "book_number": 61,
+    "testament": "NT",
+    "name": "2 Pierre",
+    "name_english": "2 Peter",
+    "header": "",
+    "chapter_count": 3,
+    "verse_count": 61
+  },
+  {
+    "id": "1JN",
+    "book_number": 62,
+    "testament": "NT",
+    "name": "1 Jean",
+    "name_english": "1 John",
+    "header": "",
+    "chapter_count": 5,
+    "verse_count": 105
+  },
+  {
+    "id": "2JN",
+    "book_number": 63,
+    "testament": "NT",
+    "name": "2 Jean",
+    "name_english": "2 John",
+    "header": "",
+    "chapter_count": 1,
+    "verse_count": 13
+  },
+  {
+    "id": "3JN",
+    "book_number": 64,
+    "testament": "NT",
+    "name": "3 Jean",
+    "name_english": "3 John",
+    "header": "",
+    "chapter_count": 1,
+    "verse_count": 15
+  },
+  {
+    "id": "JUD",
+    "book_number": 65,
+    "testament": "NT",
+    "name": "Jude",
+    "name_english": "Jude",
+    "header": "",
+    "chapter_count": 1,
+    "verse_count": 25
+  },
+  {
+    "id": "REV",
+    "book_number": 66,
+    "testament": "NT",
+    "name": "Apocalypse",
+    "name_english": "Revelation",
+    "header": "APOCALYPSE",
+    "chapter_count": 22,
+    "verse_count": 405
+  }
+]

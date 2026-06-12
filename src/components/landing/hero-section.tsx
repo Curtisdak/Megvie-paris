@@ -27,37 +27,55 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <motion.section
+      id="don"
       initial="hidden"
       animate="show"
       variants={fadeInUp}
       transition={{ duration: 0.6 }}
-      className="grid gap-10 rounded-3xl border border-zinc-200 bg-white/90 p-8 shadow-xl backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/80 lg:grid-cols-2"
+      className="grid gap-7 overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#111827_0%,#7c2d12_42%,#0f766e_100%)] p-5 text-white shadow-2xl shadow-zinc-950/20 sm:p-8 lg:grid-cols-2 lg:gap-10"
     >
       <div className="flex flex-col justify-center gap-6">
-        <p className="text-sm font-medium uppercase tracking-[0.3em] text-amber-600">
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.15 }}
+          className="text-sm font-medium uppercase tracking-[0.3em] text-amber-100"
+        >
           Une eglise pour Vous
-        </p>
-        <h2 className="text-4xl font-semibold leading-tight">
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.22 }}
+          className="text-3xl font-semibold leading-tight sm:text-5xl"
+        >
           Un lieu de priere, de compassion et d&apos;inspiration pour toute la
           ville.
-        </h2>
-        <p className="text-lg text-zinc-600 dark:text-zinc-300">
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.29 }}
+          className="text-base leading-7 text-white/78 sm:text-lg"
+        >
           MegVie Paris rassemble des personnes de tous horizons pour celebrer la
           presence de Dieu et servir la cite. Ensemble, nous accompagnons les
           familles, equipons les jeunes et investissons nos ressources pour une
           transformation durable. Choisissez librement votre participation et
           soutenez les projets qui font la difference.
-        </p>
-        <DonationControls
-          amount={amount}
-          formattedAmount={formattedAmount}
-          onSliderChange={onSliderChange}
-          onManualChange={onManualChange}
-        />
-        <div className="flex flex-wrap gap-3">
+        </motion.p>
+        <div className="rounded-[1.75rem] border border-white/15 bg-white/12 p-2 backdrop-blur-xl">
+          <DonationControls
+            amount={amount}
+            formattedAmount={formattedAmount}
+            onSliderChange={onSliderChange}
+            onManualChange={onManualChange}
+          />
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Button
             size="lg"
-            className="h-14 rounded-full bg-amber-600 px-8 text-lg font-semibold text-white shadow-md transition hover:bg-amber-500"
+            className="h-14 w-full rounded-full bg-amber-600 px-8 text-base font-semibold text-white shadow-md transition hover:bg-amber-500 sm:w-auto sm:text-lg"
             onClick={onDonate}
             disabled={isProcessing}
             aria-busy={isProcessing}
@@ -72,12 +90,12 @@ export function HeroSection({
           {heroStats.map((stat) => (
             <div
               key={stat.label}
-              className="rounded-2xl border border-amber-100 bg-amber-50/60 p-4 text-center dark:border-amber-400/20 dark:bg-amber-400/10"
+              className="rounded-2xl border border-white/15 bg-white/10 p-4 text-center backdrop-blur"
             >
-              <p className="text-2xl font-semibold text-amber-700 dark:text-amber-300">
+              <p className="text-2xl font-semibold text-amber-100">
                 {stat.value}
               </p>
-              <p className="text-xs uppercase tracking-widest text-amber-900/80 dark:text-amber-200/90">
+              <p className="text-xs uppercase tracking-widest text-white/75">
                 {stat.label}
               </p>
             </div>
@@ -88,7 +106,7 @@ export function HeroSection({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="relative overflow-hidden rounded-[32px] border border-zinc-200 shadow-2xl dark:border-zinc-800"
+        className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] border border-white/15 shadow-2xl sm:rounded-[2rem] lg:aspect-auto"
       >
         <Image
           src="https://images.unsplash.com/photo-1620763935115-3e08804489ca?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

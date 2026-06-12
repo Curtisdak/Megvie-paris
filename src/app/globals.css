@@ -116,7 +116,65 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
+  body {
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.app-sidebar-nav,
+.app-bottom-nav {
+  display: none;
+}
+
+.app-bottom-nav {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.65rem);
+}
+
+.app-edge-to-edge {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 1024px) {
+  body {
+    padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+  }
+
+  .app-bottom-nav {
+    display: block;
+  }
+
+  .floating-install-button {
+    bottom: calc(6.75rem + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .app-edge-to-edge {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  body {
+    padding-left: 18rem;
+    transition: padding-left 300ms ease;
+  }
+
+  .sidebar-collapsed body {
+    padding-left: 4.75rem;
+  }
+
+  .app-sidebar-nav {
+    display: flex;
+  }
+}
+
+@media (display-mode: standalone) and (max-width: 1024px) {
+  .floating-install-button {
+    display: none;
   }
 }

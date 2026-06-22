@@ -34,8 +34,14 @@ Use `sk_test_...` for local testing and `sk_live_...` in production. A
 
 The app can be installed on Android and iPhone as a PWA and supports opt-in
 daily Bible verse push notifications. See
-[docs/PWA_PUSH_SETUP.md](docs/PWA_PUSH_SETUP.md) for Supabase, VAPID, cron, and
+[docs/PWA_PUSH_SETUP.md](docs/PWA_PUSH_SETUP.md) for Clerk, Neon, VAPID, cron, and
 device testing setup.
+
+## Membership auth
+
+Member authentication now uses Clerk, with membership data stored in Neon/Postgres
+through Prisma. See
+[docs/CLERK_NEON_PRISMA_SETUP.md](docs/CLERK_NEON_PRISMA_SETUP.md).
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

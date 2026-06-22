@@ -1,0 +1,206 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ChurchRole {
+  MEMBER
+  RESPO
+  FINANCE
+  MASTER
+  CREATOR
+
+  @@map("church_role")
+}
+
+enum MembershipStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  REJECTED
+  ARCHIVED
+
+  @@map("membership_status")
+}
+
+enum NotificationDeliveryStatus {
+  PENDING
+  SENT
+  FAILED
+  DEACTIVATED
+
+  @@map("notification_delivery_status")
+}
+
+model AppUser {
+  id                 String           @id @default(cuid())
+  clerkUserId        String           @unique @map("clerk_user_id")
+  email              String
+  firstName          String?          @map("first_name")
+  lastName           String?          @map("last_name")
+  imageUrl           String?          @map("image_url")
+  role               ChurchRole       @default(MEMBER)
+  membershipStatus   MembershipStatus @default(PENDING) @map("membership_status")
+  onboardingComplete Boolean          @default(false) @map("onboarding_complete")
+  archivedAt         DateTime?        @map("archived_at")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+
+  profile                    MemberProfile?
+  privateDetails             MemberPrivateDetails?
+  notificationPreference     NotificationPreference?
+  pushSubscriptions          PushSubscription[]
+  approvedProfiles           MemberProfile[]          @relation("MemberApprover")
+  adminAuditLogs             AdminAuditLog[]          @relation("AuditActor")
+
+  @@index([email])
+  @@index([role])
+  @@index([membershipStatus])
+  @@map("app_users")
+}
+
+model MemberProfile {
+  id           String    @id @default(cuid())
+  userId       String    @unique @map("user_id")
+  memberNumber Int?      @unique @map("member_number")
+  memberId     String?   @unique @map("member_id")
+  displayName  String?   @map("display_name")
+  avatarUrl    String?   @map("avatar_url")
+  joinedAt     DateTime? @map("joined_at")
+  approvedAt   DateTime? @map("approved_at")
+  approvedById String?   @map("approved_by_id")
+  suspendedAt  DateTime? @map("suspended_at")
+  rejectedAt   DateTime? @map("rejected_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  user       AppUser  @relation(fields: [userId], references: [id], onDelete: Restrict)
+  approvedBy AppUser? @relation("MemberApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+
+  @@index([approvedById])
+  @@map("member_profiles")
+}
+
+model MemberPrivateDetails {
+  id           String    @id @default(cuid())
+  userId       String    @unique @map("user_id")
+  phone        String?
+  dateOfBirth  DateTime? @map("date_of_birth") @db.Date
+  addressLine1 String?   @map("address_line_1")
+  addressLine2 String?   @map("address_line_2")
+  postalCode   String?   @map("postal_code")
+  city         String?
+  countryCode  String    @default("FR") @map("country_code")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  user AppUser @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@map("member_private_details")
+}
+
+model NotificationPreference {
+  id                                    String   @id @default(cuid())
+  userId                                String   @unique @map("user_id")
+  dailyVerseEnabled                     Boolean  @default(true) @map("daily_verse_enabled")
+  privateBirthdayGreetingEnabled        Boolean  @default(true) @map("private_birthday_greeting_enabled")
+  communityBirthdayVisibilityEnabled    Boolean  @default(true) @map("community_birthday_visibility_enabled")
+  announcementsEnabled                  Boolean  @default(true) @map("announcements_enabled")
+  eventsEnabled                         Boolean  @default(true) @map("events_enabled")
+  donationNotificationsEnabled          Boolean  @default(true) @map("donation_notifications_enabled")
+  timezone                              String   @default("Europe/Paris")
+  createdAt                             DateTime @default(now()) @map("created_at")
+  updatedAt                             DateTime @updatedAt @map("updated_at")
+
+  user AppUser @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@map("notification_preferences")
+}
+
+model PushSubscription {
+  id          String    @id @default(cuid())
+  userId      String?   @map("user_id")
+  endpoint    String    @unique
+  p256dh      String
+  auth        String
+  userAgent   String?   @map("user_agent")
+  locale      String?
+  timezone    String    @default("Europe/Paris")
+  isActive    Boolean   @default(true) @map("is_active")
+  lastSentAt  DateTime? @map("last_sent_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  user AppUser? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  logs NotificationLog[]
+
+  @@index([userId])
+  @@index([isActive])
+  @@map("push_subscriptions")
+}
+
+model DailyBibleVerse {
+  id          String   @id @default(cuid())
+  dayOfYear   Int      @unique @map("day_of_year")
+  reference   String
+  text        String
+  translation String
+  theme       String?
+  source      String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("daily_bible_verses")
+}
+
+model NotificationLog {
+  id                 String                     @id @default(cuid())
+  userId             String?                    @map("user_id")
+  pushSubscriptionId String?                    @map("push_subscription_id")
+  notificationType   String                     @map("notification_type")
+  title              String?
+  deliveryStatus     NotificationDeliveryStatus @default(PENDING) @map("delivery_status")
+  errorMessage       String?                    @map("error_message")
+  deduplicationKey   String?                    @unique @map("deduplication_key")
+  sentAt             DateTime?                  @map("sent_at")
+  createdAt          DateTime                   @default(now()) @map("created_at")
+
+  pushSubscription PushSubscription? @relation(fields: [pushSubscriptionId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([notificationType])
+  @@map("notification_logs")
+}
+
+model AdminAuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?  @map("actor_user_id")
+  action      String
+  entityType  String   @map("entity_type")
+  entityId    String?  @map("entity_id")
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  actor AppUser? @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([actorUserId])
+  @@index([action])
+  @@map("admin_audit_logs")
+}
+
+model ChurchSetting {
+  id             String   @id @default("default")
+  churchName     String   @default("MegVie Paris") @map("church_name")
+  shortName      String   @default("MVP") @map("short_name")
+  memberIdPrefix String   @default("Mv") @map("member_id_prefix")
+  memberIdSuffix String   @default("P") @map("member_id_suffix")
+  timezone       String   @default("Europe/Paris")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("church_settings")
+}

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next"
+import { ClerkProvider } from "@clerk/nextjs"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -68,19 +69,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <PwaProvider />
-          <InstallAppDialog autoOpen />
-          <AppHeader />
-          {children}
-          <AppNavigation />
-          <FloatingInstallButton />
-          <Toaster position="top-center" expand richColors />
-        </ThemeProvider>
+        <ClerkProvider>
+          <ThemeProvider defaultTheme="system">
+            <PwaProvider />
+            <InstallAppDialog autoOpen />
+            <AppHeader />
+            {children}
+            <AppNavigation />
+            <FloatingInstallButton />
+            <Toaster position="top-center" expand richColors />
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   )

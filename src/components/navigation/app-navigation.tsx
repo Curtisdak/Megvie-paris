@@ -1,7 +1,7 @@
 "use client"
 
 import type { ComponentType } from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useSyncExternalStore } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
@@ -13,6 +13,7 @@ import {
   Mail,
   PanelLeftClose,
   Search,
+  UserRound,
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
@@ -54,11 +55,39 @@ const desktopNavItems = [
     icon: Mail,
     description: "Nous joindre",
   },
+  {
+    label: "Espace membre",
+    href: "/espace-membre",
+    icon: UserRound,
+    description: "Profil et carte",
+  },
 ]
 
 const mobileNavItems = desktopNavItems.filter(
-  (item) => item.href !== "/verset-du-jour" && item.href !== "/notifications",
+  (item) =>
+    item.href !== "/verset-du-jour" &&
+    item.href !== "/notifications" &&
+    item.href !== "/espace-membre",
 )
+
+const SIDEBAR_STORAGE_KEY = "megvie-sidebar-collapsed"
+const SIDEBAR_CHANGE_EVENT = "megvie-sidebar-collapsed-change"
+
+function getSidebarCollapsedSnapshot() {
+  if (typeof window === "undefined") return false
+
+  return window.localStorage.getItem(SIDEBAR_STORAGE_KEY) === "true"
+}
+
+function subscribeToSidebarCollapsed(callback: () => void) {
+  window.addEventListener("storage", callback)
+  window.addEventListener(SIDEBAR_CHANGE_EVENT, callback)
+
+  return () => {
+    window.removeEventListener("storage", callback)
+    window.removeEventListener(SIDEBAR_CHANGE_EVENT, callback)
+  }
+}
 
 function isNavItemActive(pathname: string, hash: string, href: string) {
   if (href === "/") {
@@ -71,13 +100,11 @@ function isNavItemActive(pathname: string, hash: string, href: string) {
 export function AppNavigation() {
   const pathname = usePathname()
   const [hash, setHash] = useState("")
-  const [isCollapsed, setIsCollapsed] = useState(() => {
-    if (typeof window === "undefined") {
-      return false
-    }
-
-    return window.localStorage.getItem("megvie-sidebar-collapsed") === "true"
-  })
+  const isCollapsed = useSyncExternalStore(
+    subscribeToSidebarCollapsed,
+    getSidebarCollapsedSnapshot,
+    () => false,
+  )
 
   useEffect(() => {
     const updateHash = () => setHash(window.location.hash)
@@ -104,11 +131,8 @@ export function AppNavigation() {
   }, [isCollapsed])
 
   const toggleSidebar = () => {
-    setIsCollapsed((current) => {
-      const next = !current
-      window.localStorage.setItem("megvie-sidebar-collapsed", String(next))
-      return next
-    })
+    window.localStorage.setItem(SIDEBAR_STORAGE_KEY, String(!isCollapsed))
+    window.dispatchEvent(new Event(SIDEBAR_CHANGE_EVENT))
   }
 
   return (

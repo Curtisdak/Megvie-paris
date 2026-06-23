@@ -555,7 +555,7 @@ export async function addGalleryItemAction(
   )
 
   if (!albumId || !imageUrl) {
-    return { ok: false, message: "Ajoutez une image ou une URL d'image valide." }
+    return { ok: false, message: "Ajoutez une image valide." }
   }
 
   const item = await prisma.galleryItem.create({

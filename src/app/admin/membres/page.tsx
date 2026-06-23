@@ -36,12 +36,17 @@ export default async function MembersPage({
               Creator.
             </p>
           </div>
-          <form className="grid gap-2 sm:grid-cols-[1fr,150px,130px,auto] lg:min-w-[680px]">
-            <Input name="q" placeholder="Nom, email, ID..." defaultValue={params?.q ?? ""} />
+          <form className="grid gap-2 md:grid-cols-[1fr,150px,130px,auto] lg:min-w-[680px]">
+            <Input
+              name="q"
+              placeholder="Nom, email, ID..."
+              defaultValue={params?.q ?? ""}
+              className="h-10 rounded-xl"
+            />
             <select
               name="status"
               defaultValue={params?.status ?? ""}
-              className="h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
             >
               <option value="">Tous statuts</option>
               <option value="ACTIVE">Actifs</option>
@@ -53,7 +58,7 @@ export default async function MembersPage({
             <select
               name="role"
               defaultValue={params?.role ?? ""}
-              className="h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
             >
               <option value="">Tous roles</option>
               <option value="MEMBER">Member</option>
@@ -62,7 +67,7 @@ export default async function MembersPage({
               <option value="MASTER">Master</option>
               <option value="CREATOR">Creator</option>
             </select>
-            <Button type="submit" variant="outline">
+            <Button type="submit" variant="outline" className="h-10 rounded-full">
               <Search className="h-4 w-4" aria-hidden />
               Filtrer
             </Button>
@@ -157,7 +162,7 @@ export default async function MembersPage({
                     <select
                       name="status"
                       defaultValue={member.membershipStatus}
-                      className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+                      className="h-10 w-full rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
                     >
                       <option value="ACTIVE">Activer</option>
                       <option value="SUSPENDED">Suspendre</option>

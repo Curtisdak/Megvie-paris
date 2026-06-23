@@ -29,14 +29,20 @@ export default async function AuditPage({
               complets ne doivent jamais etre stockes ici.
             </p>
           </div>
-          <form className="grid gap-2 sm:grid-cols-[1fr,1fr,auto] lg:min-w-[560px]">
-            <Input name="action" placeholder="Action" defaultValue={params?.action ?? ""} />
+          <form className="grid gap-2 md:grid-cols-[1fr,1fr,auto] lg:min-w-[560px]">
+            <Input
+              name="action"
+              placeholder="Action"
+              defaultValue={params?.action ?? ""}
+              className="h-10 rounded-xl"
+            />
             <Input
               name="entityType"
               placeholder="Type entite"
               defaultValue={params?.entityType ?? ""}
+              className="h-10 rounded-xl"
             />
-            <Button variant="outline">
+            <Button variant="outline" className="h-10 rounded-full">
               <Search className="h-4 w-4" aria-hidden />
               Filtrer
             </Button>
@@ -53,7 +59,7 @@ export default async function AuditPage({
         <AdminCard>
           <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
             {logs.map((log) => (
-              <div key={log.id} className="grid gap-2 py-4 lg:grid-cols-[220px,1fr,180px]">
+              <div key={log.id} className="grid gap-2 py-4 xl:grid-cols-[220px,1fr,180px]">
                 <div>
                   <p className="font-semibold">{log.action}</p>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400">

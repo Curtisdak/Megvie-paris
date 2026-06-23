@@ -35,9 +35,14 @@ export default async function MembershipRequestsPage({
               transaction existante.
             </p>
           </div>
-          <form className="flex w-full gap-2 md:max-w-sm">
-            <Input name="q" placeholder="Nom, email, ID..." defaultValue={params?.q ?? ""} />
-            <Button type="submit" variant="outline" aria-label="Rechercher">
+          <form className="grid w-full grid-cols-[minmax(0,1fr)_auto] gap-2 md:max-w-sm">
+            <Input
+              name="q"
+              placeholder="Nom, email, ID..."
+              defaultValue={params?.q ?? ""}
+              className="h-10 rounded-xl"
+            />
+            <Button type="submit" variant="outline" aria-label="Rechercher" className="h-10 rounded-full">
               <Search className="h-4 w-4" aria-hidden />
             </Button>
           </form>
@@ -53,7 +58,7 @@ export default async function MembershipRequestsPage({
         <div className="grid gap-4">
           {applications.map((member) => (
             <AdminCard key={member.id}>
-              <div className="grid gap-4 lg:grid-cols-[1fr,360px]">
+              <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr),340px]">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-lg font-semibold">

@@ -1,5 +1,6 @@
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { ImageDropzone } from "@/components/admin/image-dropzone"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,7 +18,7 @@ export default async function GalleryPage() {
   return (
     <div className="space-y-5">
       <AdminCard>
-        <div className="grid gap-6 lg:grid-cols-[0.9fr,1.1fr]">
+        <div className="grid gap-5 xl:grid-cols-[0.9fr,1.1fr]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
               Galerie
@@ -29,24 +30,24 @@ export default async function GalleryPage() {
             </p>
           </div>
           <AdminActionForm action={saveGalleryAlbumAction} className="grid gap-3">
-            <Input name="title" placeholder="Titre de l&apos;album" required />
-            <Textarea name="description" placeholder="Description" />
             <Input
+              name="title"
+              placeholder="Titre de l&apos;album"
+              className="h-10 rounded-xl"
+              required
+            />
+            <Textarea name="description" placeholder="Description" className="rounded-xl" />
+            <ImageDropzone
               name="coverImageFile"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
+              label="Couverture"
+              description="Deposez la couverture de l'album ici"
             />
-            <Input
-              name="coverImageUrl"
-              type="url"
-              placeholder="URL ImageKit existante optionnelle"
-            />
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Input name="eventDate" type="date" />
+            <div className="grid gap-3 md:grid-cols-2">
+              <Input name="eventDate" type="date" className="h-10 rounded-xl" />
               <select
                 name="status"
                 defaultValue="DRAFT"
-                className="h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+                className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
               >
                 <option value="DRAFT">Brouillon</option>
                 <option value="PUBLISHED">Publie</option>
@@ -67,7 +68,7 @@ export default async function GalleryPage() {
         <div className="grid gap-4 xl:grid-cols-2">
           {albums.map((album) => (
             <AdminCard key={album.id}>
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-lg font-semibold">{album.title}</h3>
@@ -80,22 +81,22 @@ export default async function GalleryPage() {
                       : ""}
                   </p>
                 </div>
-                <AdminActionForm action={updateGalleryAlbumStatusAction} className="flex gap-2">
+                <AdminActionForm action={updateGalleryAlbumStatusAction} className="grid gap-2 sm:grid-cols-[1fr_auto]">
                   <input type="hidden" name="albumId" value={album.id} />
                   <select
                     name="status"
                     defaultValue={album.status}
-                    className="h-9 rounded-md border border-zinc-200 bg-white px-2 text-xs dark:border-zinc-800 dark:bg-zinc-950"
+                    className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
                   >
                     <option value="DRAFT">Brouillon</option>
                     <option value="PUBLISHED">Publie</option>
                     <option value="ARCHIVED">Archive</option>
                   </select>
-                  <Button size="sm" variant="outline">OK</Button>
+                  <Button size="sm" variant="outline" className="h-10 rounded-full">OK</Button>
                 </AdminActionForm>
               </div>
 
-              <div className="mt-4 grid grid-cols-4 gap-2">
+              <div className="mt-4 grid grid-cols-4 gap-2 sm:grid-cols-5">
                 {album.items.map((item) => (
                   <div
                     key={item.id}
@@ -113,21 +114,15 @@ export default async function GalleryPage() {
 
               <AdminActionForm action={addGalleryItemAction} className="mt-4 grid gap-2">
                 <input type="hidden" name="albumId" value={album.id} />
-                <Input
+                <ImageDropzone
                   name="imageFile"
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
+                  label="Nouvelle photo"
+                  description="Deposez une photo ici"
                 />
-                <Input
-                  name="imageUrl"
-                  type="url"
-                  placeholder="URL ImageKit existante optionnelle"
-                />
-                <div className="grid gap-2 sm:grid-cols-2">
-                  <Input name="caption" placeholder="Legende" />
-                  <Input name="altText" placeholder="Texte alternatif" />
+                <div className="grid gap-2 md:grid-cols-2">
+                  <Input name="caption" placeholder="Legende" className="h-10 rounded-xl" />
+                  <Input name="altText" placeholder="Texte alternatif" className="h-10 rounded-xl" />
                 </div>
-                <Input name="storageKey" placeholder="Cle ImageKit existante optionnelle" />
                 <Button variant="outline" className="rounded-full">Ajouter la photo</Button>
               </AdminActionForm>
             </AdminCard>

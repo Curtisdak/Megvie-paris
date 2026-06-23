@@ -70,9 +70,14 @@ export default async function RolesPage({
               Seuls les membres actifs peuvent recevoir un role admin.
             </p>
           </div>
-          <form className="flex gap-2 lg:w-96">
-            <Input name="q" placeholder="Chercher un membre actif" defaultValue={params?.q ?? ""} />
-            <Button variant="outline">
+          <form className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 lg:w-96">
+            <Input
+              name="q"
+              placeholder="Chercher un membre actif"
+              defaultValue={params?.q ?? ""}
+              className="h-10 rounded-xl"
+            />
+            <Button variant="outline" className="h-10 rounded-full" aria-label="Rechercher">
               <Search className="h-4 w-4" aria-hidden />
             </Button>
           </form>
@@ -90,7 +95,7 @@ export default async function RolesPage({
             {candidates.map((member) => (
               <div
                 key={member.id}
-                className="grid gap-4 rounded-2xl border border-zinc-100 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950/40 lg:grid-cols-[1fr,420px]"
+                className="grid gap-4 rounded-2xl border border-zinc-100 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950/40 xl:grid-cols-[minmax(0,1fr),380px]"
               >
                 <div>
                   <p className="font-medium">
@@ -110,7 +115,7 @@ export default async function RolesPage({
                   <select
                     name="role"
                     defaultValue={member.role}
-                    className="h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+                    className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
                   >
                     <option value="MEMBER">Member</option>
                     <option value="RESPO">Respo</option>

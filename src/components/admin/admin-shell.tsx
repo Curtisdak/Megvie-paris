@@ -108,7 +108,7 @@ export function AdminShell({
       </aside>
 
       <div className="lg:pl-64">
-        <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 px-3 py-2.5 shadow-[0_10px_30px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/90 sm:px-5">
+        <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 px-2.5 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/95 sm:px-5 sm:py-2.5">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
               <Button
@@ -123,7 +123,7 @@ export function AdminShell({
                 </Link>
               </Button>
               <div className="min-w-0">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-amber-700 dark:text-amber-200">
+                <p className="hidden text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-amber-700 dark:text-amber-200 sm:block">
                   Administration
                 </p>
                 <h1 className="truncate text-base font-semibold sm:text-lg">
@@ -132,7 +132,7 @@ export function AdminShell({
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
               <div className="rounded-full border border-zinc-200 bg-white/80 p-1 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                 <ThemeToggle />
               </div>
@@ -181,39 +181,42 @@ export function AdminShell({
               </DropdownMenu>
             </div>
           </div>
-
-          <nav
-            className="mt-3 flex gap-2 overflow-x-auto pb-1 lg:hidden"
-            aria-label="Navigation administration mobile"
-          >
-            {navItems.map((item) => {
-              const Icon = item.icon
-              const active =
-                pathname === item.href || pathname.startsWith(`${item.href}/`)
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold",
-                    active
-                      ? "border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-zinc-950"
-                      : "border-zinc-200 bg-white text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300",
-                  )}
-                >
-                  <Icon className="h-4 w-4" aria-hidden />
-                  {item.label}
-                </Link>
-              )
-            })}
-          </nav>
         </header>
 
-        <main className="mx-auto w-full max-w-[1180px] px-3 py-5 sm:px-5 sm:py-6 xl:px-6">
+        <main className="mx-auto w-full max-w-[1180px] px-2.5 py-4 pb-[calc(6.75rem+env(safe-area-inset-bottom))] sm:px-5 sm:py-6 sm:pb-[calc(7rem+env(safe-area-inset-bottom))] lg:pb-8 xl:px-6">
           {children}
         </main>
       </div>
+
+      <nav
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200 bg-white/95 px-2 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-18px_44px_rgba(15,23,42,0.12)] backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/95 lg:hidden"
+        aria-label="Navigation administration mobile"
+      >
+        <div className="mx-auto flex max-w-3xl gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const active =
+              pathname === item.href || pathname.startsWith(`${item.href}/`)
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "inline-flex min-w-[4.75rem] shrink-0 flex-col items-center justify-center gap-1 rounded-2xl px-2.5 py-2 text-[0.68rem] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+                  active
+                    ? "bg-zinc-950 text-white shadow-lg shadow-zinc-950/15 dark:bg-white dark:text-zinc-950"
+                    : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white",
+                )}
+              >
+                <Icon className="h-4 w-4" aria-hidden />
+                <span className="max-w-[4.25rem] truncate">{item.label}</span>
+              </Link>
+            )
+          })}
+        </div>
+      </nav>
     </div>
   )
 }

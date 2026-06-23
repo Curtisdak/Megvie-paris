@@ -186,6 +186,7 @@ test("ImageKit upload provider is server-only and wired to admin image forms", (
   assert.match(readFileSync("src/components/admin/event-form-dialog.tsx", "utf8"), /coverImageFile/)
   assert.match(readFileSync("src/components/admin/event-form-dialog.tsx", "utf8"), /stayOnPage/)
   assert.match(readFileSync("src/app/admin/galerie/page.tsx", "utf8"), /imageFile/)
+  assert.match(readFileSync("src/app/admin/galerie/page.tsx", "utf8"), /ImageDropzone/)
   assert.match(readFileSync("src/app/admin/annonces/page.tsx", "utf8"), /AnnouncementFormDialog/)
   assert.match(readFileSync("src/components/admin/announcement-form-dialog.tsx", "utf8"), /coverImageFile/)
   assert.match(readFileSync("src/components/admin/announcement-form-dialog.tsx", "utf8"), /ImageDropzone/)
@@ -237,11 +238,15 @@ test("admin users have a post-login and dashboard path to admin", () => {
 test("admin routes do not render public app chrome", () => {
   const rootLayout = readFileSync("src/app/layout.tsx", "utf8")
   const globals = readFileSync("src/app/globals.css", "utf8")
+  const adminShell = readFileSync("src/components/admin/admin-shell.tsx", "utf8")
 
   assert.match(rootLayout, /<AppChrome \/>/)
   assert.match(appChrome, /pathname\.startsWith\(\"\/admin\"\)/)
   assert.match(appChrome, /if \(isAdminRoute\) return null/)
   assert.match(globals, /\.admin-route body/)
+  assert.match(adminShell, /env\(safe-area-inset-bottom\)/)
+  assert.match(adminShell, /aria-label="Navigation administration mobile"/)
+  assert.match(adminShell, /fixed inset-x-0 bottom-0/)
   assert.doesNotMatch(rootLayout, /<AppNavigation \/>/)
   assert.doesNotMatch(rootLayout, /<FloatingInstallButton \/>/)
 })

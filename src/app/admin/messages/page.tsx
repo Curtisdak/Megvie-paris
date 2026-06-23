@@ -32,12 +32,17 @@ export default async function MessagesPage({
               email n&apos;est configure.
             </p>
           </div>
-          <form className="grid gap-2 sm:grid-cols-[1fr,150px,180px,auto] lg:min-w-[720px]">
-            <Input name="q" placeholder="Nom, email, sujet..." defaultValue={params?.q ?? ""} />
+          <form className="grid gap-2 md:grid-cols-[1fr,150px,180px,auto] lg:min-w-[720px]">
+            <Input
+              name="q"
+              placeholder="Nom, email, sujet..."
+              defaultValue={params?.q ?? ""}
+              className="h-10 rounded-xl"
+            />
             <select
               name="status"
               defaultValue={params?.status ?? ""}
-              className="h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
             >
               <option value="">Tous statuts</option>
               <option value="NEW">Nouveaux</option>
@@ -48,13 +53,13 @@ export default async function MessagesPage({
             <select
               name="confidentiality"
               defaultValue={params?.confidentiality ?? ""}
-              className="h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+              className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
             >
               <option value="">Toutes confidentialites</option>
               <option value="GENERAL">General</option>
               <option value="PASTORAL_CONFIDENTIAL">Pastoral confidentiel</option>
             </select>
-            <Button variant="outline">
+            <Button variant="outline" className="h-10 rounded-full">
               <Search className="h-4 w-4" aria-hidden />
               Filtrer
             </Button>
@@ -83,7 +88,7 @@ export default async function MessagesPage({
                     {message.createdAt.toLocaleString("fr-FR")}
                   </p>
                 </div>
-                <Button asChild variant="outline" className="rounded-full">
+                <Button asChild variant="outline" className="w-full rounded-full lg:w-auto">
                   <Link href={`/admin/messages/${message.id}`}>Ouvrir</Link>
                 </Button>
               </div>

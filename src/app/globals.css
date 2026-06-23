@@ -125,6 +125,11 @@
   }
 }
 
+.admin-route body {
+  padding-left: 0 !important;
+  padding-bottom: 0;
+}
+
 .app-sidebar-nav,
 .app-bottom-nav {
   display: none;

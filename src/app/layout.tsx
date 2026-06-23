@@ -5,10 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { PwaProvider } from "@/components/pwa/pwa-provider"
-import { InstallAppDialog } from "@/components/pwa/install-app-dialog"
-import { FloatingInstallButton } from "@/components/pwa/floating-install-button"
-import { AppNavigation } from "@/components/navigation/app-navigation"
-import { AppHeader } from "@/components/navigation/app-header"
+import { AppChrome } from "@/components/navigation/app-chrome"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,11 +73,8 @@ export default function RootLayout({
         <ClerkProvider>
           <ThemeProvider defaultTheme="system">
             <PwaProvider />
-            <InstallAppDialog autoOpen />
-            <AppHeader />
+            <AppChrome />
             {children}
-            <AppNavigation />
-            <FloatingInstallButton />
             <Toaster position="top-center" expand richColors />
           </ThemeProvider>
         </ClerkProvider>

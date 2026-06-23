@@ -49,7 +49,7 @@ Do not apply migrations automatically during build.
 - `/connexion` uses Clerk SignIn.
 - `/bienvenue` collects MegVie-specific membership fields after Clerk signup.
 - `/espace-membre` is protected by Clerk middleware.
-- `/admin` is protected by role checks and Clerk AAL2/MFA checks.
+- `/admin` is protected by Clerk login plus trusted database role checks.
 
 ## Webhook
 
@@ -106,10 +106,11 @@ optional/disabled in Clerk Dashboard or use a supported country number. The
 script then sets the local membership active, assigns `CREATOR`, generates the
 first member ID if absent, and writes an audit log.
 
-## MFA
+## Account Security
 
-Clerk manages MFA under `/espace-membre/securite`. Admin routes call server-side
-guards that require role permission and `aal2`.
+Clerk manages password, sessions and optional account security settings under
+`/espace-membre/securite`. Admin routes require an authenticated Clerk session
+and an administrative role in Neon.
 
 ## Push Notifications
 

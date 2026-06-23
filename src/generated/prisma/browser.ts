@@ -62,3 +62,43 @@ export type AdminAuditLog = Prisma.AdminAuditLogModel
  * 
  */
 export type ChurchSetting = Prisma.ChurchSettingModel
+/**
+ * Model ChurchEvent
+ * 
+ */
+export type ChurchEvent = Prisma.ChurchEventModel
+/**
+ * Model GalleryAlbum
+ * 
+ */
+export type GalleryAlbum = Prisma.GalleryAlbumModel
+/**
+ * Model GalleryItem
+ * 
+ */
+export type GalleryItem = Prisma.GalleryItemModel
+/**
+ * Model ContactMessage
+ * 
+ */
+export type ContactMessage = Prisma.ContactMessageModel
+/**
+ * Model MessageReply
+ * 
+ */
+export type MessageReply = Prisma.MessageReplyModel
+/**
+ * Model MessageInternalNote
+ * 
+ */
+export type MessageInternalNote = Prisma.MessageInternalNoteModel
+/**
+ * Model Announcement
+ * 
+ */
+export type Announcement = Prisma.AnnouncementModel
+/**
+ * Model AnnouncementRead
+ * 
+ */
+export type AnnouncementRead = Prisma.AnnouncementReadModel

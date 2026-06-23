@@ -4,7 +4,11 @@ import { auth, currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { ChurchRole, MembershipStatus } from "@/generated/prisma/enums"
 import { prisma } from "@/lib/prisma"
-import { hasPermission, type AppPermission } from "@/lib/auth/permissions"
+import {
+  hasPermission,
+  isAdminRole,
+  type AppPermission,
+} from "@/lib/auth/permissions"
 
 type ClerkUserSnapshot = {
   id: string
@@ -107,17 +111,11 @@ export async function requirePermission(
   return user
 }
 
-export async function requireAdminAal2(nextPath = "/admin") {
+export async function requireAdminRole(nextPath = "/admin") {
   const user = await requireCurrentAppUser(nextPath)
-  const authState = await auth()
-  const aal = authState.sessionClaims?.aal
 
-  if (!hasPermission(user.role, "members.approve") && !hasPermission(user.role, "roles.manage")) {
+  if (!isAdminRole(user.role)) {
     redirect("/espace-membre")
-  }
-
-  if (aal !== "aal2") {
-    redirect(`/espace-membre/securite?admin=aal2&next=${encodeURIComponent(nextPath)}`)
   }
 
   return user

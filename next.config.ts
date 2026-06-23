@@ -1,6 +1,11 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "8mb",
+    },
+  },
   serverExternalPackages: [
     "@neondatabase/serverless",
     "@prisma/adapter-neon",
@@ -13,6 +18,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.imagekit.io",
       },
     ],
   },

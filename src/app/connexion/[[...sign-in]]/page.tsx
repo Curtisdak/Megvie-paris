@@ -13,7 +13,7 @@ export default async function LoginPage({
   searchParams?: Promise<{ next?: string }>
 }) {
   const params = await searchParams
-  const redirectPath = getSafeRedirectPath(params?.next ?? "/espace-membre")
+  const redirectPath = getSafeRedirectPath(params?.next ?? "/apres-connexion")
 
   return (
     <AuthPageShell

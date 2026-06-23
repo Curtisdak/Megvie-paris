@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useActionState, useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { toast } from "sonner"
 import {
@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { createContactMessageAction } from "@/lib/admin/actions"
 
 const contactChannels = [
   {
@@ -71,7 +72,24 @@ const initialFormState = {
 
 export default function ContactPage() {
   const [formData, setFormData] = useState(initialFormState)
-  const [isSending, setIsSending] = useState(false)
+  const [state, formAction, isSending] = useActionState(
+    createContactMessageAction,
+    { ok: false, message: "" },
+  )
+
+  useEffect(() => {
+    if (!state.message) return
+
+    if (state.ok) {
+      toast.success("Message enregistre", {
+        description: state.message,
+      })
+    } else {
+      toast.error("Message non envoye", {
+        description: state.message,
+      })
+    }
+  }, [state])
 
   const handleChannelClick = (url: string) => {
     if (typeof window === "undefined") return
@@ -83,20 +101,6 @@ export default function ContactPage() {
     value: string,
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setIsSending(true)
-
-    setTimeout(() => {
-      toast.success("Message envoye !", {
-        description:
-          "Merci de nous avoir contacte. Nous revenons vers vous tres vite.",
-      })
-      setIsSending(false)
-      setFormData(initialFormState)
-    }, 900)
   }
 
   return (
@@ -239,12 +243,15 @@ export default function ContactPage() {
                 tres prochainement.
               </span>
             </div>
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            <form className="space-y-4" action={formAction}>
+              <input type="hidden" name="subject" value="Message depuis la page contact" />
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" />
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="contact-name">Nom complet</Label>
                   <Input
                     id="contact-name"
+                    name="name"
                     value={formData.name}
                     onChange={(event) =>
                       handleChange("name", event.target.value)
@@ -257,6 +264,7 @@ export default function ContactPage() {
                   <Label htmlFor="contact-email">Email</Label>
                   <Input
                     id="contact-email"
+                    name="email"
                     type="email"
                     value={formData.email}
                     onChange={(event) =>
@@ -271,6 +279,7 @@ export default function ContactPage() {
                 <Label htmlFor="contact-phone">Numero</Label>
                 <Input
                   id="contact-phone"
+                  name="phone"
                   type="tel"
                   value={formData.phone}
                   onChange={(event) =>
@@ -281,9 +290,24 @@ export default function ContactPage() {
                 />
               </div>
               <div className="space-y-2">
+                <Label htmlFor="contact-confidentiality">Type de message</Label>
+                <select
+                  id="contact-confidentiality"
+                  name="confidentiality"
+                  className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+                  defaultValue="GENERAL"
+                >
+                  <option value="GENERAL">Question generale</option>
+                  <option value="PASTORAL_CONFIDENTIAL">
+                    Message pastoral confidentiel
+                  </option>
+                </select>
+              </div>
+              <div className="space-y-2">
                 <Label htmlFor="contact-message">Message</Label>
                 <Textarea
                   id="contact-message"
+                  name="message"
                   value={formData.message}
                   onChange={(event) =>
                     handleChange("message", event.target.value)

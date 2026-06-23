@@ -20,8 +20,8 @@ export default async function MemberSecurityPage() {
         </Link>
         <h1 className="mt-4 text-3xl font-semibold">Securite</h1>
         <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-          Activez MFA pour proteger votre compte. Les roles administratifs
-          doivent atteindre AAL2 avant les pages et mutations sensibles.
+          Gerez votre mot de passe, vos sessions et les reglages de securite
+          proposes par Clerk.
         </p>
         <div className="mt-6">
           <ClerkSecurityPanel />

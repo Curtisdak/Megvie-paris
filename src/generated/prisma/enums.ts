@@ -39,3 +39,90 @@ export const NotificationDeliveryStatus = {
 } as const
 
 export type NotificationDeliveryStatus = (typeof NotificationDeliveryStatus)[keyof typeof NotificationDeliveryStatus]
+
+
+export const ContentVisibility = {
+  PUBLIC: 'PUBLIC',
+  MEMBERS_ONLY: 'MEMBERS_ONLY'
+} as const
+
+export type ContentVisibility = (typeof ContentVisibility)[keyof typeof ContentVisibility]
+
+
+export const EventStatus = {
+  DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
+  PUBLISHED: 'PUBLISHED',
+  CANCELLED: 'CANCELLED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+
+export const GalleryAlbumStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type GalleryAlbumStatus = (typeof GalleryAlbumStatus)[keyof typeof GalleryAlbumStatus]
+
+
+export const ContactMessageSource = {
+  PUBLIC_CONTACT: 'PUBLIC_CONTACT',
+  MEMBER_PORTAL: 'MEMBER_PORTAL'
+} as const
+
+export type ContactMessageSource = (typeof ContactMessageSource)[keyof typeof ContactMessageSource]
+
+
+export const MessageConfidentiality = {
+  GENERAL: 'GENERAL',
+  PASTORAL_CONFIDENTIAL: 'PASTORAL_CONFIDENTIAL'
+} as const
+
+export type MessageConfidentiality = (typeof MessageConfidentiality)[keyof typeof MessageConfidentiality]
+
+
+export const ContactMessageStatus = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  ANSWERED: 'ANSWERED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type ContactMessageStatus = (typeof ContactMessageStatus)[keyof typeof ContactMessageStatus]
+
+
+export const MessageDeliveryStatus = {
+  INTERNAL_NOTE: 'INTERNAL_NOTE',
+  DRAFT: 'DRAFT',
+  SENT: 'SENT',
+  FAILED: 'FAILED'
+} as const
+
+export type MessageDeliveryStatus = (typeof MessageDeliveryStatus)[keyof typeof MessageDeliveryStatus]
+
+
+export const AnnouncementCategory = {
+  GENERAL: 'GENERAL',
+  EMPLOI: 'EMPLOI',
+  MARIAGE: 'MARIAGE',
+  BAPTEME: 'BAPTEME',
+  EVENEMENT: 'EVENEMENT',
+  BON_PLAN: 'BON_PLAN',
+  URGENT: 'URGENT'
+} as const
+
+export type AnnouncementCategory = (typeof AnnouncementCategory)[keyof typeof AnnouncementCategory]
+
+
+export const AnnouncementStatus = {
+  DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type AnnouncementStatus = (typeof AnnouncementStatus)[keyof typeof AnnouncementStatus]

@@ -489,8 +489,8 @@ export function ClerkSecurityPanel() {
               Securite du compte
             </p>
             <p className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-              Clerk gere le mot de passe, les sessions et l&apos;authentification
-              multi-facteur. Les comptes administratifs doivent activer MFA.
+              Clerk gere le mot de passe, les sessions et les reglages de
+              securite du compte.
             </p>
           </div>
         </div>

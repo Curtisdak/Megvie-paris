@@ -244,6 +244,17 @@ export type AppUserWhereInput = {
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
   approvedProfiles?: Prisma.MemberProfileListRelationFilter
   adminAuditLogs?: Prisma.AdminAuditLogListRelationFilter
+  createdEvents?: Prisma.ChurchEventListRelationFilter
+  updatedEvents?: Prisma.ChurchEventListRelationFilter
+  createdGalleryAlbums?: Prisma.GalleryAlbumListRelationFilter
+  uploadedGalleryItems?: Prisma.GalleryItemListRelationFilter
+  sentContactMessages?: Prisma.ContactMessageListRelationFilter
+  assignedContactMessages?: Prisma.ContactMessageListRelationFilter
+  messageReplies?: Prisma.MessageReplyListRelationFilter
+  messageInternalNotes?: Prisma.MessageInternalNoteListRelationFilter
+  authoredAnnouncements?: Prisma.AnnouncementListRelationFilter
+  updatedAnnouncements?: Prisma.AnnouncementListRelationFilter
+  announcementReads?: Prisma.AnnouncementReadListRelationFilter
 }
 
 export type AppUserOrderByWithRelationInput = {
@@ -265,6 +276,17 @@ export type AppUserOrderByWithRelationInput = {
   pushSubscriptions?: Prisma.PushSubscriptionOrderByRelationAggregateInput
   approvedProfiles?: Prisma.MemberProfileOrderByRelationAggregateInput
   adminAuditLogs?: Prisma.AdminAuditLogOrderByRelationAggregateInput
+  createdEvents?: Prisma.ChurchEventOrderByRelationAggregateInput
+  updatedEvents?: Prisma.ChurchEventOrderByRelationAggregateInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumOrderByRelationAggregateInput
+  uploadedGalleryItems?: Prisma.GalleryItemOrderByRelationAggregateInput
+  sentContactMessages?: Prisma.ContactMessageOrderByRelationAggregateInput
+  assignedContactMessages?: Prisma.ContactMessageOrderByRelationAggregateInput
+  messageReplies?: Prisma.MessageReplyOrderByRelationAggregateInput
+  messageInternalNotes?: Prisma.MessageInternalNoteOrderByRelationAggregateInput
+  authoredAnnouncements?: Prisma.AnnouncementOrderByRelationAggregateInput
+  updatedAnnouncements?: Prisma.AnnouncementOrderByRelationAggregateInput
+  announcementReads?: Prisma.AnnouncementReadOrderByRelationAggregateInput
 }
 
 export type AppUserWhereUniqueInput = Prisma.AtLeast<{
@@ -289,6 +311,17 @@ export type AppUserWhereUniqueInput = Prisma.AtLeast<{
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
   approvedProfiles?: Prisma.MemberProfileListRelationFilter
   adminAuditLogs?: Prisma.AdminAuditLogListRelationFilter
+  createdEvents?: Prisma.ChurchEventListRelationFilter
+  updatedEvents?: Prisma.ChurchEventListRelationFilter
+  createdGalleryAlbums?: Prisma.GalleryAlbumListRelationFilter
+  uploadedGalleryItems?: Prisma.GalleryItemListRelationFilter
+  sentContactMessages?: Prisma.ContactMessageListRelationFilter
+  assignedContactMessages?: Prisma.ContactMessageListRelationFilter
+  messageReplies?: Prisma.MessageReplyListRelationFilter
+  messageInternalNotes?: Prisma.MessageInternalNoteListRelationFilter
+  authoredAnnouncements?: Prisma.AnnouncementListRelationFilter
+  updatedAnnouncements?: Prisma.AnnouncementListRelationFilter
+  announcementReads?: Prisma.AnnouncementReadListRelationFilter
 }, "id" | "clerkUserId">
 
 export type AppUserOrderByWithAggregationInput = {
@@ -346,6 +379,17 @@ export type AppUserCreateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUncheckedCreateInput = {
@@ -367,6 +411,17 @@ export type AppUserUncheckedCreateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUpdateInput = {
@@ -388,6 +443,17 @@ export type AppUserUpdateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUncheckedUpdateInput = {
@@ -409,6 +475,17 @@ export type AppUserUncheckedUpdateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserCreateManyInput = {
@@ -629,6 +706,168 @@ export type AppUserUpdateOneWithoutAdminAuditLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutAdminAuditLogsInput, Prisma.AppUserUpdateWithoutAdminAuditLogsInput>, Prisma.AppUserUncheckedUpdateWithoutAdminAuditLogsInput>
 }
 
+export type AppUserCreateNestedOneWithoutCreatedEventsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedEventsInput, Prisma.AppUserUncheckedCreateWithoutCreatedEventsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedEventsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutUpdatedEventsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedEventsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedEventsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUpdatedEventsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutCreatedEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedEventsInput, Prisma.AppUserUncheckedCreateWithoutCreatedEventsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedEventsInput
+  upsert?: Prisma.AppUserUpsertWithoutCreatedEventsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutCreatedEventsInput, Prisma.AppUserUpdateWithoutCreatedEventsInput>, Prisma.AppUserUncheckedUpdateWithoutCreatedEventsInput>
+}
+
+export type AppUserUpdateOneWithoutUpdatedEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedEventsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedEventsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUpdatedEventsInput
+  upsert?: Prisma.AppUserUpsertWithoutUpdatedEventsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutUpdatedEventsInput, Prisma.AppUserUpdateWithoutUpdatedEventsInput>, Prisma.AppUserUncheckedUpdateWithoutUpdatedEventsInput>
+}
+
+export type AppUserCreateNestedOneWithoutCreatedGalleryAlbumsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedGalleryAlbumsInput, Prisma.AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedGalleryAlbumsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutCreatedGalleryAlbumsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedGalleryAlbumsInput, Prisma.AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedGalleryAlbumsInput
+  upsert?: Prisma.AppUserUpsertWithoutCreatedGalleryAlbumsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutCreatedGalleryAlbumsInput, Prisma.AppUserUpdateWithoutCreatedGalleryAlbumsInput>, Prisma.AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput>
+}
+
+export type AppUserCreateNestedOneWithoutUploadedGalleryItemsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUploadedGalleryItemsInput, Prisma.AppUserUncheckedCreateWithoutUploadedGalleryItemsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUploadedGalleryItemsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutUploadedGalleryItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUploadedGalleryItemsInput, Prisma.AppUserUncheckedCreateWithoutUploadedGalleryItemsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUploadedGalleryItemsInput
+  upsert?: Prisma.AppUserUpsertWithoutUploadedGalleryItemsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutUploadedGalleryItemsInput, Prisma.AppUserUpdateWithoutUploadedGalleryItemsInput>, Prisma.AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput>
+}
+
+export type AppUserCreateNestedOneWithoutSentContactMessagesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutSentContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutSentContactMessagesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutSentContactMessagesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutAssignedContactMessagesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutAssignedContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutAssignedContactMessagesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutAssignedContactMessagesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneWithoutSentContactMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutSentContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutSentContactMessagesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutSentContactMessagesInput
+  upsert?: Prisma.AppUserUpsertWithoutSentContactMessagesInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutSentContactMessagesInput, Prisma.AppUserUpdateWithoutSentContactMessagesInput>, Prisma.AppUserUncheckedUpdateWithoutSentContactMessagesInput>
+}
+
+export type AppUserUpdateOneWithoutAssignedContactMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutAssignedContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutAssignedContactMessagesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutAssignedContactMessagesInput
+  upsert?: Prisma.AppUserUpsertWithoutAssignedContactMessagesInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutAssignedContactMessagesInput, Prisma.AppUserUpdateWithoutAssignedContactMessagesInput>, Prisma.AppUserUncheckedUpdateWithoutAssignedContactMessagesInput>
+}
+
+export type AppUserCreateNestedOneWithoutMessageRepliesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutMessageRepliesInput, Prisma.AppUserUncheckedCreateWithoutMessageRepliesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutMessageRepliesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutMessageRepliesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutMessageRepliesInput, Prisma.AppUserUncheckedCreateWithoutMessageRepliesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutMessageRepliesInput
+  upsert?: Prisma.AppUserUpsertWithoutMessageRepliesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutMessageRepliesInput, Prisma.AppUserUpdateWithoutMessageRepliesInput>, Prisma.AppUserUncheckedUpdateWithoutMessageRepliesInput>
+}
+
+export type AppUserCreateNestedOneWithoutMessageInternalNotesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutMessageInternalNotesInput, Prisma.AppUserUncheckedCreateWithoutMessageInternalNotesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutMessageInternalNotesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutMessageInternalNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutMessageInternalNotesInput, Prisma.AppUserUncheckedCreateWithoutMessageInternalNotesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutMessageInternalNotesInput
+  upsert?: Prisma.AppUserUpsertWithoutMessageInternalNotesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutMessageInternalNotesInput, Prisma.AppUserUpdateWithoutMessageInternalNotesInput>, Prisma.AppUserUncheckedUpdateWithoutMessageInternalNotesInput>
+}
+
+export type AppUserCreateNestedOneWithoutAuthoredAnnouncementsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutAuthoredAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutAuthoredAnnouncementsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutUpdatedAnnouncementsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUpdatedAnnouncementsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutAuthoredAnnouncementsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutAuthoredAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutAuthoredAnnouncementsInput
+  upsert?: Prisma.AppUserUpsertWithoutAuthoredAnnouncementsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutAuthoredAnnouncementsInput, Prisma.AppUserUpdateWithoutAuthoredAnnouncementsInput>, Prisma.AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput>
+}
+
+export type AppUserUpdateOneWithoutUpdatedAnnouncementsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUpdatedAnnouncementsInput
+  upsert?: Prisma.AppUserUpsertWithoutUpdatedAnnouncementsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutUpdatedAnnouncementsInput, Prisma.AppUserUpdateWithoutUpdatedAnnouncementsInput>, Prisma.AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput>
+}
+
+export type AppUserCreateNestedOneWithoutAnnouncementReadsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutAnnouncementReadsInput, Prisma.AppUserUncheckedCreateWithoutAnnouncementReadsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutAnnouncementReadsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutAnnouncementReadsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutAnnouncementReadsInput, Prisma.AppUserUncheckedCreateWithoutAnnouncementReadsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutAnnouncementReadsInput
+  upsert?: Prisma.AppUserUpsertWithoutAnnouncementReadsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutAnnouncementReadsInput, Prisma.AppUserUpdateWithoutAnnouncementReadsInput>, Prisma.AppUserUncheckedUpdateWithoutAnnouncementReadsInput>
+}
+
 export type AppUserCreateWithoutProfileInput = {
   id?: string
   clerkUserId: string
@@ -647,6 +886,17 @@ export type AppUserCreateWithoutProfileInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUncheckedCreateWithoutProfileInput = {
@@ -667,6 +917,17 @@ export type AppUserUncheckedCreateWithoutProfileInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AppUserCreateOrConnectWithoutProfileInput = {
@@ -692,6 +953,17 @@ export type AppUserCreateWithoutApprovedProfilesInput = {
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUncheckedCreateWithoutApprovedProfilesInput = {
@@ -712,6 +984,17 @@ export type AppUserUncheckedCreateWithoutApprovedProfilesInput = {
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AppUserCreateOrConnectWithoutApprovedProfilesInput = {
@@ -748,6 +1031,17 @@ export type AppUserUpdateWithoutProfileInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutProfileInput = {
@@ -768,6 +1062,17 @@ export type AppUserUncheckedUpdateWithoutProfileInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUpsertWithoutApprovedProfilesInput = {
@@ -799,6 +1104,17 @@ export type AppUserUpdateWithoutApprovedProfilesInput = {
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutApprovedProfilesInput = {
@@ -819,6 +1135,17 @@ export type AppUserUncheckedUpdateWithoutApprovedProfilesInput = {
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserCreateWithoutPrivateDetailsInput = {
@@ -839,6 +1166,17 @@ export type AppUserCreateWithoutPrivateDetailsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUncheckedCreateWithoutPrivateDetailsInput = {
@@ -859,6 +1197,17 @@ export type AppUserUncheckedCreateWithoutPrivateDetailsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AppUserCreateOrConnectWithoutPrivateDetailsInput = {
@@ -895,6 +1244,17 @@ export type AppUserUpdateWithoutPrivateDetailsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutPrivateDetailsInput = {
@@ -915,6 +1275,17 @@ export type AppUserUncheckedUpdateWithoutPrivateDetailsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserCreateWithoutNotificationPreferenceInput = {
@@ -935,6 +1306,17 @@ export type AppUserCreateWithoutNotificationPreferenceInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUncheckedCreateWithoutNotificationPreferenceInput = {
@@ -955,6 +1337,17 @@ export type AppUserUncheckedCreateWithoutNotificationPreferenceInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AppUserCreateOrConnectWithoutNotificationPreferenceInput = {
@@ -991,6 +1384,17 @@ export type AppUserUpdateWithoutNotificationPreferenceInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutNotificationPreferenceInput = {
@@ -1011,6 +1415,17 @@ export type AppUserUncheckedUpdateWithoutNotificationPreferenceInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserCreateWithoutPushSubscriptionsInput = {
@@ -1031,6 +1446,17 @@ export type AppUserCreateWithoutPushSubscriptionsInput = {
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUncheckedCreateWithoutPushSubscriptionsInput = {
@@ -1051,6 +1477,17 @@ export type AppUserUncheckedCreateWithoutPushSubscriptionsInput = {
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AppUserCreateOrConnectWithoutPushSubscriptionsInput = {
@@ -1087,6 +1524,17 @@ export type AppUserUpdateWithoutPushSubscriptionsInput = {
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutPushSubscriptionsInput = {
@@ -1107,6 +1555,17 @@ export type AppUserUncheckedUpdateWithoutPushSubscriptionsInput = {
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
   adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserCreateWithoutAdminAuditLogsInput = {
@@ -1127,6 +1586,17 @@ export type AppUserCreateWithoutAdminAuditLogsInput = {
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
 }
 
 export type AppUserUncheckedCreateWithoutAdminAuditLogsInput = {
@@ -1147,6 +1617,17 @@ export type AppUserUncheckedCreateWithoutAdminAuditLogsInput = {
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type AppUserCreateOrConnectWithoutAdminAuditLogsInput = {
@@ -1183,6 +1664,17 @@ export type AppUserUpdateWithoutAdminAuditLogsInput = {
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutAdminAuditLogsInput = {
@@ -1203,6 +1695,1557 @@ export type AppUserUncheckedUpdateWithoutAdminAuditLogsInput = {
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutCreatedEventsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutCreatedEventsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutCreatedEventsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedEventsInput, Prisma.AppUserUncheckedCreateWithoutCreatedEventsInput>
+}
+
+export type AppUserCreateWithoutUpdatedEventsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutUpdatedEventsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutUpdatedEventsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedEventsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedEventsInput>
+}
+
+export type AppUserUpsertWithoutCreatedEventsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedEventsInput, Prisma.AppUserUncheckedUpdateWithoutCreatedEventsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedEventsInput, Prisma.AppUserUncheckedCreateWithoutCreatedEventsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutCreatedEventsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedEventsInput, Prisma.AppUserUncheckedUpdateWithoutCreatedEventsInput>
+}
+
+export type AppUserUpdateWithoutCreatedEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutCreatedEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUpsertWithoutUpdatedEventsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutUpdatedEventsInput, Prisma.AppUserUncheckedUpdateWithoutUpdatedEventsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedEventsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedEventsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutUpdatedEventsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutUpdatedEventsInput, Prisma.AppUserUncheckedUpdateWithoutUpdatedEventsInput>
+}
+
+export type AppUserUpdateWithoutUpdatedEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutUpdatedEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutCreatedGalleryAlbumsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutCreatedGalleryAlbumsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedGalleryAlbumsInput, Prisma.AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput>
+}
+
+export type AppUserUpsertWithoutCreatedGalleryAlbumsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedGalleryAlbumsInput, Prisma.AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedGalleryAlbumsInput, Prisma.AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutCreatedGalleryAlbumsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedGalleryAlbumsInput, Prisma.AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput>
+}
+
+export type AppUserUpdateWithoutCreatedGalleryAlbumsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutUploadedGalleryItemsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutUploadedGalleryItemsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutUploadedGalleryItemsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUploadedGalleryItemsInput, Prisma.AppUserUncheckedCreateWithoutUploadedGalleryItemsInput>
+}
+
+export type AppUserUpsertWithoutUploadedGalleryItemsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutUploadedGalleryItemsInput, Prisma.AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUploadedGalleryItemsInput, Prisma.AppUserUncheckedCreateWithoutUploadedGalleryItemsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutUploadedGalleryItemsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutUploadedGalleryItemsInput, Prisma.AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput>
+}
+
+export type AppUserUpdateWithoutUploadedGalleryItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutSentContactMessagesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutSentContactMessagesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutSentContactMessagesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutSentContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutSentContactMessagesInput>
+}
+
+export type AppUserCreateWithoutAssignedContactMessagesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutAssignedContactMessagesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutAssignedContactMessagesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutAssignedContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutAssignedContactMessagesInput>
+}
+
+export type AppUserUpsertWithoutSentContactMessagesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutSentContactMessagesInput, Prisma.AppUserUncheckedUpdateWithoutSentContactMessagesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutSentContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutSentContactMessagesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutSentContactMessagesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutSentContactMessagesInput, Prisma.AppUserUncheckedUpdateWithoutSentContactMessagesInput>
+}
+
+export type AppUserUpdateWithoutSentContactMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutSentContactMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUpsertWithoutAssignedContactMessagesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutAssignedContactMessagesInput, Prisma.AppUserUncheckedUpdateWithoutAssignedContactMessagesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutAssignedContactMessagesInput, Prisma.AppUserUncheckedCreateWithoutAssignedContactMessagesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutAssignedContactMessagesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutAssignedContactMessagesInput, Prisma.AppUserUncheckedUpdateWithoutAssignedContactMessagesInput>
+}
+
+export type AppUserUpdateWithoutAssignedContactMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutAssignedContactMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutMessageRepliesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutMessageRepliesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutMessageRepliesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutMessageRepliesInput, Prisma.AppUserUncheckedCreateWithoutMessageRepliesInput>
+}
+
+export type AppUserUpsertWithoutMessageRepliesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutMessageRepliesInput, Prisma.AppUserUncheckedUpdateWithoutMessageRepliesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutMessageRepliesInput, Prisma.AppUserUncheckedCreateWithoutMessageRepliesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutMessageRepliesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutMessageRepliesInput, Prisma.AppUserUncheckedUpdateWithoutMessageRepliesInput>
+}
+
+export type AppUserUpdateWithoutMessageRepliesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutMessageRepliesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutMessageInternalNotesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutMessageInternalNotesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutMessageInternalNotesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutMessageInternalNotesInput, Prisma.AppUserUncheckedCreateWithoutMessageInternalNotesInput>
+}
+
+export type AppUserUpsertWithoutMessageInternalNotesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutMessageInternalNotesInput, Prisma.AppUserUncheckedUpdateWithoutMessageInternalNotesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutMessageInternalNotesInput, Prisma.AppUserUncheckedCreateWithoutMessageInternalNotesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutMessageInternalNotesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutMessageInternalNotesInput, Prisma.AppUserUncheckedUpdateWithoutMessageInternalNotesInput>
+}
+
+export type AppUserUpdateWithoutMessageInternalNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutMessageInternalNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutAuthoredAnnouncementsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutAuthoredAnnouncementsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutAuthoredAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput>
+}
+
+export type AppUserCreateWithoutUpdatedAnnouncementsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+}
+
+export type AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AppUserCreateOrConnectWithoutUpdatedAnnouncementsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput>
+}
+
+export type AppUserUpsertWithoutAuthoredAnnouncementsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutAuthoredAnnouncementsInput, Prisma.AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutAuthoredAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutAuthoredAnnouncementsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutAuthoredAnnouncementsInput, Prisma.AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput>
+}
+
+export type AppUserUpdateWithoutAuthoredAnnouncementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUpsertWithoutUpdatedAnnouncementsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutUpdatedAnnouncementsInput, Prisma.AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedAnnouncementsInput, Prisma.AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutUpdatedAnnouncementsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutUpdatedAnnouncementsInput, Prisma.AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput>
+}
+
+export type AppUserUpdateWithoutUpdatedAnnouncementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AppUserCreateWithoutAnnouncementReadsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+}
+
+export type AppUserUncheckedCreateWithoutAnnouncementReadsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type AppUserCreateOrConnectWithoutAnnouncementReadsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutAnnouncementReadsInput, Prisma.AppUserUncheckedCreateWithoutAnnouncementReadsInput>
+}
+
+export type AppUserUpsertWithoutAnnouncementReadsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutAnnouncementReadsInput, Prisma.AppUserUncheckedUpdateWithoutAnnouncementReadsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutAnnouncementReadsInput, Prisma.AppUserUncheckedCreateWithoutAnnouncementReadsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutAnnouncementReadsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutAnnouncementReadsInput, Prisma.AppUserUncheckedUpdateWithoutAnnouncementReadsInput>
+}
+
+export type AppUserUpdateWithoutAnnouncementReadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutAnnouncementReadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 
@@ -1214,12 +3257,34 @@ export type AppUserCountOutputType = {
   pushSubscriptions: number
   approvedProfiles: number
   adminAuditLogs: number
+  createdEvents: number
+  updatedEvents: number
+  createdGalleryAlbums: number
+  uploadedGalleryItems: number
+  sentContactMessages: number
+  assignedContactMessages: number
+  messageReplies: number
+  messageInternalNotes: number
+  authoredAnnouncements: number
+  updatedAnnouncements: number
+  announcementReads: number
 }
 
 export type AppUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pushSubscriptions?: boolean | AppUserCountOutputTypeCountPushSubscriptionsArgs
   approvedProfiles?: boolean | AppUserCountOutputTypeCountApprovedProfilesArgs
   adminAuditLogs?: boolean | AppUserCountOutputTypeCountAdminAuditLogsArgs
+  createdEvents?: boolean | AppUserCountOutputTypeCountCreatedEventsArgs
+  updatedEvents?: boolean | AppUserCountOutputTypeCountUpdatedEventsArgs
+  createdGalleryAlbums?: boolean | AppUserCountOutputTypeCountCreatedGalleryAlbumsArgs
+  uploadedGalleryItems?: boolean | AppUserCountOutputTypeCountUploadedGalleryItemsArgs
+  sentContactMessages?: boolean | AppUserCountOutputTypeCountSentContactMessagesArgs
+  assignedContactMessages?: boolean | AppUserCountOutputTypeCountAssignedContactMessagesArgs
+  messageReplies?: boolean | AppUserCountOutputTypeCountMessageRepliesArgs
+  messageInternalNotes?: boolean | AppUserCountOutputTypeCountMessageInternalNotesArgs
+  authoredAnnouncements?: boolean | AppUserCountOutputTypeCountAuthoredAnnouncementsArgs
+  updatedAnnouncements?: boolean | AppUserCountOutputTypeCountUpdatedAnnouncementsArgs
+  announcementReads?: boolean | AppUserCountOutputTypeCountAnnouncementReadsArgs
 }
 
 /**
@@ -1253,6 +3318,83 @@ export type AppUserCountOutputTypeCountAdminAuditLogsArgs<ExtArgs extends runtim
   where?: Prisma.AdminAuditLogWhereInput
 }
 
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountCreatedEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChurchEventWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountUpdatedEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChurchEventWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountCreatedGalleryAlbumsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GalleryAlbumWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountUploadedGalleryItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GalleryItemWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountSentContactMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ContactMessageWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountAssignedContactMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ContactMessageWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountMessageRepliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MessageReplyWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountMessageInternalNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MessageInternalNoteWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountAuthoredAnnouncementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AnnouncementWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountUpdatedAnnouncementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AnnouncementWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountAnnouncementReadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AnnouncementReadWhereInput
+}
+
 
 export type AppUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1273,6 +3415,17 @@ export type AppUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   pushSubscriptions?: boolean | Prisma.AppUser$pushSubscriptionsArgs<ExtArgs>
   approvedProfiles?: boolean | Prisma.AppUser$approvedProfilesArgs<ExtArgs>
   adminAuditLogs?: boolean | Prisma.AppUser$adminAuditLogsArgs<ExtArgs>
+  createdEvents?: boolean | Prisma.AppUser$createdEventsArgs<ExtArgs>
+  updatedEvents?: boolean | Prisma.AppUser$updatedEventsArgs<ExtArgs>
+  createdGalleryAlbums?: boolean | Prisma.AppUser$createdGalleryAlbumsArgs<ExtArgs>
+  uploadedGalleryItems?: boolean | Prisma.AppUser$uploadedGalleryItemsArgs<ExtArgs>
+  sentContactMessages?: boolean | Prisma.AppUser$sentContactMessagesArgs<ExtArgs>
+  assignedContactMessages?: boolean | Prisma.AppUser$assignedContactMessagesArgs<ExtArgs>
+  messageReplies?: boolean | Prisma.AppUser$messageRepliesArgs<ExtArgs>
+  messageInternalNotes?: boolean | Prisma.AppUser$messageInternalNotesArgs<ExtArgs>
+  authoredAnnouncements?: boolean | Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs>
+  updatedAnnouncements?: boolean | Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs>
+  announcementReads?: boolean | Prisma.AppUser$announcementReadsArgs<ExtArgs>
   _count?: boolean | Prisma.AppUserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["appUser"]>
 
@@ -1329,6 +3482,17 @@ export type AppUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   pushSubscriptions?: boolean | Prisma.AppUser$pushSubscriptionsArgs<ExtArgs>
   approvedProfiles?: boolean | Prisma.AppUser$approvedProfilesArgs<ExtArgs>
   adminAuditLogs?: boolean | Prisma.AppUser$adminAuditLogsArgs<ExtArgs>
+  createdEvents?: boolean | Prisma.AppUser$createdEventsArgs<ExtArgs>
+  updatedEvents?: boolean | Prisma.AppUser$updatedEventsArgs<ExtArgs>
+  createdGalleryAlbums?: boolean | Prisma.AppUser$createdGalleryAlbumsArgs<ExtArgs>
+  uploadedGalleryItems?: boolean | Prisma.AppUser$uploadedGalleryItemsArgs<ExtArgs>
+  sentContactMessages?: boolean | Prisma.AppUser$sentContactMessagesArgs<ExtArgs>
+  assignedContactMessages?: boolean | Prisma.AppUser$assignedContactMessagesArgs<ExtArgs>
+  messageReplies?: boolean | Prisma.AppUser$messageRepliesArgs<ExtArgs>
+  messageInternalNotes?: boolean | Prisma.AppUser$messageInternalNotesArgs<ExtArgs>
+  authoredAnnouncements?: boolean | Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs>
+  updatedAnnouncements?: boolean | Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs>
+  announcementReads?: boolean | Prisma.AppUser$announcementReadsArgs<ExtArgs>
   _count?: boolean | Prisma.AppUserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AppUserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1343,6 +3507,17 @@ export type $AppUserPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     pushSubscriptions: Prisma.$PushSubscriptionPayload<ExtArgs>[]
     approvedProfiles: Prisma.$MemberProfilePayload<ExtArgs>[]
     adminAuditLogs: Prisma.$AdminAuditLogPayload<ExtArgs>[]
+    createdEvents: Prisma.$ChurchEventPayload<ExtArgs>[]
+    updatedEvents: Prisma.$ChurchEventPayload<ExtArgs>[]
+    createdGalleryAlbums: Prisma.$GalleryAlbumPayload<ExtArgs>[]
+    uploadedGalleryItems: Prisma.$GalleryItemPayload<ExtArgs>[]
+    sentContactMessages: Prisma.$ContactMessagePayload<ExtArgs>[]
+    assignedContactMessages: Prisma.$ContactMessagePayload<ExtArgs>[]
+    messageReplies: Prisma.$MessageReplyPayload<ExtArgs>[]
+    messageInternalNotes: Prisma.$MessageInternalNotePayload<ExtArgs>[]
+    authoredAnnouncements: Prisma.$AnnouncementPayload<ExtArgs>[]
+    updatedAnnouncements: Prisma.$AnnouncementPayload<ExtArgs>[]
+    announcementReads: Prisma.$AnnouncementReadPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1757,6 +3932,17 @@ export interface Prisma__AppUserClient<T, Null = never, ExtArgs extends runtime.
   pushSubscriptions<T extends Prisma.AppUser$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   approvedProfiles<T extends Prisma.AppUser$approvedProfilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$approvedProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   adminAuditLogs<T extends Prisma.AppUser$adminAuditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$adminAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdEvents<T extends Prisma.AppUser$createdEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$createdEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChurchEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedEvents<T extends Prisma.AppUser$updatedEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$updatedEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChurchEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdGalleryAlbums<T extends Prisma.AppUser$createdGalleryAlbumsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$createdGalleryAlbumsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryAlbumPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  uploadedGalleryItems<T extends Prisma.AppUser$uploadedGalleryItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$uploadedGalleryItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sentContactMessages<T extends Prisma.AppUser$sentContactMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$sentContactMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedContactMessages<T extends Prisma.AppUser$assignedContactMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$assignedContactMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  messageReplies<T extends Prisma.AppUser$messageRepliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$messageRepliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  messageInternalNotes<T extends Prisma.AppUser$messageInternalNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$messageInternalNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageInternalNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  authoredAnnouncements<T extends Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedAnnouncements<T extends Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  announcementReads<T extends Prisma.AppUser$announcementReadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$announcementReadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnnouncementReadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2317,6 +4503,270 @@ export type AppUser$adminAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.AdminAuditLogScalarFieldEnum | Prisma.AdminAuditLogScalarFieldEnum[]
+}
+
+/**
+ * AppUser.createdEvents
+ */
+export type AppUser$createdEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChurchEvent
+   */
+  select?: Prisma.ChurchEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChurchEvent
+   */
+  omit?: Prisma.ChurchEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChurchEventInclude<ExtArgs> | null
+  where?: Prisma.ChurchEventWhereInput
+  orderBy?: Prisma.ChurchEventOrderByWithRelationInput | Prisma.ChurchEventOrderByWithRelationInput[]
+  cursor?: Prisma.ChurchEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChurchEventScalarFieldEnum | Prisma.ChurchEventScalarFieldEnum[]
+}
+
+/**
+ * AppUser.updatedEvents
+ */
+export type AppUser$updatedEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChurchEvent
+   */
+  select?: Prisma.ChurchEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChurchEvent
+   */
+  omit?: Prisma.ChurchEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChurchEventInclude<ExtArgs> | null
+  where?: Prisma.ChurchEventWhereInput
+  orderBy?: Prisma.ChurchEventOrderByWithRelationInput | Prisma.ChurchEventOrderByWithRelationInput[]
+  cursor?: Prisma.ChurchEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChurchEventScalarFieldEnum | Prisma.ChurchEventScalarFieldEnum[]
+}
+
+/**
+ * AppUser.createdGalleryAlbums
+ */
+export type AppUser$createdGalleryAlbumsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GalleryAlbum
+   */
+  select?: Prisma.GalleryAlbumSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GalleryAlbum
+   */
+  omit?: Prisma.GalleryAlbumOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GalleryAlbumInclude<ExtArgs> | null
+  where?: Prisma.GalleryAlbumWhereInput
+  orderBy?: Prisma.GalleryAlbumOrderByWithRelationInput | Prisma.GalleryAlbumOrderByWithRelationInput[]
+  cursor?: Prisma.GalleryAlbumWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GalleryAlbumScalarFieldEnum | Prisma.GalleryAlbumScalarFieldEnum[]
+}
+
+/**
+ * AppUser.uploadedGalleryItems
+ */
+export type AppUser$uploadedGalleryItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GalleryItem
+   */
+  select?: Prisma.GalleryItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GalleryItem
+   */
+  omit?: Prisma.GalleryItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GalleryItemInclude<ExtArgs> | null
+  where?: Prisma.GalleryItemWhereInput
+  orderBy?: Prisma.GalleryItemOrderByWithRelationInput | Prisma.GalleryItemOrderByWithRelationInput[]
+  cursor?: Prisma.GalleryItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GalleryItemScalarFieldEnum | Prisma.GalleryItemScalarFieldEnum[]
+}
+
+/**
+ * AppUser.sentContactMessages
+ */
+export type AppUser$sentContactMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContactMessage
+   */
+  select?: Prisma.ContactMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContactMessage
+   */
+  omit?: Prisma.ContactMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContactMessageInclude<ExtArgs> | null
+  where?: Prisma.ContactMessageWhereInput
+  orderBy?: Prisma.ContactMessageOrderByWithRelationInput | Prisma.ContactMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ContactMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ContactMessageScalarFieldEnum | Prisma.ContactMessageScalarFieldEnum[]
+}
+
+/**
+ * AppUser.assignedContactMessages
+ */
+export type AppUser$assignedContactMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContactMessage
+   */
+  select?: Prisma.ContactMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContactMessage
+   */
+  omit?: Prisma.ContactMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContactMessageInclude<ExtArgs> | null
+  where?: Prisma.ContactMessageWhereInput
+  orderBy?: Prisma.ContactMessageOrderByWithRelationInput | Prisma.ContactMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ContactMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ContactMessageScalarFieldEnum | Prisma.ContactMessageScalarFieldEnum[]
+}
+
+/**
+ * AppUser.messageReplies
+ */
+export type AppUser$messageRepliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MessageReply
+   */
+  select?: Prisma.MessageReplySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MessageReply
+   */
+  omit?: Prisma.MessageReplyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageReplyInclude<ExtArgs> | null
+  where?: Prisma.MessageReplyWhereInput
+  orderBy?: Prisma.MessageReplyOrderByWithRelationInput | Prisma.MessageReplyOrderByWithRelationInput[]
+  cursor?: Prisma.MessageReplyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageReplyScalarFieldEnum | Prisma.MessageReplyScalarFieldEnum[]
+}
+
+/**
+ * AppUser.messageInternalNotes
+ */
+export type AppUser$messageInternalNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MessageInternalNote
+   */
+  select?: Prisma.MessageInternalNoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MessageInternalNote
+   */
+  omit?: Prisma.MessageInternalNoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInternalNoteInclude<ExtArgs> | null
+  where?: Prisma.MessageInternalNoteWhereInput
+  orderBy?: Prisma.MessageInternalNoteOrderByWithRelationInput | Prisma.MessageInternalNoteOrderByWithRelationInput[]
+  cursor?: Prisma.MessageInternalNoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageInternalNoteScalarFieldEnum | Prisma.MessageInternalNoteScalarFieldEnum[]
+}
+
+/**
+ * AppUser.authoredAnnouncements
+ */
+export type AppUser$authoredAnnouncementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Announcement
+   */
+  select?: Prisma.AnnouncementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Announcement
+   */
+  omit?: Prisma.AnnouncementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AnnouncementInclude<ExtArgs> | null
+  where?: Prisma.AnnouncementWhereInput
+  orderBy?: Prisma.AnnouncementOrderByWithRelationInput | Prisma.AnnouncementOrderByWithRelationInput[]
+  cursor?: Prisma.AnnouncementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AnnouncementScalarFieldEnum | Prisma.AnnouncementScalarFieldEnum[]
+}
+
+/**
+ * AppUser.updatedAnnouncements
+ */
+export type AppUser$updatedAnnouncementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Announcement
+   */
+  select?: Prisma.AnnouncementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Announcement
+   */
+  omit?: Prisma.AnnouncementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AnnouncementInclude<ExtArgs> | null
+  where?: Prisma.AnnouncementWhereInput
+  orderBy?: Prisma.AnnouncementOrderByWithRelationInput | Prisma.AnnouncementOrderByWithRelationInput[]
+  cursor?: Prisma.AnnouncementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AnnouncementScalarFieldEnum | Prisma.AnnouncementScalarFieldEnum[]
+}
+
+/**
+ * AppUser.announcementReads
+ */
+export type AppUser$announcementReadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AnnouncementRead
+   */
+  select?: Prisma.AnnouncementReadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AnnouncementRead
+   */
+  omit?: Prisma.AnnouncementReadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AnnouncementReadInclude<ExtArgs> | null
+  where?: Prisma.AnnouncementReadWhereInput
+  orderBy?: Prisma.AnnouncementReadOrderByWithRelationInput | Prisma.AnnouncementReadOrderByWithRelationInput[]
+  cursor?: Prisma.AnnouncementReadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AnnouncementReadScalarFieldEnum | Prisma.AnnouncementReadScalarFieldEnum[]
 }
 
 /**

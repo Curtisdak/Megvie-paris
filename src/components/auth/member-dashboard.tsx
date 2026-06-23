@@ -1,5 +1,14 @@
 import Link from "next/link"
-import { Bell, CreditCard, ShieldCheck, UserRound } from "lucide-react"
+import {
+  ArrowRight,
+  Bell,
+  CreditCard,
+  FileText,
+  LayoutDashboard,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
 import type { MemberDashboardData } from "@/lib/auth/dashboard"
 import { getDisplayName } from "@/lib/auth/member"
 import { SignOutControl } from "@/components/auth/sign-out-control"
@@ -19,9 +28,35 @@ function StatusBadge({ status }: { status: string }) {
   )
 }
 
-export function MemberHome({ data }: { data: MemberDashboardData }) {
+type MemberContent = {
+  events: Array<{
+    id: string
+    title: string
+    shortDescription: string | null
+    startsAt: Date
+    locationName: string | null
+    visibility: string
+  }>
+  announcements: Array<{
+    id: string
+    title: string
+    summary: string | null
+    category: string
+    visibility: string
+    publishedAt: Date | null
+  }>
+}
+
+export function MemberHome({
+  data,
+  content,
+}: {
+  data: MemberDashboardData
+  content?: MemberContent
+}) {
   const profile = data.profile
   const isActive = profile?.membership_status === "active"
+  const isAdmin = ["respo", "finance", "master", "creator"].includes(data.role)
   const displayName = profile ? getDisplayName(profile) : "Membre MegVie"
 
   return (
@@ -92,9 +127,19 @@ export function MemberHome({ data }: { data: MemberDashboardData }) {
             {
               href: "/espace-membre/securite",
               label: "Securite",
-              description: "Mot de passe et MFA.",
+              description: "Mot de passe et sessions Clerk.",
               icon: ShieldCheck,
             },
+            ...(isAdmin
+              ? [
+                  {
+                    href: "/admin",
+                    label: "Administration",
+                    description: "Ouvrir le tableau de bord admin.",
+                    icon: LayoutDashboard,
+                  },
+                ]
+              : []),
           ].map((item) => {
             const Icon = item.icon
 
@@ -116,13 +161,85 @@ export function MemberHome({ data }: { data: MemberDashboardData }) {
           })}
         </section>
 
+        <section className="grid gap-4 lg:grid-cols-2">
+          <div className="rounded-[28px] border border-zinc-200 bg-white/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/80">
+            <h2 className="text-lg font-semibold">Evenements a venir</h2>
+            <div className="mt-4 space-y-3">
+              {content?.events.length ? (
+                content.events.map((event) => (
+                  <div
+                    key={event.id}
+                    className="rounded-2xl bg-zinc-50 p-4 text-sm dark:bg-zinc-950/40"
+                  >
+                    <p className="font-semibold">{event.title}</p>
+                    <p className="mt-1 text-zinc-600 dark:text-zinc-300">
+                      {event.startsAt.toLocaleString("fr-FR")}
+                      {event.locationName ? ` - ${event.locationName}` : ""}
+                    </p>
+                    {event.shortDescription ? (
+                      <p className="mt-2 text-zinc-500 dark:text-zinc-400">
+                        {event.shortDescription}
+                      </p>
+                    ) : null}
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  Aucun evenement publie pour le moment.
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="rounded-[28px] border border-zinc-200 bg-white/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/80">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <span className="rounded-2xl bg-amber-100 p-2 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
+                  <FileText className="h-4 w-4" aria-hidden />
+                </span>
+                <h2 className="text-lg font-semibold">Annonces</h2>
+              </div>
+              <Button asChild variant="ghost" size="sm" className="rounded-full">
+                <Link href="/espace-membre/annonces">
+                  Tout voir
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              </Button>
+            </div>
+            <div className="mt-4 space-y-3">
+              {content?.announcements.length ? (
+                content.announcements.map((announcement) => (
+                  <Link
+                    key={announcement.id}
+                    href={`/espace-membre/annonces/${announcement.id}`}
+                    className="block rounded-2xl bg-zinc-50 p-4 text-sm transition hover:bg-amber-50 dark:bg-zinc-950/40 dark:hover:bg-zinc-950"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-700 dark:text-amber-200">
+                      {announcement.category.toLowerCase().replace(/_/g, " ")}
+                    </p>
+                    <p className="mt-1 font-semibold">{announcement.title}</p>
+                    {announcement.summary ? (
+                      <p className="mt-2 text-zinc-500 dark:text-zinc-400">
+                        {announcement.summary}
+                      </p>
+                    ) : null}
+                  </Link>
+                ))
+              ) : (
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  Aucune annonce publiee pour le moment.
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+
         <section className="rounded-[28px] border border-zinc-200 bg-white/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/80">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="font-semibold">Fonctions a venir</p>
               <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-                Dons recurrents, annonces, evenements et ressources seront
-                ajoutes dans les prochaines phases.
+                Dons recurrents, ressources et notifications push de contenu
+                seront ajoutes dans les prochaines phases.
               </p>
             </div>
             <SignOutControl />

@@ -59,7 +59,15 @@ export const ModelName = {
   DailyBibleVerse: 'DailyBibleVerse',
   NotificationLog: 'NotificationLog',
   AdminAuditLog: 'AdminAuditLog',
-  ChurchSetting: 'ChurchSetting'
+  ChurchSetting: 'ChurchSetting',
+  ChurchEvent: 'ChurchEvent',
+  GalleryAlbum: 'GalleryAlbum',
+  GalleryItem: 'GalleryItem',
+  ContactMessage: 'ContactMessage',
+  MessageReply: 'MessageReply',
+  MessageInternalNote: 'MessageInternalNote',
+  Announcement: 'Announcement',
+  AnnouncementRead: 'AnnouncementRead'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -201,9 +209,11 @@ export type NotificationLogScalarFieldEnum = (typeof NotificationLogScalarFieldE
 export const AdminAuditLogScalarFieldEnum = {
   id: 'id',
   actorUserId: 'actorUserId',
+  actorMemberId: 'actorMemberId',
   action: 'action',
   entityType: 'entityType',
   entityId: 'entityId',
+  summary: 'summary',
   metadata: 'metadata',
   createdAt: 'createdAt'
 } as const
@@ -223,6 +233,155 @@ export const ChurchSettingScalarFieldEnum = {
 } as const
 
 export type ChurchSettingScalarFieldEnum = (typeof ChurchSettingScalarFieldEnum)[keyof typeof ChurchSettingScalarFieldEnum]
+
+
+export const ChurchEventScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  shortDescription: 'shortDescription',
+  description: 'description',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  timezone: 'timezone',
+  locationName: 'locationName',
+  address: 'address',
+  mapUrl: 'mapUrl',
+  registrationUrl: 'registrationUrl',
+  coverImageUrl: 'coverImageUrl',
+  coverImageStorageKey: 'coverImageStorageKey',
+  visibility: 'visibility',
+  status: 'status',
+  publishAt: 'publishAt',
+  publishedAt: 'publishedAt',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  archivedAt: 'archivedAt'
+} as const
+
+export type ChurchEventScalarFieldEnum = (typeof ChurchEventScalarFieldEnum)[keyof typeof ChurchEventScalarFieldEnum]
+
+
+export const GalleryAlbumScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  description: 'description',
+  coverImageUrl: 'coverImageUrl',
+  coverImageStorageKey: 'coverImageStorageKey',
+  status: 'status',
+  eventDate: 'eventDate',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  archivedAt: 'archivedAt'
+} as const
+
+export type GalleryAlbumScalarFieldEnum = (typeof GalleryAlbumScalarFieldEnum)[keyof typeof GalleryAlbumScalarFieldEnum]
+
+
+export const GalleryItemScalarFieldEnum = {
+  id: 'id',
+  albumId: 'albumId',
+  imageUrl: 'imageUrl',
+  storageKey: 'storageKey',
+  caption: 'caption',
+  altText: 'altText',
+  sortOrder: 'sortOrder',
+  uploadedByUserId: 'uploadedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  archivedAt: 'archivedAt'
+} as const
+
+export type GalleryItemScalarFieldEnum = (typeof GalleryItemScalarFieldEnum)[keyof typeof GalleryItemScalarFieldEnum]
+
+
+export const ContactMessageScalarFieldEnum = {
+  id: 'id',
+  senderUserId: 'senderUserId',
+  senderName: 'senderName',
+  senderEmail: 'senderEmail',
+  senderPhone: 'senderPhone',
+  subject: 'subject',
+  category: 'category',
+  body: 'body',
+  source: 'source',
+  confidentiality: 'confidentiality',
+  status: 'status',
+  assignedToUserId: 'assignedToUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  firstReadAt: 'firstReadAt',
+  answeredAt: 'answeredAt',
+  archivedAt: 'archivedAt'
+} as const
+
+export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
+
+
+export const MessageReplyScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  authorUserId: 'authorUserId',
+  body: 'body',
+  deliveryStatus: 'deliveryStatus',
+  externalMessageId: 'externalMessageId',
+  createdAt: 'createdAt',
+  sentAt: 'sentAt',
+  failedAt: 'failedAt',
+  failureReason: 'failureReason'
+} as const
+
+export type MessageReplyScalarFieldEnum = (typeof MessageReplyScalarFieldEnum)[keyof typeof MessageReplyScalarFieldEnum]
+
+
+export const MessageInternalNoteScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  authorUserId: 'authorUserId',
+  body: 'body',
+  createdAt: 'createdAt'
+} as const
+
+export type MessageInternalNoteScalarFieldEnum = (typeof MessageInternalNoteScalarFieldEnum)[keyof typeof MessageInternalNoteScalarFieldEnum]
+
+
+export const AnnouncementScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  summary: 'summary',
+  body: 'body',
+  category: 'category',
+  coverImageUrl: 'coverImageUrl',
+  coverImageStorageKey: 'coverImageStorageKey',
+  externalUrl: 'externalUrl',
+  visibility: 'visibility',
+  status: 'status',
+  publishAt: 'publishAt',
+  publishedAt: 'publishedAt',
+  expiresAt: 'expiresAt',
+  authorUserId: 'authorUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  archivedAt: 'archivedAt'
+} as const
+
+export type AnnouncementScalarFieldEnum = (typeof AnnouncementScalarFieldEnum)[keyof typeof AnnouncementScalarFieldEnum]
+
+
+export const AnnouncementReadScalarFieldEnum = {
+  id: 'id',
+  announcementId: 'announcementId',
+  userId: 'userId',
+  readAt: 'readAt'
+} as const
+
+export type AnnouncementReadScalarFieldEnum = (typeof AnnouncementReadScalarFieldEnum)[keyof typeof AnnouncementReadScalarFieldEnum]
 
 
 export const SortOrder = {

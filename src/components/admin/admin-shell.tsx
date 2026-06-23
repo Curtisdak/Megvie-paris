@@ -8,11 +8,21 @@ import {
   ChevronDown,
   LayoutDashboard,
   LogOut,
+  MoreHorizontal,
   UserRound,
 } from "lucide-react"
 import { SignOutButton } from "@clerk/nextjs"
 import type { ChurchRole } from "@/generated/prisma/enums"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,6 +49,13 @@ export function AdminShell({
 }) {
   const pathname = usePathname()
   const navItems = getAdminNavItems(role)
+  const mobilePrimaryItems = navItems.length > 5 ? navItems.slice(0, 4) : navItems
+  const mobileOverflowItems = navItems.length > 5 ? navItems.slice(4) : []
+  const hasMobileOverflow = mobileOverflowItems.length > 0
+  const mobileColumnCount = mobilePrimaryItems.length + (hasMobileOverflow ? 1 : 0)
+  const overflowIsActive = mobileOverflowItems.some((item) =>
+    isNavItemActive(pathname, item.href),
+  )
 
   return (
     <div className="min-h-dvh bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_100%)] text-zinc-950 dark:bg-[linear-gradient(180deg,#09090b_0%,#111113_100%)] dark:text-zinc-50">
@@ -64,8 +81,7 @@ export function AdminShell({
           <nav className="space-y-1.5" aria-label="Navigation administration">
             {navItems.map((item) => {
               const Icon = item.icon
-              const active =
-                pathname === item.href || pathname.startsWith(`${item.href}/`)
+              const active = isNavItemActive(pathname, item.href)
 
               return (
                 <Link
@@ -192,11 +208,15 @@ export function AdminShell({
         className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200 bg-white/95 px-2 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-18px_44px_rgba(15,23,42,0.12)] backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/95 lg:hidden"
         aria-label="Navigation administration mobile"
       >
-        <div className="mx-auto flex max-w-3xl gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {navItems.map((item) => {
+        <div
+          className="mx-auto grid max-w-3xl gap-1.5"
+          style={{
+            gridTemplateColumns: `repeat(${mobileColumnCount}, minmax(0, 1fr))`,
+          }}
+        >
+          {mobilePrimaryItems.map((item) => {
             const Icon = item.icon
-            const active =
-              pathname === item.href || pathname.startsWith(`${item.href}/`)
+            const active = isNavItemActive(pathname, item.href)
 
             return (
               <Link
@@ -204,21 +224,89 @@ export function AdminShell({
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "inline-flex min-w-[4.75rem] shrink-0 flex-col items-center justify-center gap-1 rounded-2xl px-2.5 py-2 text-[0.68rem] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+                  "inline-flex min-w-0 flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 text-[0.68rem] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                   active
                     ? "bg-zinc-950 text-white shadow-lg shadow-zinc-950/15 dark:bg-white dark:text-zinc-950"
                     : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white",
                 )}
               >
                 <Icon className="h-4 w-4" aria-hidden />
-                <span className="max-w-[4.25rem] truncate">{item.label}</span>
+                <span className="w-full truncate text-center">{item.label}</span>
               </Link>
             )
           })}
+
+          {hasMobileOverflow ? (
+            <Dialog>
+              <DialogTrigger asChild>
+                <button
+                  type="button"
+                  aria-label="Voir toutes les pages admin"
+                  className={cn(
+                    "inline-flex min-w-0 flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 text-[0.68rem] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+                    overflowIsActive
+                      ? "bg-zinc-950 text-white shadow-lg shadow-zinc-950/15 dark:bg-white dark:text-zinc-950"
+                      : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white",
+                  )}
+                >
+                  <MoreHorizontal className="h-4 w-4" aria-hidden />
+                  <span className="w-full truncate text-center">Plus</span>
+                </button>
+              </DialogTrigger>
+              <DialogContent className="bottom-0 left-0 top-auto max-h-[78dvh] w-full max-w-full translate-x-0 translate-y-0 gap-0 overflow-hidden rounded-b-none rounded-t-[1.75rem] border-x-0 border-b-0 p-0 sm:max-w-full">
+                <DialogHeader className="border-b border-zinc-200 px-5 py-4 text-left dark:border-zinc-800">
+                  <DialogTitle>Pages admin</DialogTitle>
+                  <DialogDescription>
+                    Acces rapide a toutes les sections disponibles.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid max-h-[calc(78dvh-6rem)] gap-2 overflow-y-auto p-3 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+                  {navItems.map((item) => {
+                    const Icon = item.icon
+                    const active = isNavItemActive(pathname, item.href)
+
+                    return (
+                      <DialogClose asChild key={item.href}>
+                        <Link
+                          href={item.href}
+                          aria-current={active ? "page" : undefined}
+                          className={cn(
+                            "flex min-h-12 items-center gap-3 rounded-2xl px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
+                            active
+                              ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950"
+                              : "bg-zinc-50 text-zinc-700 hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800",
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              "grid h-9 w-9 place-items-center rounded-xl",
+                              active
+                                ? "bg-amber-500 text-white"
+                                : "bg-white text-zinc-500 dark:bg-zinc-950 dark:text-zinc-400",
+                            )}
+                          >
+                            <Icon className="h-4 w-4" aria-hidden />
+                          </span>
+                          <span className="min-w-0 flex-1 truncate">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </DialogClose>
+                    )
+                  })}
+                </div>
+              </DialogContent>
+            </Dialog>
+          ) : null}
         </div>
       </nav>
     </div>
   )
+}
+
+function isNavItemActive(pathname: string, href: string) {
+  if (href === "/admin") return pathname === "/admin"
+  return pathname === href || pathname.startsWith(`${href}/`)
 }
 
 function currentTitle(pathname: string) {

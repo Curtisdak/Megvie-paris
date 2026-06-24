@@ -120,8 +120,40 @@ export type BibleSearchResponse = {
 
 export const BIBLE_SEARCH_LIMIT = 50
 
+type BibleChapterIndexEntry = {
+  start: number
+  end: number
+  verses?: number
+}
+
+type BibleChapterIndex = {
+  source?: string
+  encoding?: BufferEncoding
+  chapters?: Record<string, BibleChapterIndexEntry>
+}
+
+type BibleSearchIndexRecord = [
+  id: string,
+  bookId: string,
+  bookNumber: number,
+  bookName: string,
+  testament: Testament,
+  chapter: number,
+  verse: number,
+  reference: string,
+  text: string,
+  searchText: string,
+]
+
+type BibleSearchIndex = {
+  source?: string
+  recordCount?: number
+  records?: BibleSearchIndexRecord[]
+}
+
 const bibleDirectory = path.join(process.cwd(), "bible")
 const jsonCache = new Map<string, unknown>()
+const chapterVerseCache = new Map<string, BibleVerse[]>()
 
 function readJsonFile<T>(fileName: string, fallback: T): T {
   if (jsonCache.has(fileName)) {
@@ -273,6 +305,190 @@ function sortByCanonicalOrder<T extends { book_number: number }>(items: T[]) {
   return [...items].sort((a, b) => a.book_number - b.book_number)
 }
 
+function chapterCacheKey(bookId: string, chapterNumber: number) {
+  return `${bookId.toUpperCase()}:${chapterNumber}`
+}
+
+function toSearchResult(verse: BibleVerse): BibleSearchResult {
+  return {
+    id: verse.id,
+    book_id: verse.book_id,
+    book_number: verse.book_number,
+    book_name: verse.book_name,
+    testament: verse.testament,
+    chapter: verse.chapter,
+    verse: verse.verse,
+    reference: verse.reference,
+    text: verse.text,
+  }
+}
+
+function searchRecordToResult(record: BibleSearchIndexRecord): BibleSearchResult {
+  return {
+    id: record[0],
+    book_id: record[1],
+    book_number: record[2],
+    book_name: record[3],
+    testament: record[4],
+    chapter: record[5],
+    verse: record[6],
+    reference: record[7],
+    text: record[8],
+  }
+}
+
+function readVerseChapterIndex() {
+  return readJsonFile<BibleChapterIndex>("verses.chapter-index.json", {
+    source: "verses.ndjson",
+    encoding: "utf8",
+    chapters: {},
+  })
+}
+
+function readVerseSearchIndex() {
+  const index = readJsonFile<BibleSearchIndex>("verses.search-index.json", {
+    source: "verses.ndjson",
+    recordCount: 0,
+    records: [],
+  })
+
+  return Array.isArray(index.records) && index.records.length > 0 ? index : null
+}
+
+function parseVerseLine(line: string) {
+  return normalizeVerse(JSON.parse(line) as Record<string, unknown>)
+}
+
+function readVersesForChapterFromIndex(bookId: string, chapterNumber: number) {
+  const index = readVerseChapterIndex()
+  const entry = index.chapters?.[chapterCacheKey(bookId, chapterNumber)]
+
+  if (!entry || entry.start < 0 || entry.end <= entry.start) {
+    return null
+  }
+
+  const sourcePath = path.join(bibleDirectory, index.source ?? "verses.ndjson")
+
+  if (!fs.existsSync(sourcePath)) {
+    return null
+  }
+
+  const length = entry.end - entry.start
+  const buffer = Buffer.alloc(length)
+  const fd = fs.openSync(sourcePath, "r")
+
+  try {
+    fs.readSync(fd, buffer, 0, length, entry.start)
+  } finally {
+    fs.closeSync(fd)
+  }
+
+  return buffer
+    .toString(index.encoding ?? "utf8")
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .map(parseVerseLine)
+    .filter(
+      (verse) =>
+        verse.book_id.toUpperCase() === bookId.toUpperCase() &&
+        verse.chapter === chapterNumber,
+    )
+    .sort((a, b) => a.verse - b.verse)
+}
+
+function forEachBibleVerse(callback: (verse: BibleVerse) => void) {
+  const ndjsonPath = path.join(bibleDirectory, "verses.ndjson")
+
+  if (fs.existsSync(ndjsonPath)) {
+    const content = fs.readFileSync(ndjsonPath, "utf8")
+
+    for (const line of content.split(/\r?\n/)) {
+      if (line) {
+        callback(parseVerseLine(line))
+      }
+    }
+
+    return
+  }
+
+  for (const rawVerse of readJsonFile<Record<string, unknown>[]>("verses.json", [])) {
+    callback(normalizeVerse(rawVerse))
+  }
+}
+
+function searchReferenceVerses(normalizedQuery: string) {
+  const referenceMatch = normalizedQuery.match(/^(.+?)\s+(\d{1,3})(?::(\d{1,3}))?$/)
+
+  if (!referenceMatch) {
+    return null
+  }
+
+  const [, bookPart, chapterText, verseText] = referenceMatch
+  const chapterNumber = Number(chapterText)
+  const verseNumber = verseText ? Number(verseText) : null
+  const books = getBibleBooks()
+  const exactBooks = books.filter((book) => {
+    const normalizedBookName = normalizeSearchText(book.name)
+    const normalizedBookId = normalizeSearchText(book.id)
+
+    return normalizedBookName === bookPart || normalizedBookId === bookPart
+  })
+  const matchingBooks =
+    exactBooks.length > 0
+      ? exactBooks
+      : books.filter((book) => {
+          const normalizedBookName = normalizeSearchText(book.name)
+          const normalizedBookId = normalizeSearchText(book.id)
+
+          return (
+            normalizedBookName.includes(bookPart) ||
+            normalizedBookId.includes(bookPart)
+          )
+        })
+
+  return matchingBooks.flatMap((book) =>
+    getVersesForChapter(book.id, chapterNumber).filter(
+      (verse) => verseNumber === null || verse.verse === verseNumber,
+    ),
+  )
+}
+
+function searchIndexedVerses(
+  cleanQuery: string,
+  normalizedQuery: string,
+  boundedLimit: number,
+): BibleSearchResponse | null {
+  const index = readVerseSearchIndex()
+
+  if (!index?.records?.length) {
+    return null
+  }
+
+  const words = normalizedQuery.split(/\s+/).filter(Boolean)
+  const results: BibleSearchResult[] = []
+  let total = 0
+
+  for (const record of index.records) {
+    const searchText = record[9]
+
+    if (words.every((word) => searchText.includes(word))) {
+      total += 1
+
+      if (results.length < boundedLimit) {
+        results.push(searchRecordToResult(record))
+      }
+    }
+  }
+
+  return {
+    query: cleanQuery,
+    total,
+    limit: boundedLimit,
+    limited: total > boundedLimit,
+    results,
+  }
+}
+
 export function getBibleTranslation() {
   return readJsonFile<BibleTranslation>("translation.json", {})
 }
@@ -307,9 +523,23 @@ export function getChaptersForBook(bookId: string) {
 
 export function getVersesForChapter(bookId: string, chapterNumber: number) {
   const normalizedBookId = bookId.toUpperCase()
-  const verses = readJsonFile<Record<string, unknown>[]>("verses.json", [])
+  const cacheKey = chapterCacheKey(normalizedBookId, chapterNumber)
 
-  return verses
+  if (chapterVerseCache.has(cacheKey)) {
+    return chapterVerseCache.get(cacheKey) as BibleVerse[]
+  }
+
+  const indexedVerses = readVersesForChapterFromIndex(
+    normalizedBookId,
+    chapterNumber,
+  )
+
+  if (indexedVerses) {
+    chapterVerseCache.set(cacheKey, indexedVerses)
+    return indexedVerses
+  }
+
+  const verses = readJsonFile<Record<string, unknown>[]>("verses.json", [])
     .map(normalizeVerse)
     .filter(
       (verse) =>
@@ -317,6 +547,9 @@ export function getVersesForChapter(bookId: string, chapterNumber: number) {
         verse.chapter === chapterNumber,
     )
     .sort((a, b) => a.verse - b.verse)
+
+  chapterVerseCache.set(cacheKey, verses)
+  return verses
 }
 
 export function getIntroductionsForBook(
@@ -366,71 +599,60 @@ export function searchVerses(
     }
   }
 
-  const referenceMatch = normalizedQuery.match(/^(.+?)\s+(\d{1,3})(?::(\d{1,3}))?$/)
-  const words = normalizedQuery.split(/\s+/).filter(Boolean)
-  const verses = readJsonFile<Record<string, unknown>[]>("verses.json", []).map(
-    normalizeVerse,
-  )
+  const referenceVerses = searchReferenceVerses(normalizedQuery)
 
-  const referenceMatches = (exactBookOnly: boolean) => {
-    if (!referenceMatch) return []
+  if (referenceVerses) {
+    const results = referenceVerses.slice(0, boundedLimit).map(toSearchResult)
 
-    const [, bookPart, chapterText, verseText] = referenceMatch
-    const chapterNumber = Number(chapterText)
-    const verseNumber = verseText ? Number(verseText) : null
-
-    return verses.filter((verse) => {
-      const normalizedBookName = normalizeSearchText(verse.book_name)
-      const normalizedBookId = normalizeSearchText(verse.book_id)
-      const bookMatches = exactBookOnly
-        ? normalizedBookName === bookPart || normalizedBookId === bookPart
-        : normalizedBookName.includes(bookPart) ||
-          normalizedBookId.includes(bookPart)
-
-      return (
-        bookMatches &&
-        verse.chapter === chapterNumber &&
-        (verseNumber === null || verse.verse === verseNumber)
-      )
-    })
+    return {
+      query: cleanQuery,
+      total: referenceVerses.length,
+      limit: boundedLimit,
+      limited: referenceVerses.length > boundedLimit,
+      results,
+    }
   }
 
-  const matchedVerses = referenceMatch
-    ? referenceMatches(true).length > 0
-      ? referenceMatches(true)
-      : referenceMatches(false)
-    : verses.filter((verse) => {
-        const searchableText = normalizeSearchText(
-          [
-            verse.reference,
-            verse.book_id,
-            verse.book_name,
-            verse.chapter,
-            verse.verse,
-            verse.text,
-          ].join(" "),
-        )
+  const indexedResponse = searchIndexedVerses(
+    cleanQuery,
+    normalizedQuery,
+    boundedLimit,
+  )
 
-        return words.every((word) => searchableText.includes(word))
-      })
+  if (indexedResponse) {
+    return indexedResponse
+  }
 
-  const results = matchedVerses.slice(0, boundedLimit).map((verse) => ({
-    id: verse.id,
-    book_id: verse.book_id,
-    book_number: verse.book_number,
-    book_name: verse.book_name,
-    testament: verse.testament,
-    chapter: verse.chapter,
-    verse: verse.verse,
-    reference: verse.reference,
-    text: verse.text,
-  }))
+  const words = normalizedQuery.split(/\s+/).filter(Boolean)
+  const results: BibleSearchResult[] = []
+  let total = 0
+
+  forEachBibleVerse((verse) => {
+    const searchableText = normalizeSearchText(
+      [
+        verse.reference,
+        verse.book_id,
+        verse.book_name,
+        verse.chapter,
+        verse.verse,
+        verse.text,
+      ].join(" "),
+    )
+
+    if (words.every((word) => searchableText.includes(word))) {
+      total += 1
+
+      if (results.length < boundedLimit) {
+        results.push(toSearchResult(verse))
+      }
+    }
+  })
 
   return {
     query: cleanQuery,
-    total: matchedVerses.length,
+    total,
     limit: boundedLimit,
-    limited: matchedVerses.length > boundedLimit,
+    limited: total > boundedLimit,
     results,
   }
 }

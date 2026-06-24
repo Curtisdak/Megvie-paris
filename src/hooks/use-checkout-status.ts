@@ -9,6 +9,7 @@ type CheckoutSessionStatus = {
   paymentStatus?: string | null
   amountTotal?: number | null
   currency?: string | null
+  ledgerStatus?: string | null
   error?: string
 }
 
@@ -68,7 +69,7 @@ export function useCheckoutStatus() {
             )
           }
 
-          if (data?.paymentStatus === "paid") {
+          if (data?.ledgerStatus === "SUCCEEDED") {
             const formattedAmount = formatStripeAmount(
               data.amountTotal,
               data.currency,
@@ -78,6 +79,11 @@ export function useCheckoutStatus() {
               description: formattedAmount
                 ? `Votre paiement de ${formattedAmount} a bien ete confirme.`
                 : "Votre paiement a bien ete confirme.",
+            })
+          } else if (data?.paymentStatus === "paid") {
+            toast.info("Confirmation en cours", {
+              description:
+                "Stripe a recu le paiement. L'historique sera mis a jour apres traitement du webhook.",
             })
           } else if (data?.status === "open") {
             toast.info("Paiement en attente", {
@@ -118,9 +124,9 @@ export function useCheckoutStatus() {
     }
 
     if (statusValue === "success") {
-      toast.success("Merci pour votre don !", {
+      toast.info("Retour Stripe recu", {
         description:
-          "Votre retour depuis Stripe a bien ete recu. Merci pour votre soutien.",
+          "La confirmation finale du don arrive par webhook Stripe.",
       })
     } else if (statusValue === "cancel" || statusValue === "canceled") {
       toast.info("Paiement interrompu", {

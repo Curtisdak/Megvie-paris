@@ -172,120 +172,106 @@ export async function listMembers(options: {
   )
     ? (options.role as ChurchRole)
     : undefined
+  const searchWhere = query
+    ? [
+        { firstName: contains(query) },
+        { lastName: contains(query) },
+        ...(canContact ? [{ email: contains(query) }] : []),
+        { profile: { memberId: contains(query) } },
+      ]
+    : undefined
+  const where = {
+    membershipStatus: status,
+    role,
+    OR: searchWhere,
+  }
+  const [members, filteredTotal, totalMembers, statusGroups, roleGroups] =
+    await Promise.all([
+      prisma.appUser.findMany({
+        where,
+        orderBy: [{ lastName: "asc" }, { firstName: "asc" }],
+        take: pageSize,
+        select: {
+          id: true,
+          email: canContact || canSensitive,
+          firstName: true,
+          lastName: true,
+          imageUrl: true,
+          role: true,
+          membershipStatus: true,
+          createdAt: true,
+          profile: {
+            select: {
+              memberId: true,
+              displayName: true,
+              avatarUrl: true,
+              joinedAt: true,
+              approvedAt: true,
+              suspendedAt: true,
+            },
+          },
+          privateDetails: canSensitive
+            ? {
+                select: {
+                  phone: true,
+                  dateOfBirth: true,
+                  addressLine1: true,
+                  postalCode: true,
+                  city: true,
+                  countryCode: true,
+                },
+              }
+            : canContact
+              ? { select: { phone: true, city: true } }
+              : false,
+        },
+      }),
+      prisma.appUser.count({ where }),
+      prisma.appUser.count(),
+      prisma.appUser.groupBy({
+        by: ["membershipStatus"],
+        _count: { _all: true },
+      }),
+      prisma.appUser.groupBy({
+        by: ["role"],
+        _count: { _all: true },
+      }),
+    ])
+  const statusCounts = Object.fromEntries(
+    Object.values(MembershipStatus).map((value) => [value, 0]),
+  ) as Record<MembershipStatus, number>
+  const roleCounts = Object.fromEntries(
+    ["MEMBER", "RESPO", "FINANCE", "MASTER", "CREATOR"].map((value) => [
+      value,
+      0,
+    ]),
+  ) as Record<ChurchRole, number>
+
+  for (const item of statusGroups) {
+    statusCounts[item.membershipStatus] = item._count._all
+  }
+
+  for (const item of roleGroups) {
+    roleCounts[item.role] = item._count._all
+  }
 
   return {
+    actorId: actor.id,
     actorRole: actor.role,
     canSensitive,
-    members: await prisma.appUser.findMany({
-      where: {
-        membershipStatus: status,
-        role,
-        OR: query
-          ? [
-              { firstName: contains(query) },
-              { lastName: contains(query) },
-              { email: canContact ? contains(query) : undefined },
-              { profile: { memberId: contains(query) } },
-            ]
-          : undefined,
-      },
-      orderBy: [{ lastName: "asc" }, { firstName: "asc" }],
-      take: pageSize,
-      select: {
-        id: true,
-        email: canContact || canSensitive,
-        firstName: true,
-        lastName: true,
-        imageUrl: true,
-        role: true,
-        membershipStatus: true,
-        createdAt: true,
-        profile: {
-          select: {
-            memberId: true,
-            displayName: true,
-            avatarUrl: true,
-            joinedAt: true,
-            approvedAt: true,
-            suspendedAt: true,
-          },
-        },
-        privateDetails: canSensitive
-          ? {
-              select: {
-                phone: true,
-                dateOfBirth: true,
-                addressLine1: true,
-                postalCode: true,
-                city: true,
-                countryCode: true,
-              },
-            }
-          : canContact
-            ? { select: { phone: true, city: true } }
-            : false,
-      },
-    }),
+    counts: {
+      total: totalMembers,
+      filtered: filteredTotal,
+      status: statusCounts,
+      role: roleCounts,
+    },
+    members,
   }
-}
-
-export async function listRoleAdministrators() {
-  await requirePermission("roles.manage", "/admin/roles")
-
-  return prisma.appUser.findMany({
-    where: {
-      role: { in: ["RESPO", "FINANCE", "MASTER", "CREATOR"] },
-      archivedAt: null,
-    },
-    orderBy: [{ role: "asc" }, { lastName: "asc" }],
-    select: {
-      id: true,
-      email: true,
-      firstName: true,
-      lastName: true,
-      role: true,
-      membershipStatus: true,
-      updatedAt: true,
-      profile: { select: { memberId: true, displayName: true } },
-    },
-  })
-}
-
-export async function listRoleCandidates(search?: string) {
-  await requirePermission("roles.manage", "/admin/roles")
-  const query = search?.trim() || null
-
-  return prisma.appUser.findMany({
-    where: {
-      membershipStatus: MembershipStatus.ACTIVE,
-      role: { not: "CREATOR" },
-      OR: query
-        ? [
-            { firstName: contains(query) },
-            { lastName: contains(query) },
-            { email: contains(query) },
-            { profile: { memberId: contains(query) } },
-          ]
-        : undefined,
-    },
-    orderBy: [{ lastName: "asc" }, { firstName: "asc" }],
-    take: 30,
-    select: {
-      id: true,
-      email: true,
-      firstName: true,
-      lastName: true,
-      role: true,
-      membershipStatus: true,
-      profile: { select: { memberId: true, displayName: true } },
-    },
-  })
 }
 
 export async function listEvents(options: {
   search?: string
   status?: string
-  visibility?: string
   page?: string | number
 } = {}) {
   await requirePermission("events.manage", "/admin/evenements")
@@ -296,15 +282,10 @@ export async function listEvents(options: {
   const status = Object.values(EventStatus).includes(options.status as EventStatus)
     ? (options.status as EventStatus)
     : undefined
-  const visibility = Object.values(ContentVisibility).includes(
-    options.visibility as ContentVisibility,
-  )
-    ? (options.visibility as ContentVisibility)
-    : undefined
 
   const where = {
-    status,
-    visibility,
+    status: status ?? { not: EventStatus.ARCHIVED },
+    visibility: ContentVisibility.PUBLIC,
     OR: searchFilter
       ? [
           { title: searchFilter },
@@ -436,6 +417,7 @@ export async function listMessages(options: {
   return prisma.contactMessage.findMany({
     where: {
       ...messageAccessWhere(user.role, status),
+      status: status ?? { not: ContactMessageStatus.ARCHIVED },
       confidentiality:
         requestedConfidentiality && canConfidential
           ? requestedConfidentiality
@@ -522,7 +504,7 @@ export async function listAnnouncements(options: {
     : undefined
 
   const where = {
-    status,
+    status: status ?? { not: AnnouncementStatus.ARCHIVED },
     visibility,
     category,
     OR: searchFilter
@@ -674,6 +656,7 @@ export async function listMemberDashboardContent() {
     prisma.churchEvent.findMany({
       where: {
         status: EventStatus.PUBLISHED,
+        visibility: ContentVisibility.PUBLIC,
         archivedAt: null,
         startsAt: { gte: now },
       },

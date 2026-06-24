@@ -1,15 +1,23 @@
 import "server-only"
 
+import { DailyVerseScheduleStatus } from "@/generated/prisma/enums"
+import { getLocalDateKey } from "@/lib/notifications/safety"
 import { prisma } from "@/lib/prisma"
 
 export type DailyBibleVerse = {
   id?: string
   day_of_year: number
+  book?: string
+  chapter?: number
+  verseStart?: number
+  verseEnd?: number
   reference: string
   text: string
   translation: string
   theme?: string | null
   isFallback?: boolean
+  isScheduled?: boolean
+  localDate?: string
 }
 
 const fallbackVerses: DailyBibleVerse[] = [
@@ -106,8 +114,48 @@ export function getFallbackVerse(dayOfYear = getParisDayOfYear()) {
 export async function getDailyBibleVerse(date = new Date()) {
   const dayOfYear = getParisDayOfYear(date)
   const fallbackVerse = getFallbackVerse(dayOfYear)
+  const localDate = getLocalDateKey(date, "Europe/Paris")
 
   try {
+    const scheduled = await prisma.dailyVerseSchedule.findFirst({
+      where: {
+        localDate,
+        status: {
+          in: [DailyVerseScheduleStatus.SCHEDULED, DailyVerseScheduleStatus.SENT],
+        },
+      },
+      orderBy: [{ status: "desc" }, { updatedAt: "desc" }],
+      select: {
+        id: true,
+        book: true,
+        chapter: true,
+        verseStart: true,
+        verseEnd: true,
+        reference: true,
+        verseText: true,
+        translation: true,
+        theme: true,
+        localDate: true,
+      },
+    })
+
+    if (scheduled) {
+      return {
+        id: scheduled.id,
+        day_of_year: dayOfYear,
+        book: scheduled.book,
+        chapter: scheduled.chapter,
+        verseStart: scheduled.verseStart,
+        verseEnd: scheduled.verseEnd,
+        reference: scheduled.reference,
+        text: scheduled.verseText,
+        translation: scheduled.translation,
+        theme: scheduled.theme,
+        isScheduled: true,
+        localDate: scheduled.localDate,
+      } satisfies DailyBibleVerse
+    }
+
     const verse = await prisma.dailyBibleVerse.findUnique({
       where: { dayOfYear },
       select: {
@@ -134,5 +182,41 @@ export async function getDailyBibleVerse(date = new Date()) {
     } satisfies DailyBibleVerse
   } catch {
     return fallbackVerse
+  }
+}
+
+export async function getAdjacentSentDailyVerses(date = new Date()) {
+  const localDate = getLocalDateKey(date, "Europe/Paris")
+  const select = {
+    id: true,
+    localDate: true,
+    reference: true,
+    verseText: true,
+    translation: true,
+  }
+
+  try {
+    const [previous, next] = await Promise.all([
+      prisma.dailyVerseSchedule.findFirst({
+        where: {
+          status: DailyVerseScheduleStatus.SENT,
+          localDate: { lt: localDate },
+        },
+        orderBy: { localDate: "desc" },
+        select,
+      }),
+      prisma.dailyVerseSchedule.findFirst({
+        where: {
+          status: DailyVerseScheduleStatus.SENT,
+          localDate: { gt: localDate },
+        },
+        orderBy: { localDate: "asc" },
+        select,
+      }),
+    ])
+
+    return { previous, next }
+  } catch {
+    return { previous: null, next: null }
   }
 }

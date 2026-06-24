@@ -5,6 +5,7 @@ import { Plus, Send } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { ImageDropzone } from "@/components/admin/image-dropzone"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
@@ -193,6 +194,19 @@ export function AnnouncementFormDialog() {
                   />
                 </Field>
               </div>
+
+              <label className="flex items-start gap-3 rounded-2xl border border-amber-100 bg-amber-50/80 p-3 text-sm dark:border-amber-400/20 dark:bg-amber-400/10">
+                <Checkbox name="notifyPush" className="mt-1" />
+                <span>
+                  <span className="block font-semibold">
+                    Notifier les membres
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-zinc-500 dark:text-zinc-400">
+                    Envoie un push seulement si l&apos;annonce est publiee ou
+                    programme une notification si la publication est planifiee.
+                  </span>
+                </span>
+              </label>
 
               <div className="border-t border-zinc-200 pt-4 dark:border-zinc-800">
                 <ImageDropzone

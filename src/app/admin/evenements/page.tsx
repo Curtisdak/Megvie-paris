@@ -12,11 +12,14 @@ import {
   Search,
   Send,
 } from "lucide-react"
+import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { DeleteSubmitButton } from "@/components/admin/delete-submit-button"
 import { EventFormDialog } from "@/components/admin/event-form-dialog"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { deleteEventAction } from "@/lib/admin/actions"
 import { listEvents } from "@/lib/admin/data"
 
 const selectClass =
@@ -33,13 +36,7 @@ const statusOptions = [
   ["ARCHIVED", "Archive"],
 ] as const
 
-const visibilityOptions = [
-  ["PUBLIC", "Public"],
-  ["MEMBERS_ONLY", "Membres seulement"],
-] as const
-
 const statusLabels = Object.fromEntries(statusOptions) as Record<string, string>
-const visibilityLabels = Object.fromEntries(visibilityOptions) as Record<string, string>
 
 function formatDateTime(value: Date | null) {
   if (!value) return null
@@ -72,7 +69,6 @@ export default async function EventsPage({
   searchParams?: Promise<{
     q?: string
     status?: string
-    visibility?: string
     page?: string
   }>
 }) {
@@ -80,10 +76,9 @@ export default async function EventsPage({
   const { events, counts, pagination } = await listEvents({
     search: params?.q,
     status: params?.status,
-    visibility: params?.visibility,
     page: params?.page,
   })
-  const hasFilters = Boolean(params?.q || params?.status || params?.visibility)
+  const hasFilters = Boolean(params?.q || params?.status)
   const metrics = [
     {
       label: "Total evenements",
@@ -119,7 +114,6 @@ export default async function EventsPage({
     const next = new URLSearchParams()
     if (params?.q) next.set("q", params.q)
     if (params?.status) next.set("status", params.status)
-    if (params?.visibility) next.set("visibility", params.visibility)
     if (page > 1) next.set("page", String(page))
     const query = next.toString()
     return query ? `/admin/evenements?${query}` : "/admin/evenements"
@@ -168,7 +162,7 @@ export default async function EventsPage({
       </section>
 
       <AdminCard className="p-4 sm:p-5">
-        <form className="grid gap-3 lg:grid-cols-[minmax(220px,1fr),180px,190px,auto] lg:items-end">
+        <form className="grid gap-3 lg:grid-cols-[minmax(220px,1fr),180px,auto] lg:items-end">
           <div className="space-y-2">
             <label htmlFor="event-search" className={labelClass}>
               Rechercher
@@ -200,25 +194,6 @@ export default async function EventsPage({
             >
               <option value="">Tous</option>
               {statusOptions.map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="event-visibility-filter" className={labelClass}>
-              Audience
-            </label>
-            <select
-              id="event-visibility-filter"
-              name="visibility"
-              defaultValue={params?.visibility ?? ""}
-              className={selectClass}
-            >
-              <option value="">Toutes</option>
-              {visibilityOptions.map(([value, label]) => (
                 <option key={value} value={value}>
                   {label}
                 </option>
@@ -290,10 +265,6 @@ export default async function EventsPage({
                         value={event.status}
                         label={statusLabels[event.status]}
                       />
-                      <StatusBadge
-                        value={event.visibility}
-                        label={visibilityLabels[event.visibility]}
-                      />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold leading-tight">
@@ -342,11 +313,20 @@ export default async function EventsPage({
                   </div>
 
                   <div className="border-t border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-950/50 lg:border-l lg:border-t-0">
-                    <Button asChild variant="outline" className="w-full rounded-full">
-                      <Link href={`/admin/evenements/${event.id}`}>
-                        Modifier
-                      </Link>
-                    </Button>
+                    <div className="grid gap-2">
+                      <Button asChild variant="outline" className="w-full rounded-full">
+                        <Link href={`/admin/evenements/${event.id}`}>
+                          Modifier
+                        </Link>
+                      </Button>
+                      <AdminActionForm action={deleteEventAction}>
+                        <input type="hidden" name="id" value={event.id} />
+                        <DeleteSubmitButton
+                          disabled={event.status === "ARCHIVED"}
+                          confirmMessage={`Supprimer l'evenement "${event.title}" ?`}
+                        />
+                      </AdminActionForm>
+                    </div>
                     <p className="mt-4 text-xs leading-5 text-zinc-500 dark:text-zinc-400">
                       Mis a jour le {formatDateTime(event.updatedAt)}.
                     </p>

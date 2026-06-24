@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { NotificationCountBadge } from "@/components/navigation/notification-count-badge"
 import { getAdminNavItems } from "@/lib/admin/navigation"
 import { cn } from "@/lib/utils"
 
@@ -156,11 +157,12 @@ export function AdminShell({
                 asChild
                 variant="ghost"
                 size="icon"
-                className="rounded-full"
+                className="relative rounded-full"
                 aria-label="Notifications"
               >
-                <Link href="/notifications">
+                <Link href="/admin/notifications">
                   <Bell className="h-5 w-5" aria-hidden />
+                  <NotificationCountBadge />
                 </Link>
               </Button>
 
@@ -316,7 +318,11 @@ function currentTitle(pathname: string) {
   if (pathname.startsWith("/admin/galerie")) return "Galerie"
   if (pathname.startsWith("/admin/messages")) return "Messages"
   if (pathname.startsWith("/admin/annonces")) return "Annonces"
-  if (pathname.startsWith("/admin/roles")) return "Roles"
+  if (pathname.startsWith("/admin/notifications")) return "Notifications"
+  if (pathname.startsWith("/admin/versets-du-jour")) return "Versets du jour"
+  if (pathname.startsWith("/admin/dons/directs")) return "Dons directs"
+  if (pathname.startsWith("/admin/finance")) return "Finance"
+  if (pathname.startsWith("/admin/webhooks-stripe")) return "Webhooks Stripe"
   if (pathname.startsWith("/admin/audit")) return "Audit"
   return "Tableau de bord"
 }

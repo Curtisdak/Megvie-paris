@@ -31,6 +31,7 @@ export type AppUserMinAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   imageUrl: string | null
+  stripeCustomerId: string | null
   role: $Enums.ChurchRole | null
   membershipStatus: $Enums.MembershipStatus | null
   onboardingComplete: boolean | null
@@ -46,6 +47,7 @@ export type AppUserMaxAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   imageUrl: string | null
+  stripeCustomerId: string | null
   role: $Enums.ChurchRole | null
   membershipStatus: $Enums.MembershipStatus | null
   onboardingComplete: boolean | null
@@ -61,6 +63,7 @@ export type AppUserCountAggregateOutputType = {
   firstName: number
   lastName: number
   imageUrl: number
+  stripeCustomerId: number
   role: number
   membershipStatus: number
   onboardingComplete: number
@@ -78,6 +81,7 @@ export type AppUserMinAggregateInputType = {
   firstName?: true
   lastName?: true
   imageUrl?: true
+  stripeCustomerId?: true
   role?: true
   membershipStatus?: true
   onboardingComplete?: true
@@ -93,6 +97,7 @@ export type AppUserMaxAggregateInputType = {
   firstName?: true
   lastName?: true
   imageUrl?: true
+  stripeCustomerId?: true
   role?: true
   membershipStatus?: true
   onboardingComplete?: true
@@ -108,6 +113,7 @@ export type AppUserCountAggregateInputType = {
   firstName?: true
   lastName?: true
   imageUrl?: true
+  stripeCustomerId?: true
   role?: true
   membershipStatus?: true
   onboardingComplete?: true
@@ -196,6 +202,7 @@ export type AppUserGroupByOutputType = {
   firstName: string | null
   lastName: string | null
   imageUrl: string | null
+  stripeCustomerId: string | null
   role: $Enums.ChurchRole
   membershipStatus: $Enums.MembershipStatus
   onboardingComplete: boolean
@@ -232,6 +239,7 @@ export type AppUserWhereInput = {
   firstName?: Prisma.StringNullableFilter<"AppUser"> | string | null
   lastName?: Prisma.StringNullableFilter<"AppUser"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"AppUser"> | string | null
+  stripeCustomerId?: Prisma.StringNullableFilter<"AppUser"> | string | null
   role?: Prisma.EnumChurchRoleFilter<"AppUser"> | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFilter<"AppUser"> | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFilter<"AppUser"> | boolean
@@ -255,6 +263,21 @@ export type AppUserWhereInput = {
   authoredAnnouncements?: Prisma.AnnouncementListRelationFilter
   updatedAnnouncements?: Prisma.AnnouncementListRelationFilter
   announcementReads?: Prisma.AnnouncementReadListRelationFilter
+  createdNotificationCampaigns?: Prisma.NotificationCampaignListRelationFilter
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignListRelationFilter
+  notificationRecipients?: Prisma.NotificationRecipientListRelationFilter
+  donationCheckouts?: Prisma.DonationCheckoutListRelationFilter
+  donations?: Prisma.DonationListRelationFilter
+  recurringDonations?: Prisma.RecurringDonationListRelationFilter
+  enteredDirectDonations?: Prisma.DonationListRelationFilter
+  verifiedDirectDonations?: Prisma.DonationListRelationFilter
+  cancelledDirectDonations?: Prisma.DonationListRelationFilter
+  bibleFavorites?: Prisma.BibleFavoriteListRelationFilter
+  bibleNotes?: Prisma.BibleNoteListRelationFilter
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
 }
 
 export type AppUserOrderByWithRelationInput = {
@@ -264,6 +287,7 @@ export type AppUserOrderByWithRelationInput = {
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   membershipStatus?: Prisma.SortOrder
   onboardingComplete?: Prisma.SortOrder
@@ -287,11 +311,27 @@ export type AppUserOrderByWithRelationInput = {
   authoredAnnouncements?: Prisma.AnnouncementOrderByRelationAggregateInput
   updatedAnnouncements?: Prisma.AnnouncementOrderByRelationAggregateInput
   announcementReads?: Prisma.AnnouncementReadOrderByRelationAggregateInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignOrderByRelationAggregateInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignOrderByRelationAggregateInput
+  notificationRecipients?: Prisma.NotificationRecipientOrderByRelationAggregateInput
+  donationCheckouts?: Prisma.DonationCheckoutOrderByRelationAggregateInput
+  donations?: Prisma.DonationOrderByRelationAggregateInput
+  recurringDonations?: Prisma.RecurringDonationOrderByRelationAggregateInput
+  enteredDirectDonations?: Prisma.DonationOrderByRelationAggregateInput
+  verifiedDirectDonations?: Prisma.DonationOrderByRelationAggregateInput
+  cancelledDirectDonations?: Prisma.DonationOrderByRelationAggregateInput
+  bibleFavorites?: Prisma.BibleFavoriteOrderByRelationAggregateInput
+  bibleNotes?: Prisma.BibleNoteOrderByRelationAggregateInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleOrderByRelationAggregateInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleOrderByRelationAggregateInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleOrderByRelationAggregateInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleOrderByRelationAggregateInput
 }
 
 export type AppUserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   clerkUserId?: string
+  stripeCustomerId?: string
   AND?: Prisma.AppUserWhereInput | Prisma.AppUserWhereInput[]
   OR?: Prisma.AppUserWhereInput[]
   NOT?: Prisma.AppUserWhereInput | Prisma.AppUserWhereInput[]
@@ -322,7 +362,22 @@ export type AppUserWhereUniqueInput = Prisma.AtLeast<{
   authoredAnnouncements?: Prisma.AnnouncementListRelationFilter
   updatedAnnouncements?: Prisma.AnnouncementListRelationFilter
   announcementReads?: Prisma.AnnouncementReadListRelationFilter
-}, "id" | "clerkUserId">
+  createdNotificationCampaigns?: Prisma.NotificationCampaignListRelationFilter
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignListRelationFilter
+  notificationRecipients?: Prisma.NotificationRecipientListRelationFilter
+  donationCheckouts?: Prisma.DonationCheckoutListRelationFilter
+  donations?: Prisma.DonationListRelationFilter
+  recurringDonations?: Prisma.RecurringDonationListRelationFilter
+  enteredDirectDonations?: Prisma.DonationListRelationFilter
+  verifiedDirectDonations?: Prisma.DonationListRelationFilter
+  cancelledDirectDonations?: Prisma.DonationListRelationFilter
+  bibleFavorites?: Prisma.BibleFavoriteListRelationFilter
+  bibleNotes?: Prisma.BibleNoteListRelationFilter
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleListRelationFilter
+}, "id" | "clerkUserId" | "stripeCustomerId">
 
 export type AppUserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -331,6 +386,7 @@ export type AppUserOrderByWithAggregationInput = {
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   membershipStatus?: Prisma.SortOrder
   onboardingComplete?: Prisma.SortOrder
@@ -352,6 +408,7 @@ export type AppUserScalarWhereWithAggregatesInput = {
   firstName?: Prisma.StringNullableWithAggregatesFilter<"AppUser"> | string | null
   lastName?: Prisma.StringNullableWithAggregatesFilter<"AppUser"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"AppUser"> | string | null
+  stripeCustomerId?: Prisma.StringNullableWithAggregatesFilter<"AppUser"> | string | null
   role?: Prisma.EnumChurchRoleWithAggregatesFilter<"AppUser"> | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusWithAggregatesFilter<"AppUser"> | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolWithAggregatesFilter<"AppUser"> | boolean
@@ -367,6 +424,7 @@ export type AppUserCreateInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -390,6 +448,21 @@ export type AppUserCreateInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateInput = {
@@ -399,6 +472,7 @@ export type AppUserUncheckedCreateInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -422,6 +496,21 @@ export type AppUserUncheckedCreateInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUpdateInput = {
@@ -431,6 +520,7 @@ export type AppUserUpdateInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -454,6 +544,21 @@ export type AppUserUpdateInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateInput = {
@@ -463,6 +568,7 @@ export type AppUserUncheckedUpdateInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -486,6 +592,21 @@ export type AppUserUncheckedUpdateInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateManyInput = {
@@ -495,6 +616,7 @@ export type AppUserCreateManyInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -510,6 +632,7 @@ export type AppUserUpdateManyMutationInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -525,6 +648,7 @@ export type AppUserUncheckedUpdateManyInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -540,6 +664,7 @@ export type AppUserCountOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   membershipStatus?: Prisma.SortOrder
   onboardingComplete?: Prisma.SortOrder
@@ -555,6 +680,7 @@ export type AppUserMaxOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   membershipStatus?: Prisma.SortOrder
   onboardingComplete?: Prisma.SortOrder
@@ -570,6 +696,7 @@ export type AppUserMinOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   membershipStatus?: Prisma.SortOrder
   onboardingComplete?: Prisma.SortOrder
@@ -688,6 +815,142 @@ export type AppUserUpdateOneWithoutPushSubscriptionsNestedInput = {
   delete?: Prisma.AppUserWhereInput | boolean
   connect?: Prisma.AppUserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutPushSubscriptionsInput, Prisma.AppUserUpdateWithoutPushSubscriptionsInput>, Prisma.AppUserUncheckedUpdateWithoutPushSubscriptionsInput>
+}
+
+export type AppUserCreateNestedOneWithoutBibleFavoritesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutBibleFavoritesInput, Prisma.AppUserUncheckedCreateWithoutBibleFavoritesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutBibleFavoritesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutBibleFavoritesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutBibleFavoritesInput, Prisma.AppUserUncheckedCreateWithoutBibleFavoritesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutBibleFavoritesInput
+  upsert?: Prisma.AppUserUpsertWithoutBibleFavoritesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutBibleFavoritesInput, Prisma.AppUserUpdateWithoutBibleFavoritesInput>, Prisma.AppUserUncheckedUpdateWithoutBibleFavoritesInput>
+}
+
+export type AppUserCreateNestedOneWithoutBibleNotesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutBibleNotesInput, Prisma.AppUserUncheckedCreateWithoutBibleNotesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutBibleNotesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutBibleNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutBibleNotesInput, Prisma.AppUserUncheckedCreateWithoutBibleNotesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutBibleNotesInput
+  upsert?: Prisma.AppUserUpsertWithoutBibleNotesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutBibleNotesInput, Prisma.AppUserUpdateWithoutBibleNotesInput>, Prisma.AppUserUncheckedUpdateWithoutBibleNotesInput>
+}
+
+export type AppUserCreateNestedOneWithoutCreatedDailyVerseSchedulesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCreatedDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedDailyVerseSchedulesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutUpdatedDailyVerseSchedulesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutUpdatedDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUpdatedDailyVerseSchedulesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutCancelledDailyVerseSchedulesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCancelledDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCancelledDailyVerseSchedulesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutSentDailyVerseSchedulesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutSentDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutSentDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutSentDailyVerseSchedulesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutCreatedDailyVerseSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCreatedDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedDailyVerseSchedulesInput
+  upsert?: Prisma.AppUserUpsertWithoutCreatedDailyVerseSchedulesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutCreatedDailyVerseSchedulesInput, Prisma.AppUserUpdateWithoutCreatedDailyVerseSchedulesInput>, Prisma.AppUserUncheckedUpdateWithoutCreatedDailyVerseSchedulesInput>
+}
+
+export type AppUserUpdateOneWithoutUpdatedDailyVerseSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutUpdatedDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutUpdatedDailyVerseSchedulesInput
+  upsert?: Prisma.AppUserUpsertWithoutUpdatedDailyVerseSchedulesInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutUpdatedDailyVerseSchedulesInput, Prisma.AppUserUpdateWithoutUpdatedDailyVerseSchedulesInput>, Prisma.AppUserUncheckedUpdateWithoutUpdatedDailyVerseSchedulesInput>
+}
+
+export type AppUserUpdateOneWithoutCancelledDailyVerseSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCancelledDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCancelledDailyVerseSchedulesInput
+  upsert?: Prisma.AppUserUpsertWithoutCancelledDailyVerseSchedulesInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutCancelledDailyVerseSchedulesInput, Prisma.AppUserUpdateWithoutCancelledDailyVerseSchedulesInput>, Prisma.AppUserUncheckedUpdateWithoutCancelledDailyVerseSchedulesInput>
+}
+
+export type AppUserUpdateOneWithoutSentDailyVerseSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutSentDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutSentDailyVerseSchedulesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutSentDailyVerseSchedulesInput
+  upsert?: Prisma.AppUserUpsertWithoutSentDailyVerseSchedulesInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutSentDailyVerseSchedulesInput, Prisma.AppUserUpdateWithoutSentDailyVerseSchedulesInput>, Prisma.AppUserUncheckedUpdateWithoutSentDailyVerseSchedulesInput>
+}
+
+export type AppUserCreateNestedOneWithoutCreatedNotificationCampaignsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutCreatedNotificationCampaignsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedNotificationCampaignsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutTargetedNotificationCampaignsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutTargetedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutTargetedNotificationCampaignsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutTargetedNotificationCampaignsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneWithoutCreatedNotificationCampaignsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutCreatedNotificationCampaignsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCreatedNotificationCampaignsInput
+  upsert?: Prisma.AppUserUpsertWithoutCreatedNotificationCampaignsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutCreatedNotificationCampaignsInput, Prisma.AppUserUpdateWithoutCreatedNotificationCampaignsInput>, Prisma.AppUserUncheckedUpdateWithoutCreatedNotificationCampaignsInput>
+}
+
+export type AppUserUpdateOneWithoutTargetedNotificationCampaignsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutTargetedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutTargetedNotificationCampaignsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutTargetedNotificationCampaignsInput
+  upsert?: Prisma.AppUserUpsertWithoutTargetedNotificationCampaignsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutTargetedNotificationCampaignsInput, Prisma.AppUserUpdateWithoutTargetedNotificationCampaignsInput>, Prisma.AppUserUncheckedUpdateWithoutTargetedNotificationCampaignsInput>
+}
+
+export type AppUserCreateNestedOneWithoutNotificationRecipientsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutNotificationRecipientsInput, Prisma.AppUserUncheckedCreateWithoutNotificationRecipientsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutNotificationRecipientsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutNotificationRecipientsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutNotificationRecipientsInput, Prisma.AppUserUncheckedCreateWithoutNotificationRecipientsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutNotificationRecipientsInput
+  upsert?: Prisma.AppUserUpsertWithoutNotificationRecipientsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutNotificationRecipientsInput, Prisma.AppUserUpdateWithoutNotificationRecipientsInput>, Prisma.AppUserUncheckedUpdateWithoutNotificationRecipientsInput>
 }
 
 export type AppUserCreateNestedOneWithoutAdminAuditLogsInput = {
@@ -868,6 +1131,100 @@ export type AppUserUpdateOneRequiredWithoutAnnouncementReadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutAnnouncementReadsInput, Prisma.AppUserUpdateWithoutAnnouncementReadsInput>, Prisma.AppUserUncheckedUpdateWithoutAnnouncementReadsInput>
 }
 
+export type AppUserCreateNestedOneWithoutDonationCheckoutsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutDonationCheckoutsInput, Prisma.AppUserUncheckedCreateWithoutDonationCheckoutsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutDonationCheckoutsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneWithoutDonationCheckoutsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutDonationCheckoutsInput, Prisma.AppUserUncheckedCreateWithoutDonationCheckoutsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutDonationCheckoutsInput
+  upsert?: Prisma.AppUserUpsertWithoutDonationCheckoutsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutDonationCheckoutsInput, Prisma.AppUserUpdateWithoutDonationCheckoutsInput>, Prisma.AppUserUncheckedUpdateWithoutDonationCheckoutsInput>
+}
+
+export type AppUserCreateNestedOneWithoutDonationsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutDonationsInput, Prisma.AppUserUncheckedCreateWithoutDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutDonationsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutEnteredDirectDonationsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutEnteredDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutEnteredDirectDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutEnteredDirectDonationsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutVerifiedDirectDonationsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutVerifiedDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutVerifiedDirectDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutVerifiedDirectDonationsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserCreateNestedOneWithoutCancelledDirectDonationsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutCancelledDirectDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCancelledDirectDonationsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneWithoutDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutDonationsInput, Prisma.AppUserUncheckedCreateWithoutDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutDonationsInput
+  upsert?: Prisma.AppUserUpsertWithoutDonationsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutDonationsInput, Prisma.AppUserUpdateWithoutDonationsInput>, Prisma.AppUserUncheckedUpdateWithoutDonationsInput>
+}
+
+export type AppUserUpdateOneWithoutEnteredDirectDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutEnteredDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutEnteredDirectDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutEnteredDirectDonationsInput
+  upsert?: Prisma.AppUserUpsertWithoutEnteredDirectDonationsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutEnteredDirectDonationsInput, Prisma.AppUserUpdateWithoutEnteredDirectDonationsInput>, Prisma.AppUserUncheckedUpdateWithoutEnteredDirectDonationsInput>
+}
+
+export type AppUserUpdateOneWithoutVerifiedDirectDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutVerifiedDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutVerifiedDirectDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutVerifiedDirectDonationsInput
+  upsert?: Prisma.AppUserUpsertWithoutVerifiedDirectDonationsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutVerifiedDirectDonationsInput, Prisma.AppUserUpdateWithoutVerifiedDirectDonationsInput>, Prisma.AppUserUncheckedUpdateWithoutVerifiedDirectDonationsInput>
+}
+
+export type AppUserUpdateOneWithoutCancelledDirectDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutCancelledDirectDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutCancelledDirectDonationsInput
+  upsert?: Prisma.AppUserUpsertWithoutCancelledDirectDonationsInput
+  disconnect?: Prisma.AppUserWhereInput | boolean
+  delete?: Prisma.AppUserWhereInput | boolean
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutCancelledDirectDonationsInput, Prisma.AppUserUpdateWithoutCancelledDirectDonationsInput>, Prisma.AppUserUncheckedUpdateWithoutCancelledDirectDonationsInput>
+}
+
+export type AppUserCreateNestedOneWithoutRecurringDonationsInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutRecurringDonationsInput, Prisma.AppUserUncheckedCreateWithoutRecurringDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutRecurringDonationsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutRecurringDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutRecurringDonationsInput, Prisma.AppUserUncheckedCreateWithoutRecurringDonationsInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutRecurringDonationsInput
+  upsert?: Prisma.AppUserUpsertWithoutRecurringDonationsInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutRecurringDonationsInput, Prisma.AppUserUpdateWithoutRecurringDonationsInput>, Prisma.AppUserUncheckedUpdateWithoutRecurringDonationsInput>
+}
+
 export type AppUserCreateWithoutProfileInput = {
   id?: string
   clerkUserId: string
@@ -875,6 +1232,7 @@ export type AppUserCreateWithoutProfileInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -897,6 +1255,21 @@ export type AppUserCreateWithoutProfileInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutProfileInput = {
@@ -906,6 +1279,7 @@ export type AppUserUncheckedCreateWithoutProfileInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -928,6 +1302,21 @@ export type AppUserUncheckedCreateWithoutProfileInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutProfileInput = {
@@ -942,6 +1331,7 @@ export type AppUserCreateWithoutApprovedProfilesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -964,6 +1354,21 @@ export type AppUserCreateWithoutApprovedProfilesInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutApprovedProfilesInput = {
@@ -973,6 +1378,7 @@ export type AppUserUncheckedCreateWithoutApprovedProfilesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -995,6 +1401,21 @@ export type AppUserUncheckedCreateWithoutApprovedProfilesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutApprovedProfilesInput = {
@@ -1020,6 +1441,7 @@ export type AppUserUpdateWithoutProfileInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1042,6 +1464,21 @@ export type AppUserUpdateWithoutProfileInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutProfileInput = {
@@ -1051,6 +1488,7 @@ export type AppUserUncheckedUpdateWithoutProfileInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1073,6 +1511,21 @@ export type AppUserUncheckedUpdateWithoutProfileInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUpsertWithoutApprovedProfilesInput = {
@@ -1093,6 +1546,7 @@ export type AppUserUpdateWithoutApprovedProfilesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1115,6 +1569,21 @@ export type AppUserUpdateWithoutApprovedProfilesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutApprovedProfilesInput = {
@@ -1124,6 +1593,7 @@ export type AppUserUncheckedUpdateWithoutApprovedProfilesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1146,6 +1616,21 @@ export type AppUserUncheckedUpdateWithoutApprovedProfilesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutPrivateDetailsInput = {
@@ -1155,6 +1640,7 @@ export type AppUserCreateWithoutPrivateDetailsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1177,6 +1663,21 @@ export type AppUserCreateWithoutPrivateDetailsInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutPrivateDetailsInput = {
@@ -1186,6 +1687,7 @@ export type AppUserUncheckedCreateWithoutPrivateDetailsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1208,6 +1710,21 @@ export type AppUserUncheckedCreateWithoutPrivateDetailsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutPrivateDetailsInput = {
@@ -1233,6 +1750,7 @@ export type AppUserUpdateWithoutPrivateDetailsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1255,6 +1773,21 @@ export type AppUserUpdateWithoutPrivateDetailsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutPrivateDetailsInput = {
@@ -1264,6 +1797,7 @@ export type AppUserUncheckedUpdateWithoutPrivateDetailsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1286,6 +1820,21 @@ export type AppUserUncheckedUpdateWithoutPrivateDetailsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutNotificationPreferenceInput = {
@@ -1295,6 +1844,7 @@ export type AppUserCreateWithoutNotificationPreferenceInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1317,6 +1867,21 @@ export type AppUserCreateWithoutNotificationPreferenceInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutNotificationPreferenceInput = {
@@ -1326,6 +1891,7 @@ export type AppUserUncheckedCreateWithoutNotificationPreferenceInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1348,6 +1914,21 @@ export type AppUserUncheckedCreateWithoutNotificationPreferenceInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutNotificationPreferenceInput = {
@@ -1373,6 +1954,7 @@ export type AppUserUpdateWithoutNotificationPreferenceInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1395,6 +1977,21 @@ export type AppUserUpdateWithoutNotificationPreferenceInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutNotificationPreferenceInput = {
@@ -1404,6 +2001,7 @@ export type AppUserUncheckedUpdateWithoutNotificationPreferenceInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1426,6 +2024,21 @@ export type AppUserUncheckedUpdateWithoutNotificationPreferenceInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutPushSubscriptionsInput = {
@@ -1435,6 +2048,7 @@ export type AppUserCreateWithoutPushSubscriptionsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1457,6 +2071,21 @@ export type AppUserCreateWithoutPushSubscriptionsInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutPushSubscriptionsInput = {
@@ -1466,6 +2095,7 @@ export type AppUserUncheckedCreateWithoutPushSubscriptionsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1488,6 +2118,21 @@ export type AppUserUncheckedCreateWithoutPushSubscriptionsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutPushSubscriptionsInput = {
@@ -1513,6 +2158,7 @@ export type AppUserUpdateWithoutPushSubscriptionsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1535,6 +2181,21 @@ export type AppUserUpdateWithoutPushSubscriptionsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutPushSubscriptionsInput = {
@@ -1544,6 +2205,7 @@ export type AppUserUncheckedUpdateWithoutPushSubscriptionsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1566,6 +2228,1857 @@ export type AppUserUncheckedUpdateWithoutPushSubscriptionsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutBibleFavoritesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutBibleFavoritesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutBibleFavoritesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutBibleFavoritesInput, Prisma.AppUserUncheckedCreateWithoutBibleFavoritesInput>
+}
+
+export type AppUserUpsertWithoutBibleFavoritesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutBibleFavoritesInput, Prisma.AppUserUncheckedUpdateWithoutBibleFavoritesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutBibleFavoritesInput, Prisma.AppUserUncheckedCreateWithoutBibleFavoritesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutBibleFavoritesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutBibleFavoritesInput, Prisma.AppUserUncheckedUpdateWithoutBibleFavoritesInput>
+}
+
+export type AppUserUpdateWithoutBibleFavoritesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutBibleFavoritesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutBibleNotesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutBibleNotesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutBibleNotesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutBibleNotesInput, Prisma.AppUserUncheckedCreateWithoutBibleNotesInput>
+}
+
+export type AppUserUpsertWithoutBibleNotesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutBibleNotesInput, Prisma.AppUserUncheckedUpdateWithoutBibleNotesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutBibleNotesInput, Prisma.AppUserUncheckedCreateWithoutBibleNotesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutBibleNotesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutBibleNotesInput, Prisma.AppUserUncheckedUpdateWithoutBibleNotesInput>
+}
+
+export type AppUserUpdateWithoutBibleNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutBibleNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutCreatedDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutCreatedDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutCreatedDailyVerseSchedulesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCreatedDailyVerseSchedulesInput>
+}
+
+export type AppUserCreateWithoutUpdatedDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutUpdatedDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutUpdatedDailyVerseSchedulesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutUpdatedDailyVerseSchedulesInput>
+}
+
+export type AppUserCreateWithoutCancelledDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutCancelledDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutCancelledDailyVerseSchedulesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCancelledDailyVerseSchedulesInput>
+}
+
+export type AppUserCreateWithoutSentDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+}
+
+export type AppUserUncheckedCreateWithoutSentDailyVerseSchedulesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+}
+
+export type AppUserCreateOrConnectWithoutSentDailyVerseSchedulesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutSentDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutSentDailyVerseSchedulesInput>
+}
+
+export type AppUserUpsertWithoutCreatedDailyVerseSchedulesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutCreatedDailyVerseSchedulesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCreatedDailyVerseSchedulesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutCreatedDailyVerseSchedulesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutCreatedDailyVerseSchedulesInput>
+}
+
+export type AppUserUpdateWithoutCreatedDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutCreatedDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUpsertWithoutUpdatedDailyVerseSchedulesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutUpdatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutUpdatedDailyVerseSchedulesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutUpdatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutUpdatedDailyVerseSchedulesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutUpdatedDailyVerseSchedulesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutUpdatedDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutUpdatedDailyVerseSchedulesInput>
+}
+
+export type AppUserUpdateWithoutUpdatedDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutUpdatedDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUpsertWithoutCancelledDailyVerseSchedulesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutCancelledDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutCancelledDailyVerseSchedulesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutCancelledDailyVerseSchedulesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutCancelledDailyVerseSchedulesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutCancelledDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutCancelledDailyVerseSchedulesInput>
+}
+
+export type AppUserUpdateWithoutCancelledDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutCancelledDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUpsertWithoutSentDailyVerseSchedulesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutSentDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutSentDailyVerseSchedulesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutSentDailyVerseSchedulesInput, Prisma.AppUserUncheckedCreateWithoutSentDailyVerseSchedulesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutSentDailyVerseSchedulesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutSentDailyVerseSchedulesInput, Prisma.AppUserUncheckedUpdateWithoutSentDailyVerseSchedulesInput>
+}
+
+export type AppUserUpdateWithoutSentDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutSentDailyVerseSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+}
+
+export type AppUserCreateWithoutCreatedNotificationCampaignsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutCreatedNotificationCampaignsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutCreatedNotificationCampaignsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutCreatedNotificationCampaignsInput>
+}
+
+export type AppUserCreateWithoutTargetedNotificationCampaignsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutTargetedNotificationCampaignsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutTargetedNotificationCampaignsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutTargetedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutTargetedNotificationCampaignsInput>
+}
+
+export type AppUserUpsertWithoutCreatedNotificationCampaignsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedNotificationCampaignsInput, Prisma.AppUserUncheckedUpdateWithoutCreatedNotificationCampaignsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCreatedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutCreatedNotificationCampaignsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutCreatedNotificationCampaignsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutCreatedNotificationCampaignsInput, Prisma.AppUserUncheckedUpdateWithoutCreatedNotificationCampaignsInput>
+}
+
+export type AppUserUpdateWithoutCreatedNotificationCampaignsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutCreatedNotificationCampaignsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUpsertWithoutTargetedNotificationCampaignsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutTargetedNotificationCampaignsInput, Prisma.AppUserUncheckedUpdateWithoutTargetedNotificationCampaignsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutTargetedNotificationCampaignsInput, Prisma.AppUserUncheckedCreateWithoutTargetedNotificationCampaignsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutTargetedNotificationCampaignsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutTargetedNotificationCampaignsInput, Prisma.AppUserUncheckedUpdateWithoutTargetedNotificationCampaignsInput>
+}
+
+export type AppUserUpdateWithoutTargetedNotificationCampaignsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutTargetedNotificationCampaignsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutNotificationRecipientsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutNotificationRecipientsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutNotificationRecipientsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutNotificationRecipientsInput, Prisma.AppUserUncheckedCreateWithoutNotificationRecipientsInput>
+}
+
+export type AppUserUpsertWithoutNotificationRecipientsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutNotificationRecipientsInput, Prisma.AppUserUncheckedUpdateWithoutNotificationRecipientsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutNotificationRecipientsInput, Prisma.AppUserUncheckedCreateWithoutNotificationRecipientsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutNotificationRecipientsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutNotificationRecipientsInput, Prisma.AppUserUncheckedUpdateWithoutNotificationRecipientsInput>
+}
+
+export type AppUserUpdateWithoutNotificationRecipientsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutNotificationRecipientsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutAdminAuditLogsInput = {
@@ -1575,6 +4088,7 @@ export type AppUserCreateWithoutAdminAuditLogsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1597,6 +4111,21 @@ export type AppUserCreateWithoutAdminAuditLogsInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutAdminAuditLogsInput = {
@@ -1606,6 +4135,7 @@ export type AppUserUncheckedCreateWithoutAdminAuditLogsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1628,6 +4158,21 @@ export type AppUserUncheckedCreateWithoutAdminAuditLogsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutAdminAuditLogsInput = {
@@ -1653,6 +4198,7 @@ export type AppUserUpdateWithoutAdminAuditLogsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1675,6 +4221,21 @@ export type AppUserUpdateWithoutAdminAuditLogsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutAdminAuditLogsInput = {
@@ -1684,6 +4245,7 @@ export type AppUserUncheckedUpdateWithoutAdminAuditLogsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1706,6 +4268,21 @@ export type AppUserUncheckedUpdateWithoutAdminAuditLogsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutCreatedEventsInput = {
@@ -1715,6 +4292,7 @@ export type AppUserCreateWithoutCreatedEventsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1737,6 +4315,21 @@ export type AppUserCreateWithoutCreatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutCreatedEventsInput = {
@@ -1746,6 +4339,7 @@ export type AppUserUncheckedCreateWithoutCreatedEventsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1768,6 +4362,21 @@ export type AppUserUncheckedCreateWithoutCreatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutCreatedEventsInput = {
@@ -1782,6 +4391,7 @@ export type AppUserCreateWithoutUpdatedEventsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1804,6 +4414,21 @@ export type AppUserCreateWithoutUpdatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutUpdatedEventsInput = {
@@ -1813,6 +4438,7 @@ export type AppUserUncheckedCreateWithoutUpdatedEventsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -1835,6 +4461,21 @@ export type AppUserUncheckedCreateWithoutUpdatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutUpdatedEventsInput = {
@@ -1860,6 +4501,7 @@ export type AppUserUpdateWithoutCreatedEventsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1882,6 +4524,21 @@ export type AppUserUpdateWithoutCreatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutCreatedEventsInput = {
@@ -1891,6 +4548,7 @@ export type AppUserUncheckedUpdateWithoutCreatedEventsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1913,6 +4571,21 @@ export type AppUserUncheckedUpdateWithoutCreatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUpsertWithoutUpdatedEventsInput = {
@@ -1933,6 +4606,7 @@ export type AppUserUpdateWithoutUpdatedEventsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1955,6 +4629,21 @@ export type AppUserUpdateWithoutUpdatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutUpdatedEventsInput = {
@@ -1964,6 +4653,7 @@ export type AppUserUncheckedUpdateWithoutUpdatedEventsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1986,6 +4676,21 @@ export type AppUserUncheckedUpdateWithoutUpdatedEventsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutCreatedGalleryAlbumsInput = {
@@ -1995,6 +4700,7 @@ export type AppUserCreateWithoutCreatedGalleryAlbumsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2017,6 +4723,21 @@ export type AppUserCreateWithoutCreatedGalleryAlbumsInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput = {
@@ -2026,6 +4747,7 @@ export type AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2048,6 +4770,21 @@ export type AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutCreatedGalleryAlbumsInput = {
@@ -2073,6 +4810,7 @@ export type AppUserUpdateWithoutCreatedGalleryAlbumsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2095,6 +4833,21 @@ export type AppUserUpdateWithoutCreatedGalleryAlbumsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput = {
@@ -2104,6 +4857,7 @@ export type AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2126,6 +4880,21 @@ export type AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutUploadedGalleryItemsInput = {
@@ -2135,6 +4904,7 @@ export type AppUserCreateWithoutUploadedGalleryItemsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2157,6 +4927,21 @@ export type AppUserCreateWithoutUploadedGalleryItemsInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutUploadedGalleryItemsInput = {
@@ -2166,6 +4951,7 @@ export type AppUserUncheckedCreateWithoutUploadedGalleryItemsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2188,6 +4974,21 @@ export type AppUserUncheckedCreateWithoutUploadedGalleryItemsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutUploadedGalleryItemsInput = {
@@ -2213,6 +5014,7 @@ export type AppUserUpdateWithoutUploadedGalleryItemsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2235,6 +5037,21 @@ export type AppUserUpdateWithoutUploadedGalleryItemsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput = {
@@ -2244,6 +5061,7 @@ export type AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2266,6 +5084,21 @@ export type AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutSentContactMessagesInput = {
@@ -2275,6 +5108,7 @@ export type AppUserCreateWithoutSentContactMessagesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2297,6 +5131,21 @@ export type AppUserCreateWithoutSentContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutSentContactMessagesInput = {
@@ -2306,6 +5155,7 @@ export type AppUserUncheckedCreateWithoutSentContactMessagesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2328,6 +5178,21 @@ export type AppUserUncheckedCreateWithoutSentContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutSentContactMessagesInput = {
@@ -2342,6 +5207,7 @@ export type AppUserCreateWithoutAssignedContactMessagesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2364,6 +5230,21 @@ export type AppUserCreateWithoutAssignedContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutAssignedContactMessagesInput = {
@@ -2373,6 +5254,7 @@ export type AppUserUncheckedCreateWithoutAssignedContactMessagesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2395,6 +5277,21 @@ export type AppUserUncheckedCreateWithoutAssignedContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutAssignedContactMessagesInput = {
@@ -2420,6 +5317,7 @@ export type AppUserUpdateWithoutSentContactMessagesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2442,6 +5340,21 @@ export type AppUserUpdateWithoutSentContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutSentContactMessagesInput = {
@@ -2451,6 +5364,7 @@ export type AppUserUncheckedUpdateWithoutSentContactMessagesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2473,6 +5387,21 @@ export type AppUserUncheckedUpdateWithoutSentContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUpsertWithoutAssignedContactMessagesInput = {
@@ -2493,6 +5422,7 @@ export type AppUserUpdateWithoutAssignedContactMessagesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2515,6 +5445,21 @@ export type AppUserUpdateWithoutAssignedContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutAssignedContactMessagesInput = {
@@ -2524,6 +5469,7 @@ export type AppUserUncheckedUpdateWithoutAssignedContactMessagesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2546,6 +5492,21 @@ export type AppUserUncheckedUpdateWithoutAssignedContactMessagesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutMessageRepliesInput = {
@@ -2555,6 +5516,7 @@ export type AppUserCreateWithoutMessageRepliesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2577,6 +5539,21 @@ export type AppUserCreateWithoutMessageRepliesInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutMessageRepliesInput = {
@@ -2586,6 +5563,7 @@ export type AppUserUncheckedCreateWithoutMessageRepliesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2608,6 +5586,21 @@ export type AppUserUncheckedCreateWithoutMessageRepliesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutMessageRepliesInput = {
@@ -2633,6 +5626,7 @@ export type AppUserUpdateWithoutMessageRepliesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2655,6 +5649,21 @@ export type AppUserUpdateWithoutMessageRepliesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutMessageRepliesInput = {
@@ -2664,6 +5673,7 @@ export type AppUserUncheckedUpdateWithoutMessageRepliesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2686,6 +5696,21 @@ export type AppUserUncheckedUpdateWithoutMessageRepliesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutMessageInternalNotesInput = {
@@ -2695,6 +5720,7 @@ export type AppUserCreateWithoutMessageInternalNotesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2717,6 +5743,21 @@ export type AppUserCreateWithoutMessageInternalNotesInput = {
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutMessageInternalNotesInput = {
@@ -2726,6 +5767,7 @@ export type AppUserUncheckedCreateWithoutMessageInternalNotesInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2748,6 +5790,21 @@ export type AppUserUncheckedCreateWithoutMessageInternalNotesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutMessageInternalNotesInput = {
@@ -2773,6 +5830,7 @@ export type AppUserUpdateWithoutMessageInternalNotesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2795,6 +5853,21 @@ export type AppUserUpdateWithoutMessageInternalNotesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutMessageInternalNotesInput = {
@@ -2804,6 +5877,7 @@ export type AppUserUncheckedUpdateWithoutMessageInternalNotesInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2826,6 +5900,21 @@ export type AppUserUncheckedUpdateWithoutMessageInternalNotesInput = {
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutAuthoredAnnouncementsInput = {
@@ -2835,6 +5924,7 @@ export type AppUserCreateWithoutAuthoredAnnouncementsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2857,6 +5947,21 @@ export type AppUserCreateWithoutAuthoredAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput = {
@@ -2866,6 +5971,7 @@ export type AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2888,6 +5994,21 @@ export type AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutAuthoredAnnouncementsInput = {
@@ -2902,6 +6023,7 @@ export type AppUserCreateWithoutUpdatedAnnouncementsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2924,6 +6046,21 @@ export type AppUserCreateWithoutUpdatedAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput = {
@@ -2933,6 +6070,7 @@ export type AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -2955,6 +6093,21 @@ export type AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutUpdatedAnnouncementsInput = {
@@ -2980,6 +6133,7 @@ export type AppUserUpdateWithoutAuthoredAnnouncementsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3002,6 +6156,21 @@ export type AppUserUpdateWithoutAuthoredAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput = {
@@ -3011,6 +6180,7 @@ export type AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3033,6 +6203,21 @@ export type AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUpsertWithoutUpdatedAnnouncementsInput = {
@@ -3053,6 +6238,7 @@ export type AppUserUpdateWithoutUpdatedAnnouncementsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3075,6 +6261,21 @@ export type AppUserUpdateWithoutUpdatedAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput = {
@@ -3084,6 +6285,7 @@ export type AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3106,6 +6308,21 @@ export type AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserCreateWithoutAnnouncementReadsInput = {
@@ -3115,6 +6332,7 @@ export type AppUserCreateWithoutAnnouncementReadsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -3137,6 +6355,21 @@ export type AppUserCreateWithoutAnnouncementReadsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
   authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserUncheckedCreateWithoutAnnouncementReadsInput = {
@@ -3146,6 +6379,7 @@ export type AppUserUncheckedCreateWithoutAnnouncementReadsInput = {
   firstName?: string | null
   lastName?: string | null
   imageUrl?: string | null
+  stripeCustomerId?: string | null
   role?: $Enums.ChurchRole
   membershipStatus?: $Enums.MembershipStatus
   onboardingComplete?: boolean
@@ -3168,6 +6402,21 @@ export type AppUserUncheckedCreateWithoutAnnouncementReadsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
   authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
 }
 
 export type AppUserCreateOrConnectWithoutAnnouncementReadsInput = {
@@ -3193,6 +6442,7 @@ export type AppUserUpdateWithoutAnnouncementReadsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3215,6 +6465,21 @@ export type AppUserUpdateWithoutAnnouncementReadsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
   authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
 }
 
 export type AppUserUncheckedUpdateWithoutAnnouncementReadsInput = {
@@ -3224,6 +6489,7 @@ export type AppUserUncheckedUpdateWithoutAnnouncementReadsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
   membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3246,6 +6512,1245 @@ export type AppUserUncheckedUpdateWithoutAnnouncementReadsInput = {
   messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
   authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
   updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutDonationCheckoutsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutDonationCheckoutsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutDonationCheckoutsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutDonationCheckoutsInput, Prisma.AppUserUncheckedCreateWithoutDonationCheckoutsInput>
+}
+
+export type AppUserUpsertWithoutDonationCheckoutsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutDonationCheckoutsInput, Prisma.AppUserUncheckedUpdateWithoutDonationCheckoutsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutDonationCheckoutsInput, Prisma.AppUserUncheckedCreateWithoutDonationCheckoutsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutDonationCheckoutsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutDonationCheckoutsInput, Prisma.AppUserUncheckedUpdateWithoutDonationCheckoutsInput>
+}
+
+export type AppUserUpdateWithoutDonationCheckoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutDonationCheckoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutDonationsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutDonationsInput, Prisma.AppUserUncheckedCreateWithoutDonationsInput>
+}
+
+export type AppUserCreateWithoutEnteredDirectDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutEnteredDirectDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutEnteredDirectDonationsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutEnteredDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutEnteredDirectDonationsInput>
+}
+
+export type AppUserCreateWithoutVerifiedDirectDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutVerifiedDirectDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutVerifiedDirectDonationsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutVerifiedDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutVerifiedDirectDonationsInput>
+}
+
+export type AppUserCreateWithoutCancelledDirectDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutCancelledDirectDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutCancelledDirectDonationsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutCancelledDirectDonationsInput>
+}
+
+export type AppUserUpsertWithoutDonationsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutDonationsInput, Prisma.AppUserUncheckedUpdateWithoutDonationsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutDonationsInput, Prisma.AppUserUncheckedCreateWithoutDonationsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutDonationsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutDonationsInput, Prisma.AppUserUncheckedUpdateWithoutDonationsInput>
+}
+
+export type AppUserUpdateWithoutDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUpsertWithoutEnteredDirectDonationsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutEnteredDirectDonationsInput, Prisma.AppUserUncheckedUpdateWithoutEnteredDirectDonationsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutEnteredDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutEnteredDirectDonationsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutEnteredDirectDonationsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutEnteredDirectDonationsInput, Prisma.AppUserUncheckedUpdateWithoutEnteredDirectDonationsInput>
+}
+
+export type AppUserUpdateWithoutEnteredDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutEnteredDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUpsertWithoutVerifiedDirectDonationsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutVerifiedDirectDonationsInput, Prisma.AppUserUncheckedUpdateWithoutVerifiedDirectDonationsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutVerifiedDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutVerifiedDirectDonationsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutVerifiedDirectDonationsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutVerifiedDirectDonationsInput, Prisma.AppUserUncheckedUpdateWithoutVerifiedDirectDonationsInput>
+}
+
+export type AppUserUpdateWithoutVerifiedDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutVerifiedDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUpsertWithoutCancelledDirectDonationsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutCancelledDirectDonationsInput, Prisma.AppUserUncheckedUpdateWithoutCancelledDirectDonationsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutCancelledDirectDonationsInput, Prisma.AppUserUncheckedCreateWithoutCancelledDirectDonationsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutCancelledDirectDonationsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutCancelledDirectDonationsInput, Prisma.AppUserUncheckedUpdateWithoutCancelledDirectDonationsInput>
+}
+
+export type AppUserUpdateWithoutCancelledDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutCancelledDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutRecurringDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutRecurringDonationsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutRecurringDonationsInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutRecurringDonationsInput, Prisma.AppUserUncheckedCreateWithoutRecurringDonationsInput>
+}
+
+export type AppUserUpsertWithoutRecurringDonationsInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutRecurringDonationsInput, Prisma.AppUserUncheckedUpdateWithoutRecurringDonationsInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutRecurringDonationsInput, Prisma.AppUserUncheckedCreateWithoutRecurringDonationsInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutRecurringDonationsInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutRecurringDonationsInput, Prisma.AppUserUncheckedUpdateWithoutRecurringDonationsInput>
+}
+
+export type AppUserUpdateWithoutRecurringDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutRecurringDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 
@@ -3268,6 +7773,21 @@ export type AppUserCountOutputType = {
   authoredAnnouncements: number
   updatedAnnouncements: number
   announcementReads: number
+  createdNotificationCampaigns: number
+  targetedNotificationCampaigns: number
+  notificationRecipients: number
+  donationCheckouts: number
+  donations: number
+  recurringDonations: number
+  enteredDirectDonations: number
+  verifiedDirectDonations: number
+  cancelledDirectDonations: number
+  bibleFavorites: number
+  bibleNotes: number
+  createdDailyVerseSchedules: number
+  updatedDailyVerseSchedules: number
+  cancelledDailyVerseSchedules: number
+  sentDailyVerseSchedules: number
 }
 
 export type AppUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3285,6 +7805,21 @@ export type AppUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   authoredAnnouncements?: boolean | AppUserCountOutputTypeCountAuthoredAnnouncementsArgs
   updatedAnnouncements?: boolean | AppUserCountOutputTypeCountUpdatedAnnouncementsArgs
   announcementReads?: boolean | AppUserCountOutputTypeCountAnnouncementReadsArgs
+  createdNotificationCampaigns?: boolean | AppUserCountOutputTypeCountCreatedNotificationCampaignsArgs
+  targetedNotificationCampaigns?: boolean | AppUserCountOutputTypeCountTargetedNotificationCampaignsArgs
+  notificationRecipients?: boolean | AppUserCountOutputTypeCountNotificationRecipientsArgs
+  donationCheckouts?: boolean | AppUserCountOutputTypeCountDonationCheckoutsArgs
+  donations?: boolean | AppUserCountOutputTypeCountDonationsArgs
+  recurringDonations?: boolean | AppUserCountOutputTypeCountRecurringDonationsArgs
+  enteredDirectDonations?: boolean | AppUserCountOutputTypeCountEnteredDirectDonationsArgs
+  verifiedDirectDonations?: boolean | AppUserCountOutputTypeCountVerifiedDirectDonationsArgs
+  cancelledDirectDonations?: boolean | AppUserCountOutputTypeCountCancelledDirectDonationsArgs
+  bibleFavorites?: boolean | AppUserCountOutputTypeCountBibleFavoritesArgs
+  bibleNotes?: boolean | AppUserCountOutputTypeCountBibleNotesArgs
+  createdDailyVerseSchedules?: boolean | AppUserCountOutputTypeCountCreatedDailyVerseSchedulesArgs
+  updatedDailyVerseSchedules?: boolean | AppUserCountOutputTypeCountUpdatedDailyVerseSchedulesArgs
+  cancelledDailyVerseSchedules?: boolean | AppUserCountOutputTypeCountCancelledDailyVerseSchedulesArgs
+  sentDailyVerseSchedules?: boolean | AppUserCountOutputTypeCountSentDailyVerseSchedulesArgs
 }
 
 /**
@@ -3395,6 +7930,111 @@ export type AppUserCountOutputTypeCountAnnouncementReadsArgs<ExtArgs extends run
   where?: Prisma.AnnouncementReadWhereInput
 }
 
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountCreatedNotificationCampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationCampaignWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountTargetedNotificationCampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationCampaignWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountNotificationRecipientsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationRecipientWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountDonationCheckoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DonationCheckoutWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DonationWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountRecurringDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RecurringDonationWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountEnteredDirectDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DonationWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountVerifiedDirectDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DonationWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountCancelledDirectDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DonationWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountBibleFavoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BibleFavoriteWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountBibleNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BibleNoteWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountCreatedDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyVerseScheduleWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountUpdatedDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyVerseScheduleWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountCancelledDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyVerseScheduleWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
+export type AppUserCountOutputTypeCountSentDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyVerseScheduleWhereInput
+}
+
 
 export type AppUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3403,6 +8043,7 @@ export type AppUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   firstName?: boolean
   lastName?: boolean
   imageUrl?: boolean
+  stripeCustomerId?: boolean
   role?: boolean
   membershipStatus?: boolean
   onboardingComplete?: boolean
@@ -3426,6 +8067,21 @@ export type AppUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   authoredAnnouncements?: boolean | Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs>
   updatedAnnouncements?: boolean | Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs>
   announcementReads?: boolean | Prisma.AppUser$announcementReadsArgs<ExtArgs>
+  createdNotificationCampaigns?: boolean | Prisma.AppUser$createdNotificationCampaignsArgs<ExtArgs>
+  targetedNotificationCampaigns?: boolean | Prisma.AppUser$targetedNotificationCampaignsArgs<ExtArgs>
+  notificationRecipients?: boolean | Prisma.AppUser$notificationRecipientsArgs<ExtArgs>
+  donationCheckouts?: boolean | Prisma.AppUser$donationCheckoutsArgs<ExtArgs>
+  donations?: boolean | Prisma.AppUser$donationsArgs<ExtArgs>
+  recurringDonations?: boolean | Prisma.AppUser$recurringDonationsArgs<ExtArgs>
+  enteredDirectDonations?: boolean | Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs>
+  verifiedDirectDonations?: boolean | Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs>
+  cancelledDirectDonations?: boolean | Prisma.AppUser$cancelledDirectDonationsArgs<ExtArgs>
+  bibleFavorites?: boolean | Prisma.AppUser$bibleFavoritesArgs<ExtArgs>
+  bibleNotes?: boolean | Prisma.AppUser$bibleNotesArgs<ExtArgs>
+  createdDailyVerseSchedules?: boolean | Prisma.AppUser$createdDailyVerseSchedulesArgs<ExtArgs>
+  updatedDailyVerseSchedules?: boolean | Prisma.AppUser$updatedDailyVerseSchedulesArgs<ExtArgs>
+  cancelledDailyVerseSchedules?: boolean | Prisma.AppUser$cancelledDailyVerseSchedulesArgs<ExtArgs>
+  sentDailyVerseSchedules?: boolean | Prisma.AppUser$sentDailyVerseSchedulesArgs<ExtArgs>
   _count?: boolean | Prisma.AppUserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["appUser"]>
 
@@ -3436,6 +8092,7 @@ export type AppUserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   firstName?: boolean
   lastName?: boolean
   imageUrl?: boolean
+  stripeCustomerId?: boolean
   role?: boolean
   membershipStatus?: boolean
   onboardingComplete?: boolean
@@ -3451,6 +8108,7 @@ export type AppUserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   firstName?: boolean
   lastName?: boolean
   imageUrl?: boolean
+  stripeCustomerId?: boolean
   role?: boolean
   membershipStatus?: boolean
   onboardingComplete?: boolean
@@ -3466,6 +8124,7 @@ export type AppUserSelectScalar = {
   firstName?: boolean
   lastName?: boolean
   imageUrl?: boolean
+  stripeCustomerId?: boolean
   role?: boolean
   membershipStatus?: boolean
   onboardingComplete?: boolean
@@ -3474,7 +8133,7 @@ export type AppUserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AppUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "imageUrl" | "role" | "membershipStatus" | "onboardingComplete" | "archivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["appUser"]>
+export type AppUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "imageUrl" | "stripeCustomerId" | "role" | "membershipStatus" | "onboardingComplete" | "archivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["appUser"]>
 export type AppUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profile?: boolean | Prisma.AppUser$profileArgs<ExtArgs>
   privateDetails?: boolean | Prisma.AppUser$privateDetailsArgs<ExtArgs>
@@ -3493,6 +8152,21 @@ export type AppUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   authoredAnnouncements?: boolean | Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs>
   updatedAnnouncements?: boolean | Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs>
   announcementReads?: boolean | Prisma.AppUser$announcementReadsArgs<ExtArgs>
+  createdNotificationCampaigns?: boolean | Prisma.AppUser$createdNotificationCampaignsArgs<ExtArgs>
+  targetedNotificationCampaigns?: boolean | Prisma.AppUser$targetedNotificationCampaignsArgs<ExtArgs>
+  notificationRecipients?: boolean | Prisma.AppUser$notificationRecipientsArgs<ExtArgs>
+  donationCheckouts?: boolean | Prisma.AppUser$donationCheckoutsArgs<ExtArgs>
+  donations?: boolean | Prisma.AppUser$donationsArgs<ExtArgs>
+  recurringDonations?: boolean | Prisma.AppUser$recurringDonationsArgs<ExtArgs>
+  enteredDirectDonations?: boolean | Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs>
+  verifiedDirectDonations?: boolean | Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs>
+  cancelledDirectDonations?: boolean | Prisma.AppUser$cancelledDirectDonationsArgs<ExtArgs>
+  bibleFavorites?: boolean | Prisma.AppUser$bibleFavoritesArgs<ExtArgs>
+  bibleNotes?: boolean | Prisma.AppUser$bibleNotesArgs<ExtArgs>
+  createdDailyVerseSchedules?: boolean | Prisma.AppUser$createdDailyVerseSchedulesArgs<ExtArgs>
+  updatedDailyVerseSchedules?: boolean | Prisma.AppUser$updatedDailyVerseSchedulesArgs<ExtArgs>
+  cancelledDailyVerseSchedules?: boolean | Prisma.AppUser$cancelledDailyVerseSchedulesArgs<ExtArgs>
+  sentDailyVerseSchedules?: boolean | Prisma.AppUser$sentDailyVerseSchedulesArgs<ExtArgs>
   _count?: boolean | Prisma.AppUserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AppUserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3518,6 +8192,21 @@ export type $AppUserPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     authoredAnnouncements: Prisma.$AnnouncementPayload<ExtArgs>[]
     updatedAnnouncements: Prisma.$AnnouncementPayload<ExtArgs>[]
     announcementReads: Prisma.$AnnouncementReadPayload<ExtArgs>[]
+    createdNotificationCampaigns: Prisma.$NotificationCampaignPayload<ExtArgs>[]
+    targetedNotificationCampaigns: Prisma.$NotificationCampaignPayload<ExtArgs>[]
+    notificationRecipients: Prisma.$NotificationRecipientPayload<ExtArgs>[]
+    donationCheckouts: Prisma.$DonationCheckoutPayload<ExtArgs>[]
+    donations: Prisma.$DonationPayload<ExtArgs>[]
+    recurringDonations: Prisma.$RecurringDonationPayload<ExtArgs>[]
+    enteredDirectDonations: Prisma.$DonationPayload<ExtArgs>[]
+    verifiedDirectDonations: Prisma.$DonationPayload<ExtArgs>[]
+    cancelledDirectDonations: Prisma.$DonationPayload<ExtArgs>[]
+    bibleFavorites: Prisma.$BibleFavoritePayload<ExtArgs>[]
+    bibleNotes: Prisma.$BibleNotePayload<ExtArgs>[]
+    createdDailyVerseSchedules: Prisma.$DailyVerseSchedulePayload<ExtArgs>[]
+    updatedDailyVerseSchedules: Prisma.$DailyVerseSchedulePayload<ExtArgs>[]
+    cancelledDailyVerseSchedules: Prisma.$DailyVerseSchedulePayload<ExtArgs>[]
+    sentDailyVerseSchedules: Prisma.$DailyVerseSchedulePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3526,6 +8215,7 @@ export type $AppUserPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     firstName: string | null
     lastName: string | null
     imageUrl: string | null
+    stripeCustomerId: string | null
     role: $Enums.ChurchRole
     membershipStatus: $Enums.MembershipStatus
     onboardingComplete: boolean
@@ -3943,6 +8633,21 @@ export interface Prisma__AppUserClient<T, Null = never, ExtArgs extends runtime.
   authoredAnnouncements<T extends Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$authoredAnnouncementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedAnnouncements<T extends Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$updatedAnnouncementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   announcementReads<T extends Prisma.AppUser$announcementReadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$announcementReadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnnouncementReadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdNotificationCampaigns<T extends Prisma.AppUser$createdNotificationCampaignsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$createdNotificationCampaignsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationCampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  targetedNotificationCampaigns<T extends Prisma.AppUser$targetedNotificationCampaignsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$targetedNotificationCampaignsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationCampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationRecipients<T extends Prisma.AppUser$notificationRecipientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$notificationRecipientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  donationCheckouts<T extends Prisma.AppUser$donationCheckoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$donationCheckoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationCheckoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  donations<T extends Prisma.AppUser$donationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  recurringDonations<T extends Prisma.AppUser$recurringDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$recurringDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecurringDonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  enteredDirectDonations<T extends Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  verifiedDirectDonations<T extends Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cancelledDirectDonations<T extends Prisma.AppUser$cancelledDirectDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$cancelledDirectDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bibleFavorites<T extends Prisma.AppUser$bibleFavoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$bibleFavoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BibleFavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bibleNotes<T extends Prisma.AppUser$bibleNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$bibleNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BibleNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdDailyVerseSchedules<T extends Prisma.AppUser$createdDailyVerseSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$createdDailyVerseSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyVerseSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedDailyVerseSchedules<T extends Prisma.AppUser$updatedDailyVerseSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$updatedDailyVerseSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyVerseSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cancelledDailyVerseSchedules<T extends Prisma.AppUser$cancelledDailyVerseSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$cancelledDailyVerseSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyVerseSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sentDailyVerseSchedules<T extends Prisma.AppUser$sentDailyVerseSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$sentDailyVerseSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyVerseSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3978,6 +8683,7 @@ export interface AppUserFieldRefs {
   readonly firstName: Prisma.FieldRef<"AppUser", 'String'>
   readonly lastName: Prisma.FieldRef<"AppUser", 'String'>
   readonly imageUrl: Prisma.FieldRef<"AppUser", 'String'>
+  readonly stripeCustomerId: Prisma.FieldRef<"AppUser", 'String'>
   readonly role: Prisma.FieldRef<"AppUser", 'ChurchRole'>
   readonly membershipStatus: Prisma.FieldRef<"AppUser", 'MembershipStatus'>
   readonly onboardingComplete: Prisma.FieldRef<"AppUser", 'Boolean'>
@@ -4767,6 +9473,366 @@ export type AppUser$announcementReadsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.AnnouncementReadScalarFieldEnum | Prisma.AnnouncementReadScalarFieldEnum[]
+}
+
+/**
+ * AppUser.createdNotificationCampaigns
+ */
+export type AppUser$createdNotificationCampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationCampaign
+   */
+  select?: Prisma.NotificationCampaignSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationCampaign
+   */
+  omit?: Prisma.NotificationCampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationCampaignInclude<ExtArgs> | null
+  where?: Prisma.NotificationCampaignWhereInput
+  orderBy?: Prisma.NotificationCampaignOrderByWithRelationInput | Prisma.NotificationCampaignOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationCampaignWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationCampaignScalarFieldEnum | Prisma.NotificationCampaignScalarFieldEnum[]
+}
+
+/**
+ * AppUser.targetedNotificationCampaigns
+ */
+export type AppUser$targetedNotificationCampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationCampaign
+   */
+  select?: Prisma.NotificationCampaignSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationCampaign
+   */
+  omit?: Prisma.NotificationCampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationCampaignInclude<ExtArgs> | null
+  where?: Prisma.NotificationCampaignWhereInput
+  orderBy?: Prisma.NotificationCampaignOrderByWithRelationInput | Prisma.NotificationCampaignOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationCampaignWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationCampaignScalarFieldEnum | Prisma.NotificationCampaignScalarFieldEnum[]
+}
+
+/**
+ * AppUser.notificationRecipients
+ */
+export type AppUser$notificationRecipientsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationRecipient
+   */
+  select?: Prisma.NotificationRecipientSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationRecipient
+   */
+  omit?: Prisma.NotificationRecipientOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationRecipientInclude<ExtArgs> | null
+  where?: Prisma.NotificationRecipientWhereInput
+  orderBy?: Prisma.NotificationRecipientOrderByWithRelationInput | Prisma.NotificationRecipientOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationRecipientWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationRecipientScalarFieldEnum | Prisma.NotificationRecipientScalarFieldEnum[]
+}
+
+/**
+ * AppUser.donationCheckouts
+ */
+export type AppUser$donationCheckoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DonationCheckout
+   */
+  select?: Prisma.DonationCheckoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DonationCheckout
+   */
+  omit?: Prisma.DonationCheckoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationCheckoutInclude<ExtArgs> | null
+  where?: Prisma.DonationCheckoutWhereInput
+  orderBy?: Prisma.DonationCheckoutOrderByWithRelationInput | Prisma.DonationCheckoutOrderByWithRelationInput[]
+  cursor?: Prisma.DonationCheckoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DonationCheckoutScalarFieldEnum | Prisma.DonationCheckoutScalarFieldEnum[]
+}
+
+/**
+ * AppUser.donations
+ */
+export type AppUser$donationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Donation
+   */
+  select?: Prisma.DonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Donation
+   */
+  omit?: Prisma.DonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationInclude<ExtArgs> | null
+  where?: Prisma.DonationWhereInput
+  orderBy?: Prisma.DonationOrderByWithRelationInput | Prisma.DonationOrderByWithRelationInput[]
+  cursor?: Prisma.DonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DonationScalarFieldEnum | Prisma.DonationScalarFieldEnum[]
+}
+
+/**
+ * AppUser.recurringDonations
+ */
+export type AppUser$recurringDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RecurringDonation
+   */
+  select?: Prisma.RecurringDonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RecurringDonation
+   */
+  omit?: Prisma.RecurringDonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecurringDonationInclude<ExtArgs> | null
+  where?: Prisma.RecurringDonationWhereInput
+  orderBy?: Prisma.RecurringDonationOrderByWithRelationInput | Prisma.RecurringDonationOrderByWithRelationInput[]
+  cursor?: Prisma.RecurringDonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RecurringDonationScalarFieldEnum | Prisma.RecurringDonationScalarFieldEnum[]
+}
+
+/**
+ * AppUser.enteredDirectDonations
+ */
+export type AppUser$enteredDirectDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Donation
+   */
+  select?: Prisma.DonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Donation
+   */
+  omit?: Prisma.DonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationInclude<ExtArgs> | null
+  where?: Prisma.DonationWhereInput
+  orderBy?: Prisma.DonationOrderByWithRelationInput | Prisma.DonationOrderByWithRelationInput[]
+  cursor?: Prisma.DonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DonationScalarFieldEnum | Prisma.DonationScalarFieldEnum[]
+}
+
+/**
+ * AppUser.verifiedDirectDonations
+ */
+export type AppUser$verifiedDirectDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Donation
+   */
+  select?: Prisma.DonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Donation
+   */
+  omit?: Prisma.DonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationInclude<ExtArgs> | null
+  where?: Prisma.DonationWhereInput
+  orderBy?: Prisma.DonationOrderByWithRelationInput | Prisma.DonationOrderByWithRelationInput[]
+  cursor?: Prisma.DonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DonationScalarFieldEnum | Prisma.DonationScalarFieldEnum[]
+}
+
+/**
+ * AppUser.cancelledDirectDonations
+ */
+export type AppUser$cancelledDirectDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Donation
+   */
+  select?: Prisma.DonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Donation
+   */
+  omit?: Prisma.DonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationInclude<ExtArgs> | null
+  where?: Prisma.DonationWhereInput
+  orderBy?: Prisma.DonationOrderByWithRelationInput | Prisma.DonationOrderByWithRelationInput[]
+  cursor?: Prisma.DonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DonationScalarFieldEnum | Prisma.DonationScalarFieldEnum[]
+}
+
+/**
+ * AppUser.bibleFavorites
+ */
+export type AppUser$bibleFavoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BibleFavorite
+   */
+  select?: Prisma.BibleFavoriteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BibleFavorite
+   */
+  omit?: Prisma.BibleFavoriteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BibleFavoriteInclude<ExtArgs> | null
+  where?: Prisma.BibleFavoriteWhereInput
+  orderBy?: Prisma.BibleFavoriteOrderByWithRelationInput | Prisma.BibleFavoriteOrderByWithRelationInput[]
+  cursor?: Prisma.BibleFavoriteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BibleFavoriteScalarFieldEnum | Prisma.BibleFavoriteScalarFieldEnum[]
+}
+
+/**
+ * AppUser.bibleNotes
+ */
+export type AppUser$bibleNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BibleNote
+   */
+  select?: Prisma.BibleNoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BibleNote
+   */
+  omit?: Prisma.BibleNoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BibleNoteInclude<ExtArgs> | null
+  where?: Prisma.BibleNoteWhereInput
+  orderBy?: Prisma.BibleNoteOrderByWithRelationInput | Prisma.BibleNoteOrderByWithRelationInput[]
+  cursor?: Prisma.BibleNoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BibleNoteScalarFieldEnum | Prisma.BibleNoteScalarFieldEnum[]
+}
+
+/**
+ * AppUser.createdDailyVerseSchedules
+ */
+export type AppUser$createdDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyVerseSchedule
+   */
+  select?: Prisma.DailyVerseScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyVerseSchedule
+   */
+  omit?: Prisma.DailyVerseScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyVerseScheduleInclude<ExtArgs> | null
+  where?: Prisma.DailyVerseScheduleWhereInput
+  orderBy?: Prisma.DailyVerseScheduleOrderByWithRelationInput | Prisma.DailyVerseScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.DailyVerseScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyVerseScheduleScalarFieldEnum | Prisma.DailyVerseScheduleScalarFieldEnum[]
+}
+
+/**
+ * AppUser.updatedDailyVerseSchedules
+ */
+export type AppUser$updatedDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyVerseSchedule
+   */
+  select?: Prisma.DailyVerseScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyVerseSchedule
+   */
+  omit?: Prisma.DailyVerseScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyVerseScheduleInclude<ExtArgs> | null
+  where?: Prisma.DailyVerseScheduleWhereInput
+  orderBy?: Prisma.DailyVerseScheduleOrderByWithRelationInput | Prisma.DailyVerseScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.DailyVerseScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyVerseScheduleScalarFieldEnum | Prisma.DailyVerseScheduleScalarFieldEnum[]
+}
+
+/**
+ * AppUser.cancelledDailyVerseSchedules
+ */
+export type AppUser$cancelledDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyVerseSchedule
+   */
+  select?: Prisma.DailyVerseScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyVerseSchedule
+   */
+  omit?: Prisma.DailyVerseScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyVerseScheduleInclude<ExtArgs> | null
+  where?: Prisma.DailyVerseScheduleWhereInput
+  orderBy?: Prisma.DailyVerseScheduleOrderByWithRelationInput | Prisma.DailyVerseScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.DailyVerseScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyVerseScheduleScalarFieldEnum | Prisma.DailyVerseScheduleScalarFieldEnum[]
+}
+
+/**
+ * AppUser.sentDailyVerseSchedules
+ */
+export type AppUser$sentDailyVerseSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyVerseSchedule
+   */
+  select?: Prisma.DailyVerseScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyVerseSchedule
+   */
+  omit?: Prisma.DailyVerseScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyVerseScheduleInclude<ExtArgs> | null
+  where?: Prisma.DailyVerseScheduleWhereInput
+  orderBy?: Prisma.DailyVerseScheduleOrderByWithRelationInput | Prisma.DailyVerseScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.DailyVerseScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyVerseScheduleScalarFieldEnum | Prisma.DailyVerseScheduleScalarFieldEnum[]
 }
 
 /**

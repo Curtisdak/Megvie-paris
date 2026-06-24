@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useDeferredValue,
   useEffect,
   useMemo,
   useState,
@@ -16,6 +17,10 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  BibleVerseActions,
+  type VerseActionState,
+} from "@/components/bible/verse-actions"
 import { getBibleVerseHref } from "@/lib/bible-reference"
 import { cn } from "@/lib/utils"
 import type {
@@ -55,6 +60,21 @@ type SearchState =
   | { status: "success"; data: BibleSearchResponse; error: null }
   | { status: "error"; data: null; error: string }
 
+type MemberBibleChapterState = {
+  authenticated: boolean
+  favorites: Array<{
+    id: string
+    verseStart: number
+    verseEnd: number
+  }>
+  notes: Array<{
+    id: string
+    verseStart: number
+    verseEnd: number
+    content: string
+  }>
+}
+
 const tabs: { id: BibleTab; label: string }[] = [
   { id: "old", label: "Ancien Testament" },
   { id: "new", label: "Nouveau Testament" },
@@ -71,6 +91,12 @@ const initialSearchState: SearchState = {
   status: "idle",
   data: null,
   error: null,
+}
+
+const initialMemberBibleState: MemberBibleChapterState = {
+  authenticated: false,
+  favorites: [],
+  notes: [],
 }
 
 function isValidChapterNumber(value: number) {
@@ -109,8 +135,11 @@ export function BiblePageClient({
   const [chapterState, setChapterState] =
     useState<ChapterState>(initialChapterState)
   const [searchQuery, setSearchQuery] = useState("")
+  const deferredSearchQuery = useDeferredValue(searchQuery)
   const [searchState, setSearchState] =
     useState<SearchState>(initialSearchState)
+  const [memberBibleState, setMemberBibleState] =
+    useState<MemberBibleChapterState>(initialMemberBibleState)
 
   const allBooks = useMemo(
     () => [...oldTestamentBooks, ...newTestamentBooks],
@@ -302,7 +331,7 @@ export function BiblePageClient({
   )
 
   useEffect(() => {
-    const cleanQuery = searchQuery.trim()
+    const cleanQuery = deferredSearchQuery.trim()
 
     if (cleanQuery.length < 2) {
       setSearchState(initialSearchState)
@@ -318,7 +347,49 @@ export function BiblePageClient({
       controller.abort()
       window.clearTimeout(timeoutId)
     }
-  }, [performSearch, searchQuery])
+  }, [deferredSearchQuery, performSearch])
+
+  useEffect(() => {
+    if (!selectedBookId || chapterState.status !== "success") {
+      setMemberBibleState(initialMemberBibleState)
+      return
+    }
+
+    const controller = new AbortController()
+
+    async function loadMemberBibleState() {
+      try {
+        const params = new URLSearchParams({
+          book: selectedBookId ?? "",
+          chapter: String(selectedChapter),
+          translation: translationName,
+        })
+        const response = await fetch(`/api/member/bible-state?${params}`, {
+          signal: controller.signal,
+        })
+
+        if (!response.ok) {
+          setMemberBibleState(initialMemberBibleState)
+          return
+        }
+
+        const data = (await response.json()) as MemberBibleChapterState
+        setMemberBibleState({
+          authenticated: Boolean(data.authenticated),
+          favorites: Array.isArray(data.favorites) ? data.favorites : [],
+          notes: Array.isArray(data.notes) ? data.notes : [],
+        })
+      } catch {
+        if (!controller.signal.aborted) {
+          setMemberBibleState(initialMemberBibleState)
+        }
+      }
+    }
+
+    void loadMemberBibleState()
+
+    return () => controller.abort()
+  }, [chapterState.status, selectedBookId, selectedChapter, translationName])
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -336,6 +407,7 @@ export function BiblePageClient({
         highlightVerse={highlightVerse}
         selectedBook={selectedBook}
         selectedChapter={selectedChapter}
+        memberBibleState={memberBibleState}
         translationName={translationName}
         onBack={closeBook}
         onChapterSelect={(chapterNumber) => {
@@ -543,6 +615,7 @@ function SearchPanel({
 function BookDetailView({
   chapterState,
   highlightVerse,
+  memberBibleState,
   selectedBook,
   selectedChapter,
   translationName,
@@ -552,6 +625,7 @@ function BookDetailView({
 }: {
   chapterState: ChapterState
   highlightVerse: number | null
+  memberBibleState: MemberBibleChapterState
   selectedBook: BibleBook
   selectedChapter: number
   translationName: string
@@ -634,7 +708,9 @@ function BookDetailView({
 
           <VerseList
             highlightVerse={highlightVerse}
+            memberBibleState={memberBibleState}
             onReferenceClick={onVerseReferenceClick}
+            translationName={translationName}
             verses={chapterState.data.verses}
           />
         </>
@@ -670,14 +746,37 @@ function IntroductionsPanel({
 
 function VerseList({
   highlightVerse,
+  memberBibleState,
   onReferenceClick,
+  translationName,
   verses,
 }: {
   highlightVerse: number | null
+  memberBibleState: MemberBibleChapterState
   onReferenceClick: (verse: BibleVerse) => void
+  translationName: string
   verses: BibleVerse[]
 }) {
   const verseEntries = useMemo(() => getVerseEntries(verses), [verses])
+  const actionStateByVerse = useMemo(() => {
+    const state = new Map<number, VerseActionState>()
+
+    for (const verse of verses) {
+      const favorite = memberBibleState.favorites.find(
+        (item) => item.verseStart <= verse.verse && item.verseEnd >= verse.verse,
+      )
+      const note = memberBibleState.notes.find(
+        (item) => item.verseStart <= verse.verse && item.verseEnd >= verse.verse,
+      )
+
+      state.set(verse.verse, {
+        favoriteId: favorite?.id ?? null,
+        note: note ? { id: note.id, content: note.content } : null,
+      })
+    }
+
+    return state
+  }, [memberBibleState.favorites, memberBibleState.notes, verses])
 
   return (
     <div className="space-y-2">
@@ -688,6 +787,10 @@ function VerseList({
         ]
         const footnotes = verse.footnotes ?? []
         const isHighlighted = highlightVerse === verse.verse
+        const actionState = actionStateByVerse.get(verse.verse) ?? {
+          favoriteId: null,
+          note: null,
+        }
 
         return (
           <div key={verse.id} className="space-y-3">
@@ -738,6 +841,24 @@ function VerseList({
                   <VerseMetadata
                     crossReferences={crossReferences}
                     footnotes={footnotes}
+                  />
+                  <BibleVerseActions
+                    key={`${verse.id}-${actionState.favoriteId ?? "none"}-${
+                      actionState.note?.id ?? "none"
+                    }`}
+                    authenticated={memberBibleState.authenticated}
+                    book={verse.book_id}
+                    chapter={verse.chapter}
+                    href={getBibleVerseHref({
+                      book_id: verse.book_id,
+                      chapter: verse.chapter,
+                      verse: verse.verse,
+                    })}
+                    reference={verse.reference}
+                    state={actionState}
+                    text={verse.text}
+                    translation={translationName}
+                    verse={verse.verse}
                   />
                 </div>
               </div>

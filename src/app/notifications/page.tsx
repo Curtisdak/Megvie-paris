@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
+import { auth } from "@clerk/nextjs/server"
 import { Bell, Cake, Mail, Sparkles, SunMedium } from "lucide-react"
+import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Notifications",
@@ -30,7 +32,15 @@ const notificationCategories = [
   },
 ]
 
-export default function NotificationsPage() {
+export const dynamic = "force-dynamic"
+
+export default async function NotificationsPage() {
+  const authState = await auth()
+
+  if (authState.userId) {
+    redirect("/espace-membre/notifications")
+  }
+
   return (
     <div className="app-edge-to-edge min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 py-5 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:py-12">
       <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 sm:gap-8">

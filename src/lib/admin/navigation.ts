@@ -1,12 +1,15 @@
 import type { ComponentType } from "react"
 import {
   BarChart3,
+  Bell,
+  BookOpenCheck,
   CalendarDays,
+  CircleDollarSign,
+  HandCoins,
   FileText,
   GalleryHorizontalEnd,
   History,
   Mail,
-  ShieldCheck,
   UserCheck,
   UsersRound,
 } from "lucide-react"
@@ -26,6 +29,16 @@ export function getAdminNavItems(role: ChurchRole): AdminNavItem[] {
         label: "Tableau de bord",
         href: "/admin",
         icon: BarChart3,
+      },
+      {
+        label: "Finance",
+        href: "/admin/finance",
+        icon: CircleDollarSign,
+      },
+      {
+        label: "Dons directs",
+        href: "/admin/dons/directs",
+        icon: HandCoins,
       },
     ]
   }
@@ -86,11 +99,32 @@ export function getAdminNavItems(role: ChurchRole): AdminNavItem[] {
     })
   }
 
-  if (hasPermission(role, "roles.manage")) {
+  if (hasPermission(role, "notifications.manage")) {
     items.push({
-      label: "Roles",
-      href: "/admin/roles",
-      icon: ShieldCheck,
+      label: "Notifications",
+      href: "/admin/notifications",
+      icon: Bell,
+    })
+  }
+
+  if (hasPermission(role, "daily_verses.manage")) {
+    items.push({
+      label: "Versets du jour",
+      href: "/admin/versets-du-jour",
+      icon: BookOpenCheck,
+    })
+  }
+
+  if (hasPermission(role, "donations.read_all")) {
+    items.push({
+      label: "Finance",
+      href: "/admin/finance",
+      icon: CircleDollarSign,
+    })
+    items.push({
+      label: "Dons directs",
+      href: "/admin/dons/directs",
+      icon: HandCoins,
     })
   }
 
@@ -98,6 +132,14 @@ export function getAdminNavItems(role: ChurchRole): AdminNavItem[] {
     items.push({
       label: "Audit",
       href: "/admin/audit",
+      icon: History,
+    })
+  }
+
+  if (role === "CREATOR") {
+    items.push({
+      label: "Webhooks Stripe",
+      href: "/admin/webhooks-stripe",
       icon: History,
     })
   }

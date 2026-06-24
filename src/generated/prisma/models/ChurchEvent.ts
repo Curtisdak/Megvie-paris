@@ -328,6 +328,7 @@ export type ChurchEventWhereInput = {
   archivedAt?: Prisma.DateTimeNullableFilter<"ChurchEvent"> | Date | string | null
   createdBy?: Prisma.XOR<Prisma.AppUserScalarRelationFilter, Prisma.AppUserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.AppUserNullableScalarRelationFilter, Prisma.AppUserWhereInput> | null
+  directDonations?: Prisma.DonationListRelationFilter
 }
 
 export type ChurchEventOrderByWithRelationInput = {
@@ -356,6 +357,7 @@ export type ChurchEventOrderByWithRelationInput = {
   archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.AppUserOrderByWithRelationInput
   updatedBy?: Prisma.AppUserOrderByWithRelationInput
+  directDonations?: Prisma.DonationOrderByRelationAggregateInput
 }
 
 export type ChurchEventWhereUniqueInput = Prisma.AtLeast<{
@@ -387,6 +389,7 @@ export type ChurchEventWhereUniqueInput = Prisma.AtLeast<{
   archivedAt?: Prisma.DateTimeNullableFilter<"ChurchEvent"> | Date | string | null
   createdBy?: Prisma.XOR<Prisma.AppUserScalarRelationFilter, Prisma.AppUserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.AppUserNullableScalarRelationFilter, Prisma.AppUserWhereInput> | null
+  directDonations?: Prisma.DonationListRelationFilter
 }, "id" | "slug">
 
 export type ChurchEventOrderByWithAggregationInput = {
@@ -471,6 +474,7 @@ export type ChurchEventCreateInput = {
   archivedAt?: Date | string | null
   createdBy: Prisma.AppUserCreateNestedOneWithoutCreatedEventsInput
   updatedBy?: Prisma.AppUserCreateNestedOneWithoutUpdatedEventsInput
+  directDonations?: Prisma.DonationCreateNestedManyWithoutEventInput
 }
 
 export type ChurchEventUncheckedCreateInput = {
@@ -497,6 +501,7 @@ export type ChurchEventUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   archivedAt?: Date | string | null
+  directDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type ChurchEventUpdateInput = {
@@ -523,6 +528,7 @@ export type ChurchEventUpdateInput = {
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.AppUserUpdateOneRequiredWithoutCreatedEventsNestedInput
   updatedBy?: Prisma.AppUserUpdateOneWithoutUpdatedEventsNestedInput
+  directDonations?: Prisma.DonationUpdateManyWithoutEventNestedInput
 }
 
 export type ChurchEventUncheckedUpdateInput = {
@@ -549,6 +555,7 @@ export type ChurchEventUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  directDonations?: Prisma.DonationUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type ChurchEventCreateManyInput = {
@@ -715,6 +722,11 @@ export type ChurchEventMinOrderByAggregateInput = {
   archivedAt?: Prisma.SortOrder
 }
 
+export type ChurchEventNullableScalarRelationFilter = {
+  is?: Prisma.ChurchEventWhereInput | null
+  isNot?: Prisma.ChurchEventWhereInput | null
+}
+
 export type ChurchEventCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.ChurchEventCreateWithoutCreatedByInput, Prisma.ChurchEventUncheckedCreateWithoutCreatedByInput> | Prisma.ChurchEventCreateWithoutCreatedByInput[] | Prisma.ChurchEventUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.ChurchEventCreateOrConnectWithoutCreatedByInput | Prisma.ChurchEventCreateOrConnectWithoutCreatedByInput[]
@@ -807,6 +819,22 @@ export type EnumEventStatusFieldUpdateOperationsInput = {
   set?: $Enums.EventStatus
 }
 
+export type ChurchEventCreateNestedOneWithoutDirectDonationsInput = {
+  create?: Prisma.XOR<Prisma.ChurchEventCreateWithoutDirectDonationsInput, Prisma.ChurchEventUncheckedCreateWithoutDirectDonationsInput>
+  connectOrCreate?: Prisma.ChurchEventCreateOrConnectWithoutDirectDonationsInput
+  connect?: Prisma.ChurchEventWhereUniqueInput
+}
+
+export type ChurchEventUpdateOneWithoutDirectDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.ChurchEventCreateWithoutDirectDonationsInput, Prisma.ChurchEventUncheckedCreateWithoutDirectDonationsInput>
+  connectOrCreate?: Prisma.ChurchEventCreateOrConnectWithoutDirectDonationsInput
+  upsert?: Prisma.ChurchEventUpsertWithoutDirectDonationsInput
+  disconnect?: Prisma.ChurchEventWhereInput | boolean
+  delete?: Prisma.ChurchEventWhereInput | boolean
+  connect?: Prisma.ChurchEventWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChurchEventUpdateToOneWithWhereWithoutDirectDonationsInput, Prisma.ChurchEventUpdateWithoutDirectDonationsInput>, Prisma.ChurchEventUncheckedUpdateWithoutDirectDonationsInput>
+}
+
 export type ChurchEventCreateWithoutCreatedByInput = {
   id?: string
   title: string
@@ -830,6 +858,7 @@ export type ChurchEventCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   archivedAt?: Date | string | null
   updatedBy?: Prisma.AppUserCreateNestedOneWithoutUpdatedEventsInput
+  directDonations?: Prisma.DonationCreateNestedManyWithoutEventInput
 }
 
 export type ChurchEventUncheckedCreateWithoutCreatedByInput = {
@@ -855,6 +884,7 @@ export type ChurchEventUncheckedCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   archivedAt?: Date | string | null
+  directDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type ChurchEventCreateOrConnectWithoutCreatedByInput = {
@@ -890,6 +920,7 @@ export type ChurchEventCreateWithoutUpdatedByInput = {
   updatedAt?: Date | string
   archivedAt?: Date | string | null
   createdBy: Prisma.AppUserCreateNestedOneWithoutCreatedEventsInput
+  directDonations?: Prisma.DonationCreateNestedManyWithoutEventInput
 }
 
 export type ChurchEventUncheckedCreateWithoutUpdatedByInput = {
@@ -915,6 +946,7 @@ export type ChurchEventUncheckedCreateWithoutUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   archivedAt?: Date | string | null
+  directDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type ChurchEventCreateOrConnectWithoutUpdatedByInput = {
@@ -986,6 +1018,126 @@ export type ChurchEventUpdateWithWhereUniqueWithoutUpdatedByInput = {
 export type ChurchEventUpdateManyWithWhereWithoutUpdatedByInput = {
   where: Prisma.ChurchEventScalarWhereInput
   data: Prisma.XOR<Prisma.ChurchEventUpdateManyMutationInput, Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByInput>
+}
+
+export type ChurchEventCreateWithoutDirectDonationsInput = {
+  id?: string
+  title: string
+  slug: string
+  shortDescription?: string | null
+  description?: string | null
+  startsAt: Date | string
+  endsAt?: Date | string | null
+  timezone?: string
+  locationName?: string | null
+  address?: string | null
+  mapUrl?: string | null
+  registrationUrl?: string | null
+  coverImageUrl?: string | null
+  coverImageStorageKey?: string | null
+  visibility?: $Enums.ContentVisibility
+  status?: $Enums.EventStatus
+  publishAt?: Date | string | null
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  archivedAt?: Date | string | null
+  createdBy: Prisma.AppUserCreateNestedOneWithoutCreatedEventsInput
+  updatedBy?: Prisma.AppUserCreateNestedOneWithoutUpdatedEventsInput
+}
+
+export type ChurchEventUncheckedCreateWithoutDirectDonationsInput = {
+  id?: string
+  title: string
+  slug: string
+  shortDescription?: string | null
+  description?: string | null
+  startsAt: Date | string
+  endsAt?: Date | string | null
+  timezone?: string
+  locationName?: string | null
+  address?: string | null
+  mapUrl?: string | null
+  registrationUrl?: string | null
+  coverImageUrl?: string | null
+  coverImageStorageKey?: string | null
+  visibility?: $Enums.ContentVisibility
+  status?: $Enums.EventStatus
+  publishAt?: Date | string | null
+  publishedAt?: Date | string | null
+  createdByUserId: string
+  updatedByUserId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  archivedAt?: Date | string | null
+}
+
+export type ChurchEventCreateOrConnectWithoutDirectDonationsInput = {
+  where: Prisma.ChurchEventWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChurchEventCreateWithoutDirectDonationsInput, Prisma.ChurchEventUncheckedCreateWithoutDirectDonationsInput>
+}
+
+export type ChurchEventUpsertWithoutDirectDonationsInput = {
+  update: Prisma.XOR<Prisma.ChurchEventUpdateWithoutDirectDonationsInput, Prisma.ChurchEventUncheckedUpdateWithoutDirectDonationsInput>
+  create: Prisma.XOR<Prisma.ChurchEventCreateWithoutDirectDonationsInput, Prisma.ChurchEventUncheckedCreateWithoutDirectDonationsInput>
+  where?: Prisma.ChurchEventWhereInput
+}
+
+export type ChurchEventUpdateToOneWithWhereWithoutDirectDonationsInput = {
+  where?: Prisma.ChurchEventWhereInput
+  data: Prisma.XOR<Prisma.ChurchEventUpdateWithoutDirectDonationsInput, Prisma.ChurchEventUncheckedUpdateWithoutDirectDonationsInput>
+}
+
+export type ChurchEventUpdateWithoutDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  visibility?: Prisma.EnumContentVisibilityFieldUpdateOperationsInput | $Enums.ContentVisibility
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  publishAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.AppUserUpdateOneRequiredWithoutCreatedEventsNestedInput
+  updatedBy?: Prisma.AppUserUpdateOneWithoutUpdatedEventsNestedInput
+}
+
+export type ChurchEventUncheckedUpdateWithoutDirectDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  locationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageStorageKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  visibility?: Prisma.EnumContentVisibilityFieldUpdateOperationsInput | $Enums.ContentVisibility
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  publishAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChurchEventCreateManyCreatedByInput = {
@@ -1061,6 +1213,7 @@ export type ChurchEventUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedBy?: Prisma.AppUserUpdateOneWithoutUpdatedEventsNestedInput
+  directDonations?: Prisma.DonationUpdateManyWithoutEventNestedInput
 }
 
 export type ChurchEventUncheckedUpdateWithoutCreatedByInput = {
@@ -1086,6 +1239,7 @@ export type ChurchEventUncheckedUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  directDonations?: Prisma.DonationUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type ChurchEventUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1136,6 +1290,7 @@ export type ChurchEventUpdateWithoutUpdatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.AppUserUpdateOneRequiredWithoutCreatedEventsNestedInput
+  directDonations?: Prisma.DonationUpdateManyWithoutEventNestedInput
 }
 
 export type ChurchEventUncheckedUpdateWithoutUpdatedByInput = {
@@ -1161,6 +1316,7 @@ export type ChurchEventUncheckedUpdateWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  directDonations?: Prisma.DonationUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type ChurchEventUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -1189,6 +1345,35 @@ export type ChurchEventUncheckedUpdateManyWithoutUpdatedByInput = {
 }
 
 
+/**
+ * Count Type ChurchEventCountOutputType
+ */
+
+export type ChurchEventCountOutputType = {
+  directDonations: number
+}
+
+export type ChurchEventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  directDonations?: boolean | ChurchEventCountOutputTypeCountDirectDonationsArgs
+}
+
+/**
+ * ChurchEventCountOutputType without action
+ */
+export type ChurchEventCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChurchEventCountOutputType
+   */
+  select?: Prisma.ChurchEventCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ChurchEventCountOutputType without action
+ */
+export type ChurchEventCountOutputTypeCountDirectDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DonationWhereInput
+}
+
 
 export type ChurchEventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1216,6 +1401,8 @@ export type ChurchEventSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   archivedAt?: boolean
   createdBy?: boolean | Prisma.AppUserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ChurchEvent$updatedByArgs<ExtArgs>
+  directDonations?: boolean | Prisma.ChurchEvent$directDonationsArgs<ExtArgs>
+  _count?: boolean | Prisma.ChurchEventCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["churchEvent"]>
 
 export type ChurchEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1304,6 +1491,8 @@ export type ChurchEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ChurchEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.AppUserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ChurchEvent$updatedByArgs<ExtArgs>
+  directDonations?: boolean | Prisma.ChurchEvent$directDonationsArgs<ExtArgs>
+  _count?: boolean | Prisma.ChurchEventCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChurchEventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.AppUserDefaultArgs<ExtArgs>
@@ -1319,6 +1508,7 @@ export type $ChurchEventPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     createdBy: Prisma.$AppUserPayload<ExtArgs>
     updatedBy: Prisma.$AppUserPayload<ExtArgs> | null
+    directDonations: Prisma.$DonationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1740,6 +1930,7 @@ export interface Prisma__ChurchEventClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   createdBy<T extends Prisma.AppUserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUserDefaultArgs<ExtArgs>>): Prisma.Prisma__AppUserClient<runtime.Types.Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.ChurchEvent$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChurchEvent$updatedByArgs<ExtArgs>>): Prisma.Prisma__AppUserClient<runtime.Types.Result.GetResult<Prisma.$AppUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  directDonations<T extends Prisma.ChurchEvent$directDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChurchEvent$directDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2209,6 +2400,30 @@ export type ChurchEvent$updatedByArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.AppUserInclude<ExtArgs> | null
   where?: Prisma.AppUserWhereInput
+}
+
+/**
+ * ChurchEvent.directDonations
+ */
+export type ChurchEvent$directDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Donation
+   */
+  select?: Prisma.DonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Donation
+   */
+  omit?: Prisma.DonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationInclude<ExtArgs> | null
+  where?: Prisma.DonationWhereInput
+  orderBy?: Prisma.DonationOrderByWithRelationInput | Prisma.DonationOrderByWithRelationInput[]
+  cursor?: Prisma.DonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DonationScalarFieldEnum | Prisma.DonationScalarFieldEnum[]
 }
 
 /**

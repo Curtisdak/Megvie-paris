@@ -2,9 +2,12 @@ import Link from "next/link"
 import {
   ArrowRight,
   Bell,
+  BookMarked,
   CreditCard,
   FileText,
+  HeartHandshake,
   LayoutDashboard,
+  NotebookPen,
   ShieldCheck,
   UserRound,
 } from "lucide-react"
@@ -123,6 +126,24 @@ export function MemberHome({
               label: "Notifications",
               description: "Verset du jour, annonces et anniversaires.",
               icon: Bell,
+            },
+            {
+              href: "/espace-membre/dons",
+              label: "Mes dons",
+              description: "Historique et dons mensuels.",
+              icon: HeartHandshake,
+            },
+            {
+              href: "/espace-membre/versets-favoris",
+              label: "Versets favoris",
+              description: "Passages bibliques sauvegardes.",
+              icon: BookMarked,
+            },
+            {
+              href: "/espace-membre/notes-bibliques",
+              label: "Notes bibliques",
+              description: "Notes privees de lecture.",
+              icon: NotebookPen,
             },
             {
               href: "/espace-membre/securite",

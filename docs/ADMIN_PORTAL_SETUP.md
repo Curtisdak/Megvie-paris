@@ -61,7 +61,6 @@ Do not run `prisma migrate reset`, `prisma db push --force-reset`, `DROP`,
 - `/admin/messages`
 - `/admin/messages/[id]`
 - `/admin/annonces`
-- `/admin/roles`
 - `/admin/audit`
 - `/espace-membre/annonces`
 - `/espace-membre/annonces/[id]`
@@ -153,6 +152,10 @@ Published public events, public announcements and published gallery albums are
 shown on the home page. Published announcements are also shown in the member
 dashboard and on `/espace-membre/annonces`.
 
+Events are public-only church content. The admin event forms do not expose an
+audience selector, and the database migration adds a guard so event visibility
+stays `PUBLIC`. Use announcements when content needs a member-only audience.
+
 Opening `/espace-membre/annonces/[id]` creates or updates an `AnnouncementRead`
 record for the authenticated member. This is only read tracking; Prompt 3 will
 connect announcements to Web Push.
@@ -161,7 +164,7 @@ connect announcements to Web Push.
 
 1. Register and approve a normal user.
 2. Bootstrap or keep the Creator account.
-3. Use `/admin/roles` as Creator to assign `RESPO`, `FINANCE`, or `MASTER`.
+3. Use `/admin/membres` as Creator to assign `RESPO`, `FINANCE`, or `MASTER`.
 4. Reopen protected pages after role changes so the database role is read again.
 
 ## Postponed

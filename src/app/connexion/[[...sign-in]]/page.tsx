@@ -19,7 +19,7 @@ export default async function LoginPage({
     <AuthPageShell
       eyebrow="Connexion"
       title="Retrouvez votre espace membre."
-      description="Connectez-vous avec Clerk pour suivre votre adhesion, gerer votre profil, vos notifications et vos reglages de securite."
+      description="Connectez-vous pour suivre votre adhesion, gerer votre profil, vos notifications et vos reglages de securite."
     >
       <div className="flex justify-center">
         <SignIn

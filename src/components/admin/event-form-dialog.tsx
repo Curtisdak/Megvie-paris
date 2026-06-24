@@ -5,6 +5,7 @@ import { CalendarPlus, Save } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { ImageDropzone } from "@/components/admin/image-dropzone"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
@@ -22,11 +23,6 @@ const selectClass =
 
 const labelClass =
   "text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400"
-
-const visibilityOptions = [
-  ["PUBLIC", "Public"],
-  ["MEMBERS_ONLY", "Membres seulement"],
-] as const
 
 const statusOptions = [
   ["DRAFT", "Brouillon"],
@@ -151,20 +147,6 @@ export function EventFormDialog() {
 
             <aside className="space-y-4 rounded-3xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950/70 sm:p-4">
               <div className="grid gap-3">
-                <Field id="event-visibility" label="Audience">
-                  <select
-                    id="event-visibility"
-                    name="visibility"
-                    defaultValue="PUBLIC"
-                    className={selectClass}
-                  >
-                    {visibilityOptions.map(([value, label]) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
                 <Field id="event-status" label="Statut">
                   <select
                     id="event-status"
@@ -208,6 +190,54 @@ export function EventFormDialog() {
                     className="h-10 rounded-xl bg-white dark:bg-zinc-950"
                   />
                 </Field>
+              </div>
+
+              <div className="grid gap-3 rounded-2xl border border-amber-100 bg-amber-50/80 p-3 text-sm dark:border-amber-400/20 dark:bg-amber-400/10">
+                <label className="flex items-start gap-3">
+                  <Checkbox name="notifyEventPush" className="mt-1" />
+                  <span>
+                    <span className="block font-semibold">
+                      Notifier a la publication
+                    </span>
+                    <span className="mt-1 block text-xs leading-5 text-zinc-500 dark:text-zinc-400">
+                      Cree une notification dedoublonnee pour les membres.
+                    </span>
+                  </span>
+                </label>
+                <label className="flex items-start gap-3">
+                  <Checkbox name="notifyEventReminder" className="mt-1" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold">
+                      Ajouter un rappel
+                    </span>
+                    <select
+                      name="reminderPreset"
+                      defaultValue="24_HOURS"
+                      className={`${selectClass} mt-2 w-full`}
+                    >
+                      <option value="7_DAYS">7 jours avant</option>
+                      <option value="24_HOURS">24 heures avant</option>
+                      <option value="2_HOURS">2 heures avant</option>
+                      <option value="CUSTOM">Date personnalisee</option>
+                    </select>
+                    <Input
+                      name="reminderAt"
+                      type="datetime-local"
+                      className="mt-2 h-10 rounded-xl bg-white dark:bg-zinc-950"
+                    />
+                  </span>
+                </label>
+                <label className="flex items-start gap-3">
+                  <Checkbox name="notifyCancellation" className="mt-1" />
+                  <span>
+                    <span className="block font-semibold">
+                      Notifier si annule
+                    </span>
+                    <span className="mt-1 block text-xs leading-5 text-zinc-500 dark:text-zinc-400">
+                      Utilise seulement lorsque le statut est Annule.
+                    </span>
+                  </span>
+                </label>
               </div>
 
               <div className="border-t border-zinc-200 pt-4 dark:border-zinc-800">

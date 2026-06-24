@@ -4,7 +4,6 @@ import { Suspense, useEffect, useState } from "react"
 import { toast } from "sonner"
 import { CheckoutStatusListener } from "@/components/checkout-status-listener"
 import { Footer } from "@/components/footer"
-import { ChurchLifeSection } from "@/components/landing/church-life-section"
 import { ClosingCta } from "@/components/landing/closing-cta"
 import { HeroSection } from "@/components/landing/hero-section"
 import { LeadersSection } from "@/components/landing/leaders-section"
@@ -13,7 +12,13 @@ import { WelcomeOverlay } from "@/components/welcome-overlay"
 import { useDonationAmount } from "@/hooks/use-donation-amount"
 import { createDonationSession } from "@/lib/donation-client"
 
-export function HomePageClient({ children }: { children?: React.ReactNode }) {
+export function HomePageClient({
+  featuredContent,
+  children,
+}: {
+  featuredContent?: React.ReactNode
+  children?: React.ReactNode
+}) {
   const [showWelcome, setShowWelcome] = useState(true)
   const [isProcessing, setIsProcessing] = useState(false)
   const { amount, formattedAmount, updateAmount, handleManualChange } =
@@ -56,6 +61,7 @@ export function HomePageClient({ children }: { children?: React.ReactNode }) {
       </Suspense>
       <WelcomeOverlay visible={showWelcome} />
       <main className="relative z-0 mx-auto flex w-full max-w-6xl flex-col gap-6 sm:gap-10">
+        {featuredContent}
         <HeroSection
           amount={amount}
           formattedAmount={formattedAmount}
@@ -64,7 +70,6 @@ export function HomePageClient({ children }: { children?: React.ReactNode }) {
           onManualChange={handleManualChange}
           onDonate={handleDonationClick}
         />
-        <ChurchLifeSection />
         {children}
         <PwaEngagementSection />
         <LeadersSection />

@@ -11,6 +11,28 @@ import { cn } from "@/lib/utils"
 
 const leaderCommitments = ["Accueil", "Priere", "Enseignement"]
 
+const leaderCopyContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.08,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.04,
+      staggerDirection: -1,
+    },
+  },
+}
+
+const leaderCopyItem = {
+  hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)" },
+  exit: { opacity: 0, y: -10, filter: "blur(4px)" },
+}
+
 export function LeadersSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const touchStartX = useRef<number | null>(null)
@@ -132,10 +154,10 @@ export function LeadersSection() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -32 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="grid min-h-[540px] bg-zinc-950 text-white lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]"
+            className="relative isolate grid min-h-[500px] overflow-hidden bg-zinc-950 text-white lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]"
             aria-live="polite"
           >
-            <div className="relative min-h-[330px] overflow-hidden bg-zinc-900 sm:min-h-[420px] lg:min-h-[560px]">
+            <div className="relative z-10 min-h-[330px] overflow-hidden bg-zinc-900 sm:min-h-[420px] lg:min-h-[500px]">
               <Image
                 src={activeLeader.image}
                 alt={activeLeader.name}
@@ -144,33 +166,64 @@ export function LeadersSection() {
                 className="object-cover object-top"
                 priority={activeIndex === 0}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-zinc-950/10 lg:to-zinc-950/65" />
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/10 to-transparent lg:bg-[linear-gradient(90deg,rgba(9,9,11,0)_0%,rgba(9,9,11,0)_74%,rgba(9,9,11,0.18)_100%)]" />
             </div>
 
-            <div className="flex min-h-[330px] flex-col justify-between p-5 sm:p-8 lg:p-10">
-              <div>
-                <p className="inline-flex rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-amber-100">
+            <div className="relative z-20 flex min-h-[330px] flex-col justify-center bg-zinc-950 p-5 sm:p-8 lg:-ml-24 lg:min-h-[500px] lg:p-10 lg:pl-32">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 -left-32 hidden w-32 bg-gradient-to-r from-transparent via-zinc-950/68 to-zinc-950 lg:block"
+              />
+              <motion.div
+                className="relative z-10 flex max-w-xl flex-col gap-5"
+                initial="hidden"
+                animate="show"
+                exit="exit"
+                variants={leaderCopyContainer}
+              >
+                <motion.p
+                  variants={leaderCopyItem}
+                  transition={{ duration: 0.42, ease: "easeOut" }}
+                  className="inline-flex w-fit rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-xs font-semibold uppercase text-amber-100 shadow-lg shadow-amber-950/20"
+                >
                   {activeLeader.role}
-                </p>
-                <h4 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">
-                  {activeLeader.name}
-                </h4>
-                <p className="mt-5 max-w-xl text-base leading-7 text-zinc-200 sm:text-lg">
-                  Disponible pour accueillir, prier et accompagner la
-                  communaute avec attention et fidelite.
-                </p>
-              </div>
+                </motion.p>
+                <motion.div
+                  variants={leaderCopyItem}
+                  transition={{ duration: 0.48, ease: "easeOut" }}
+                >
+                  <h4 className="text-4xl font-black leading-tight text-white sm:text-5xl">
+                    {activeLeader.name}
+                  </h4>
+                  <p className="mt-4 max-w-lg text-base leading-7 text-zinc-200 sm:text-lg">
+                    Disponible pour accueillir, prier et accompagner la
+                    communaute avec attention et fidelite.
+                  </p>
+                </motion.div>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {leaderCommitments.map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-medium text-zinc-100"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
+                <motion.div
+                  variants={leaderCopyItem}
+                  transition={{ duration: 0.42, ease: "easeOut" }}
+                  className="grid gap-3 pt-2 sm:grid-cols-3"
+                >
+                  {leaderCommitments.map((item, index) => (
+                    <motion.div
+                      key={item}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{
+                        duration: 0.35,
+                        delay: 0.24 + index * 0.06,
+                        ease: "easeOut",
+                      }}
+                      className="flex min-h-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.08] px-4 py-3 text-center text-sm font-semibold text-zinc-100 shadow-lg shadow-black/10 backdrop-blur"
+                    >
+                      {item}
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </motion.div>
             </div>
           </motion.article>
         </AnimatePresence>

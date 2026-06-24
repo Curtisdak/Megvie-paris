@@ -16,6 +16,7 @@ import {
   UserRound,
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { NotificationCountBadge } from "@/components/navigation/notification-count-badge"
 import { cn } from "@/lib/utils"
 
 const desktopNavItems = [
@@ -66,8 +67,7 @@ const desktopNavItems = [
 const mobileNavItems = desktopNavItems.filter(
   (item) =>
     item.href !== "/verset-du-jour" &&
-    item.href !== "/notifications" &&
-    item.href !== "/espace-membre",
+    item.href !== "/notifications",
 )
 
 const SIDEBAR_STORAGE_KEY = "megvie-sidebar-collapsed"
@@ -223,7 +223,7 @@ export function AppNavigation() {
         aria-label="Navigation principale mobile"
       >
         <div className="pointer-events-auto mx-auto max-w-sm rounded-[1.75rem] border border-white/70 bg-white/95 p-1.5 shadow-[0_18px_44px_rgba(15,23,42,0.2)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/95 dark:shadow-[0_18px_44px_rgba(0,0,0,0.45)]">
-          <div className="grid grid-cols-4 gap-1">
+          <div className="grid grid-cols-5 gap-1">
             {mobileNavItems.map((item, index) => (
               <NavigationLink
                 key={item.href}
@@ -321,7 +321,7 @@ function NavigationLink({
             </span>
           ) : null}
           {collapsed && href === "/notifications" ? (
-            <span className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full border border-white bg-amber-500 dark:border-zinc-950" />
+            <NotificationCountBadge className="right-2 top-2" />
           ) : null}
         </Link>
       </motion.div>
@@ -363,7 +363,7 @@ function NavigationLink({
         >
           <Icon className="h-5 w-5" aria-hidden />
           {href === "/notifications" ? (
-            <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border border-white bg-amber-500 dark:border-zinc-950" />
+            <NotificationCountBadge />
           ) : null}
         </span>
         {isActive ? (

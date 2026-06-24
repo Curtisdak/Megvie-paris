@@ -41,6 +41,62 @@ export const NotificationDeliveryStatus = {
 export type NotificationDeliveryStatus = (typeof NotificationDeliveryStatus)[keyof typeof NotificationDeliveryStatus]
 
 
+export const NotificationType = {
+  DAILY_VERSE: 'DAILY_VERSE',
+  BIRTHDAY: 'BIRTHDAY',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  EVENT_PUBLISHED: 'EVENT_PUBLISHED',
+  EVENT_REMINDER: 'EVENT_REMINDER',
+  EVENT_CANCELLED: 'EVENT_CANCELLED',
+  PERSONAL: 'PERSONAL',
+  STAFF_NEW_MESSAGE: 'STAFF_NEW_MESSAGE',
+  STAFF_CONFIDENTIAL_MESSAGE: 'STAFF_CONFIDENTIAL_MESSAGE',
+  SYSTEM: 'SYSTEM',
+  TEST: 'TEST'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const NotificationAudienceType = {
+  ALL_ACTIVE_MEMBERS: 'ALL_ACTIVE_MEMBERS',
+  ROLE: 'ROLE',
+  INDIVIDUAL: 'INDIVIDUAL',
+  ANONYMOUS_DAILY_VERSE: 'ANONYMOUS_DAILY_VERSE',
+  STAFF_GENERAL: 'STAFF_GENERAL',
+  STAFF_CONFIDENTIAL: 'STAFF_CONFIDENTIAL'
+} as const
+
+export type NotificationAudienceType = (typeof NotificationAudienceType)[keyof typeof NotificationAudienceType]
+
+
+export const NotificationCampaignStatus = {
+  DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  PARTIAL: 'PARTIAL',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type NotificationCampaignStatus = (typeof NotificationCampaignStatus)[keyof typeof NotificationCampaignStatus]
+
+
+export const PushDeliveryStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  ACCEPTED: 'ACCEPTED',
+  RETRY: 'RETRY',
+  FAILED: 'FAILED',
+  EXPIRED: 'EXPIRED',
+  SKIPPED: 'SKIPPED'
+} as const
+
+export type PushDeliveryStatus = (typeof PushDeliveryStatus)[keyof typeof PushDeliveryStatus]
+
+
 export const ContentVisibility = {
   PUBLIC: 'PUBLIC',
   MEMBERS_ONLY: 'MEMBERS_ONLY'
@@ -126,3 +182,107 @@ export const AnnouncementStatus = {
 } as const
 
 export type AnnouncementStatus = (typeof AnnouncementStatus)[keyof typeof AnnouncementStatus]
+
+
+export const DonationFrequency = {
+  ONE_TIME: 'ONE_TIME',
+  MONTHLY: 'MONTHLY'
+} as const
+
+export type DonationFrequency = (typeof DonationFrequency)[keyof typeof DonationFrequency]
+
+
+export const DonationSource = {
+  ONLINE: 'ONLINE',
+  DIRECT: 'DIRECT'
+} as const
+
+export type DonationSource = (typeof DonationSource)[keyof typeof DonationSource]
+
+
+export const DirectDonationKind = {
+  IDENTIFIED: 'IDENTIFIED',
+  ANONYMOUS_COLLECTION: 'ANONYMOUS_COLLECTION'
+} as const
+
+export type DirectDonationKind = (typeof DirectDonationKind)[keyof typeof DirectDonationKind]
+
+
+export const DirectDonationStatus = {
+  RECORDED: 'RECORDED',
+  VERIFIED: 'VERIFIED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DirectDonationStatus = (typeof DirectDonationStatus)[keyof typeof DirectDonationStatus]
+
+
+export const DonationCheckoutStatus = {
+  CREATED: 'CREATED',
+  OPEN: 'OPEN',
+  COMPLETED: 'COMPLETED',
+  EXPIRED: 'EXPIRED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DonationCheckoutStatus = (typeof DonationCheckoutStatus)[keyof typeof DonationCheckoutStatus]
+
+
+export const DonationStatus = {
+  PENDING: 'PENDING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+  PARTIALLY_REFUNDED: 'PARTIALLY_REFUNDED',
+  REFUNDED: 'REFUNDED',
+  DISPUTED: 'DISPUTED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DonationStatus = (typeof DonationStatus)[keyof typeof DonationStatus]
+
+
+export const RecurringDonationStatus = {
+  INCOMPLETE: 'INCOMPLETE',
+  INCOMPLETE_EXPIRED: 'INCOMPLETE_EXPIRED',
+  TRIALING: 'TRIALING',
+  ACTIVE: 'ACTIVE',
+  PAST_DUE: 'PAST_DUE',
+  CANCELED: 'CANCELED',
+  UNPAID: 'UNPAID',
+  PAUSED: 'PAUSED'
+} as const
+
+export type RecurringDonationStatus = (typeof RecurringDonationStatus)[keyof typeof RecurringDonationStatus]
+
+
+export const DonationRefundStatus = {
+  PENDING: 'PENDING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type DonationRefundStatus = (typeof DonationRefundStatus)[keyof typeof DonationRefundStatus]
+
+
+export const StripeWebhookProcessingStatus = {
+  RECEIVED: 'RECEIVED',
+  PROCESSING: 'PROCESSING',
+  PROCESSED: 'PROCESSED',
+  IGNORED: 'IGNORED',
+  FAILED: 'FAILED'
+} as const
+
+export type StripeWebhookProcessingStatus = (typeof StripeWebhookProcessingStatus)[keyof typeof StripeWebhookProcessingStatus]
+
+
+export const DailyVerseScheduleStatus = {
+  DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
+  SENT: 'SENT',
+  CANCELLED: 'CANCELLED',
+  FAILED: 'FAILED'
+} as const
+
+export type DailyVerseScheduleStatus = (typeof DailyVerseScheduleStatus)[keyof typeof DailyVerseScheduleStatus]

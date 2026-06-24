@@ -1,8 +1,22 @@
-export async function createDonationSession(amount: number) {
-  const response = await fetch("/api/donate", {
+export type CreateDonationSessionInput = {
+  amount: number
+  categorySlug?: string
+  frequency?: "ONE_TIME" | "MONTHLY"
+  donorName?: string
+  donorEmail?: string
+}
+
+export async function createDonationSession(
+  input: number | CreateDonationSessionInput,
+) {
+  const payload =
+    typeof input === "number"
+      ? { amount: input, categorySlug: "autre", frequency: "ONE_TIME" }
+      : input
+  const response = await fetch("/api/donations/checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount }),
+    body: JSON.stringify(payload),
   })
 
   const data = (await response.json().catch(() => null)) as {

@@ -17,10 +17,15 @@ import {
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
 import { AnnouncementFormDialog } from "@/components/admin/announcement-form-dialog"
+import { DeleteSubmitButton } from "@/components/admin/delete-submit-button"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { updateAnnouncementStatusAction } from "@/lib/admin/actions"
+import {
+  deleteAnnouncementAction,
+  updateAnnouncementStatusAction,
+} from "@/lib/admin/actions"
 import { listAnnouncements } from "@/lib/admin/data"
 
 const selectClass =
@@ -407,9 +412,23 @@ export default async function AnnouncementsPage({
                           </option>
                         ))}
                       </select>
+                      <label className="flex items-start gap-2 rounded-2xl border border-zinc-200 bg-white p-3 text-xs leading-5 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                        <Checkbox name="notifyPush" className="mt-0.5" />
+                        <span>
+                          Notifier a la publication. Les doublons sont
+                          bloques automatiquement.
+                        </span>
+                      </label>
                       <Button variant="outline" className="w-full rounded-full">
                         Mettre a jour
                       </Button>
+                    </AdminActionForm>
+                    <AdminActionForm action={deleteAnnouncementAction} className="mt-3">
+                      <input type="hidden" name="id" value={announcement.id} />
+                      <DeleteSubmitButton
+                        disabled={announcement.status === "ARCHIVED"}
+                        confirmMessage={`Supprimer l'annonce "${announcement.title}" ?`}
+                      />
                     </AdminActionForm>
                   </div>
                 </div>

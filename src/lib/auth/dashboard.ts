@@ -38,6 +38,13 @@ export type MemberDashboardData = {
     announcements_enabled: boolean
     events_enabled: boolean
     donation_notifications_enabled: boolean
+    push_enabled: boolean
+    daily_verse_push_enabled: boolean
+    birthday_push_enabled: boolean
+    announcement_push_enabled: boolean
+    event_push_enabled: boolean
+    personal_push_enabled: boolean
+    staff_message_push_enabled: boolean
     timezone: string
   } | null
   role: string
@@ -109,6 +116,17 @@ export async function getRequiredMemberDashboardData(
           events_enabled: user.notificationPreference.eventsEnabled,
           donation_notifications_enabled:
             user.notificationPreference.donationNotificationsEnabled,
+          push_enabled: user.notificationPreference.pushEnabled,
+          daily_verse_push_enabled:
+            user.notificationPreference.dailyVersePushEnabled,
+          birthday_push_enabled:
+            user.notificationPreference.birthdayPushEnabled,
+          announcement_push_enabled:
+            user.notificationPreference.announcementPushEnabled,
+          event_push_enabled: user.notificationPreference.eventPushEnabled,
+          personal_push_enabled: user.notificationPreference.personalPushEnabled,
+          staff_message_push_enabled:
+            user.notificationPreference.staffMessagePushEnabled,
           timezone: user.notificationPreference.timezone,
         }
       : null,

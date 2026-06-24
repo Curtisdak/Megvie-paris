@@ -15,7 +15,7 @@ export const MAX_DONATION = 5000
 
 export const donationHighlights = [
   "Chaque don soutient des repas solidaires et des actions sociales.",
-  "Un recu officiel vous est envoye pour vos declarations fiscales.",
+  "Stripe peut envoyer une confirmation de paiement selon la configuration choisie.",
   "Votre generosite fait rayonner l'eglise MegVie Paris dans la ville.",
 ]
 

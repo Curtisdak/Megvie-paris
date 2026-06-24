@@ -33,6 +33,13 @@ export type NotificationPreferenceMinAggregateOutputType = {
   announcementsEnabled: boolean | null
   eventsEnabled: boolean | null
   donationNotificationsEnabled: boolean | null
+  pushEnabled: boolean | null
+  dailyVersePushEnabled: boolean | null
+  birthdayPushEnabled: boolean | null
+  announcementPushEnabled: boolean | null
+  eventPushEnabled: boolean | null
+  personalPushEnabled: boolean | null
+  staffMessagePushEnabled: boolean | null
   timezone: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -47,6 +54,13 @@ export type NotificationPreferenceMaxAggregateOutputType = {
   announcementsEnabled: boolean | null
   eventsEnabled: boolean | null
   donationNotificationsEnabled: boolean | null
+  pushEnabled: boolean | null
+  dailyVersePushEnabled: boolean | null
+  birthdayPushEnabled: boolean | null
+  announcementPushEnabled: boolean | null
+  eventPushEnabled: boolean | null
+  personalPushEnabled: boolean | null
+  staffMessagePushEnabled: boolean | null
   timezone: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -61,6 +75,13 @@ export type NotificationPreferenceCountAggregateOutputType = {
   announcementsEnabled: number
   eventsEnabled: number
   donationNotificationsEnabled: number
+  pushEnabled: number
+  dailyVersePushEnabled: number
+  birthdayPushEnabled: number
+  announcementPushEnabled: number
+  eventPushEnabled: number
+  personalPushEnabled: number
+  staffMessagePushEnabled: number
   timezone: number
   createdAt: number
   updatedAt: number
@@ -77,6 +98,13 @@ export type NotificationPreferenceMinAggregateInputType = {
   announcementsEnabled?: true
   eventsEnabled?: true
   donationNotificationsEnabled?: true
+  pushEnabled?: true
+  dailyVersePushEnabled?: true
+  birthdayPushEnabled?: true
+  announcementPushEnabled?: true
+  eventPushEnabled?: true
+  personalPushEnabled?: true
+  staffMessagePushEnabled?: true
   timezone?: true
   createdAt?: true
   updatedAt?: true
@@ -91,6 +119,13 @@ export type NotificationPreferenceMaxAggregateInputType = {
   announcementsEnabled?: true
   eventsEnabled?: true
   donationNotificationsEnabled?: true
+  pushEnabled?: true
+  dailyVersePushEnabled?: true
+  birthdayPushEnabled?: true
+  announcementPushEnabled?: true
+  eventPushEnabled?: true
+  personalPushEnabled?: true
+  staffMessagePushEnabled?: true
   timezone?: true
   createdAt?: true
   updatedAt?: true
@@ -105,6 +140,13 @@ export type NotificationPreferenceCountAggregateInputType = {
   announcementsEnabled?: true
   eventsEnabled?: true
   donationNotificationsEnabled?: true
+  pushEnabled?: true
+  dailyVersePushEnabled?: true
+  birthdayPushEnabled?: true
+  announcementPushEnabled?: true
+  eventPushEnabled?: true
+  personalPushEnabled?: true
+  staffMessagePushEnabled?: true
   timezone?: true
   createdAt?: true
   updatedAt?: true
@@ -192,6 +234,13 @@ export type NotificationPreferenceGroupByOutputType = {
   announcementsEnabled: boolean
   eventsEnabled: boolean
   donationNotificationsEnabled: boolean
+  pushEnabled: boolean
+  dailyVersePushEnabled: boolean
+  birthdayPushEnabled: boolean
+  announcementPushEnabled: boolean
+  eventPushEnabled: boolean
+  personalPushEnabled: boolean
+  staffMessagePushEnabled: boolean
   timezone: string
   createdAt: Date
   updatedAt: Date
@@ -227,6 +276,13 @@ export type NotificationPreferenceWhereInput = {
   announcementsEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
   eventsEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
   donationNotificationsEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  pushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  dailyVersePushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  birthdayPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  announcementPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  eventPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  personalPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  staffMessagePushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
   timezone?: Prisma.StringFilter<"NotificationPreference"> | string
   createdAt?: Prisma.DateTimeFilter<"NotificationPreference"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"NotificationPreference"> | Date | string
@@ -242,6 +298,13 @@ export type NotificationPreferenceOrderByWithRelationInput = {
   announcementsEnabled?: Prisma.SortOrder
   eventsEnabled?: Prisma.SortOrder
   donationNotificationsEnabled?: Prisma.SortOrder
+  pushEnabled?: Prisma.SortOrder
+  dailyVersePushEnabled?: Prisma.SortOrder
+  birthdayPushEnabled?: Prisma.SortOrder
+  announcementPushEnabled?: Prisma.SortOrder
+  eventPushEnabled?: Prisma.SortOrder
+  personalPushEnabled?: Prisma.SortOrder
+  staffMessagePushEnabled?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -260,6 +323,13 @@ export type NotificationPreferenceWhereUniqueInput = Prisma.AtLeast<{
   announcementsEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
   eventsEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
   donationNotificationsEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  pushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  dailyVersePushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  birthdayPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  announcementPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  eventPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  personalPushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
+  staffMessagePushEnabled?: Prisma.BoolFilter<"NotificationPreference"> | boolean
   timezone?: Prisma.StringFilter<"NotificationPreference"> | string
   createdAt?: Prisma.DateTimeFilter<"NotificationPreference"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"NotificationPreference"> | Date | string
@@ -275,6 +345,13 @@ export type NotificationPreferenceOrderByWithAggregationInput = {
   announcementsEnabled?: Prisma.SortOrder
   eventsEnabled?: Prisma.SortOrder
   donationNotificationsEnabled?: Prisma.SortOrder
+  pushEnabled?: Prisma.SortOrder
+  dailyVersePushEnabled?: Prisma.SortOrder
+  birthdayPushEnabled?: Prisma.SortOrder
+  announcementPushEnabled?: Prisma.SortOrder
+  eventPushEnabled?: Prisma.SortOrder
+  personalPushEnabled?: Prisma.SortOrder
+  staffMessagePushEnabled?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -295,6 +372,13 @@ export type NotificationPreferenceScalarWhereWithAggregatesInput = {
   announcementsEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
   eventsEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
   donationNotificationsEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
+  pushEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
+  dailyVersePushEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
+  birthdayPushEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
+  announcementPushEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
+  eventPushEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
+  personalPushEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
+  staffMessagePushEnabled?: Prisma.BoolWithAggregatesFilter<"NotificationPreference"> | boolean
   timezone?: Prisma.StringWithAggregatesFilter<"NotificationPreference"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"NotificationPreference"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"NotificationPreference"> | Date | string
@@ -308,6 +392,13 @@ export type NotificationPreferenceCreateInput = {
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -323,6 +414,13 @@ export type NotificationPreferenceUncheckedCreateInput = {
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -336,6 +434,13 @@ export type NotificationPreferenceUpdateInput = {
   announcementsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   eventsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   donationNotificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dailyVersePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  birthdayPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  announcementPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eventPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  personalPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffMessagePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -351,6 +456,13 @@ export type NotificationPreferenceUncheckedUpdateInput = {
   announcementsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   eventsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   donationNotificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dailyVersePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  birthdayPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  announcementPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eventPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  personalPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffMessagePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -365,6 +477,13 @@ export type NotificationPreferenceCreateManyInput = {
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -378,6 +497,13 @@ export type NotificationPreferenceUpdateManyMutationInput = {
   announcementsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   eventsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   donationNotificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dailyVersePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  birthdayPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  announcementPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eventPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  personalPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffMessagePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -392,6 +518,13 @@ export type NotificationPreferenceUncheckedUpdateManyInput = {
   announcementsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   eventsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   donationNotificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dailyVersePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  birthdayPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  announcementPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eventPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  personalPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffMessagePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -411,6 +544,13 @@ export type NotificationPreferenceCountOrderByAggregateInput = {
   announcementsEnabled?: Prisma.SortOrder
   eventsEnabled?: Prisma.SortOrder
   donationNotificationsEnabled?: Prisma.SortOrder
+  pushEnabled?: Prisma.SortOrder
+  dailyVersePushEnabled?: Prisma.SortOrder
+  birthdayPushEnabled?: Prisma.SortOrder
+  announcementPushEnabled?: Prisma.SortOrder
+  eventPushEnabled?: Prisma.SortOrder
+  personalPushEnabled?: Prisma.SortOrder
+  staffMessagePushEnabled?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -425,6 +565,13 @@ export type NotificationPreferenceMaxOrderByAggregateInput = {
   announcementsEnabled?: Prisma.SortOrder
   eventsEnabled?: Prisma.SortOrder
   donationNotificationsEnabled?: Prisma.SortOrder
+  pushEnabled?: Prisma.SortOrder
+  dailyVersePushEnabled?: Prisma.SortOrder
+  birthdayPushEnabled?: Prisma.SortOrder
+  announcementPushEnabled?: Prisma.SortOrder
+  eventPushEnabled?: Prisma.SortOrder
+  personalPushEnabled?: Prisma.SortOrder
+  staffMessagePushEnabled?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -439,6 +586,13 @@ export type NotificationPreferenceMinOrderByAggregateInput = {
   announcementsEnabled?: Prisma.SortOrder
   eventsEnabled?: Prisma.SortOrder
   donationNotificationsEnabled?: Prisma.SortOrder
+  pushEnabled?: Prisma.SortOrder
+  dailyVersePushEnabled?: Prisma.SortOrder
+  birthdayPushEnabled?: Prisma.SortOrder
+  announcementPushEnabled?: Prisma.SortOrder
+  eventPushEnabled?: Prisma.SortOrder
+  personalPushEnabled?: Prisma.SortOrder
+  staffMessagePushEnabled?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -484,6 +638,13 @@ export type NotificationPreferenceCreateWithoutUserInput = {
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -497,6 +658,13 @@ export type NotificationPreferenceUncheckedCreateWithoutUserInput = {
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -526,6 +694,13 @@ export type NotificationPreferenceUpdateWithoutUserInput = {
   announcementsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   eventsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   donationNotificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dailyVersePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  birthdayPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  announcementPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eventPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  personalPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffMessagePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -539,6 +714,13 @@ export type NotificationPreferenceUncheckedUpdateWithoutUserInput = {
   announcementsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   eventsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   donationNotificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dailyVersePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  birthdayPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  announcementPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eventPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  personalPushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffMessagePushEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -555,6 +737,13 @@ export type NotificationPreferenceSelect<ExtArgs extends runtime.Types.Extension
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -570,6 +759,13 @@ export type NotificationPreferenceSelectCreateManyAndReturn<ExtArgs extends runt
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -585,6 +781,13 @@ export type NotificationPreferenceSelectUpdateManyAndReturn<ExtArgs extends runt
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -600,12 +803,19 @@ export type NotificationPreferenceSelectScalar = {
   announcementsEnabled?: boolean
   eventsEnabled?: boolean
   donationNotificationsEnabled?: boolean
+  pushEnabled?: boolean
+  dailyVersePushEnabled?: boolean
+  birthdayPushEnabled?: boolean
+  announcementPushEnabled?: boolean
+  eventPushEnabled?: boolean
+  personalPushEnabled?: boolean
+  staffMessagePushEnabled?: boolean
   timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type NotificationPreferenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "dailyVerseEnabled" | "privateBirthdayGreetingEnabled" | "communityBirthdayVisibilityEnabled" | "announcementsEnabled" | "eventsEnabled" | "donationNotificationsEnabled" | "timezone" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationPreference"]>
+export type NotificationPreferenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "dailyVerseEnabled" | "privateBirthdayGreetingEnabled" | "communityBirthdayVisibilityEnabled" | "announcementsEnabled" | "eventsEnabled" | "donationNotificationsEnabled" | "pushEnabled" | "dailyVersePushEnabled" | "birthdayPushEnabled" | "announcementPushEnabled" | "eventPushEnabled" | "personalPushEnabled" | "staffMessagePushEnabled" | "timezone" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationPreference"]>
 export type NotificationPreferenceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.AppUserDefaultArgs<ExtArgs>
 }
@@ -630,6 +840,13 @@ export type $NotificationPreferencePayload<ExtArgs extends runtime.Types.Extensi
     announcementsEnabled: boolean
     eventsEnabled: boolean
     donationNotificationsEnabled: boolean
+    pushEnabled: boolean
+    dailyVersePushEnabled: boolean
+    birthdayPushEnabled: boolean
+    announcementPushEnabled: boolean
+    eventPushEnabled: boolean
+    personalPushEnabled: boolean
+    staffMessagePushEnabled: boolean
     timezone: string
     createdAt: Date
     updatedAt: Date
@@ -1065,6 +1282,13 @@ export interface NotificationPreferenceFieldRefs {
   readonly announcementsEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
   readonly eventsEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
   readonly donationNotificationsEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
+  readonly pushEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
+  readonly dailyVersePushEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
+  readonly birthdayPushEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
+  readonly announcementPushEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
+  readonly eventPushEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
+  readonly personalPushEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
+  readonly staffMessagePushEnabled: Prisma.FieldRef<"NotificationPreference", 'Boolean'>
   readonly timezone: Prisma.FieldRef<"NotificationPreference", 'String'>
   readonly createdAt: Prisma.FieldRef<"NotificationPreference", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"NotificationPreference", 'DateTime'>

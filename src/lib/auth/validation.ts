@@ -276,6 +276,17 @@ export function validateNotificationPreferencesForm(formData: FormData) {
     donationNotificationsEnabled: hasCheckbox(
       formData.get("donationNotificationsEnabled"),
     ),
+    pushEnabled: hasCheckbox(formData.get("pushEnabled")),
+    dailyVersePushEnabled: hasCheckbox(formData.get("dailyVersePushEnabled")),
+    birthdayPushEnabled: hasCheckbox(formData.get("birthdayPushEnabled")),
+    announcementPushEnabled: hasCheckbox(
+      formData.get("announcementPushEnabled"),
+    ),
+    eventPushEnabled: hasCheckbox(formData.get("eventPushEnabled")),
+    personalPushEnabled: hasCheckbox(formData.get("personalPushEnabled")),
+    staffMessagePushEnabled: hasCheckbox(
+      formData.get("staffMessagePushEnabled"),
+    ),
     timezone,
   }
 }

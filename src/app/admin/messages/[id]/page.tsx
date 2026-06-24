@@ -1,12 +1,14 @@
 import { notFound } from "next/navigation"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard } from "@/components/admin/admin-card"
+import { DeleteSubmitButton } from "@/components/admin/delete-submit-button"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import {
   addMessageNoteAction,
   addMessageReplyDraftAction,
+  deleteMessageAction,
   updateMessageStatusAction,
 } from "@/lib/admin/actions"
 import { getMessageDetail } from "@/lib/admin/data"
@@ -104,6 +106,13 @@ export default async function MessageDetailPage({
               <option value="ARCHIVED">Archive</option>
             </select>
             <Button className="w-full rounded-full">Mettre a jour</Button>
+          </AdminActionForm>
+          <AdminActionForm action={deleteMessageAction} className="mt-3">
+            <input type="hidden" name="messageId" value={message.id} />
+            <DeleteSubmitButton
+              disabled={message.status === "ARCHIVED"}
+              confirmMessage={`Supprimer le message "${message.subject}" ?`}
+            />
           </AdminActionForm>
         </AdminCard>
 

@@ -1,9 +1,12 @@
 import Link from "next/link"
 import { Search } from "lucide-react"
+import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { DeleteSubmitButton } from "@/components/admin/delete-submit-button"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { deleteMessageAction } from "@/lib/admin/actions"
 import { listMessages } from "@/lib/admin/data"
 
 export default async function MessagesPage({
@@ -88,9 +91,22 @@ export default async function MessagesPage({
                     {message.createdAt.toLocaleString("fr-FR")}
                   </p>
                 </div>
-                <Button asChild variant="outline" className="w-full rounded-full lg:w-auto">
-                  <Link href={`/admin/messages/${message.id}`}>Ouvrir</Link>
-                </Button>
+                <div className="grid w-full gap-2 sm:grid-cols-2 lg:w-auto lg:min-w-56">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full rounded-full"
+                  >
+                    <Link href={`/admin/messages/${message.id}`}>Ouvrir</Link>
+                  </Button>
+                  <AdminActionForm action={deleteMessageAction}>
+                    <input type="hidden" name="messageId" value={message.id} />
+                    <DeleteSubmitButton
+                      disabled={message.status === "ARCHIVED"}
+                      confirmMessage={`Supprimer le message "${message.subject}" ?`}
+                    />
+                  </AdminActionForm>
+                </div>
               </div>
             </AdminCard>
           ))}

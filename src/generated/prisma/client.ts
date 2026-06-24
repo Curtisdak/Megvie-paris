@@ -72,10 +72,40 @@ export type PushSubscription = Prisma.PushSubscriptionModel
  */
 export type DailyBibleVerse = Prisma.DailyBibleVerseModel
 /**
+ * Model BibleFavorite
+ * 
+ */
+export type BibleFavorite = Prisma.BibleFavoriteModel
+/**
+ * Model BibleNote
+ * 
+ */
+export type BibleNote = Prisma.BibleNoteModel
+/**
+ * Model DailyVerseSchedule
+ * 
+ */
+export type DailyVerseSchedule = Prisma.DailyVerseScheduleModel
+/**
  * Model NotificationLog
  * 
  */
 export type NotificationLog = Prisma.NotificationLogModel
+/**
+ * Model NotificationCampaign
+ * 
+ */
+export type NotificationCampaign = Prisma.NotificationCampaignModel
+/**
+ * Model NotificationRecipient
+ * 
+ */
+export type NotificationRecipient = Prisma.NotificationRecipientModel
+/**
+ * Model PushDeliveryAttempt
+ * 
+ */
+export type PushDeliveryAttempt = Prisma.PushDeliveryAttemptModel
 /**
  * Model AdminAuditLog
  * 
@@ -126,3 +156,33 @@ export type Announcement = Prisma.AnnouncementModel
  * 
  */
 export type AnnouncementRead = Prisma.AnnouncementReadModel
+/**
+ * Model DonationCategory
+ * 
+ */
+export type DonationCategory = Prisma.DonationCategoryModel
+/**
+ * Model DonationCheckout
+ * 
+ */
+export type DonationCheckout = Prisma.DonationCheckoutModel
+/**
+ * Model Donation
+ * 
+ */
+export type Donation = Prisma.DonationModel
+/**
+ * Model RecurringDonation
+ * 
+ */
+export type RecurringDonation = Prisma.RecurringDonationModel
+/**
+ * Model DonationRefund
+ * 
+ */
+export type DonationRefund = Prisma.DonationRefundModel
+/**
+ * Model StripeWebhookEvent
+ * 
+ */
+export type StripeWebhookEvent = Prisma.StripeWebhookEventModel

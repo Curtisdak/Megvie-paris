@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 import {
   ArrowRight,
   CalendarDays,
@@ -8,12 +8,12 @@ import {
   ShieldAlert,
   UserCheck,
   UsersRound,
-} from "lucide-react"
-import { AdminCard, EmptyState } from "@/components/admin/admin-card"
-import { StatusBadge } from "@/components/admin/status-badge"
-import { Button } from "@/components/ui/button"
-import { getAdminDashboardData } from "@/lib/admin/data"
-import { hasPermission } from "@/lib/auth/permissions"
+} from "lucide-react";
+import { AdminCard, EmptyState } from "@/components/admin/admin-card";
+import { StatusBadge } from "@/components/admin/status-badge";
+import { Button } from "@/components/ui/button";
+import { getAdminDashboardData } from "@/lib/admin/data";
+import { hasPermission } from "@/lib/auth/permissions";
 
 const cardConfig = [
   {
@@ -72,11 +72,11 @@ const cardConfig = [
     icon: Camera,
     href: "/admin/galerie",
   },
-] as const
+] as const;
 
 export default async function AdminPage() {
-  const data = await getAdminDashboardData()
-  const role = data.user.role
+  const data = await getAdminDashboardData();
+  const role = data.user.role;
 
   if (role === "FINANCE") {
     return (
@@ -86,32 +86,38 @@ export default async function AdminPage() {
             Finance
           </p>
           <h2 className="mt-3 text-3xl font-semibold">
-            Module finance prepare pour une prochaine phase.
+            Tableau de bord finance disponible.
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-            Votre role est reconnu, mais Prompt 2 ne doit pas exposer les dons,
-            statistiques ou exports financiers. Ces ecrans arriveront dans la
-            phase finance.
+            Consultez les dons confirmes par Stripe, les dons mensuels,
+            statistiques et exports autorises pour votre role.
           </p>
+          <Button asChild className="mt-5 rounded-full">
+            <Link href="/admin/finance">Ouvrir la finance</Link>
+          </Button>
         </AdminCard>
       </div>
-    )
+    );
   }
 
   const visibleCards = cardConfig.filter((item) => {
-    if (item.key === "pendingMembers") return hasPermission(role, "members.approve")
+    if (item.key === "pendingMembers")
+      return hasPermission(role, "members.approve");
     if (item.key === "activeMembers" || item.key === "suspendedMembers") {
-      return hasPermission(role, "members.read_basic")
+      return hasPermission(role, "members.read_basic");
     }
-    if (item.key === "unreadMessages") return hasPermission(role, "messages.read_general")
-    if (item.key === "upcomingEvents") return hasPermission(role, "events.manage")
-    if (item.key === "recentPhotos") return hasPermission(role, "gallery.manage")
-    return hasPermission(role, "announcements.manage")
-  })
+    if (item.key === "unreadMessages")
+      return hasPermission(role, "messages.read_general");
+    if (item.key === "upcomingEvents")
+      return hasPermission(role, "events.manage");
+    if (item.key === "recentPhotos")
+      return hasPermission(role, "gallery.manage");
+    return hasPermission(role, "announcements.manage");
+  });
 
   return (
     <div className="space-y-5">
-      <section className="overflow-hidden rounded-[1.35rem] border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 sm:rounded-[1.5rem] sm:p-6">
+      <section className="overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
@@ -132,33 +138,33 @@ export default async function AdminPage() {
         </div>
       </section>
 
-      <div className="grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {visibleCards.map((item) => {
-          const Icon = item.icon
-          const value = data.counts[item.key]
+          const Icon = item.icon;
+          const value = data.counts[item.key];
 
           return (
             <Link
               key={item.key}
               href={item.href}
-              className="group rounded-[1.25rem] border border-zinc-200 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/80 dark:hover:border-amber-400/30 sm:rounded-[1.35rem] sm:p-4"
+              className="group rounded-[1.35rem] border border-zinc-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/80 dark:hover:border-amber-400/30"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-xs font-medium leading-5 text-zinc-600 dark:text-zinc-300 sm:text-sm">
+                  <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300">
                     {item.label}
                   </p>
-                  <p className="mt-1 hidden text-xs text-zinc-500 dark:text-zinc-500 sm:block">
+                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">
                     {item.description}
                   </p>
                 </div>
-                <span className="rounded-2xl bg-amber-50 p-2 text-amber-700 ring-1 ring-amber-100 transition group-hover:bg-amber-600 group-hover:text-white dark:bg-amber-400/10 dark:text-amber-200 dark:ring-amber-400/10 sm:p-2.5">
-                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden />
+                <span className="rounded-2xl bg-amber-50 p-2.5 text-amber-700 ring-1 ring-amber-100 transition group-hover:bg-amber-600 group-hover:text-white dark:bg-amber-400/10 dark:text-amber-200 dark:ring-amber-400/10">
+                  <Icon className="h-5 w-5" aria-hidden />
                 </span>
               </div>
-              <div className="mt-4 flex items-end justify-between gap-2 sm:mt-5">
-                <p className="text-3xl font-semibold tracking-tight sm:text-4xl">{value}</p>
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 dark:text-amber-200 sm:text-sm">
+              <div className="mt-5 flex items-end justify-between gap-3">
+                <p className="text-4xl font-semibold tracking-tight">{value}</p>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold text-amber-700 dark:text-amber-200">
                   Ouvrir
                   <ArrowRight
                     className="h-4 w-4 transition group-hover:translate-x-0.5"
@@ -167,7 +173,7 @@ export default async function AdminPage() {
                 </span>
               </div>
             </Link>
-          )
+          );
         })}
       </div>
 
@@ -213,5 +219,5 @@ export default async function AdminPage() {
         </div>
       </AdminCard>
     </div>
-  )
+  );
 }

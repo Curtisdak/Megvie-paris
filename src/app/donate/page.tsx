@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { DonatePageClient } from "@/components/donation/donate-page-client"
-import { HighlightsSection } from "@/components/landing/highlights-section"
+import { listActiveDonationCategories } from "@/lib/finance/categories"
 
 export const metadata: Metadata = {
   title: "Faire un don",
@@ -8,12 +8,15 @@ export const metadata: Metadata = {
     "Soutenir MegVie Paris avec un don securise en ligne via Stripe.",
 }
 
-export default function DonatePage() {
+export const dynamic = "force-dynamic"
+
+export default async function DonatePage() {
+  const categories = await listActiveDonationCategories()
+
   return (
-    <div className="app-edge-to-edge min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 py-5 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:py-12">
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 sm:gap-8">
-        <DonatePageClient />
-        <HighlightsSection />
+    <div className="app-edge-to-edge min-h-screen bg-[linear-gradient(180deg,#fff8eb_0%,#f7faf7_46%,#ffffff_100%)] py-4 text-zinc-950 dark:bg-[linear-gradient(180deg,#080808_0%,#11120f_48%,#050505_100%)] dark:text-zinc-50 sm:py-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col">
+        <DonatePageClient categories={categories} />
       </main>
     </div>
   )

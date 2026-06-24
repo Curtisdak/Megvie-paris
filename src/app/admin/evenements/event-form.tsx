@@ -2,6 +2,7 @@ import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard } from "@/components/admin/admin-card"
 import { ImageDropzone } from "@/components/admin/image-dropzone"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { saveEventAction } from "@/lib/admin/actions"
@@ -20,7 +21,6 @@ type EventFormData = {
   registrationUrl?: string | null
   coverImageUrl?: string | null
   coverImageStorageKey?: string | null
-  visibility?: string
   status?: string
   publishAt?: Date | null
 }
@@ -117,17 +117,6 @@ export function EventForm({ event }: { event?: EventFormData | null }) {
             />
           </div>
           <label className="space-y-2">
-            <span className="text-sm font-medium">Visibilite</span>
-            <select
-              name="visibility"
-              defaultValue={event?.visibility ?? "PUBLIC"}
-              className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
-            >
-              <option value="PUBLIC">Public</option>
-              <option value="MEMBERS_ONLY">Membres seulement</option>
-            </select>
-          </label>
-          <label className="space-y-2">
             <span className="text-sm font-medium">Statut</span>
             <select
               name="status"
@@ -150,6 +139,47 @@ export function EventForm({ event }: { event?: EventFormData | null }) {
             />
           </label>
           <input type="hidden" name="timezone" value={event?.timezone ?? "Europe/Paris"} />
+        </div>
+        <div className="grid gap-3 rounded-2xl border border-amber-100 bg-amber-50/70 p-4 dark:border-amber-400/20 dark:bg-amber-400/10 lg:grid-cols-3">
+          <label className="flex items-start gap-3 text-sm">
+            <Checkbox name="notifyEventPush" className="mt-1" />
+            <span>
+              <span className="block font-semibold">Notifier a la publication</span>
+              <span className="mt-1 block text-xs text-zinc-500 dark:text-zinc-400">
+                Ne renvoie pas si une campagne existe deja.
+              </span>
+            </span>
+          </label>
+          <label className="flex items-start gap-3 text-sm">
+            <Checkbox name="notifyEventReminder" className="mt-1" />
+            <span className="min-w-0 flex-1">
+              <span className="block font-semibold">Ajouter un rappel</span>
+              <select
+                name="reminderPreset"
+                defaultValue="24_HOURS"
+                className="mt-2 h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+              >
+                <option value="7_DAYS">7 jours avant</option>
+                <option value="24_HOURS">24 heures avant</option>
+                <option value="2_HOURS">2 heures avant</option>
+                <option value="CUSTOM">Date personnalisee</option>
+              </select>
+              <Input
+                name="reminderAt"
+                type="datetime-local"
+                className="mt-2"
+              />
+            </span>
+          </label>
+          <label className="flex items-start gap-3 text-sm">
+            <Checkbox name="notifyCancellation" className="mt-1" />
+            <span>
+              <span className="block font-semibold">Notifier si annule</span>
+              <span className="mt-1 block text-xs text-zinc-500 dark:text-zinc-400">
+                Utilise seulement avec le statut Annule.
+              </span>
+            </span>
+          </label>
         </div>
         <label className="block space-y-2">
           <span className="text-sm font-medium">Description</span>

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import {
   AnnouncementStatus,
   ChurchRole,
+  ContentVisibility,
   ContactMessageSource,
   ContactMessageStatus,
   EventStatus,
@@ -33,6 +34,15 @@ import {
   type AdminActionState,
 } from "@/lib/admin/validation"
 import { uploadImageFromFormData, type UploadedImage } from "@/lib/imagekit"
+import {
+  cancelPendingEventReminders,
+  createAnnouncementNotification,
+  createEventCancelledNotification,
+  createEventPublishedNotification,
+  createEventReminderNotification,
+  createPersonalNotification,
+  createStaffMessageNotification,
+} from "@/lib/notifications/service"
 
 const allowedAdminAssignments = new Set<ChurchRole>([
   ChurchRole.MEMBER,
@@ -58,6 +68,22 @@ function readRole(value: FormDataEntryValue | null) {
   return allowedAdminAssignments.has(role as ChurchRole)
     ? (role as ChurchRole)
     : null
+}
+
+function hasCheckbox(value: FormDataEntryValue | null) {
+  return value === "on" || value === "true" || value === "1"
+}
+
+function parseReminderDate(formData: FormData, startsAt: Date) {
+  const preset = cleanText(formData.get("reminderPreset"), 40)
+  const custom = parseOptionalDateTime(formData.get("reminderAt"))
+
+  if (preset === "CUSTOM") return custom
+  if (preset === "7_DAYS") return new Date(startsAt.getTime() - 7 * 86_400_000)
+  if (preset === "24_HOURS") return new Date(startsAt.getTime() - 24 * 3_600_000)
+  if (preset === "2_HOURS") return new Date(startsAt.getTime() - 2 * 3_600_000)
+
+  return null
 }
 
 async function resolveImageUpload(
@@ -213,6 +239,16 @@ export async function approveMemberAdminAction(
     }
   }
 
+  await createPersonalNotification({
+    userId: targetUserId,
+    title: "Adhesion validee",
+    body: "Votre compte membre MegVie Paris est maintenant actif.",
+    targetUrl: "/espace-membre",
+    sourceType: "membership",
+    sourceId: targetUserId,
+    dedupeKey: `membership-approved:${targetUserId}`,
+  })
+
   revalidatePath("/admin")
   revalidatePath("/admin/demandes-adhesion")
   revalidatePath("/admin/membres")
@@ -328,6 +364,18 @@ export async function updateMemberStatusAction(
     }),
   ])
 
+  if (status === "SUSPENDED" || status === "ARCHIVED") {
+    await createPersonalNotification({
+      userId: target.id,
+      title: "Mise a jour de votre compte",
+      body: "Une information importante est disponible dans votre espace membre.",
+      targetUrl: "/espace-membre/notifications",
+      sourceType: "membership_status",
+      sourceId: target.id,
+      dedupeKey: `membership-status:${target.id}:${status}`,
+    })
+  }
+
   revalidatePath("/admin/membres")
   return { ok: true, message: "Statut mis a jour." }
 }
@@ -336,7 +384,7 @@ export async function updateRoleAction(
   _previous: AdminActionState,
   formData: FormData,
 ): Promise<AdminActionState> {
-  const actor = await requirePermission("roles.manage", "/admin/roles")
+  const actor = await requirePermission("roles.manage", "/admin/membres")
   const targetUserId = cleanText(formData.get("userId"), 80)
   const role = readRole(formData.get("role"))
   const reason = cleanLongText(formData.get("reason"), 800)
@@ -384,7 +432,16 @@ export async function updateRoleAction(
     }),
   ])
 
-  revalidatePath("/admin/roles")
+  await createPersonalNotification({
+    userId: target.id,
+    title: "Mise a jour de votre role",
+    body: "Votre role dans l'application MegVie Paris a ete mis a jour.",
+    targetUrl: "/espace-membre/notifications",
+    sourceType: "role",
+    sourceId: target.id,
+    dedupeKey: `role:${target.id}:${role}`,
+  })
+
   revalidatePath("/admin/membres")
   return { ok: true, message: "Role mis a jour." }
 }
@@ -439,13 +496,20 @@ export async function saveEventAction(
       formData,
       "coverImageStorageKey",
     ),
-    visibility: parseVisibility(formData.get("visibility")),
+    visibility: ContentVisibility.PUBLIC,
     status,
     publishAt,
     publishedAt: status === EventStatus.PUBLISHED ? new Date() : null,
     archivedAt: status === EventStatus.ARCHIVED ? new Date() : null,
     updatedByUserId: actor.id,
   }
+
+  const previousEvent = id
+    ? await prisma.churchEvent.findUnique({
+        where: { id },
+        select: { startsAt: true },
+      })
+    : null
 
   const saved = id
     ? await prisma.churchEvent.update({
@@ -468,6 +532,56 @@ export async function saveEventAction(
     },
   })
 
+  if (
+    previousEvent &&
+    previousEvent.startsAt.getTime() !== saved.startsAt.getTime()
+  ) {
+    await cancelPendingEventReminders(saved.id)
+  }
+
+  if (saved.status === EventStatus.CANCELLED) {
+    await cancelPendingEventReminders(saved.id)
+
+    if (hasCheckbox(formData.get("notifyCancellation"))) {
+      await createEventCancelledNotification({
+        eventId: saved.id,
+        title: saved.title,
+        createdByUserId: actor.id,
+      })
+    }
+  } else if (
+    hasCheckbox(formData.get("notifyEventPush")) &&
+    (saved.status === EventStatus.PUBLISHED ||
+      (saved.status === EventStatus.SCHEDULED && saved.publishAt))
+  ) {
+    await createEventPublishedNotification({
+      eventId: saved.id,
+      title: saved.title,
+      startsAt: saved.startsAt,
+      scheduledFor:
+        saved.status === EventStatus.SCHEDULED ? saved.publishAt : null,
+      createdByUserId: actor.id,
+    })
+  }
+
+  const reminderAt = hasCheckbox(formData.get("notifyEventReminder"))
+    ? parseReminderDate(formData, saved.startsAt)
+    : null
+
+  if (
+    reminderAt &&
+    reminderAt.getTime() > Date.now() &&
+    saved.status !== EventStatus.CANCELLED &&
+    saved.status !== EventStatus.ARCHIVED
+  ) {
+    await createEventReminderNotification({
+      eventId: saved.id,
+      title: saved.title,
+      scheduledFor: reminderAt,
+      createdByUserId: actor.id,
+    })
+  }
+
   revalidatePath("/admin/evenements")
   revalidatePath("/")
   if (id) revalidatePath(`/admin/evenements/${id}`)
@@ -476,6 +590,52 @@ export async function saveEventAction(
     redirect(`/admin/evenements/${saved.id}`)
   }
   return { ok: true, message: "Evenement enregistre." }
+}
+
+export async function deleteEventAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  const actor = await requirePermission("events.manage", "/admin/evenements")
+  const id = cleanText(formData.get("id"), 80)
+
+  if (!id) return { ok: false, message: "Evenement introuvable." }
+
+  const event = await prisma.churchEvent.findUnique({
+    where: { id },
+    select: { id: true, title: true, status: true },
+  })
+
+  if (!event) return { ok: false, message: "Evenement introuvable." }
+
+  await cancelPendingEventReminders(event.id)
+
+  await prisma.$transaction([
+    prisma.churchEvent.update({
+      where: { id: event.id },
+      data: {
+        status: EventStatus.ARCHIVED,
+        archivedAt: new Date(),
+        updatedByUserId: actor.id,
+      },
+    }),
+    prisma.adminAuditLog.create({
+      data: {
+        actorUserId: actor.id,
+        actorMemberId: actor.profile?.memberId ?? null,
+        action: "event.deleted",
+        entityType: "church_event",
+        entityId: event.id,
+        summary: event.title,
+        metadata: { previousStatus: event.status },
+      },
+    }),
+  ])
+
+  revalidatePath("/admin/evenements")
+  revalidatePath(`/admin/evenements/${event.id}`)
+  revalidatePath("/")
+  return { ok: true, message: "Evenement supprime." }
 }
 
 export async function saveGalleryAlbumAction(
@@ -659,6 +819,40 @@ export async function updateMessageStatusAction(
   return { ok: true, message: "Message mis a jour." }
 }
 
+export async function deleteMessageAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  const messageId = cleanText(formData.get("messageId"), 80)
+  const result = await requireMessageAccess(messageId, "/admin/messages")
+
+  if (!result.ok) return { ok: false, message: result.message }
+
+  await prisma.$transaction([
+    prisma.contactMessage.update({
+      where: { id: result.message.id },
+      data: {
+        status: ContactMessageStatus.ARCHIVED,
+        archivedAt: new Date(),
+      },
+    }),
+    prisma.adminAuditLog.create({
+      data: {
+        actorUserId: result.actor.id,
+        actorMemberId: result.actor.profile?.memberId ?? null,
+        action: "message.deleted",
+        entityType: "contact_message",
+        entityId: result.message.id,
+        summary: "Message supprime.",
+      },
+    }),
+  ])
+
+  revalidatePath("/admin/messages")
+  revalidatePath(`/admin/messages/${result.message.id}`)
+  return { ok: true, message: "Message supprime." }
+}
+
 export async function addMessageNoteAction(
   _previous: AdminActionState,
   formData: FormData,
@@ -804,6 +998,24 @@ export async function saveAnnouncementAction(
     },
   })
 
+  if (
+    hasCheckbox(formData.get("notifyPush")) &&
+    (announcement.status === AnnouncementStatus.PUBLISHED ||
+      (announcement.status === AnnouncementStatus.SCHEDULED &&
+        announcement.publishAt))
+  ) {
+    await createAnnouncementNotification({
+      announcementId: announcement.id,
+      title: announcement.title,
+      visibility: announcement.visibility,
+      scheduledFor:
+        announcement.status === AnnouncementStatus.SCHEDULED
+          ? announcement.publishAt
+          : null,
+      createdByUserId: actor.id,
+    })
+  }
+
   revalidatePath("/admin/annonces")
   revalidatePath("/")
   revalidatePath("/espace-membre")
@@ -842,12 +1054,66 @@ export async function updateAnnouncementStatusAction(
     },
   })
 
+  if (status === AnnouncementStatus.PUBLISHED && hasCheckbox(formData.get("notifyPush"))) {
+    await createAnnouncementNotification({
+      announcementId: announcement.id,
+      title: announcement.title,
+      visibility: announcement.visibility,
+      createdByUserId: actor.id,
+    })
+  }
+
   revalidatePath("/admin/annonces")
   revalidatePath("/")
   revalidatePath("/espace-membre")
   revalidatePath("/espace-membre/annonces")
 
   return { ok: true, message: "Statut de l'annonce mis a jour." }
+}
+
+export async function deleteAnnouncementAction(
+  _previous: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  const actor = await requirePermission("announcements.manage", "/admin/annonces")
+  const id = cleanText(formData.get("id"), 80)
+
+  if (!id) return { ok: false, message: "Annonce introuvable." }
+
+  const announcement = await prisma.announcement.findUnique({
+    where: { id },
+    select: { id: true, title: true, status: true },
+  })
+
+  if (!announcement) return { ok: false, message: "Annonce introuvable." }
+
+  await prisma.$transaction([
+    prisma.announcement.update({
+      where: { id: announcement.id },
+      data: {
+        status: AnnouncementStatus.ARCHIVED,
+        archivedAt: new Date(),
+        updatedByUserId: actor.id,
+      },
+    }),
+    prisma.adminAuditLog.create({
+      data: {
+        actorUserId: actor.id,
+        actorMemberId: actor.profile?.memberId ?? null,
+        action: "announcement.deleted",
+        entityType: "announcement",
+        entityId: announcement.id,
+        summary: announcement.title,
+        metadata: { previousStatus: announcement.status },
+      },
+    }),
+  ])
+
+  revalidatePath("/admin/annonces")
+  revalidatePath("/")
+  revalidatePath("/espace-membre")
+  revalidatePath("/espace-membre/annonces")
+  return { ok: true, message: "Annonce supprimee." }
 }
 
 export async function createContactMessageAction(
@@ -858,11 +1124,16 @@ export async function createContactMessageAction(
 
   if (!parsed.ok) return { ok: false, message: parsed.message }
 
-  await prisma.contactMessage.create({
+  const message = await prisma.contactMessage.create({
     data: {
       ...parsed.data,
       source: ContactMessageSource.PUBLIC_CONTACT,
     },
+  })
+
+  await createStaffMessageNotification({
+    messageId: message.id,
+    confidentiality: message.confidentiality,
   })
 
   revalidatePath("/admin/messages")

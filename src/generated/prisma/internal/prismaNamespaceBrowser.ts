@@ -57,7 +57,13 @@ export const ModelName = {
   NotificationPreference: 'NotificationPreference',
   PushSubscription: 'PushSubscription',
   DailyBibleVerse: 'DailyBibleVerse',
+  BibleFavorite: 'BibleFavorite',
+  BibleNote: 'BibleNote',
+  DailyVerseSchedule: 'DailyVerseSchedule',
   NotificationLog: 'NotificationLog',
+  NotificationCampaign: 'NotificationCampaign',
+  NotificationRecipient: 'NotificationRecipient',
+  PushDeliveryAttempt: 'PushDeliveryAttempt',
   AdminAuditLog: 'AdminAuditLog',
   ChurchSetting: 'ChurchSetting',
   ChurchEvent: 'ChurchEvent',
@@ -67,7 +73,13 @@ export const ModelName = {
   MessageReply: 'MessageReply',
   MessageInternalNote: 'MessageInternalNote',
   Announcement: 'Announcement',
-  AnnouncementRead: 'AnnouncementRead'
+  AnnouncementRead: 'AnnouncementRead',
+  DonationCategory: 'DonationCategory',
+  DonationCheckout: 'DonationCheckout',
+  Donation: 'Donation',
+  RecurringDonation: 'RecurringDonation',
+  DonationRefund: 'DonationRefund',
+  StripeWebhookEvent: 'StripeWebhookEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -93,6 +105,7 @@ export const AppUserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   imageUrl: 'imageUrl',
+  stripeCustomerId: 'stripeCustomerId',
   role: 'role',
   membershipStatus: 'membershipStatus',
   onboardingComplete: 'onboardingComplete',
@@ -149,6 +162,13 @@ export const NotificationPreferenceScalarFieldEnum = {
   announcementsEnabled: 'announcementsEnabled',
   eventsEnabled: 'eventsEnabled',
   donationNotificationsEnabled: 'donationNotificationsEnabled',
+  pushEnabled: 'pushEnabled',
+  dailyVersePushEnabled: 'dailyVersePushEnabled',
+  birthdayPushEnabled: 'birthdayPushEnabled',
+  announcementPushEnabled: 'announcementPushEnabled',
+  eventPushEnabled: 'eventPushEnabled',
+  personalPushEnabled: 'personalPushEnabled',
+  staffMessagePushEnabled: 'staffMessagePushEnabled',
   timezone: 'timezone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -163,11 +183,17 @@ export const PushSubscriptionScalarFieldEnum = {
   endpoint: 'endpoint',
   p256dh: 'p256dh',
   auth: 'auth',
+  deviceName: 'deviceName',
   userAgent: 'userAgent',
   locale: 'locale',
   timezone: 'timezone',
   isActive: 'isActive',
+  anonymousDailyVerseEnabled: 'anonymousDailyVerseEnabled',
   lastSentAt: 'lastSentAt',
+  lastSeenAt: 'lastSeenAt',
+  lastSuccessAt: 'lastSuccessAt',
+  failureCount: 'failureCount',
+  revokedAt: 'revokedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -190,6 +216,68 @@ export const DailyBibleVerseScalarFieldEnum = {
 export type DailyBibleVerseScalarFieldEnum = (typeof DailyBibleVerseScalarFieldEnum)[keyof typeof DailyBibleVerseScalarFieldEnum]
 
 
+export const BibleFavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  book: 'book',
+  chapter: 'chapter',
+  verseStart: 'verseStart',
+  verseEnd: 'verseEnd',
+  reference: 'reference',
+  verseTextSnapshot: 'verseTextSnapshot',
+  translation: 'translation',
+  createdAt: 'createdAt'
+} as const
+
+export type BibleFavoriteScalarFieldEnum = (typeof BibleFavoriteScalarFieldEnum)[keyof typeof BibleFavoriteScalarFieldEnum]
+
+
+export const BibleNoteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  book: 'book',
+  chapter: 'chapter',
+  verseStart: 'verseStart',
+  verseEnd: 'verseEnd',
+  reference: 'reference',
+  translation: 'translation',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BibleNoteScalarFieldEnum = (typeof BibleNoteScalarFieldEnum)[keyof typeof BibleNoteScalarFieldEnum]
+
+
+export const DailyVerseScheduleScalarFieldEnum = {
+  id: 'id',
+  localDate: 'localDate',
+  notificationTime: 'notificationTime',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  book: 'book',
+  chapter: 'chapter',
+  verseStart: 'verseStart',
+  verseEnd: 'verseEnd',
+  reference: 'reference',
+  verseText: 'verseText',
+  translation: 'translation',
+  theme: 'theme',
+  dedupeKey: 'dedupeKey',
+  failureCode: 'failureCode',
+  sentAt: 'sentAt',
+  cancelledAt: 'cancelledAt',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  cancelledByUserId: 'cancelledByUserId',
+  sentByUserId: 'sentByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DailyVerseScheduleScalarFieldEnum = (typeof DailyVerseScheduleScalarFieldEnum)[keyof typeof DailyVerseScheduleScalarFieldEnum]
+
+
 export const NotificationLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -204,6 +292,67 @@ export const NotificationLogScalarFieldEnum = {
 } as const
 
 export type NotificationLogScalarFieldEnum = (typeof NotificationLogScalarFieldEnum)[keyof typeof NotificationLogScalarFieldEnum]
+
+
+export const NotificationCampaignScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  targetUrl: 'targetUrl',
+  iconUrl: 'iconUrl',
+  imageUrl: 'imageUrl',
+  tag: 'tag',
+  audienceType: 'audienceType',
+  targetRole: 'targetRole',
+  targetUserId: 'targetUserId',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  status: 'status',
+  scheduledFor: 'scheduledFor',
+  processingStartedAt: 'processingStartedAt',
+  completedAt: 'completedAt',
+  cancelledAt: 'cancelledAt',
+  createdByUserId: 'createdByUserId',
+  dedupeKey: 'dedupeKey',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationCampaignScalarFieldEnum = (typeof NotificationCampaignScalarFieldEnum)[keyof typeof NotificationCampaignScalarFieldEnum]
+
+
+export const NotificationRecipientScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  userId: 'userId',
+  readAt: 'readAt',
+  archivedAt: 'archivedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationRecipientScalarFieldEnum = (typeof NotificationRecipientScalarFieldEnum)[keyof typeof NotificationRecipientScalarFieldEnum]
+
+
+export const PushDeliveryAttemptScalarFieldEnum = {
+  id: 'id',
+  recipientId: 'recipientId',
+  campaignId: 'campaignId',
+  pushSubscriptionId: 'pushSubscriptionId',
+  status: 'status',
+  attemptNumber: 'attemptNumber',
+  nextAttemptAt: 'nextAttemptAt',
+  acceptedAt: 'acceptedAt',
+  failedAt: 'failedAt',
+  responseStatusCode: 'responseStatusCode',
+  safeErrorCode: 'safeErrorCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PushDeliveryAttemptScalarFieldEnum = (typeof PushDeliveryAttemptScalarFieldEnum)[keyof typeof PushDeliveryAttemptScalarFieldEnum]
 
 
 export const AdminAuditLogScalarFieldEnum = {
@@ -382,6 +531,156 @@ export const AnnouncementReadScalarFieldEnum = {
 } as const
 
 export type AnnouncementReadScalarFieldEnum = (typeof AnnouncementReadScalarFieldEnum)[keyof typeof AnnouncementReadScalarFieldEnum]
+
+
+export const DonationCategoryScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  label: 'label',
+  description: 'description',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationCategoryScalarFieldEnum = (typeof DonationCategoryScalarFieldEnum)[keyof typeof DonationCategoryScalarFieldEnum]
+
+
+export const DonationCheckoutScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  memberIdSnapshot: 'memberIdSnapshot',
+  categoryId: 'categoryId',
+  frequency: 'frequency',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  donorNameSnapshot: 'donorNameSnapshot',
+  donorEmailSnapshot: 'donorEmailSnapshot',
+  status: 'status',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  livemode: 'livemode',
+  expiresAt: 'expiresAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationCheckoutScalarFieldEnum = (typeof DonationCheckoutScalarFieldEnum)[keyof typeof DonationCheckoutScalarFieldEnum]
+
+
+export const DonationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  memberIdSnapshot: 'memberIdSnapshot',
+  checkoutId: 'checkoutId',
+  recurringDonationId: 'recurringDonationId',
+  categoryId: 'categoryId',
+  frequency: 'frequency',
+  source: 'source',
+  status: 'status',
+  amountCents: 'amountCents',
+  refundedAmountCents: 'refundedAmountCents',
+  currency: 'currency',
+  donorNameSnapshot: 'donorNameSnapshot',
+  donorEmailSnapshot: 'donorEmailSnapshot',
+  directKind: 'directKind',
+  directStatus: 'directStatus',
+  receivedAt: 'receivedAt',
+  eventId: 'eventId',
+  collectionLabel: 'collectionLabel',
+  internalNote: 'internalNote',
+  manualReference: 'manualReference',
+  enteredByUserId: 'enteredByUserId',
+  verifiedByUserId: 'verifiedByUserId',
+  verifiedAt: 'verifiedAt',
+  cancelledByUserId: 'cancelledByUserId',
+  cancelledAt: 'cancelledAt',
+  cancellationReason: 'cancellationReason',
+  correctionReason: 'correctionReason',
+  replacesDonationId: 'replacesDonationId',
+  directEntryRequestId: 'directEntryRequestId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripeChargeId: 'stripeChargeId',
+  stripeReceiptUrl: 'stripeReceiptUrl',
+  stripeHostedInvoiceUrl: 'stripeHostedInvoiceUrl',
+  stripeInvoicePdfUrl: 'stripeInvoicePdfUrl',
+  failureCode: 'failureCode',
+  livemode: 'livemode',
+  donatedAt: 'donatedAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
+
+
+export const RecurringDonationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  memberIdSnapshot: 'memberIdSnapshot',
+  categoryId: 'categoryId',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  status: 'status',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  stripePriceId: 'stripePriceId',
+  stripeProductId: 'stripeProductId',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
+  cancelAtPeriodEnd: 'cancelAtPeriodEnd',
+  canceledAt: 'canceledAt',
+  endedAt: 'endedAt',
+  livemode: 'livemode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RecurringDonationScalarFieldEnum = (typeof RecurringDonationScalarFieldEnum)[keyof typeof RecurringDonationScalarFieldEnum]
+
+
+export const DonationRefundScalarFieldEnum = {
+  id: 'id',
+  donationId: 'donationId',
+  stripeRefundId: 'stripeRefundId',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  status: 'status',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationRefundScalarFieldEnum = (typeof DonationRefundScalarFieldEnum)[keyof typeof DonationRefundScalarFieldEnum]
+
+
+export const StripeWebhookEventScalarFieldEnum = {
+  id: 'id',
+  stripeEventId: 'stripeEventId',
+  eventType: 'eventType',
+  stripeObjectId: 'stripeObjectId',
+  livemode: 'livemode',
+  apiVersion: 'apiVersion',
+  processingStatus: 'processingStatus',
+  attemptCount: 'attemptCount',
+  lastErrorCode: 'lastErrorCode',
+  receivedAt: 'receivedAt',
+  processingStartedAt: 'processingStartedAt',
+  processedAt: 'processedAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StripeWebhookEventScalarFieldEnum = (typeof StripeWebhookEventScalarFieldEnum)[keyof typeof StripeWebhookEventScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -26,11 +26,13 @@ function getPrimaryEmail(user: Awaited<ReturnType<typeof currentUser>>) {
   )
 }
 
-async function getClerkSnapshot(): Promise<ClerkUserSnapshot> {
+async function getClerkSnapshot(
+  nextPath = "/espace-membre",
+): Promise<ClerkUserSnapshot> {
   const authState = await auth()
 
   if (!authState.userId) {
-    authState.redirectToSignIn({ returnBackUrl: "/espace-membre" })
+    redirect(`/connexion?next=${encodeURIComponent(nextPath)}`)
   }
 
   const clerkUser = await currentUser()
@@ -49,8 +51,8 @@ async function getClerkSnapshot(): Promise<ClerkUserSnapshot> {
   }
 }
 
-export async function ensureCurrentAppUser() {
-  const clerkUser = await getClerkSnapshot()
+export async function ensureCurrentAppUser(nextPath = "/espace-membre") {
+  const clerkUser = await getClerkSnapshot(nextPath)
 
   return prisma.appUser.upsert({
     where: { clerkUserId: clerkUser.id },
@@ -89,7 +91,7 @@ export async function ensureCurrentAppUser() {
 }
 
 export async function requireCurrentAppUser(nextPath = "/espace-membre") {
-  const user = await ensureCurrentAppUser()
+  const user = await ensureCurrentAppUser(nextPath)
 
   if (!user.onboardingComplete && !nextPath.startsWith("/bienvenue")) {
     redirect(`/bienvenue?next=${encodeURIComponent(nextPath)}`)

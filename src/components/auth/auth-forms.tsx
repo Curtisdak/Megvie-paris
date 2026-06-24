@@ -12,6 +12,7 @@ import {
   CalendarDays,
   Gift,
   Megaphone,
+  MessageSquare,
   Phone,
   ShieldCheck,
   Sparkles,
@@ -416,10 +417,20 @@ export function NotificationPreferencesForm({
     initialState,
   )
   const preferences = data.preferences
+  const canReceiveStaffMessages = ["respo", "master", "creator"].includes(
+    data.role,
+  )
 
   return (
     <form action={formAction} className="space-y-4">
       <FormMessage state={state} />
+      <CheckboxField
+        name="pushEnabled"
+        label="Autoriser les notifications push"
+        description="Controle global pour les notifications de cet espace membre."
+        icon={Bell}
+        defaultChecked={preferences?.push_enabled ?? true}
+      />
       <CheckboxField
         name="dailyVerseEnabled"
         label="Recevoir le verset du jour"
@@ -460,6 +471,52 @@ export function NotificationPreferencesForm({
         icon={ShieldCheck}
         defaultChecked={preferences?.donation_notifications_enabled ?? true}
       />
+      <div className="grid gap-3 border-t border-zinc-100 pt-4 dark:border-zinc-800">
+        <p className="text-sm font-semibold text-zinc-900 dark:text-white">
+          Categories push
+        </p>
+        <CheckboxField
+          name="dailyVersePushEnabled"
+          label="Push verset du jour"
+          icon={Sparkles}
+          defaultChecked={preferences?.daily_verse_push_enabled ?? true}
+        />
+        <CheckboxField
+          name="birthdayPushEnabled"
+          label="Push anniversaire prive"
+          icon={Gift}
+          defaultChecked={preferences?.birthday_push_enabled ?? true}
+        />
+        <CheckboxField
+          name="announcementPushEnabled"
+          label="Push annonces"
+          icon={Megaphone}
+          defaultChecked={preferences?.announcement_push_enabled ?? true}
+        />
+        <CheckboxField
+          name="eventPushEnabled"
+          label="Push evenements"
+          icon={CalendarDays}
+          defaultChecked={preferences?.event_push_enabled ?? true}
+        />
+        <CheckboxField
+          name="personalPushEnabled"
+          label="Push compte personnel"
+          icon={ShieldCheck}
+          defaultChecked={preferences?.personal_push_enabled ?? true}
+        />
+        {canReceiveStaffMessages ? (
+          <CheckboxField
+            name="staffMessagePushEnabled"
+            label="Alertes messages equipe"
+            description="Messages generaux et confidentiels selon votre role."
+            icon={MessageSquare}
+            defaultChecked={preferences?.staff_message_push_enabled ?? true}
+          />
+        ) : (
+          <input type="hidden" name="staffMessagePushEnabled" value="true" />
+        )}
+      </div>
       <input
         type="hidden"
         name="timezone"
@@ -489,8 +546,8 @@ export function ClerkSecurityPanel() {
               Securite du compte
             </p>
             <p className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-              Clerk gere le mot de passe, les sessions et les reglages de
-              securite du compte.
+              Gere le mot de passe, les sessions et les reglages de securite
+              de votre compte MegVie Paris.
             </p>
           </div>
         </div>

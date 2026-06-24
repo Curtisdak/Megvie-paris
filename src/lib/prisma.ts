@@ -21,11 +21,32 @@ const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient
 }
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    adapter: new PrismaNeon({ connectionString: getDatabaseUrl() }),
-  })
+function hasCurrentPrismaDelegates(
+  client: PrismaClient | undefined,
+): client is PrismaClient {
+  if (!client) return false
+
+  const delegates = client as unknown as Record<string, unknown>
+
+  return Boolean(
+    delegates.notificationCampaign &&
+      delegates.notificationRecipient &&
+      delegates.pushDeliveryAttempt &&
+      delegates.donation &&
+      delegates.stripeWebhookEvent &&
+      delegates.bibleFavorite &&
+      delegates.bibleNote &&
+      delegates.dailyVerseSchedule,
+  )
+}
+
+const cachedPrisma = globalForPrisma.prisma
+
+export const prisma = hasCurrentPrismaDelegates(cachedPrisma)
+  ? cachedPrisma
+  : new PrismaClient({
+      adapter: new PrismaNeon({ connectionString: getDatabaseUrl() }),
+    })
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma

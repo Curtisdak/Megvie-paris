@@ -1,0 +1,2 @@
+-- RenameIndex
+ALTER INDEX "push_delivery_attempts_campaign_id_push_subscription_id_attempt" RENAME TO "push_delivery_attempts_campaign_id_push_subscription_id_att_key";

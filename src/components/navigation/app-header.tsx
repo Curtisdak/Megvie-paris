@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Bell, ChevronLeft } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { NotificationCountBadge } from "@/components/navigation/notification-count-badge"
 
 function getPageTitle(pathname: string) {
   if (pathname === "/") return "Accueil"
@@ -20,6 +21,9 @@ function getPageTitle(pathname: string) {
   if (pathname.startsWith("/espace-membre/carte")) return "Carte membre"
   if (pathname.startsWith("/espace-membre/securite")) return "Securite"
   if (pathname.startsWith("/espace-membre/notifications")) return "Notifications"
+  if (pathname.startsWith("/espace-membre/dons")) return "Mes dons"
+  if (pathname.startsWith("/espace-membre/versets-favoris")) return "Favoris"
+  if (pathname.startsWith("/espace-membre/notes-bibliques")) return "Notes bibliques"
   if (pathname.startsWith("/espace-membre")) return "Espace membre"
   if (pathname.startsWith("/admin")) return "Administration"
   return "MegVie Paris"
@@ -30,6 +34,9 @@ export function AppHeader() {
   const router = useRouter()
   const pageTitle = getPageTitle(pathname)
   const isHomePage = pathname === "/"
+  const notificationHref = pathname.startsWith("/espace-membre")
+    ? "/espace-membre/notifications"
+    : "/notifications"
 
   return (
     <header className="sticky top-0 z-30 border-b border-zinc-200/60 bg-white/80 px-3 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/80 sm:px-4">
@@ -52,12 +59,12 @@ export function AppHeader() {
         <div className="flex shrink-0 items-center gap-1 rounded-full border border-zinc-200/80 bg-white/75 p-1 shadow-sm ring-1 ring-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:ring-white/5">
           <ThemeToggle />
           <Link
-            href="/notifications"
+            href={notificationHref}
             className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-zinc-950 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:bg-white dark:text-zinc-950 dark:hover:bg-amber-300"
             aria-label="Ouvrir les notifications"
           >
             <Bell className="h-4 w-4" aria-hidden />
-            <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full border-2 border-zinc-950 bg-amber-400 dark:border-white" />
+            <NotificationCountBadge />
           </Link>
         </div>
       </div>

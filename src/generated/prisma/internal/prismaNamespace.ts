@@ -390,7 +390,13 @@ export const ModelName = {
   NotificationPreference: 'NotificationPreference',
   PushSubscription: 'PushSubscription',
   DailyBibleVerse: 'DailyBibleVerse',
+  BibleFavorite: 'BibleFavorite',
+  BibleNote: 'BibleNote',
+  DailyVerseSchedule: 'DailyVerseSchedule',
   NotificationLog: 'NotificationLog',
+  NotificationCampaign: 'NotificationCampaign',
+  NotificationRecipient: 'NotificationRecipient',
+  PushDeliveryAttempt: 'PushDeliveryAttempt',
   AdminAuditLog: 'AdminAuditLog',
   ChurchSetting: 'ChurchSetting',
   ChurchEvent: 'ChurchEvent',
@@ -400,7 +406,13 @@ export const ModelName = {
   MessageReply: 'MessageReply',
   MessageInternalNote: 'MessageInternalNote',
   Announcement: 'Announcement',
-  AnnouncementRead: 'AnnouncementRead'
+  AnnouncementRead: 'AnnouncementRead',
+  DonationCategory: 'DonationCategory',
+  DonationCheckout: 'DonationCheckout',
+  Donation: 'Donation',
+  RecurringDonation: 'RecurringDonation',
+  DonationRefund: 'DonationRefund',
+  StripeWebhookEvent: 'StripeWebhookEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "appUser" | "memberProfile" | "memberPrivateDetails" | "notificationPreference" | "pushSubscription" | "dailyBibleVerse" | "notificationLog" | "adminAuditLog" | "churchSetting" | "churchEvent" | "galleryAlbum" | "galleryItem" | "contactMessage" | "messageReply" | "messageInternalNote" | "announcement" | "announcementRead"
+    modelProps: "appUser" | "memberProfile" | "memberPrivateDetails" | "notificationPreference" | "pushSubscription" | "dailyBibleVerse" | "bibleFavorite" | "bibleNote" | "dailyVerseSchedule" | "notificationLog" | "notificationCampaign" | "notificationRecipient" | "pushDeliveryAttempt" | "adminAuditLog" | "churchSetting" | "churchEvent" | "galleryAlbum" | "galleryItem" | "contactMessage" | "messageReply" | "messageInternalNote" | "announcement" | "announcementRead" | "donationCategory" | "donationCheckout" | "donation" | "recurringDonation" | "donationRefund" | "stripeWebhookEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -864,6 +876,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    BibleFavorite: {
+      payload: Prisma.$BibleFavoritePayload<ExtArgs>
+      fields: Prisma.BibleFavoriteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BibleFavoriteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BibleFavoriteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>
+        }
+        findFirst: {
+          args: Prisma.BibleFavoriteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BibleFavoriteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>
+        }
+        findMany: {
+          args: Prisma.BibleFavoriteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>[]
+        }
+        create: {
+          args: Prisma.BibleFavoriteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>
+        }
+        createMany: {
+          args: Prisma.BibleFavoriteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BibleFavoriteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>[]
+        }
+        delete: {
+          args: Prisma.BibleFavoriteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>
+        }
+        update: {
+          args: Prisma.BibleFavoriteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>
+        }
+        deleteMany: {
+          args: Prisma.BibleFavoriteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BibleFavoriteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BibleFavoriteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>[]
+        }
+        upsert: {
+          args: Prisma.BibleFavoriteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleFavoritePayload>
+        }
+        aggregate: {
+          args: Prisma.BibleFavoriteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBibleFavorite>
+        }
+        groupBy: {
+          args: Prisma.BibleFavoriteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BibleFavoriteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BibleFavoriteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BibleFavoriteCountAggregateOutputType> | number
+        }
+      }
+    }
+    BibleNote: {
+      payload: Prisma.$BibleNotePayload<ExtArgs>
+      fields: Prisma.BibleNoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BibleNoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BibleNoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>
+        }
+        findFirst: {
+          args: Prisma.BibleNoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BibleNoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>
+        }
+        findMany: {
+          args: Prisma.BibleNoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>[]
+        }
+        create: {
+          args: Prisma.BibleNoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>
+        }
+        createMany: {
+          args: Prisma.BibleNoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BibleNoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>[]
+        }
+        delete: {
+          args: Prisma.BibleNoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>
+        }
+        update: {
+          args: Prisma.BibleNoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>
+        }
+        deleteMany: {
+          args: Prisma.BibleNoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BibleNoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BibleNoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>[]
+        }
+        upsert: {
+          args: Prisma.BibleNoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleNotePayload>
+        }
+        aggregate: {
+          args: Prisma.BibleNoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBibleNote>
+        }
+        groupBy: {
+          args: Prisma.BibleNoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BibleNoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BibleNoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BibleNoteCountAggregateOutputType> | number
+        }
+      }
+    }
+    DailyVerseSchedule: {
+      payload: Prisma.$DailyVerseSchedulePayload<ExtArgs>
+      fields: Prisma.DailyVerseScheduleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DailyVerseScheduleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DailyVerseScheduleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>
+        }
+        findFirst: {
+          args: Prisma.DailyVerseScheduleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DailyVerseScheduleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>
+        }
+        findMany: {
+          args: Prisma.DailyVerseScheduleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>[]
+        }
+        create: {
+          args: Prisma.DailyVerseScheduleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>
+        }
+        createMany: {
+          args: Prisma.DailyVerseScheduleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DailyVerseScheduleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>[]
+        }
+        delete: {
+          args: Prisma.DailyVerseScheduleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>
+        }
+        update: {
+          args: Prisma.DailyVerseScheduleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>
+        }
+        deleteMany: {
+          args: Prisma.DailyVerseScheduleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DailyVerseScheduleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DailyVerseScheduleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>[]
+        }
+        upsert: {
+          args: Prisma.DailyVerseScheduleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyVerseSchedulePayload>
+        }
+        aggregate: {
+          args: Prisma.DailyVerseScheduleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDailyVerseSchedule>
+        }
+        groupBy: {
+          args: Prisma.DailyVerseScheduleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyVerseScheduleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DailyVerseScheduleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyVerseScheduleCountAggregateOutputType> | number
+        }
+      }
+    }
     NotificationLog: {
       payload: Prisma.$NotificationLogPayload<ExtArgs>
       fields: Prisma.NotificationLogFieldRefs
@@ -935,6 +1169,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.NotificationLogCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.NotificationLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    NotificationCampaign: {
+      payload: Prisma.$NotificationCampaignPayload<ExtArgs>
+      fields: Prisma.NotificationCampaignFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationCampaignFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationCampaignFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationCampaignFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationCampaignFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationCampaignFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationCampaignCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationCampaignCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationCampaignCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationCampaignDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>
+        }
+        update: {
+          args: Prisma.NotificationCampaignUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationCampaignDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationCampaignUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationCampaignUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationCampaignUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationCampaignPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationCampaignAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotificationCampaign>
+        }
+        groupBy: {
+          args: Prisma.NotificationCampaignGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationCampaignGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationCampaignCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationCampaignCountAggregateOutputType> | number
+        }
+      }
+    }
+    NotificationRecipient: {
+      payload: Prisma.$NotificationRecipientPayload<ExtArgs>
+      fields: Prisma.NotificationRecipientFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationRecipientFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationRecipientFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationRecipientFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationRecipientFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationRecipientFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationRecipientCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationRecipientCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationRecipientCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationRecipientDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>
+        }
+        update: {
+          args: Prisma.NotificationRecipientUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationRecipientDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationRecipientUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationRecipientUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationRecipientUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationRecipientPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationRecipientAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotificationRecipient>
+        }
+        groupBy: {
+          args: Prisma.NotificationRecipientGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationRecipientGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationRecipientCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationRecipientCountAggregateOutputType> | number
+        }
+      }
+    }
+    PushDeliveryAttempt: {
+      payload: Prisma.$PushDeliveryAttemptPayload<ExtArgs>
+      fields: Prisma.PushDeliveryAttemptFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PushDeliveryAttemptFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PushDeliveryAttemptFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>
+        }
+        findFirst: {
+          args: Prisma.PushDeliveryAttemptFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PushDeliveryAttemptFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>
+        }
+        findMany: {
+          args: Prisma.PushDeliveryAttemptFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>[]
+        }
+        create: {
+          args: Prisma.PushDeliveryAttemptCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>
+        }
+        createMany: {
+          args: Prisma.PushDeliveryAttemptCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PushDeliveryAttemptCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>[]
+        }
+        delete: {
+          args: Prisma.PushDeliveryAttemptDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>
+        }
+        update: {
+          args: Prisma.PushDeliveryAttemptUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>
+        }
+        deleteMany: {
+          args: Prisma.PushDeliveryAttemptDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PushDeliveryAttemptUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PushDeliveryAttemptUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>[]
+        }
+        upsert: {
+          args: Prisma.PushDeliveryAttemptUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PushDeliveryAttemptPayload>
+        }
+        aggregate: {
+          args: Prisma.PushDeliveryAttemptAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePushDeliveryAttempt>
+        }
+        groupBy: {
+          args: Prisma.PushDeliveryAttemptGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PushDeliveryAttemptGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PushDeliveryAttemptCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PushDeliveryAttemptCountAggregateOutputType> | number
         }
       }
     }
@@ -1678,6 +2134,450 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DonationCategory: {
+      payload: Prisma.$DonationCategoryPayload<ExtArgs>
+      fields: Prisma.DonationCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DonationCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DonationCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.DonationCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DonationCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.DonationCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.DonationCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.DonationCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DonationCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.DonationCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>
+        }
+        update: {
+          args: Prisma.DonationCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.DonationCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DonationCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DonationCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.DonationCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.DonationCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDonationCategory>
+        }
+        groupBy: {
+          args: Prisma.DonationCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DonationCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    DonationCheckout: {
+      payload: Prisma.$DonationCheckoutPayload<ExtArgs>
+      fields: Prisma.DonationCheckoutFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DonationCheckoutFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DonationCheckoutFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>
+        }
+        findFirst: {
+          args: Prisma.DonationCheckoutFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DonationCheckoutFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>
+        }
+        findMany: {
+          args: Prisma.DonationCheckoutFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>[]
+        }
+        create: {
+          args: Prisma.DonationCheckoutCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>
+        }
+        createMany: {
+          args: Prisma.DonationCheckoutCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DonationCheckoutCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>[]
+        }
+        delete: {
+          args: Prisma.DonationCheckoutDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>
+        }
+        update: {
+          args: Prisma.DonationCheckoutUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>
+        }
+        deleteMany: {
+          args: Prisma.DonationCheckoutDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DonationCheckoutUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DonationCheckoutUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>[]
+        }
+        upsert: {
+          args: Prisma.DonationCheckoutUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationCheckoutPayload>
+        }
+        aggregate: {
+          args: Prisma.DonationCheckoutAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDonationCheckout>
+        }
+        groupBy: {
+          args: Prisma.DonationCheckoutGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationCheckoutGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DonationCheckoutCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationCheckoutCountAggregateOutputType> | number
+        }
+      }
+    }
+    Donation: {
+      payload: Prisma.$DonationPayload<ExtArgs>
+      fields: Prisma.DonationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DonationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DonationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>
+        }
+        findFirst: {
+          args: Prisma.DonationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DonationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>
+        }
+        findMany: {
+          args: Prisma.DonationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>[]
+        }
+        create: {
+          args: Prisma.DonationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>
+        }
+        createMany: {
+          args: Prisma.DonationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DonationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>[]
+        }
+        delete: {
+          args: Prisma.DonationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>
+        }
+        update: {
+          args: Prisma.DonationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>
+        }
+        deleteMany: {
+          args: Prisma.DonationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DonationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DonationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>[]
+        }
+        upsert: {
+          args: Prisma.DonationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationPayload>
+        }
+        aggregate: {
+          args: Prisma.DonationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDonation>
+        }
+        groupBy: {
+          args: Prisma.DonationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DonationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationCountAggregateOutputType> | number
+        }
+      }
+    }
+    RecurringDonation: {
+      payload: Prisma.$RecurringDonationPayload<ExtArgs>
+      fields: Prisma.RecurringDonationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RecurringDonationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RecurringDonationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>
+        }
+        findFirst: {
+          args: Prisma.RecurringDonationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RecurringDonationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>
+        }
+        findMany: {
+          args: Prisma.RecurringDonationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>[]
+        }
+        create: {
+          args: Prisma.RecurringDonationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>
+        }
+        createMany: {
+          args: Prisma.RecurringDonationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RecurringDonationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>[]
+        }
+        delete: {
+          args: Prisma.RecurringDonationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>
+        }
+        update: {
+          args: Prisma.RecurringDonationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>
+        }
+        deleteMany: {
+          args: Prisma.RecurringDonationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RecurringDonationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RecurringDonationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>[]
+        }
+        upsert: {
+          args: Prisma.RecurringDonationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecurringDonationPayload>
+        }
+        aggregate: {
+          args: Prisma.RecurringDonationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRecurringDonation>
+        }
+        groupBy: {
+          args: Prisma.RecurringDonationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecurringDonationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RecurringDonationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecurringDonationCountAggregateOutputType> | number
+        }
+      }
+    }
+    DonationRefund: {
+      payload: Prisma.$DonationRefundPayload<ExtArgs>
+      fields: Prisma.DonationRefundFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DonationRefundFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DonationRefundFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>
+        }
+        findFirst: {
+          args: Prisma.DonationRefundFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DonationRefundFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>
+        }
+        findMany: {
+          args: Prisma.DonationRefundFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>[]
+        }
+        create: {
+          args: Prisma.DonationRefundCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>
+        }
+        createMany: {
+          args: Prisma.DonationRefundCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DonationRefundCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>[]
+        }
+        delete: {
+          args: Prisma.DonationRefundDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>
+        }
+        update: {
+          args: Prisma.DonationRefundUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>
+        }
+        deleteMany: {
+          args: Prisma.DonationRefundDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DonationRefundUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DonationRefundUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>[]
+        }
+        upsert: {
+          args: Prisma.DonationRefundUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DonationRefundPayload>
+        }
+        aggregate: {
+          args: Prisma.DonationRefundAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDonationRefund>
+        }
+        groupBy: {
+          args: Prisma.DonationRefundGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationRefundGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DonationRefundCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DonationRefundCountAggregateOutputType> | number
+        }
+      }
+    }
+    StripeWebhookEvent: {
+      payload: Prisma.$StripeWebhookEventPayload<ExtArgs>
+      fields: Prisma.StripeWebhookEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StripeWebhookEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StripeWebhookEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>
+        }
+        findFirst: {
+          args: Prisma.StripeWebhookEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StripeWebhookEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>
+        }
+        findMany: {
+          args: Prisma.StripeWebhookEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>[]
+        }
+        create: {
+          args: Prisma.StripeWebhookEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>
+        }
+        createMany: {
+          args: Prisma.StripeWebhookEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StripeWebhookEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>[]
+        }
+        delete: {
+          args: Prisma.StripeWebhookEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>
+        }
+        update: {
+          args: Prisma.StripeWebhookEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.StripeWebhookEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StripeWebhookEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StripeWebhookEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.StripeWebhookEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeWebhookEventPayload>
+        }
+        aggregate: {
+          args: Prisma.StripeWebhookEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStripeWebhookEvent>
+        }
+        groupBy: {
+          args: Prisma.StripeWebhookEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StripeWebhookEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StripeWebhookEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StripeWebhookEventCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1724,6 +2624,7 @@ export const AppUserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   imageUrl: 'imageUrl',
+  stripeCustomerId: 'stripeCustomerId',
   role: 'role',
   membershipStatus: 'membershipStatus',
   onboardingComplete: 'onboardingComplete',
@@ -1780,6 +2681,13 @@ export const NotificationPreferenceScalarFieldEnum = {
   announcementsEnabled: 'announcementsEnabled',
   eventsEnabled: 'eventsEnabled',
   donationNotificationsEnabled: 'donationNotificationsEnabled',
+  pushEnabled: 'pushEnabled',
+  dailyVersePushEnabled: 'dailyVersePushEnabled',
+  birthdayPushEnabled: 'birthdayPushEnabled',
+  announcementPushEnabled: 'announcementPushEnabled',
+  eventPushEnabled: 'eventPushEnabled',
+  personalPushEnabled: 'personalPushEnabled',
+  staffMessagePushEnabled: 'staffMessagePushEnabled',
   timezone: 'timezone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1794,11 +2702,17 @@ export const PushSubscriptionScalarFieldEnum = {
   endpoint: 'endpoint',
   p256dh: 'p256dh',
   auth: 'auth',
+  deviceName: 'deviceName',
   userAgent: 'userAgent',
   locale: 'locale',
   timezone: 'timezone',
   isActive: 'isActive',
+  anonymousDailyVerseEnabled: 'anonymousDailyVerseEnabled',
   lastSentAt: 'lastSentAt',
+  lastSeenAt: 'lastSeenAt',
+  lastSuccessAt: 'lastSuccessAt',
+  failureCount: 'failureCount',
+  revokedAt: 'revokedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1821,6 +2735,68 @@ export const DailyBibleVerseScalarFieldEnum = {
 export type DailyBibleVerseScalarFieldEnum = (typeof DailyBibleVerseScalarFieldEnum)[keyof typeof DailyBibleVerseScalarFieldEnum]
 
 
+export const BibleFavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  book: 'book',
+  chapter: 'chapter',
+  verseStart: 'verseStart',
+  verseEnd: 'verseEnd',
+  reference: 'reference',
+  verseTextSnapshot: 'verseTextSnapshot',
+  translation: 'translation',
+  createdAt: 'createdAt'
+} as const
+
+export type BibleFavoriteScalarFieldEnum = (typeof BibleFavoriteScalarFieldEnum)[keyof typeof BibleFavoriteScalarFieldEnum]
+
+
+export const BibleNoteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  book: 'book',
+  chapter: 'chapter',
+  verseStart: 'verseStart',
+  verseEnd: 'verseEnd',
+  reference: 'reference',
+  translation: 'translation',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BibleNoteScalarFieldEnum = (typeof BibleNoteScalarFieldEnum)[keyof typeof BibleNoteScalarFieldEnum]
+
+
+export const DailyVerseScheduleScalarFieldEnum = {
+  id: 'id',
+  localDate: 'localDate',
+  notificationTime: 'notificationTime',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  book: 'book',
+  chapter: 'chapter',
+  verseStart: 'verseStart',
+  verseEnd: 'verseEnd',
+  reference: 'reference',
+  verseText: 'verseText',
+  translation: 'translation',
+  theme: 'theme',
+  dedupeKey: 'dedupeKey',
+  failureCode: 'failureCode',
+  sentAt: 'sentAt',
+  cancelledAt: 'cancelledAt',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  cancelledByUserId: 'cancelledByUserId',
+  sentByUserId: 'sentByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DailyVerseScheduleScalarFieldEnum = (typeof DailyVerseScheduleScalarFieldEnum)[keyof typeof DailyVerseScheduleScalarFieldEnum]
+
+
 export const NotificationLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1835,6 +2811,67 @@ export const NotificationLogScalarFieldEnum = {
 } as const
 
 export type NotificationLogScalarFieldEnum = (typeof NotificationLogScalarFieldEnum)[keyof typeof NotificationLogScalarFieldEnum]
+
+
+export const NotificationCampaignScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  targetUrl: 'targetUrl',
+  iconUrl: 'iconUrl',
+  imageUrl: 'imageUrl',
+  tag: 'tag',
+  audienceType: 'audienceType',
+  targetRole: 'targetRole',
+  targetUserId: 'targetUserId',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  status: 'status',
+  scheduledFor: 'scheduledFor',
+  processingStartedAt: 'processingStartedAt',
+  completedAt: 'completedAt',
+  cancelledAt: 'cancelledAt',
+  createdByUserId: 'createdByUserId',
+  dedupeKey: 'dedupeKey',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationCampaignScalarFieldEnum = (typeof NotificationCampaignScalarFieldEnum)[keyof typeof NotificationCampaignScalarFieldEnum]
+
+
+export const NotificationRecipientScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  userId: 'userId',
+  readAt: 'readAt',
+  archivedAt: 'archivedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationRecipientScalarFieldEnum = (typeof NotificationRecipientScalarFieldEnum)[keyof typeof NotificationRecipientScalarFieldEnum]
+
+
+export const PushDeliveryAttemptScalarFieldEnum = {
+  id: 'id',
+  recipientId: 'recipientId',
+  campaignId: 'campaignId',
+  pushSubscriptionId: 'pushSubscriptionId',
+  status: 'status',
+  attemptNumber: 'attemptNumber',
+  nextAttemptAt: 'nextAttemptAt',
+  acceptedAt: 'acceptedAt',
+  failedAt: 'failedAt',
+  responseStatusCode: 'responseStatusCode',
+  safeErrorCode: 'safeErrorCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PushDeliveryAttemptScalarFieldEnum = (typeof PushDeliveryAttemptScalarFieldEnum)[keyof typeof PushDeliveryAttemptScalarFieldEnum]
 
 
 export const AdminAuditLogScalarFieldEnum = {
@@ -2015,6 +3052,156 @@ export const AnnouncementReadScalarFieldEnum = {
 export type AnnouncementReadScalarFieldEnum = (typeof AnnouncementReadScalarFieldEnum)[keyof typeof AnnouncementReadScalarFieldEnum]
 
 
+export const DonationCategoryScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  label: 'label',
+  description: 'description',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationCategoryScalarFieldEnum = (typeof DonationCategoryScalarFieldEnum)[keyof typeof DonationCategoryScalarFieldEnum]
+
+
+export const DonationCheckoutScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  memberIdSnapshot: 'memberIdSnapshot',
+  categoryId: 'categoryId',
+  frequency: 'frequency',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  donorNameSnapshot: 'donorNameSnapshot',
+  donorEmailSnapshot: 'donorEmailSnapshot',
+  status: 'status',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  livemode: 'livemode',
+  expiresAt: 'expiresAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationCheckoutScalarFieldEnum = (typeof DonationCheckoutScalarFieldEnum)[keyof typeof DonationCheckoutScalarFieldEnum]
+
+
+export const DonationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  memberIdSnapshot: 'memberIdSnapshot',
+  checkoutId: 'checkoutId',
+  recurringDonationId: 'recurringDonationId',
+  categoryId: 'categoryId',
+  frequency: 'frequency',
+  source: 'source',
+  status: 'status',
+  amountCents: 'amountCents',
+  refundedAmountCents: 'refundedAmountCents',
+  currency: 'currency',
+  donorNameSnapshot: 'donorNameSnapshot',
+  donorEmailSnapshot: 'donorEmailSnapshot',
+  directKind: 'directKind',
+  directStatus: 'directStatus',
+  receivedAt: 'receivedAt',
+  eventId: 'eventId',
+  collectionLabel: 'collectionLabel',
+  internalNote: 'internalNote',
+  manualReference: 'manualReference',
+  enteredByUserId: 'enteredByUserId',
+  verifiedByUserId: 'verifiedByUserId',
+  verifiedAt: 'verifiedAt',
+  cancelledByUserId: 'cancelledByUserId',
+  cancelledAt: 'cancelledAt',
+  cancellationReason: 'cancellationReason',
+  correctionReason: 'correctionReason',
+  replacesDonationId: 'replacesDonationId',
+  directEntryRequestId: 'directEntryRequestId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripeChargeId: 'stripeChargeId',
+  stripeReceiptUrl: 'stripeReceiptUrl',
+  stripeHostedInvoiceUrl: 'stripeHostedInvoiceUrl',
+  stripeInvoicePdfUrl: 'stripeInvoicePdfUrl',
+  failureCode: 'failureCode',
+  livemode: 'livemode',
+  donatedAt: 'donatedAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
+
+
+export const RecurringDonationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  memberIdSnapshot: 'memberIdSnapshot',
+  categoryId: 'categoryId',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  status: 'status',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  stripePriceId: 'stripePriceId',
+  stripeProductId: 'stripeProductId',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
+  cancelAtPeriodEnd: 'cancelAtPeriodEnd',
+  canceledAt: 'canceledAt',
+  endedAt: 'endedAt',
+  livemode: 'livemode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RecurringDonationScalarFieldEnum = (typeof RecurringDonationScalarFieldEnum)[keyof typeof RecurringDonationScalarFieldEnum]
+
+
+export const DonationRefundScalarFieldEnum = {
+  id: 'id',
+  donationId: 'donationId',
+  stripeRefundId: 'stripeRefundId',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  status: 'status',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DonationRefundScalarFieldEnum = (typeof DonationRefundScalarFieldEnum)[keyof typeof DonationRefundScalarFieldEnum]
+
+
+export const StripeWebhookEventScalarFieldEnum = {
+  id: 'id',
+  stripeEventId: 'stripeEventId',
+  eventType: 'eventType',
+  stripeObjectId: 'stripeObjectId',
+  livemode: 'livemode',
+  apiVersion: 'apiVersion',
+  processingStatus: 'processingStatus',
+  attemptCount: 'attemptCount',
+  lastErrorCode: 'lastErrorCode',
+  receivedAt: 'receivedAt',
+  processingStartedAt: 'processingStartedAt',
+  processedAt: 'processedAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StripeWebhookEventScalarFieldEnum = (typeof StripeWebhookEventScalarFieldEnum)[keyof typeof StripeWebhookEventScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2140,6 +3327,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'DailyVerseScheduleStatus'
+ */
+export type EnumDailyVerseScheduleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DailyVerseScheduleStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DailyVerseScheduleStatus[]'
+ */
+export type ListEnumDailyVerseScheduleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DailyVerseScheduleStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'NotificationDeliveryStatus'
  */
 export type EnumNotificationDeliveryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationDeliveryStatus'>
@@ -2154,6 +3355,48 @@ export type ListEnumNotificationDeliveryStatusFieldRefInput<$PrismaModel> = Fiel
 
 
 /**
+ * Reference to a field of type 'NotificationType'
+ */
+export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationType[]'
+ */
+export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationAudienceType'
+ */
+export type EnumNotificationAudienceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationAudienceType'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationAudienceType[]'
+ */
+export type ListEnumNotificationAudienceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationAudienceType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationCampaignStatus'
+ */
+export type EnumNotificationCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationCampaignStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationCampaignStatus[]'
+ */
+export type ListEnumNotificationCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationCampaignStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -2164,6 +3407,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'PushDeliveryStatus'
+ */
+export type EnumPushDeliveryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PushDeliveryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PushDeliveryStatus[]'
+ */
+export type ListEnumPushDeliveryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PushDeliveryStatus[]'>
     
 
 
@@ -2290,6 +3547,132 @@ export type EnumAnnouncementStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'AnnouncementStatus[]'
  */
 export type ListEnumAnnouncementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AnnouncementStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationFrequency'
+ */
+export type EnumDonationFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationFrequency'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationFrequency[]'
+ */
+export type ListEnumDonationFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationFrequency[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationCheckoutStatus'
+ */
+export type EnumDonationCheckoutStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationCheckoutStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationCheckoutStatus[]'
+ */
+export type ListEnumDonationCheckoutStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationCheckoutStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationSource'
+ */
+export type EnumDonationSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationSource'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationSource[]'
+ */
+export type ListEnumDonationSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationSource[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationStatus'
+ */
+export type EnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationStatus[]'
+ */
+export type ListEnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DirectDonationKind'
+ */
+export type EnumDirectDonationKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationKind'>
+    
+
+
+/**
+ * Reference to a field of type 'DirectDonationKind[]'
+ */
+export type ListEnumDirectDonationKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DirectDonationStatus'
+ */
+export type EnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DirectDonationStatus[]'
+ */
+export type ListEnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DirectDonationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RecurringDonationStatus'
+ */
+export type EnumRecurringDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RecurringDonationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RecurringDonationStatus[]'
+ */
+export type ListEnumRecurringDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RecurringDonationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationRefundStatus'
+ */
+export type EnumDonationRefundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationRefundStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DonationRefundStatus[]'
+ */
+export type ListEnumDonationRefundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationRefundStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'StripeWebhookProcessingStatus'
+ */
+export type EnumStripeWebhookProcessingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StripeWebhookProcessingStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'StripeWebhookProcessingStatus[]'
+ */
+export type ListEnumStripeWebhookProcessingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StripeWebhookProcessingStatus[]'>
     
 
 
@@ -2422,7 +3805,13 @@ export type GlobalOmitConfig = {
   notificationPreference?: Prisma.NotificationPreferenceOmit
   pushSubscription?: Prisma.PushSubscriptionOmit
   dailyBibleVerse?: Prisma.DailyBibleVerseOmit
+  bibleFavorite?: Prisma.BibleFavoriteOmit
+  bibleNote?: Prisma.BibleNoteOmit
+  dailyVerseSchedule?: Prisma.DailyVerseScheduleOmit
   notificationLog?: Prisma.NotificationLogOmit
+  notificationCampaign?: Prisma.NotificationCampaignOmit
+  notificationRecipient?: Prisma.NotificationRecipientOmit
+  pushDeliveryAttempt?: Prisma.PushDeliveryAttemptOmit
   adminAuditLog?: Prisma.AdminAuditLogOmit
   churchSetting?: Prisma.ChurchSettingOmit
   churchEvent?: Prisma.ChurchEventOmit
@@ -2433,6 +3822,12 @@ export type GlobalOmitConfig = {
   messageInternalNote?: Prisma.MessageInternalNoteOmit
   announcement?: Prisma.AnnouncementOmit
   announcementRead?: Prisma.AnnouncementReadOmit
+  donationCategory?: Prisma.DonationCategoryOmit
+  donationCheckout?: Prisma.DonationCheckoutOmit
+  donation?: Prisma.DonationOmit
+  recurringDonation?: Prisma.RecurringDonationOmit
+  donationRefund?: Prisma.DonationRefundOmit
+  stripeWebhookEvent?: Prisma.StripeWebhookEventOmit
 }
 
 /* Types for Logging */

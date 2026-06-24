@@ -14,6 +14,8 @@ export type AppPermission =
   | "messages.read_general"
   | "messages.read_confidential"
   | "announcements.manage"
+  | "notifications.manage"
+  | "daily_verses.manage"
   | "donations.read_all"
   | "donations.stats"
   | "donations.export"
@@ -34,6 +36,7 @@ const respoPermissions = [
   "gallery.manage",
   "messages.read_general",
   "announcements.manage",
+  "notifications.manage",
 ] satisfies AppPermission[]
 
 const financePermissions = [
@@ -50,6 +53,8 @@ const masterPermissions = [
   "members.approve",
   "members.suspend",
   "messages.read_confidential",
+  "notifications.manage",
+  "daily_verses.manage",
   "donations.read_all",
   "donations.stats",
   "donations.export",

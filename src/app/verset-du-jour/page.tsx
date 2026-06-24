@@ -80,7 +80,7 @@ export default async function DailyVersePage() {
               {verse.isFallback && (
                 <p className="mt-5 rounded-2xl border border-amber-100 bg-amber-50/70 px-4 py-3 text-sm leading-6 text-amber-900 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100">
                   Exemple de demarrage: remplacez cette liste par les versets
-                  approuves par l&apos;eglise dans Supabase.
+                  approuves par l&apos;eglise dans Neon/Postgres.
                 </p>
               )}
 

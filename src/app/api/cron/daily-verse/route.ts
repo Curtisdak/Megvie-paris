@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getParisDayOfYear } from "@/lib/daily-verse"
-import { getSupabaseAdminClient } from "@/lib/supabase-admin"
+import { NotificationDeliveryStatus } from "@/generated/prisma/enums"
+import { prisma } from "@/lib/prisma"
 import { validateRequestSecret } from "@/lib/request-auth"
 import {
   getWebPushConfig,
@@ -11,15 +12,9 @@ import {
 
 export const dynamic = "force-dynamic"
 
-type DailyVerseRow = {
-  id: string
-  reference: string
-  text: string
-  translation: string
-}
-
 type PushSubscriptionRow = StoredPushSubscription & {
   id: string
+  userId: string | null
 }
 
 function getSiteUrl(request: NextRequest) {
@@ -37,12 +32,6 @@ async function handleDailyVerse(request: NextRequest) {
     return NextResponse.json({ error: auth.error }, { status: auth.status })
   }
 
-  const supabaseConfig = getSupabaseAdminClient()
-
-  if ("error" in supabaseConfig) {
-    return NextResponse.json({ error: supabaseConfig.error }, { status: 500 })
-  }
-
   const webPushConfig = getWebPushConfig()
 
   if ("error" in webPushConfig) {
@@ -50,19 +39,15 @@ async function handleDailyVerse(request: NextRequest) {
   }
 
   const dayOfYear = getParisDayOfYear()
-  const { data: verse, error: verseError } = await supabaseConfig.supabase
-    .from("daily_bible_verses")
-    .select("id, reference, text, translation")
-    .eq("day_of_year", dayOfYear)
-    .maybeSingle()
-
-  if (verseError) {
-    console.error("Daily verse fetch error", verseError)
-    return NextResponse.json(
-      { error: "Impossible de charger le verset du jour." },
-      { status: 500 },
-    )
-  }
+  const verse = await prisma.dailyBibleVerse
+    .findUnique({
+      where: { dayOfYear },
+      select: { id: true, reference: true, text: true, translation: true },
+    })
+    .catch((error) => {
+      console.error("Daily verse fetch error", error)
+      return null
+    })
 
   if (!verse) {
     return NextResponse.json(
@@ -71,14 +56,33 @@ async function handleDailyVerse(request: NextRequest) {
     )
   }
 
-  const { data: subscriptions, error: subscriptionsError } =
-    await supabaseConfig.supabase
-      .from("push_subscriptions")
-      .select("id, endpoint, p256dh, auth")
-      .eq("is_active", true)
+  let subscriptions: PushSubscriptionRow[]
 
-  if (subscriptionsError) {
-    console.error("Push subscriptions fetch error", subscriptionsError)
+  try {
+    subscriptions = await prisma.pushSubscription.findMany({
+      where: {
+        isActive: true,
+        OR: [
+          { userId: null },
+          {
+            user: {
+              notificationPreference: {
+                is: { dailyVerseEnabled: true },
+              },
+            },
+          },
+        ],
+      },
+      select: {
+        id: true,
+        userId: true,
+        endpoint: true,
+        p256dh: true,
+        auth: true,
+      },
+    })
+  } catch (error) {
+    console.error("Push subscriptions fetch error", error)
     return NextResponse.json(
       { error: "Impossible de charger les abonnements push." },
       { status: 500 },
@@ -89,16 +93,15 @@ async function handleDailyVerse(request: NextRequest) {
   let failed = 0
   let deactivated = 0
   const siteUrl = getSiteUrl(request)
-  const typedVerse = verse as DailyVerseRow
   const payload = JSON.stringify({
     title: "Verset du jour \u2014 MegVie Paris",
-    body: `${typedVerse.text} \u2014 ${typedVerse.reference}`,
+    body: `${verse.text} \u2014 ${verse.reference}`,
     url: `${siteUrl}/verset-du-jour`,
-    reference: typedVerse.reference,
-    text: typedVerse.text,
+    reference: verse.reference,
+    text: verse.text,
   })
 
-  for (const subscription of (subscriptions ?? []) as PushSubscriptionRow[]) {
+  for (const subscription of subscriptions) {
     try {
       await webPushConfig.push.sendNotification(
         toWebPushSubscription(subscription),
@@ -107,18 +110,20 @@ async function handleDailyVerse(request: NextRequest) {
 
       sent += 1
 
-      await supabaseConfig.supabase
-        .from("push_subscriptions")
-        .update({
-          last_sent_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", subscription.id)
+      await prisma.pushSubscription.update({
+        where: { id: subscription.id },
+        data: { lastSentAt: new Date() },
+      })
 
-      await supabaseConfig.supabase.from("notification_logs").insert({
-        subscription_id: subscription.id,
-        verse_id: typedVerse.id,
-        status: "sent",
+      await prisma.notificationLog.create({
+        data: {
+          userId: subscription.userId,
+          pushSubscriptionId: subscription.id,
+          notificationType: "daily_verse",
+          title: "Verset du jour",
+          deliveryStatus: NotificationDeliveryStatus.SENT,
+          sentAt: new Date(),
+        },
       })
     } catch (error) {
       failed += 1
@@ -127,28 +132,33 @@ async function handleDailyVerse(request: NextRequest) {
 
       if (shouldDeactivate) {
         deactivated += 1
-        await supabaseConfig.supabase
-          .from("push_subscriptions")
-          .update({
-            is_active: false,
-            updated_at: new Date().toISOString(),
-          })
-          .eq("id", subscription.id)
+        await prisma.pushSubscription.update({
+          where: { id: subscription.id },
+          data: { isActive: false },
+        })
       }
 
-      await supabaseConfig.supabase.from("notification_logs").insert({
-        subscription_id: subscription.id,
-        verse_id: typedVerse.id,
-        status: "failed",
-        error_message:
-          error instanceof Error ? error.message : "Erreur web-push inconnue",
+      await prisma.notificationLog.create({
+        data: {
+          userId: subscription.userId,
+          pushSubscriptionId: subscription.id,
+          notificationType: "daily_verse",
+          title: "Verset du jour",
+          deliveryStatus: shouldDeactivate
+            ? NotificationDeliveryStatus.DEACTIVATED
+            : NotificationDeliveryStatus.FAILED,
+          errorMessage:
+            error instanceof Error
+              ? error.message
+              : "Erreur web-push inconnue",
+        },
       })
     }
   }
 
   return NextResponse.json({
     dayOfYear,
-    verse: typedVerse.reference,
+    verse: verse.reference,
     sent,
     failed,
     deactivated,

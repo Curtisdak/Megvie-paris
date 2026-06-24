@@ -1,0 +1,492 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ChurchRole {
+  MEMBER
+  RESPO
+  FINANCE
+  MASTER
+  CREATOR
+
+  @@map("church_role")
+}
+
+enum MembershipStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  REJECTED
+  ARCHIVED
+
+  @@map("membership_status")
+}
+
+enum NotificationDeliveryStatus {
+  PENDING
+  SENT
+  FAILED
+  DEACTIVATED
+
+  @@map("notification_delivery_status")
+}
+
+enum ContentVisibility {
+  PUBLIC
+  MEMBERS_ONLY
+
+  @@map("content_visibility")
+}
+
+enum EventStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  CANCELLED
+  ARCHIVED
+
+  @@map("event_status")
+}
+
+enum GalleryAlbumStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+
+  @@map("gallery_album_status")
+}
+
+enum ContactMessageSource {
+  PUBLIC_CONTACT
+  MEMBER_PORTAL
+
+  @@map("contact_message_source")
+}
+
+enum MessageConfidentiality {
+  GENERAL
+  PASTORAL_CONFIDENTIAL
+
+  @@map("message_confidentiality")
+}
+
+enum ContactMessageStatus {
+  NEW
+  IN_PROGRESS
+  ANSWERED
+  ARCHIVED
+
+  @@map("contact_message_status")
+}
+
+enum MessageDeliveryStatus {
+  INTERNAL_NOTE
+  DRAFT
+  SENT
+  FAILED
+
+  @@map("message_delivery_status")
+}
+
+enum AnnouncementCategory {
+  GENERAL
+  EMPLOI
+  MARIAGE
+  BAPTEME
+  EVENEMENT
+  BON_PLAN
+  URGENT
+
+  @@map("announcement_category")
+}
+
+enum AnnouncementStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+
+  @@map("announcement_status")
+}
+
+model AppUser {
+  id                 String           @id @default(cuid())
+  clerkUserId        String           @unique @map("clerk_user_id")
+  email              String
+  firstName          String?          @map("first_name")
+  lastName           String?          @map("last_name")
+  imageUrl           String?          @map("image_url")
+  role               ChurchRole       @default(MEMBER)
+  membershipStatus   MembershipStatus @default(PENDING) @map("membership_status")
+  onboardingComplete Boolean          @default(false) @map("onboarding_complete")
+  archivedAt         DateTime?        @map("archived_at")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+
+  profile                 MemberProfile?
+  privateDetails          MemberPrivateDetails?
+  notificationPreference  NotificationPreference?
+  pushSubscriptions       PushSubscription[]
+  approvedProfiles        MemberProfile[]         @relation("MemberApprover")
+  adminAuditLogs          AdminAuditLog[]         @relation("AuditActor")
+  createdEvents           ChurchEvent[]           @relation("EventCreator")
+  updatedEvents           ChurchEvent[]           @relation("EventUpdater")
+  createdGalleryAlbums    GalleryAlbum[]          @relation("GalleryAlbumCreator")
+  uploadedGalleryItems    GalleryItem[]           @relation("GalleryItemUploader")
+  sentContactMessages     ContactMessage[]        @relation("ContactMessageSender")
+  assignedContactMessages ContactMessage[]        @relation("ContactMessageAssignee")
+  messageReplies          MessageReply[]          @relation("MessageReplyAuthor")
+  messageInternalNotes    MessageInternalNote[]   @relation("MessageNoteAuthor")
+  authoredAnnouncements   Announcement[]          @relation("AnnouncementAuthor")
+  updatedAnnouncements    Announcement[]          @relation("AnnouncementUpdater")
+  announcementReads       AnnouncementRead[]
+
+  @@index([email])
+  @@index([role])
+  @@index([membershipStatus])
+  @@map("app_users")
+}
+
+model MemberProfile {
+  id           String    @id @default(cuid())
+  userId       String    @unique @map("user_id")
+  memberNumber Int?      @unique @map("member_number")
+  memberId     String?   @unique @map("member_id")
+  displayName  String?   @map("display_name")
+  avatarUrl    String?   @map("avatar_url")
+  joinedAt     DateTime? @map("joined_at")
+  approvedAt   DateTime? @map("approved_at")
+  approvedById String?   @map("approved_by_id")
+  suspendedAt  DateTime? @map("suspended_at")
+  rejectedAt   DateTime? @map("rejected_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  user       AppUser  @relation(fields: [userId], references: [id], onDelete: Restrict)
+  approvedBy AppUser? @relation("MemberApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+
+  @@index([approvedById])
+  @@map("member_profiles")
+}
+
+model MemberPrivateDetails {
+  id           String    @id @default(cuid())
+  userId       String    @unique @map("user_id")
+  phone        String?
+  dateOfBirth  DateTime? @map("date_of_birth") @db.Date
+  addressLine1 String?   @map("address_line_1")
+  addressLine2 String?   @map("address_line_2")
+  postalCode   String?   @map("postal_code")
+  city         String?
+  countryCode  String    @default("FR") @map("country_code")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  user AppUser @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@map("member_private_details")
+}
+
+model NotificationPreference {
+  id                                 String   @id @default(cuid())
+  userId                             String   @unique @map("user_id")
+  dailyVerseEnabled                  Boolean  @default(true) @map("daily_verse_enabled")
+  privateBirthdayGreetingEnabled     Boolean  @default(true) @map("private_birthday_greeting_enabled")
+  communityBirthdayVisibilityEnabled Boolean  @default(true) @map("community_birthday_visibility_enabled")
+  announcementsEnabled               Boolean  @default(true) @map("announcements_enabled")
+  eventsEnabled                      Boolean  @default(true) @map("events_enabled")
+  donationNotificationsEnabled       Boolean  @default(true) @map("donation_notifications_enabled")
+  timezone                           String   @default("Europe/Paris")
+  createdAt                          DateTime @default(now()) @map("created_at")
+  updatedAt                          DateTime @updatedAt @map("updated_at")
+
+  user AppUser @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@map("notification_preferences")
+}
+
+model PushSubscription {
+  id         String    @id @default(cuid())
+  userId     String?   @map("user_id")
+  endpoint   String    @unique
+  p256dh     String
+  auth       String
+  userAgent  String?   @map("user_agent")
+  locale     String?
+  timezone   String    @default("Europe/Paris")
+  isActive   Boolean   @default(true) @map("is_active")
+  lastSentAt DateTime? @map("last_sent_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  user AppUser?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  logs NotificationLog[]
+
+  @@index([userId])
+  @@index([isActive])
+  @@map("push_subscriptions")
+}
+
+model DailyBibleVerse {
+  id          String   @id @default(cuid())
+  dayOfYear   Int      @unique @map("day_of_year")
+  reference   String
+  text        String
+  translation String
+  theme       String?
+  source      String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("daily_bible_verses")
+}
+
+model NotificationLog {
+  id                 String                     @id @default(cuid())
+  userId             String?                    @map("user_id")
+  pushSubscriptionId String?                    @map("push_subscription_id")
+  notificationType   String                     @map("notification_type")
+  title              String?
+  deliveryStatus     NotificationDeliveryStatus @default(PENDING) @map("delivery_status")
+  errorMessage       String?                    @map("error_message")
+  deduplicationKey   String?                    @unique @map("deduplication_key")
+  sentAt             DateTime?                  @map("sent_at")
+  createdAt          DateTime                   @default(now()) @map("created_at")
+
+  pushSubscription PushSubscription? @relation(fields: [pushSubscriptionId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([notificationType])
+  @@map("notification_logs")
+}
+
+model AdminAuditLog {
+  id            String   @id @default(cuid())
+  actorUserId   String?  @map("actor_user_id")
+  actorMemberId String?  @map("actor_member_id")
+  action        String
+  entityType    String   @map("entity_type")
+  entityId      String?  @map("entity_id")
+  summary       String?
+  metadata      Json?
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  actor AppUser? @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([actorUserId])
+  @@index([action])
+  @@index([entityType])
+  @@index([createdAt])
+  @@map("admin_audit_logs")
+}
+
+model ChurchSetting {
+  id             String   @id @default("default")
+  churchName     String   @default("MegVie Paris") @map("church_name")
+  shortName      String   @default("MVP") @map("short_name")
+  memberIdPrefix String   @default("Mv") @map("member_id_prefix")
+  memberIdSuffix String   @default("P") @map("member_id_suffix")
+  timezone       String   @default("Europe/Paris")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("church_settings")
+}
+
+model ChurchEvent {
+  id                   String            @id @default(cuid())
+  title                String
+  slug                 String            @unique
+  shortDescription     String?           @map("short_description")
+  description          String?
+  startsAt             DateTime          @map("starts_at")
+  endsAt               DateTime?         @map("ends_at")
+  timezone             String            @default("Europe/Paris")
+  locationName         String?           @map("location_name")
+  address              String?
+  mapUrl               String?           @map("map_url")
+  registrationUrl      String?           @map("registration_url")
+  coverImageUrl        String?           @map("cover_image_url")
+  coverImageStorageKey String?           @map("cover_image_storage_key")
+  visibility           ContentVisibility @default(PUBLIC)
+  status               EventStatus       @default(DRAFT)
+  publishAt            DateTime?         @map("publish_at")
+  publishedAt          DateTime?         @map("published_at")
+  createdByUserId      String            @map("created_by_user_id")
+  updatedByUserId      String?           @map("updated_by_user_id")
+  createdAt            DateTime          @default(now()) @map("created_at")
+  updatedAt            DateTime          @updatedAt @map("updated_at")
+  archivedAt           DateTime?         @map("archived_at")
+
+  createdBy AppUser  @relation("EventCreator", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedBy AppUser? @relation("EventUpdater", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([visibility])
+  @@index([startsAt])
+  @@index([createdByUserId])
+  @@map("church_events")
+}
+
+model GalleryAlbum {
+  id                   String             @id @default(cuid())
+  title                String
+  slug                 String             @unique
+  description          String?
+  coverImageUrl        String?            @map("cover_image_url")
+  coverImageStorageKey String?            @map("cover_image_storage_key")
+  status               GalleryAlbumStatus @default(DRAFT)
+  eventDate            DateTime?          @map("event_date") @db.Date
+  createdByUserId      String             @map("created_by_user_id")
+  createdAt            DateTime           @default(now()) @map("created_at")
+  updatedAt            DateTime           @updatedAt @map("updated_at")
+  archivedAt           DateTime?          @map("archived_at")
+
+  createdBy AppUser       @relation("GalleryAlbumCreator", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  items     GalleryItem[]
+
+  @@index([status])
+  @@index([eventDate])
+  @@index([createdByUserId])
+  @@map("gallery_albums")
+}
+
+model GalleryItem {
+  id               String    @id @default(cuid())
+  albumId          String    @map("album_id")
+  imageUrl         String    @map("image_url")
+  storageKey       String?   @map("storage_key")
+  caption          String?
+  altText          String?   @map("alt_text")
+  sortOrder        Int       @default(0) @map("sort_order")
+  uploadedByUserId String    @map("uploaded_by_user_id")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  archivedAt       DateTime? @map("archived_at")
+
+  album      GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Restrict)
+  uploadedBy AppUser      @relation("GalleryItemUploader", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([albumId])
+  @@index([uploadedByUserId])
+  @@map("gallery_items")
+}
+
+model ContactMessage {
+  id               String                 @id @default(cuid())
+  senderUserId     String?                @map("sender_user_id")
+  senderName       String                 @map("sender_name")
+  senderEmail      String                 @map("sender_email")
+  senderPhone      String?                @map("sender_phone")
+  subject          String
+  category         String                 @default("GENERAL")
+  body             String
+  source           ContactMessageSource   @default(PUBLIC_CONTACT)
+  confidentiality  MessageConfidentiality @default(GENERAL)
+  status           ContactMessageStatus   @default(NEW)
+  assignedToUserId String?                @map("assigned_to_user_id")
+  createdAt        DateTime               @default(now()) @map("created_at")
+  updatedAt        DateTime               @updatedAt @map("updated_at")
+  firstReadAt      DateTime?              @map("first_read_at")
+  answeredAt       DateTime?              @map("answered_at")
+  archivedAt       DateTime?              @map("archived_at")
+
+  sender     AppUser?              @relation("ContactMessageSender", fields: [senderUserId], references: [id], onDelete: SetNull)
+  assignedTo AppUser?              @relation("ContactMessageAssignee", fields: [assignedToUserId], references: [id], onDelete: SetNull)
+  replies    MessageReply[]
+  notes      MessageInternalNote[]
+
+  @@index([senderUserId])
+  @@index([assignedToUserId])
+  @@index([status])
+  @@index([confidentiality])
+  @@index([createdAt])
+  @@map("contact_messages")
+}
+
+model MessageReply {
+  id                String                @id @default(cuid())
+  messageId         String                @map("message_id")
+  authorUserId      String                @map("author_user_id")
+  body              String
+  deliveryStatus    MessageDeliveryStatus @default(DRAFT) @map("delivery_status")
+  externalMessageId String?               @map("external_message_id")
+  createdAt         DateTime              @default(now()) @map("created_at")
+  sentAt            DateTime?             @map("sent_at")
+  failedAt          DateTime?             @map("failed_at")
+  failureReason     String?               @map("failure_reason")
+
+  message ContactMessage @relation(fields: [messageId], references: [id], onDelete: Restrict)
+  author  AppUser        @relation("MessageReplyAuthor", fields: [authorUserId], references: [id], onDelete: Restrict)
+
+  @@index([messageId])
+  @@index([authorUserId])
+  @@map("message_replies")
+}
+
+model MessageInternalNote {
+  id           String   @id @default(cuid())
+  messageId    String   @map("message_id")
+  authorUserId String   @map("author_user_id")
+  body         String
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  message ContactMessage @relation(fields: [messageId], references: [id], onDelete: Restrict)
+  author  AppUser        @relation("MessageNoteAuthor", fields: [authorUserId], references: [id], onDelete: Restrict)
+
+  @@index([messageId])
+  @@index([authorUserId])
+  @@map("message_internal_notes")
+}
+
+model Announcement {
+  id                   String               @id @default(cuid())
+  title                String
+  slug                 String               @unique
+  summary              String?
+  body                 String
+  category             AnnouncementCategory @default(GENERAL)
+  coverImageUrl        String?              @map("cover_image_url")
+  coverImageStorageKey String?              @map("cover_image_storage_key")
+  externalUrl          String?              @map("external_url")
+  visibility           ContentVisibility    @default(MEMBERS_ONLY)
+  status               AnnouncementStatus   @default(DRAFT)
+  publishAt            DateTime?            @map("publish_at")
+  publishedAt          DateTime?            @map("published_at")
+  expiresAt            DateTime?            @map("expires_at")
+  authorUserId         String               @map("author_user_id")
+  updatedByUserId      String?              @map("updated_by_user_id")
+  createdAt            DateTime             @default(now()) @map("created_at")
+  updatedAt            DateTime             @updatedAt @map("updated_at")
+  archivedAt           DateTime?            @map("archived_at")
+
+  author    AppUser            @relation("AnnouncementAuthor", fields: [authorUserId], references: [id], onDelete: Restrict)
+  updatedBy AppUser?           @relation("AnnouncementUpdater", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  reads     AnnouncementRead[]
+
+  @@index([status])
+  @@index([visibility])
+  @@index([category])
+  @@index([publishAt])
+  @@index([authorUserId])
+  @@map("announcements")
+}
+
+model AnnouncementRead {
+  id             String   @id @default(cuid())
+  announcementId String   @map("announcement_id")
+  userId         String   @map("user_id")
+  readAt         DateTime @default(now()) @map("read_at")
+
+  announcement Announcement @relation(fields: [announcementId], references: [id], onDelete: Restrict)
+  user         AppUser      @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@unique([announcementId, userId])
+  @@index([userId])
+  @@map("announcement_reads")
+}

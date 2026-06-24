@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getSupabaseAdminClient } from "@/lib/supabase-admin"
+import { auth } from "@clerk/nextjs/server"
+import { prisma } from "@/lib/prisma"
 import {
   normalizeLocale,
   normalizeTimezone,
@@ -33,29 +34,37 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const supabaseConfig = getSupabaseAdminClient()
+  const authState = await auth()
+  const appUser = authState.userId
+    ? await prisma.appUser.findUnique({
+        where: { clerkUserId: authState.userId },
+        select: { id: true },
+      })
+    : null
 
-  if ("error" in supabaseConfig) {
-    return NextResponse.json({ error: supabaseConfig.error }, { status: 500 })
-  }
-
-  const { error } = await supabaseConfig.supabase
-    .from("push_subscriptions")
-    .upsert(
-      {
+  try {
+    await prisma.pushSubscription.upsert({
+      where: { endpoint: parsedSubscription.endpoint },
+      update: {
+        userId: appUser?.id ?? undefined,
+        p256dh: parsedSubscription.p256dh,
+        auth: parsedSubscription.auth,
+        userAgent: request.headers.get("user-agent"),
+        locale: normalizeLocale(body.locale),
+        timezone: normalizeTimezone(body.timezone),
+        isActive: true,
+      },
+      create: {
+        userId: appUser?.id ?? undefined,
         endpoint: parsedSubscription.endpoint,
         p256dh: parsedSubscription.p256dh,
         auth: parsedSubscription.auth,
-        user_agent: request.headers.get("user-agent"),
+        userAgent: request.headers.get("user-agent"),
         locale: normalizeLocale(body.locale),
         timezone: normalizeTimezone(body.timezone),
-        is_active: true,
-        updated_at: new Date().toISOString(),
       },
-      { onConflict: "endpoint" },
-    )
-
-  if (error) {
+    })
+  } catch (error) {
     console.error("Push subscription upsert error", error)
     return NextResponse.json(
       { error: "Impossible d'enregistrer les notifications." },

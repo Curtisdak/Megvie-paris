@@ -1,6 +1,6 @@
 import "server-only"
 
-import { getSupabaseAdminClient } from "@/lib/supabase-admin"
+import { prisma } from "@/lib/prisma"
 
 export type DailyBibleVerse = {
   id?: string
@@ -106,21 +106,33 @@ export function getFallbackVerse(dayOfYear = getParisDayOfYear()) {
 export async function getDailyBibleVerse(date = new Date()) {
   const dayOfYear = getParisDayOfYear(date)
   const fallbackVerse = getFallbackVerse(dayOfYear)
-  const supabaseConfig = getSupabaseAdminClient()
 
-  if ("error" in supabaseConfig) {
+  try {
+    const verse = await prisma.dailyBibleVerse.findUnique({
+      where: { dayOfYear },
+      select: {
+        id: true,
+        dayOfYear: true,
+        reference: true,
+        text: true,
+        translation: true,
+        theme: true,
+      },
+    })
+
+    if (!verse) {
+      return fallbackVerse
+    }
+
+    return {
+      id: verse.id,
+      day_of_year: verse.dayOfYear,
+      reference: verse.reference,
+      text: verse.text,
+      translation: verse.translation,
+      theme: verse.theme,
+    } satisfies DailyBibleVerse
+  } catch {
     return fallbackVerse
   }
-
-  const { data, error } = await supabaseConfig.supabase
-    .from("daily_bible_verses")
-    .select("id, day_of_year, reference, text, translation, theme")
-    .eq("day_of_year", dayOfYear)
-    .maybeSingle()
-
-  if (error || !data) {
-    return fallbackVerse
-  }
-
-  return data as DailyBibleVerse
 }

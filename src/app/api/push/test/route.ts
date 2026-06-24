@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getSupabaseAdminClient } from "@/lib/supabase-admin"
+import { prisma } from "@/lib/prisma"
 import { validateRequestSecret } from "@/lib/request-auth"
 import {
   parsePushSubscription,
@@ -40,12 +40,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: webPushConfig.error }, { status: 500 })
   }
 
-  const supabaseConfig = getSupabaseAdminClient()
-
-  if ("error" in supabaseConfig) {
-    return NextResponse.json({ error: supabaseConfig.error }, { status: 500 })
-  }
-
   const body = (await request.json().catch(() => ({}))) as {
     subscription?: unknown
     endpoint?: unknown
@@ -65,37 +59,29 @@ export async function POST(request: NextRequest) {
 
     subscription = parsedSubscription
   } else if (typeof body.endpoint === "string") {
-    const { data, error } = await supabaseConfig.supabase
-      .from("push_subscriptions")
-      .select("id, endpoint, p256dh, auth")
-      .eq("endpoint", body.endpoint)
-      .eq("is_active", true)
-      .maybeSingle()
-
-    if (error) {
+    try {
+      subscription = await prisma.pushSubscription.findFirst({
+        where: { endpoint: body.endpoint, isActive: true },
+        select: { id: true, endpoint: true, p256dh: true, auth: true },
+      })
+    } catch {
       return NextResponse.json(
         { error: "Impossible de charger l'abonnement push." },
         { status: 500 },
       )
     }
-
-    subscription = data as PushSubscriptionRow | null
   } else {
-    const { data, error } = await supabaseConfig.supabase
-      .from("push_subscriptions")
-      .select("id, endpoint, p256dh, auth")
-      .eq("is_active", true)
-      .limit(1)
-      .maybeSingle()
-
-    if (error) {
+    try {
+      subscription = await prisma.pushSubscription.findFirst({
+        where: { isActive: true },
+        select: { id: true, endpoint: true, p256dh: true, auth: true },
+      })
+    } catch {
       return NextResponse.json(
         { error: "Impossible de charger un abonnement push actif." },
         { status: 500 },
       )
     }
-
-    subscription = data as PushSubscriptionRow | null
   }
 
   if (!subscription) {

@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from "next"
+import { ClerkProvider } from "@clerk/nextjs"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { PwaProvider } from "@/components/pwa/pwa-provider"
-import { InstallAppDialog } from "@/components/pwa/install-app-dialog"
-import { FloatingInstallButton } from "@/components/pwa/floating-install-button"
-import { AppNavigation } from "@/components/navigation/app-navigation"
-import { AppHeader } from "@/components/navigation/app-header"
+import { AppChrome } from "@/components/navigation/app-chrome"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,19 +66,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <PwaProvider />
-          <InstallAppDialog autoOpen />
-          <AppHeader />
-          {children}
-          <AppNavigation />
-          <FloatingInstallButton />
-          <Toaster position="top-center" expand richColors />
-        </ThemeProvider>
+        <ClerkProvider>
+          <ThemeProvider defaultTheme="system">
+            <PwaProvider />
+            <AppChrome />
+            {children}
+            <Toaster position="top-center" expand richColors />
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   )

@@ -12,6 +12,16 @@ function getPageTitle(pathname: string) {
   if (pathname.startsWith("/notifications")) return "Notifications"
   if (pathname.startsWith("/contact")) return "Contact"
   if (pathname.startsWith("/verset-du-jour")) return "Verset du jour"
+  if (pathname.startsWith("/inscription")) return "Inscription"
+  if (pathname.startsWith("/connexion")) return "Connexion"
+  if (pathname.startsWith("/mot-de-passe-oublie")) return "Mot de passe"
+  if (pathname.startsWith("/reinitialiser-mot-de-passe")) return "Mot de passe"
+  if (pathname.startsWith("/espace-membre/profil")) return "Profil"
+  if (pathname.startsWith("/espace-membre/carte")) return "Carte membre"
+  if (pathname.startsWith("/espace-membre/securite")) return "Securite"
+  if (pathname.startsWith("/espace-membre/notifications")) return "Notifications"
+  if (pathname.startsWith("/espace-membre")) return "Espace membre"
+  if (pathname.startsWith("/admin")) return "Administration"
   return "MegVie Paris"
 }
 

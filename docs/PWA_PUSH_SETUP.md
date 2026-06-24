@@ -1,20 +1,22 @@
 # MegVie Paris PWA and Push Setup
 
 This app is installable as a PWA and can send an opt-in daily French Bible
-verse notification.
+verse notification. Persistence now uses Prisma with Neon/Postgres.
 
 ## Required Environment Variables
 
 Create `.env.local` locally and configure the same variables in production:
 
 ```bash
-STRIPE_SECRET_KEY=sk_live_or_sk_test
-NEXT_PUBLIC_APP_URL=https://your-domain.com
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_APP_URL=https://your-domain.com
 
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxx
-SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxxxx
+DATABASE_URL=postgresql://...
+DIRECT_URL=postgresql://...
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_or_test
+CLERK_SECRET_KEY=sk_live_or_test
+CLERK_WEBHOOK_SIGNING_SECRET=whsec_xxxxx
 
 NEXT_PUBLIC_VAPID_PUBLIC_KEY=your_vapid_public_key
 VAPID_PRIVATE_KEY=your_vapid_private_key
@@ -26,12 +28,12 @@ DAILY_VERSE_NOTIFICATION_TIME=08:00
 DAILY_VERSE_SCHEDULER=vercel
 ```
 
-Never expose `SUPABASE_SERVICE_ROLE_KEY` or `VAPID_PRIVATE_KEY` in client
-components. Never commit `.env.local`.
+Never expose `CLERK_SECRET_KEY`, `CLERK_WEBHOOK_SIGNING_SECRET`,
+`DATABASE_URL`, `DIRECT_URL`, `VAPID_PRIVATE_KEY`, `CRON_SECRET` or
+`TEST_PUSH_SECRET` in client components. Never commit real `.env` values.
 
-Use the Supabase project root URL for `NEXT_PUBLIC_SUPABASE_URL`, for example
-`https://your-project.supabase.co`, not the REST endpoint ending in
-`/rest/v1/`.
+`DIRECT_URL` must be a Neon/Postgres database connection string for Prisma
+migrations. It is not the production website URL.
 
 ## Generate VAPID Keys
 
@@ -42,22 +44,58 @@ npx web-push generate-vapid-keys
 Set the public key as `NEXT_PUBLIC_VAPID_PUBLIC_KEY` and the private key as
 `VAPID_PRIVATE_KEY`.
 
-## Apply Supabase SQL
+## Apply Database Migration
 
-Run [docs/supabase-pwa.sql](./supabase-pwa.sql) in the Supabase SQL editor.
+Review and apply the Prisma migration manually:
 
-The file creates:
+```bash
+npx prisma migrate deploy
+npx prisma db seed
+```
 
+The migration creates:
+
+- `app_users`
+- `member_profiles`
+- `member_private_details`
+- `notification_preferences`
 - `push_subscriptions`
 - `daily_bible_verses`
 - `notification_logs`
+- `admin_audit_logs`
+- `church_settings`
+- `member_number_seq`
 
-RLS is enabled. No public RLS policies are added for `push_subscriptions`;
-the app writes through protected Next.js API routes using the server-only
-service-role key.
+The starter seed inserts a few daily verses for testing. Replace them with the
+full church-approved 365/366 day verse list before production use.
 
-The SQL includes seven starter verses for testing. Replace them with the full
-church-approved 365/366 day verse list before production use.
+## Clerk Webhook
+
+Create a Clerk webhook endpoint:
+
+```text
+https://your-domain.com/api/clerk/webhook
+```
+
+Subscribe at least to:
+
+- `user.created`
+- `user.updated`
+- `user.deleted`
+
+Copy the webhook signing secret to `CLERK_WEBHOOK_SIGNING_SECRET`.
+
+## Creator Bootstrap
+
+After migrations, run once:
+
+```bash
+npm run bootstrap:creator
+```
+
+The script uses `CREATOR_EMAIL` and, only if the Clerk account does not already
+exist, `CREATOR_PASSWORD`. It assigns role `CREATOR`, activates the membership,
+and generates the first available member ID such as `Mv00001P`.
 
 ## Test Locally With HTTPS
 
@@ -104,14 +142,11 @@ opened from the installed app.
 ## Test on Laptop/Desktop
 
 1. Open the HTTPS site in Chrome or Edge.
-2. Click the "Installer" button in the MegVie Paris header.
+2. Click the "Installer" button.
 3. If the native install prompt appears, choose Install.
-4. If no prompt appears, use the browser address-bar install icon or open the
-   browser menu and choose Install MegVie Paris / Install app.
+4. If no prompt appears, use the browser address-bar install icon or browser
+   menu install option.
 5. Launch MegVie Paris from the desktop, dock, start menu, or applications list.
-
-On Safari for Mac, use Share and then Add to Dock if the browser offers that
-option.
 
 ## Configure Daily Scheduling
 
@@ -133,27 +168,11 @@ For 08:00 Europe/Paris, remember that Vercel Cron uses UTC. Adjust the UTC
 schedule for daylight saving time, or call the route more than once and add
 server-side send-window logic later.
 
-### Supabase Cron
-
-Use Supabase scheduled jobs to call:
-
-```text
-https://your-domain.com/api/cron/daily-verse
-```
-
-Include:
-
-```text
-Authorization: Bearer YOUR_CRON_SECRET
-```
-
 ## Manual Setup Still Needed
 
-- Provide the real Supabase project URL.
-- Provide the Supabase publishable key if you later add public Supabase reads.
-- Provide the Supabase service-role key for server API routes.
+- Configure real Clerk keys and webhook secret.
+- Configure real Neon/Postgres `DATABASE_URL` and `DIRECT_URL`.
 - Provide the production site URL.
 - Provide the web push contact email.
-- Choose Vercel Cron or Supabase Cron.
-- Replace placeholder icons with approved MegVie Paris logo assets if desired.
-- Replace the starter verses with the full approved Bible verse list.
+- Choose and configure the production cron scheduler.
+- Replace starter verses with the full approved Bible verse list.

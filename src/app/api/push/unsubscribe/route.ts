@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getSupabaseAdminClient } from "@/lib/supabase-admin"
+import { prisma } from "@/lib/prisma"
 
 export async function POST(request: NextRequest) {
   let body: { endpoint?: unknown }
@@ -20,21 +20,12 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const supabaseConfig = getSupabaseAdminClient()
-
-  if ("error" in supabaseConfig) {
-    return NextResponse.json({ error: supabaseConfig.error }, { status: 500 })
-  }
-
-  const { error } = await supabaseConfig.supabase
-    .from("push_subscriptions")
-    .update({
-      is_active: false,
-      updated_at: new Date().toISOString(),
+  try {
+    await prisma.pushSubscription.updateMany({
+      where: { endpoint: body.endpoint },
+      data: { isActive: false },
     })
-    .eq("endpoint", body.endpoint)
-
-  if (error) {
+  } catch (error) {
     console.error("Push unsubscribe error", error)
     return NextResponse.json(
       { error: "Impossible de desactiver les notifications." },

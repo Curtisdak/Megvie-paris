@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { DailyVerseScheduler } from "@/components/bible/daily-verse-scheduler"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { getBibleBooks } from "@/lib/bible-data"
 import { listDailyVerseSchedules } from "@/lib/daily-verse-admin"
 
@@ -41,32 +42,23 @@ export default async function AdminDailyVersesPage() {
 
   return (
     <div className="space-y-5">
-      <section className="rounded-[1.75rem] bg-gradient-to-br from-zinc-950 via-amber-900 to-emerald-800 p-5 text-white shadow-2xl sm:p-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-100">
-          Bible
-        </p>
-        <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h1 className="text-3xl font-semibold sm:text-5xl">
-              Versets du jour
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-white/80">
-              Choisissez le verset, programmez l&apos;heure Europe/Paris et laissez
-              le cron protege envoyer la notification.
-            </p>
-          </div>
+      <AdminPageHero
+        eyebrow="Bible"
+        title="Versets du jour"
+        description="Choisissez le verset, programmez l'heure Europe/Paris et laissez le cron protégé envoyer la notification."
+        action={
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:min-w-[28rem]">
             {statusCards.map((card) => (
-              <div key={card.key} className="rounded-2xl bg-white/10 p-3">
-                <p className="text-xs text-white/70">{card.label}</p>
-                <p className="mt-1 text-2xl font-semibold">
+              <div key={card.key} className="rounded-xl bg-white/10 p-3 ring-1 ring-white/15">
+                <p className="text-xs text-white/65">{card.label}</p>
+                <p className="mt-1 text-2xl font-bold text-white">
                   {data.counts[card.key]}
                 </p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        }
+      />
 
       <DailyVerseScheduler books={books} schedules={schedules} />
     </div>

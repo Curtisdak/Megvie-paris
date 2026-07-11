@@ -125,6 +125,17 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 .admin-route body {
   padding-left: 0 !important;
   padding-bottom: 0;
@@ -181,5 +192,222 @@
 @media (display-mode: standalone) and (max-width: 1024px) {
   .floating-install-button {
     display: none;
+  }
+}
+
+@keyframes admin-content-enter {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes admin-section-rise {
+  from {
+    opacity: 0.72;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes admin-gradient-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.admin-content-enter {
+  animation: admin-content-enter 160ms ease-out both;
+}
+
+.admin-page-motion > * {
+  animation: admin-section-rise 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.admin-page-motion > :nth-child(2) {
+  animation-delay: 18ms;
+}
+
+.admin-page-motion > :nth-child(3) {
+  animation-delay: 32ms;
+}
+
+.admin-page-motion > :nth-child(4) {
+  animation-delay: 46ms;
+}
+
+.admin-page-motion > :nth-child(n + 5) {
+  animation-delay: 58ms;
+}
+
+.admin-workspace {
+  --admin-accent: #ea580c;
+  isolation: isolate;
+}
+
+.admin-workspace aside [aria-current="page"] {
+  background-size: 200% 200%;
+  background-position: 50% 50%;
+}
+
+.admin-page-hero {
+  background-size: 180% 180%;
+  background-position: 50% 50%;
+}
+
+.admin-page-hero button {
+  border: 0 !important;
+  border-radius: 0.8rem !important;
+  background: white !important;
+  color: #18181b !important;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.18) !important;
+  transition: transform 180ms ease, box-shadow 180ms ease !important;
+}
+
+.admin-page-hero button:hover {
+  transform: translateY(-2px);
+  background: #fafafa !important;
+  box-shadow: 0 16px 36px rgb(0 0 0 / 0.24) !important;
+}
+
+.admin-page-hero + :is(section, div).grid > :is(section, div, a) {
+  background-image: linear-gradient(145deg, #fff 0%, #fffaf5 58%, #f1fff9 100%);
+}
+
+.dark .admin-page-hero + :is(section, div).grid > :is(section, div, a) {
+  background-image: linear-gradient(145deg, #111114 0%, #19110d 58%, #0b1712 100%);
+}
+
+.admin-workspace main section,
+.admin-workspace main article {
+  scroll-margin-top: 6rem;
+}
+
+.admin-workspace main :is(input, select, textarea) {
+  border-radius: 0.65rem;
+  border-color: rgb(212 212 216 / 0.9);
+  background-color: rgb(255 255 255 / 0.88);
+  transition: border-color 180ms ease, box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.dark .admin-workspace main :is(input, select, textarea) {
+  border-color: rgb(255 255 255 / 0.1);
+  background-color: rgb(9 9 11 / 0.72);
+}
+
+.admin-filter-bar :is(input, select) {
+  min-height: 2.75rem;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8),
+    0 1px 2px rgb(15 23 42 / 0.04);
+}
+
+.dark .admin-filter-bar :is(input, select) {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.admin-filter-bar button[type="submit"] {
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+  background-image: linear-gradient(110deg, #ea580c, #f59e0b 55%, #059669);
+  background-size: 180% 180%;
+  color: white;
+  box-shadow: 0 8px 20px rgb(234 88 12 / 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease,
+    background-position 300ms ease;
+}
+
+.admin-filter-bar button[type="submit"]:hover {
+  transform: translateY(-1px);
+  background-position: 100% 50%;
+  box-shadow: 0 12px 26px rgb(234 88 12 / 0.24);
+}
+
+.admin-filter-bar button[type="submit"]:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.admin-filter-bar label {
+  color: rgb(82 82 91);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dark .admin-filter-bar label {
+  color: rgb(161 161 170);
+}
+
+.admin-workspace main :is(input, select, textarea):focus-visible {
+  border-color: color-mix(in srgb, var(--admin-accent) 70%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--admin-accent) 12%, transparent);
+}
+
+.admin-workspace main button,
+.admin-workspace main a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.admin-workspace main details > summary {
+  list-style: none;
+}
+
+.admin-workspace main details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-workspace main form[aria-busy="true"] {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.admin-workspace [data-radix-scroll-area-viewport] {
+  overscroll-behavior: contain;
+}
+
+.admin-workspace ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.admin-workspace ::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgb(161 161 170 / 0.48);
+  background-clip: padding-box;
+}
+
+.admin-workspace ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (max-width: 1023px) {
+  .admin-workspace main :is(input, select, textarea, button) {
+    min-height: 2.65rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .admin-page-hero {
+    border-radius: 1.25rem;
+  }
+
+  .admin-page-hero > div {
+    align-items: stretch;
+  }
+
+  .admin-page-hero > div > :last-child,
+  .admin-page-hero > div > :last-child button {
+    width: 100%;
   }
 }

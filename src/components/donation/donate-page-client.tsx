@@ -57,7 +57,7 @@ const trustItems = [
   },
   {
     label: "Recapitulatif clair",
-    description: "Montant, categorie et frequence avant paiement.",
+    description: "Montant, type de don et frequence avant paiement.",
     icon: ReceiptText,
   },
   {
@@ -163,7 +163,7 @@ export function DonatePageClient({
               <h1 className="mt-6 max-w-lg text-4xl font-black leading-[0.96] text-white sm:text-6xl lg:text-7xl">
                 Donner avec clarte et confiance.
               </h1>
-              <p className="mt-5 max-w-md text-base leading-7 text-white/78 sm:text-lg">
+              <p className="mt-5 max-w-md text-base leading-7 text-white/80 sm:text-lg">
                 Votre generosite aide MegVie Paris a accueillir, accompagner et
                 servir la communaute avec fidelite.
               </p>
@@ -356,21 +356,20 @@ export function DonatePageClient({
 
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <Label htmlFor="donor-name">Nom complet</Label>
+                <Label htmlFor="donor-name">Nom complet optionnel</Label>
                 <div className="relative mt-2">
                   <UserRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
                   <Input
                     id="donor-name"
                     value={donorName}
                     onChange={(event) => setDonorName(event.target.value)}
-                    placeholder="Votre nom"
-                    required
+                    placeholder="Votre nom si vous le souhaitez"
                     className="h-12 rounded-2xl bg-white pl-11 dark:bg-zinc-950"
                   />
                 </div>
               </div>
               <div>
-                <Label htmlFor="donor-email">Email pour le recu</Label>
+                <Label htmlFor="donor-email">Email pour le recu optionnel</Label>
                 <div className="relative mt-2">
                   <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
                   <Input
@@ -379,12 +378,16 @@ export function DonatePageClient({
                     value={donorEmail}
                     onChange={(event) => setDonorEmail(event.target.value)}
                     placeholder="vous@example.com"
-                    required
                     className="h-12 rounded-2xl bg-white pl-11 dark:bg-zinc-950"
                   />
                 </div>
               </div>
             </div>
+            <p className="-mt-1 text-xs leading-5 text-zinc-500 dark:text-zinc-400">
+              Vous pouvez donner sans compte et sans email. Si vous indiquez un
+              email, il pourra servir au recu Stripe selon la configuration du
+              paiement.
+            </p>
 
             <div className="grid gap-3 lg:grid-cols-[1fr_0.8fr]">
               <div className="rounded-[1.35rem] border border-zinc-200 bg-white p-4 dark:border-white/10 dark:bg-white/[0.035]">
@@ -405,7 +408,7 @@ export function DonatePageClient({
                     </strong>
                   </div>
                   <div className="flex items-center justify-between gap-3">
-                    <span>Categorie</span>
+                    <span>Type de don</span>
                     <strong className="text-right text-zinc-950 dark:text-white">
                       {selectedCategory?.label ?? "Autre"}
                     </strong>

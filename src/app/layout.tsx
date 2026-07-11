@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { PwaProvider } from "@/components/pwa/pwa-provider"
 import { AppChrome } from "@/components/navigation/app-chrome"
+import { PageTransition } from "@/components/navigation/page-transition"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -105,7 +106,7 @@ export default function RootLayout({
           <ThemeProvider defaultTheme="system">
             <PwaProvider />
             <AppChrome />
-            {children}
+            <PageTransition>{children}</PageTransition>
             <Toaster position="top-center" expand richColors />
           </ThemeProvider>
         </ClerkProvider>

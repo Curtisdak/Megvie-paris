@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard } from "@/components/admin/admin-card"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { DeleteSubmitButton } from "@/components/admin/delete-submit-button"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
@@ -24,7 +25,13 @@ export default async function MessageDetailPage({
   if (!message) notFound()
 
   return (
-    <div className="grid gap-5 xl:grid-cols-[1fr,420px]">
+    <div className="space-y-5">
+      <AdminPageHero
+        eyebrow="Message"
+        title={message.subject}
+        description={`Message reçu de ${message.senderName} le ${message.createdAt.toLocaleDateString("fr-FR")}.`}
+      />
+      <div className="grid gap-5 xl:grid-cols-[1fr,420px]">
       <div className="space-y-5">
         <AdminCard>
           <div className="flex flex-wrap items-center gap-2">
@@ -140,6 +147,7 @@ export default async function MessageDetailPage({
           </AdminActionForm>
         </AdminCard>
       </aside>
+      </div>
     </div>
   )
 }

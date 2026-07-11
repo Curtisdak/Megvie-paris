@@ -14,6 +14,8 @@ import {
 } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -184,28 +186,15 @@ export default async function FinancePage({
 
   return (
     <div className="space-y-3 pb-4 sm:space-y-4">
-      <section className="rounded-[1.35rem] border border-zinc-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-zinc-900/80 sm:p-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-700 dark:text-amber-200">
-              Finance
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
-              Finance des dons
-            </h2>
-            <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium">
-              <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-200">
-                Webhooks verifies
-              </span>
-              <span className="rounded-full bg-zinc-100 px-3 py-1.5 text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
-                {data.pagination.filtered} don(s)
-              </span>
-            </div>
-          </div>
+      <AdminPageHero
+        eyebrow="Finance"
+        title="Finance des dons"
+        description={`${data.pagination.filtered} don(s) affiché(s). Les paiements confirmés sont rapprochés avec les événements Stripe vérifiés.`}
+        action={
           <div className="grid gap-2 sm:grid-flow-col sm:justify-end">
             <Button
               asChild
-              className="h-11 w-full rounded-2xl bg-amber-600 text-white hover:bg-amber-700 sm:w-fit"
+              className="h-10 w-full rounded-xl sm:w-fit"
             >
               <Link href="/admin/dons/directs/nouveau">
                 <Plus className="h-4 w-4" aria-hidden />
@@ -215,7 +204,7 @@ export default async function FinancePage({
             <Button
               asChild
               variant="outline"
-              className="h-11 w-full rounded-2xl bg-white dark:bg-zinc-950 sm:w-fit"
+              className="h-10 w-full rounded-xl sm:w-fit"
             >
               <Link href={exportHref}>
                 <ArrowDownToLine className="h-4 w-4" aria-hidden />
@@ -223,8 +212,8 @@ export default async function FinancePage({
               </Link>
             </Button>
           </div>
-        </div>
-      </section>
+        }
+      />
 
       <div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
         {statCards.map((item) => {
@@ -233,28 +222,28 @@ export default async function FinancePage({
           return (
             <section
               key={item.label}
-              className={`rounded-[1.2rem] p-3 shadow-sm ring-1 ring-black/5 dark:ring-white/10 sm:p-4 ${item.className}`}
+              className="rounded-xl border border-zinc-200/90 bg-white p-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114] sm:p-4"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <p className="truncate text-xs font-semibold uppercase tracking-[0.14em] opacity-70">
+                  <p className="truncate text-xs font-bold uppercase tracking-[0.08em] text-zinc-500 dark:text-zinc-400">
                     {item.label}
                   </p>
                   <p className="mt-2 truncate text-xl font-semibold tracking-tight sm:text-2xl">
                     {item.value}
                   </p>
                 </div>
-                <span className="rounded-2xl bg-white/70 p-2 text-current shadow-sm dark:bg-white/10">
+                <span className={`rounded-lg p-2 ${item.className}`}>
                   <Icon className="h-4 w-4" aria-hidden />
                 </span>
               </div>
-              <p className="mt-2 text-xs opacity-70">{item.helper}</p>
+              <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">{item.helper}</p>
             </section>
           )
         })}
       </div>
 
-      <AdminCard className="p-3 sm:p-4">
+      <AdminFilterBar description="Recherchez une transaction puis ouvrez les critères avancés si nécessaire.">
         <form className="space-y-3">
           <div className="flex flex-col gap-2 sm:flex-row">
             <label className="relative min-w-0 flex-1">
@@ -267,10 +256,10 @@ export default async function FinancePage({
                 name="q"
                 defaultValue={params.q ?? ""}
                 placeholder="Nom, email, membre, Stripe, collecte..."
-                className="h-12 rounded-2xl pl-10"
+                className="h-12 rounded-xl pl-10"
               />
             </label>
-            <Button type="submit" className="h-12 rounded-2xl sm:w-36">
+            <Button type="submit" className="h-12 sm:w-36">
               <Filter className="h-4 w-4" aria-hidden />
               Filtrer
             </Button>
@@ -278,7 +267,7 @@ export default async function FinancePage({
 
           <details
             open={hasActiveFilters}
-            className="group rounded-2xl border border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-zinc-950/40"
+            className="group rounded-xl border border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-zinc-950/40"
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-3 text-sm font-semibold marker:hidden">
               <span className="inline-flex items-center gap-2">
@@ -379,7 +368,7 @@ export default async function FinancePage({
             </div>
           </details>
         </form>
-      </AdminCard>
+      </AdminFilterBar>
 
       <section className="grid gap-3 xl:grid-cols-[minmax(0,1fr),22rem]">
         <AdminCard className="p-3 sm:p-4">

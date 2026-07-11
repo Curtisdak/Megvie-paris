@@ -1,5 +1,6 @@
 import "server-only"
 
+import { cache } from "react"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { ChurchRole, MembershipStatus } from "@/generated/prisma/enums"
@@ -26,20 +27,18 @@ function getPrimaryEmail(user: Awaited<ReturnType<typeof currentUser>>) {
   )
 }
 
-async function getClerkSnapshot(
-  nextPath = "/espace-membre",
-): Promise<ClerkUserSnapshot> {
+async function getClerkSnapshot(): Promise<ClerkUserSnapshot | null> {
   const authState = await auth()
 
   if (!authState.userId) {
-    redirect(`/connexion?next=${encodeURIComponent(nextPath)}`)
+    return null
   }
 
   const clerkUser = await currentUser()
   const email = getPrimaryEmail(clerkUser)
 
   if (!clerkUser || !email) {
-    redirect("/connexion")
+    return null
   }
 
   return {
@@ -51,8 +50,10 @@ async function getClerkSnapshot(
   }
 }
 
-export async function ensureCurrentAppUser(nextPath = "/espace-membre") {
-  const clerkUser = await getClerkSnapshot(nextPath)
+const getCurrentAppUserRecord = cache(async () => {
+  const clerkUser = await getClerkSnapshot()
+
+  if (!clerkUser) return null
 
   return prisma.appUser.upsert({
     where: { clerkUserId: clerkUser.id },
@@ -88,6 +89,16 @@ export async function ensureCurrentAppUser(nextPath = "/espace-membre") {
       notificationPreference: true,
     },
   })
+})
+
+export async function ensureCurrentAppUser(nextPath = "/espace-membre") {
+  const user = await getCurrentAppUserRecord()
+
+  if (!user) {
+    redirect(`/connexion?next=${encodeURIComponent(nextPath)}`)
+  }
+
+  return user
 }
 
 export async function requireCurrentAppUser(nextPath = "/espace-membre") {

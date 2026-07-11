@@ -1,6 +1,8 @@
 import { RefreshCcw } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
-import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { EmptyState } from "@/components/admin/admin-card"
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { retryStripeWebhookEventAction } from "@/lib/finance/actions"
@@ -16,29 +18,24 @@ export default async function StripeWebhooksPage({
 
   return (
     <div className="space-y-4">
-      <AdminCard className="bg-gradient-to-br from-zinc-950 to-zinc-800 text-white dark:from-zinc-900 dark:to-zinc-950">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-200">
-          Stripe
-        </p>
-        <h2 className="mt-3 text-3xl font-semibold">Webhooks Stripe</h2>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-300">
-          Suivi operationnel des evenements verifies. Le payload complet et les
-          secrets ne sont jamais affiches.
-        </p>
-      </AdminCard>
+      <AdminPageHero
+        eyebrow="Stripe"
+        title="Webhooks Stripe"
+        description="Suivi opérationnel des événements vérifiés. Le payload complet et les secrets ne sont jamais affichés."
+      />
 
-      <AdminCard>
+      <AdminFilterBar description="Retrouvez un événement Stripe par type ou état de traitement.">
         <form className="grid gap-2 sm:grid-cols-[1fr,180px,auto]">
           <input
             name="type"
             defaultValue={params.type ?? ""}
             placeholder="Type d'evenement"
-            className="h-11 rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            className="h-10 rounded-lg border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
           />
           <select
             name="status"
             defaultValue={params.status ?? ""}
-            className="h-11 rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            className="h-10 rounded-lg border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
           >
             <option value="">Tous statuts</option>
             <option value="FAILED">Echoues</option>
@@ -46,16 +43,16 @@ export default async function StripeWebhooksPage({
             <option value="IGNORED">Ignores</option>
             <option value="PROCESSING">En traitement</option>
           </select>
-          <Button className="h-11 rounded-2xl">Filtrer</Button>
+          <Button className="h-10">Filtrer</Button>
         </form>
-      </AdminCard>
+      </AdminFilterBar>
 
       <div className="space-y-3">
         {events.length ? (
           events.map((event) => (
             <article
               key={event.id}
-              className="rounded-[1.35rem] border border-zinc-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-zinc-900/80"
+              className="rounded-xl border border-zinc-200 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114]"
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">

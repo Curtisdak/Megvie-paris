@@ -1,5 +1,6 @@
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { ImageDropzone } from "@/components/admin/image-dropzone"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
@@ -17,19 +18,14 @@ export default async function GalleryPage() {
 
   return (
     <div className="space-y-5">
+      <AdminPageHero
+        eyebrow="Médias"
+        title="Albums photos"
+        description="Créez les albums publics et gérez les images hébergées de façon sécurisée sur ImageKit."
+      />
+
       <AdminCard>
-        <div className="grid gap-5 xl:grid-cols-[0.9fr,1.1fr]">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
-              Galerie
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold">Albums photos</h2>
-            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-              Les nouvelles images sont envoyees vers ImageKit, puis seules les
-              URL et metadonnees sont conservees dans Neon.
-            </p>
-          </div>
-          <AdminActionForm action={saveGalleryAlbumAction} className="grid gap-3">
+          <AdminActionForm action={saveGalleryAlbumAction} className="mx-auto grid max-w-3xl gap-3">
             <Input
               name="title"
               placeholder="Titre de l&apos;album"
@@ -54,9 +50,8 @@ export default async function GalleryPage() {
                 <option value="ARCHIVED">Archive</option>
               </select>
             </div>
-            <Button className="rounded-full">Creer l&apos;album</Button>
+            <Button className="rounded-lg bg-orange-600 shadow-none hover:bg-orange-700">Créer l&apos;album</Button>
           </AdminActionForm>
-        </div>
       </AdminCard>
 
       {albums.length === 0 ? (
@@ -92,7 +87,7 @@ export default async function GalleryPage() {
                     <option value="PUBLISHED">Publie</option>
                     <option value="ARCHIVED">Archive</option>
                   </select>
-                  <Button size="sm" variant="outline" className="h-10 rounded-full">OK</Button>
+                  <Button size="sm" variant="outline" className="h-10 rounded-lg shadow-none">OK</Button>
                 </AdminActionForm>
               </div>
 
@@ -100,7 +95,7 @@ export default async function GalleryPage() {
                 {album.items.map((item) => (
                   <div
                     key={item.id}
-                    className="relative aspect-square overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-800"
+                    className="relative aspect-square overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -123,7 +118,7 @@ export default async function GalleryPage() {
                   <Input name="caption" placeholder="Legende" className="h-10 rounded-xl" />
                   <Input name="altText" placeholder="Texte alternatif" className="h-10 rounded-xl" />
                 </div>
-                <Button variant="outline" className="rounded-full">Ajouter la photo</Button>
+                <Button variant="outline" className="rounded-lg shadow-none">Ajouter la photo</Button>
               </AdminActionForm>
             </AdminCard>
           ))}

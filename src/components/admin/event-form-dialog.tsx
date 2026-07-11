@@ -61,7 +61,7 @@ export function EventFormDialog() {
           Ajouter evenement
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[calc(100dvh-2rem)] gap-0 overflow-hidden rounded-3xl p-0 sm:max-w-5xl">
+      <DialogContent className="max-h-[calc(100dvh-2rem)] gap-0 overflow-hidden rounded-xl p-0 sm:max-w-5xl">
         <DialogHeader className="border-b border-zinc-200 bg-zinc-50 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-950/70 sm:px-6">
           <DialogTitle className="text-2xl">Ajouter un evenement</DialogTitle>
           <DialogDescription>
@@ -145,7 +145,7 @@ export function EventFormDialog() {
               </Field>
             </div>
 
-            <aside className="space-y-4 rounded-3xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950/70 sm:p-4">
+            <aside className="space-y-4 rounded-xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-950/70 sm:p-4">
               <div className="grid gap-3">
                 <Field id="event-status" label="Statut">
                   <select

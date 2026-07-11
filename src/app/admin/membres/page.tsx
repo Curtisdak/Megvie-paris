@@ -4,22 +4,33 @@ import {
   BadgeCheck,
   CalendarCheck,
   Cake,
-  ChevronDown,
+  ChevronRight,
   Mail,
   MapPin,
   Phone,
   Search,
   ShieldCheck,
-  SlidersHorizontal,
   UserCheck,
   Users,
 } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { EmptyState } from "@/components/admin/admin-card"
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
+import { MemberProfileDisclosure } from "@/components/admin/member-profile-disclosure"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { updateMemberStatusAction, updateRoleAction } from "@/lib/admin/actions"
 import { listMembers, pageSize } from "@/lib/admin/data"
 import { hasPermission } from "@/lib/auth/permissions"
@@ -148,19 +159,152 @@ function DetailItem({
   )
 
   return (
-    <div className="flex min-w-0 gap-3 rounded-2xl border border-zinc-200/80 bg-white/70 p-3 dark:border-white/10 dark:bg-white/[0.03]">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
+    <div className="flex min-h-[5.25rem] min-w-0 gap-3 bg-white p-4 dark:bg-[#111114]">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-100 to-orange-50 text-orange-700 dark:from-amber-400/15 dark:to-orange-500/10 dark:text-amber-100">
         <Icon className="h-4 w-4" />
       </span>
       <div className="min-w-0">
         <dt className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-zinc-400">
           {label}
         </dt>
-        <dd className="mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">
+        <dd className="mt-1 text-sm font-semibold leading-5 text-zinc-900 dark:text-zinc-100">
           {content}
         </dd>
       </div>
     </div>
+  )
+}
+
+function MemberStatusDialog({
+  userId,
+  memberName,
+  currentStatus,
+}: {
+  userId: string
+  memberName: string
+  currentStatus: string
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button
+          type="button"
+          className="flex min-h-16 w-full items-center justify-between gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-left transition hover:border-emerald-300 hover:bg-emerald-50/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-white/10 dark:bg-[#111114] dark:hover:border-emerald-500/30 dark:hover:bg-emerald-500/5"
+        >
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
+              <BadgeCheck className="h-4 w-4" aria-hidden />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold">Modifier le statut</span>
+              <span className="block text-xs text-zinc-500 dark:text-zinc-400">Activer, suspendre ou archiver</span>
+            </span>
+          </span>
+          <ChevronRight className="h-4 w-4 shrink-0 text-zinc-400" aria-hidden />
+        </button>
+      </DialogTrigger>
+      <DialogContent className="w-[calc(100%_-_1.5rem)] rounded-2xl p-0 sm:max-w-lg">
+        <DialogHeader className="border-b border-zinc-200 bg-gradient-to-r from-emerald-50 via-white to-orange-50 px-5 py-5 text-left dark:border-white/10 dark:from-emerald-500/10 dark:via-zinc-950 dark:to-orange-500/10">
+          <DialogTitle>Modifier le statut</DialogTitle>
+          <DialogDescription>
+            Mettez à jour l&apos;accès de {memberName}. Les changements sensibles sont enregistrés dans l&apos;audit.
+          </DialogDescription>
+        </DialogHeader>
+        <AdminActionForm action={updateMemberStatusAction} className="space-y-4 p-5">
+          <input type="hidden" name="userId" value={userId} />
+          <div className="space-y-2">
+            <label htmlFor={`status-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Nouveau statut</label>
+            <select
+              id={`status-${userId}`}
+              name="status"
+              defaultValue={currentStatus}
+              className="h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            >
+              <option value="ACTIVE">Activer</option>
+              <option value="SUSPENDED">Suspendre</option>
+              <option value="ARCHIVED">Archiver</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label htmlFor={`status-reason-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Motif</label>
+            <Textarea id={`status-reason-${userId}`} name="reason" placeholder="Obligatoire pour une suspension ou un archivage" className="min-h-24 rounded-xl" />
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <DialogClose asChild>
+              <Button type="button" variant="outline" className="rounded-xl shadow-none">Annuler</Button>
+            </DialogClose>
+            <Button className="rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-none hover:from-orange-700 hover:to-amber-600">Confirmer</Button>
+          </div>
+        </AdminActionForm>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function MemberRoleDialog({
+  userId,
+  memberName,
+  currentRole,
+}: {
+  userId: string
+  memberName: string
+  currentRole: string
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button
+          type="button"
+          className="flex min-h-16 w-full items-center justify-between gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-left transition hover:border-orange-300 hover:bg-orange-50/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 dark:border-white/10 dark:bg-[#111114] dark:hover:border-orange-500/30 dark:hover:bg-orange-500/5"
+        >
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300">
+              <ShieldCheck className="h-4 w-4" aria-hidden />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold">Modifier le rôle</span>
+              <span className="block text-xs text-zinc-500 dark:text-zinc-400">Changer les autorisations</span>
+            </span>
+          </span>
+          <ChevronRight className="h-4 w-4 shrink-0 text-zinc-400" aria-hidden />
+        </button>
+      </DialogTrigger>
+      <DialogContent className="w-[calc(100%_-_1.5rem)] rounded-2xl p-0 sm:max-w-lg">
+        <DialogHeader className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-5 py-5 text-left dark:border-white/10 dark:from-orange-500/10 dark:via-zinc-950 dark:to-amber-500/10">
+          <DialogTitle>Modifier le rôle</DialogTitle>
+          <DialogDescription>
+            Attribuez de nouvelles responsabilités à {memberName}. Cette action sera enregistrée dans l&apos;audit.
+          </DialogDescription>
+        </DialogHeader>
+        <AdminActionForm action={updateRoleAction} className="space-y-4 p-5">
+          <input type="hidden" name="userId" value={userId} />
+          <div className="space-y-2">
+            <label htmlFor={`role-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Nouveau rôle</label>
+            <select
+              id={`role-${userId}`}
+              name="role"
+              defaultValue={currentRole}
+              className="h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            >
+              <option value="MEMBER">Membre</option>
+              <option value="RESPO">Responsable</option>
+              <option value="FINANCE">Finance</option>
+              <option value="MASTER">Administrateur</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label htmlFor={`role-reason-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Motif</label>
+            <Textarea id={`role-reason-${userId}`} name="reason" placeholder="Expliquez la raison du changement" className="min-h-24 rounded-xl" required />
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <DialogClose asChild>
+              <Button type="button" variant="outline" className="rounded-xl shadow-none">Annuler</Button>
+            </DialogClose>
+            <Button className="rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-none hover:from-orange-700 hover:to-amber-600">Confirmer</Button>
+          </div>
+        </AdminActionForm>
+      </DialogContent>
+    </Dialog>
   )
 }
 
@@ -214,62 +358,37 @@ export default async function MembersPage({
 
   return (
     <div className="space-y-4 sm:space-y-5">
-      <section className="overflow-hidden rounded-[1.6rem] border border-zinc-200 bg-white shadow-sm dark:border-white/10 dark:bg-zinc-900/80">
-        <div className="grid gap-0 xl:grid-cols-[1fr,0.9fr]">
-          <div className="bg-gradient-to-br from-zinc-950 via-zinc-900 to-amber-950 p-5 text-white sm:p-6 lg:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200">
-              Repertoire
-            </p>
-            <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                  Membres
-                </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-300">
-                  Retrouvez les membres, leurs statuts et les informations
-                  autorisees pour votre role.
-                </p>
+      <AdminPageHero
+        eyebrow="Communauté"
+        title="Répertoire des membres"
+        description="Retrouvez les membres, leurs statuts et les informations autorisées pour votre rôle."
+        action={
+          <div className="flex items-baseline gap-2 rounded-xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
+            <span className="text-3xl font-bold text-white">{data.counts.filtered}</span>
+            <span className="text-xs text-white/65">résultat(s)</span>
+          </div>
+        }
+      />
+
+      <section className="grid grid-cols-2 gap-3 xl:grid-cols-4" aria-label="Statistiques membres">
+        {statCards.map((item) => {
+          const Icon = item.icon
+          return (
+            <div key={item.label} className="rounded-xl border border-zinc-200/90 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114]">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">{item.label}</p>
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300">
+                  <Icon className="h-4 w-4" aria-hidden />
+                </span>
               </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.18em] text-zinc-300">
-                  Resultats
-                </p>
-                <p className="mt-1 text-3xl font-semibold">
-                  {data.counts.filtered}
-                </p>
-              </div>
+              <p className="mt-3 text-2xl font-bold tracking-tight">{item.value}</p>
             </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 bg-zinc-50 p-4 dark:bg-zinc-950/50 sm:p-5">
-            {statCards.map((item) => {
-              const Icon = item.icon
-
-              return (
-                <div
-                  key={item.label}
-                  className={`rounded-3xl bg-gradient-to-br p-4 shadow-sm ${item.tone}`}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-sm font-medium opacity-80">
-                      {item.label}
-                    </p>
-                    <Icon className="h-5 w-5 opacity-75" />
-                  </div>
-                  <p className="mt-5 text-3xl font-semibold">{item.value}</p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+          )
+        })}
       </section>
 
-      <section className="rounded-[1.45rem] border border-zinc-200 bg-white p-3 shadow-sm dark:border-white/10 dark:bg-zinc-900/80 sm:p-4">
-        <div className="flex items-center gap-2 px-1 pb-3 text-sm font-semibold text-zinc-700 dark:text-zinc-200">
-          <SlidersHorizontal className="h-4 w-4 text-amber-600" />
-          Filtres rapides
-        </div>
-        <div className="flex gap-2 overflow-x-auto pb-2">
+      <AdminFilterBar description="Recherchez une personne et filtrez par statut ou rôle.">
+        <div className="flex snap-x gap-2 overflow-x-auto pb-2">
           {statusOptions.map((item) => {
             const active = activeStatus === item.value
 
@@ -279,7 +398,7 @@ export default async function MembersPage({
                 asChild
                 size="sm"
                 variant={active ? "default" : "outline"}
-                className="shrink-0 rounded-full"
+                className="shrink-0 snap-start rounded-lg shadow-none"
               >
                 <Link
                   href={buildMembersHref({
@@ -304,31 +423,21 @@ export default async function MembersPage({
           })}
         </div>
 
-        <form className="mt-2 grid gap-2 lg:grid-cols-[1fr,180px,170px,auto]">
-          <div className="relative">
+        <form className="mt-2 grid grid-cols-[minmax(0,1fr)_auto] gap-2 sm:grid-cols-[minmax(0,1fr)_180px_auto]">
+          <div className="relative col-span-2 sm:col-span-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
             <Input
               name="q"
               placeholder="Nom, email, ID membre..."
               defaultValue={activeSearch}
-              className="h-11 rounded-2xl pl-9"
+              className="h-10 rounded-lg pl-9"
             />
           </div>
-          <select
-            name="status"
-            defaultValue={activeStatus}
-            className="h-11 rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
-          >
-            {statusOptions.map((item) => (
-              <option key={item.value || "all"} value={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
+          <input type="hidden" name="status" value={activeStatus} />
           <select
             name="role"
             defaultValue={activeRole}
-            className="h-11 rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            className="h-10 rounded-lg border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
           >
             {roleOptions.map((item) => (
               <option key={item.value || "all"} value={item.value}>
@@ -336,7 +445,7 @@ export default async function MembersPage({
               </option>
             ))}
           </select>
-          <Button type="submit" className="h-11 rounded-2xl">
+          <Button type="submit" className="h-10 px-4">
             <Search className="h-4 w-4" aria-hidden />
             Filtrer
           </Button>
@@ -365,7 +474,7 @@ export default async function MembersPage({
             </Button>
           </div>
         ) : null}
-      </section>
+      </AdminFilterBar>
 
       {!data.canSensitive ? (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-100">
@@ -414,13 +523,13 @@ export default async function MembersPage({
               return (
                 <article
                   key={member.id}
-                  className="overflow-hidden rounded-[1.45rem] border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-zinc-900/80"
+                  className="group/member overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.07)] transition-[border-color,box-shadow] duration-300 hover:border-orange-200 hover:shadow-[0_20px_55px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-[#111114] dark:hover:border-orange-500/30"
                 >
-                  <div className="grid gap-0 xl:grid-cols-[1fr,320px]">
-                    <div className="p-4 sm:p-5">
+                  <MemberProfileDisclosure
+                    summary={
                       <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                         <div className="flex min-w-0 gap-3">
-                          <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-lg font-semibold text-white shadow-sm">
+                          <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 via-amber-400 to-emerald-500 text-lg font-bold text-white shadow-lg shadow-orange-500/20 ring-4 ring-white dark:ring-zinc-900">
                             {member.profile?.avatarUrl || member.imageUrl ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
@@ -431,9 +540,20 @@ export default async function MembersPage({
                             ) : (
                               getInitials(memberName)
                             )}
+                            <span
+                              className={`absolute bottom-1 right-1 h-3.5 w-3.5 rounded-full border-2 border-white dark:border-zinc-900 ${
+                                member.membershipStatus === "ACTIVE"
+                                  ? "bg-emerald-500"
+                                  : member.membershipStatus === "SUSPENDED"
+                                    ? "bg-orange-500"
+                                    : "bg-zinc-400"
+                              }`}
+                              aria-hidden
+                            />
                           </div>
                           <div className="min-w-0">
-                            <h4 className="truncate text-xl font-semibold text-zinc-950 dark:text-white">
+                            <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-orange-600 dark:text-orange-400">Profil membre</p>
+                            <h4 className="mt-1 truncate text-xl font-bold text-zinc-950 dark:text-white">
                               {memberName}
                             </h4>
                             <div className="mt-2 flex flex-wrap gap-2">
@@ -451,12 +571,19 @@ export default async function MembersPage({
                             </div>
                           </div>
                         </div>
-                        <div className="rounded-2xl bg-zinc-100 px-3 py-2 text-sm font-semibold text-zinc-800 dark:bg-zinc-950 dark:text-zinc-100">
-                          {memberId}
+                        <div className="flex items-center gap-2 self-start">
+                          <div className="flex items-center gap-2 rounded-xl bg-zinc-950 px-3 py-2 text-sm font-bold text-white shadow-sm dark:bg-white dark:text-zinc-950">
+                            <BadgeCheck className="h-4 w-4 text-amber-400 dark:text-orange-600" aria-hidden />
+                            <span>{memberId}</span>
+                          </div>
                         </div>
                       </div>
+                    }
+                  >
 
-                      <dl className="mt-5 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                    <div className="divide-y divide-zinc-200/80 dark:divide-white/10">
+                      <div className="p-4 sm:p-5">
+                      <dl className="grid gap-px overflow-hidden rounded-xl bg-zinc-200/80 ring-1 ring-zinc-200/80 dark:bg-white/10 dark:ring-white/10 sm:grid-cols-2 xl:grid-cols-3">
                         <DetailItem
                           icon={Mail}
                           label="Email"
@@ -494,16 +621,16 @@ export default async function MembersPage({
                           </>
                         ) : null}
                       </dl>
-                    </div>
+                      </div>
 
-                    <div className="border-t border-zinc-200 bg-zinc-50 p-4 dark:border-white/10 dark:bg-zinc-950/45 xl:border-l xl:border-t-0">
+                    <div className="bg-zinc-50/80 p-4 dark:bg-black/15 sm:p-5">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-semibold text-zinc-950 dark:text-white">
-                            Gestion
+                          <p className="text-sm font-bold text-zinc-950 dark:text-white">
+                            Gestion du compte
                           </p>
                           <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                            Statut et role du compte membre.
+                            Modifiez le statut ou les responsabilités de ce membre.
                           </p>
                         </div>
                         {member.membershipStatus === "ACTIVE" ? (
@@ -515,101 +642,44 @@ export default async function MembersPage({
                         )}
                       </div>
 
-                      <div className="mt-4 space-y-3">
+                      <div className="mt-4 grid gap-3 lg:grid-cols-2">
                         {canSuspend ? (
-                          <details className="group rounded-2xl border border-zinc-200 bg-white dark:border-white/10 dark:bg-zinc-900">
-                            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold">
-                              Modifier le statut
-                              <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
-                            </summary>
-                            <AdminActionForm
-                              action={updateMemberStatusAction}
-                              className="space-y-3 border-t border-zinc-200 p-3 dark:border-white/10"
-                            >
-                              <input
-                                type="hidden"
-                                name="userId"
-                                value={member.id}
-                              />
-                              <select
-                                name="status"
-                                defaultValue={member.membershipStatus}
-                                className="h-11 w-full rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
-                              >
-                                <option value="ACTIVE">Activer</option>
-                                <option value="SUSPENDED">Suspendre</option>
-                                <option value="ARCHIVED">Archiver</option>
-                              </select>
-                              <Textarea
-                                name="reason"
-                                placeholder="Raison obligatoire pour suspension/archive"
-                                className="min-h-24 rounded-2xl"
-                              />
-                              <Button className="h-11 w-full rounded-2xl">
-                                Mettre a jour
-                              </Button>
-                            </AdminActionForm>
-                          </details>
+                          <MemberStatusDialog
+                            userId={member.id}
+                            memberName={memberName}
+                            currentStatus={member.membershipStatus}
+                          />
                         ) : (
-                          <p className="rounded-2xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
+                          <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
                             Votre role ne permet pas de modifier les statuts.
                           </p>
                         )}
                         {canManageRoles ? (
                           member.id === data.actorId ? (
-                            <p className="rounded-2xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
+                            <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
                               Votre propre role n&apos;est pas modifiable ici.
                             </p>
                           ) : member.role === "CREATOR" ? (
-                            <p className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-100">
+                            <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-100">
                               Le role Creator est protege et ne se modifie pas
                               depuis cette interface.
                             </p>
                           ) : member.membershipStatus !== "ACTIVE" ? (
-                            <p className="rounded-2xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
+                            <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
                               Activez ce membre avant de lui attribuer un role.
                             </p>
                           ) : (
-                            <details className="group rounded-2xl border border-zinc-200 bg-white dark:border-white/10 dark:bg-zinc-900">
-                              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold">
-                                Modifier le role
-                                <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
-                              </summary>
-                              <AdminActionForm
-                                action={updateRoleAction}
-                                className="space-y-3 border-t border-zinc-200 p-3 dark:border-white/10"
-                              >
-                                <input
-                                  type="hidden"
-                                  name="userId"
-                                  value={member.id}
-                                />
-                                <select
-                                  name="role"
-                                  defaultValue={member.role}
-                                  className="h-11 w-full rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
-                                >
-                                  <option value="MEMBER">Member</option>
-                                  <option value="RESPO">Respo</option>
-                                  <option value="FINANCE">Finance</option>
-                                  <option value="MASTER">Master</option>
-                                </select>
-                                <Textarea
-                                  name="reason"
-                                  placeholder="Raison du changement de role"
-                                  className="min-h-24 rounded-2xl"
-                                  required
-                                />
-                                <Button className="h-11 w-full rounded-2xl">
-                                  Mettre a jour le role
-                                </Button>
-                              </AdminActionForm>
-                            </details>
+                            <MemberRoleDialog
+                              userId={member.id}
+                              memberName={memberName}
+                              currentRole={member.role}
+                            />
                           )
                         ) : null}
                       </div>
                     </div>
-                  </div>
+                    </div>
+                  </MemberProfileDisclosure>
                 </article>
               )
             })}

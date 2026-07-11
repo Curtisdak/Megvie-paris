@@ -200,14 +200,6 @@ export async function createDonationCheckout(input: CheckoutInput, request: Next
     user ? getDonationDisplayName(user) : cleanText(input.donorName, 160) || null
   const donorEmail = user ? user.email : cleanEmail(input.donorEmail) || null
 
-  if (!user && (!donorName || !donorEmail)) {
-    return {
-      ok: false as const,
-      status: 400,
-      error: "Votre nom et votre email sont necessaires pour un don invite.",
-    }
-  }
-
   if (!user && donorEmail && !emailPattern.test(donorEmail)) {
     return {
       ok: false as const,

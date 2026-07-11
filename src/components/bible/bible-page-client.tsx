@@ -11,6 +11,7 @@ import {
 import {
   BookOpen,
   ChevronLeft,
+  ChevronRight,
   Loader2,
   Search,
   Sparkles,
@@ -634,9 +635,22 @@ function BookDetailView({
   onVerseReferenceClick: (verse: BibleVerse) => void
 }) {
   const chapters = chapterState.data?.chapters ?? []
+  const previousChapter = selectedChapter > 1 ? selectedChapter - 1 : null
+  const nextChapter =
+    selectedChapter < selectedBook.chapter_count ? selectedChapter + 1 : null
+
+  function navigateFromBottom(chapterNumber: number | null) {
+    if (!chapterNumber) return
+    onChapterSelect(chapterNumber)
+    window.requestAnimationFrame(() => {
+      document
+        .getElementById("bible-chapter-reader")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" })
+    })
+  }
 
   return (
-    <section className="space-y-6">
+    <section id="bible-chapter-reader" className="scroll-mt-24 space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <Button
@@ -713,6 +727,43 @@ function BookDetailView({
             translationName={translationName}
             verses={chapterState.data.verses}
           />
+
+          <nav
+            className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 border-t border-zinc-200 pt-5 dark:border-zinc-800"
+            aria-label="Navigation entre les chapitres"
+          >
+            <Button
+              type="button"
+              variant="outline"
+              className="h-11 justify-self-start rounded-xl px-3 shadow-none sm:px-4"
+              disabled={!previousChapter}
+              onClick={() => navigateFromBottom(previousChapter)}
+              aria-label="Chapitre précédent"
+              title="Chapitre précédent"
+            >
+              <ChevronLeft className="h-4 w-4" aria-hidden />
+            </Button>
+
+            <div className="text-center">
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.12em] text-zinc-400">
+                {selectedBook.name}
+              </p>
+              <p className="mt-0.5 text-sm font-bold text-zinc-900 dark:text-white">
+                {selectedChapter} / {selectedBook.chapter_count}
+              </p>
+            </div>
+
+            <Button
+              type="button"
+              className="h-11 justify-self-end rounded-xl bg-amber-600 px-3 text-white shadow-none hover:bg-amber-700 sm:px-4"
+              disabled={!nextChapter}
+              onClick={() => navigateFromBottom(nextChapter)}
+              aria-label="Chapitre suivant"
+              title="Chapitre suivant"
+            >
+              <ChevronRight className="h-4 w-4" aria-hidden />
+            </Button>
+          </nav>
         </>
       ) : null}
     </section>

@@ -1,14 +1,14 @@
 import { EventForm } from "../event-form"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 
 export default function NewEventPage() {
   return (
     <div className="space-y-5">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
-          Evenements
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold">Nouvel evenement</h2>
-      </div>
+      <AdminPageHero
+        eyebrow="Événements"
+        title="Nouvel événement"
+        description="Ajoutez les informations essentielles, l'image et les liens utiles pour la communauté."
+      />
       <EventForm />
     </div>
   )

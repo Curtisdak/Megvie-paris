@@ -135,7 +135,7 @@ export function ImageDropzone({
       />
       <div
         className={cn(
-          "group relative overflow-hidden rounded-2xl border border-dashed border-zinc-300 bg-white p-3 shadow-sm transition dark:border-zinc-700 dark:bg-zinc-950",
+          "group relative overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-white p-3 transition dark:border-zinc-700 dark:bg-zinc-950",
           dragging &&
             "border-orange-500 bg-orange-50 ring-4 ring-orange-500/10 dark:bg-orange-500/10",
         )}
@@ -197,7 +197,7 @@ export function ImageDropzone({
             className="flex min-h-40 w-full flex-col items-center justify-center rounded-xl bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.16),transparent_42%),linear-gradient(135deg,#fafafa,#f4f4f5)] px-4 py-6 text-center transition group-hover:scale-[0.99] dark:bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.18),transparent_42%),linear-gradient(135deg,#09090b,#18181b)]"
             onClick={() => inputRef.current?.click()}
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-950 text-white shadow-lg shadow-zinc-950/15 dark:bg-white dark:text-zinc-950">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950">
               <UploadCloud className="h-5 w-5" aria-hidden />
             </span>
             <span className="mt-4 text-sm font-semibold text-zinc-900 dark:text-white">

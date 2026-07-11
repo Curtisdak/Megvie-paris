@@ -1,6 +1,8 @@
 import { Check, Search, X } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,20 +23,13 @@ export default async function MembershipRequestsPage({
 
   return (
     <div className="space-y-5">
-      <AdminCard>
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
-              Adhesions
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold">
-              Demandes en attente
-            </h2>
-            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-              L&apos;approbation genere l&apos;identifiant permanent Mv00001P dans la
-              transaction existante.
-            </p>
-          </div>
+      <AdminPageHero
+        eyebrow="Adhésions"
+        title="Demandes en attente"
+        description="Validez les inscriptions et attribuez automatiquement un identifiant membre permanent."
+      />
+
+      <AdminFilterBar title="Rechercher une demande" description="Trouvez une demande par nom, email ou identifiant.">
           <form className="grid w-full grid-cols-[minmax(0,1fr)_auto] gap-2 md:max-w-sm">
             <Input
               name="q"
@@ -42,12 +37,11 @@ export default async function MembershipRequestsPage({
               defaultValue={params?.q ?? ""}
               className="h-10 rounded-xl"
             />
-            <Button type="submit" variant="outline" aria-label="Rechercher" className="h-10 rounded-full">
+            <Button type="submit" aria-label="Rechercher" className="h-10">
               <Search className="h-4 w-4" aria-hidden />
             </Button>
           </form>
-        </div>
-      </AdminCard>
+      </AdminFilterBar>
 
       {applications.length === 0 ? (
         <EmptyState
@@ -95,10 +89,10 @@ export default async function MembershipRequestsPage({
                   </dl>
                 </div>
 
-                <div className="space-y-3 rounded-2xl bg-zinc-50 p-3 dark:bg-zinc-950/40">
+                <div className="space-y-3 border-l border-zinc-200 pl-4 dark:border-white/10">
                   <AdminActionForm action={approveMemberAdminAction}>
                     <input type="hidden" name="userId" value={member.id} />
-                    <Button className="w-full rounded-full bg-emerald-600 text-white hover:bg-emerald-500">
+                    <Button className="w-full rounded-lg bg-emerald-600 text-white shadow-none hover:bg-emerald-500">
                       <Check className="h-4 w-4" aria-hidden />
                       Approuver
                     </Button>
@@ -114,7 +108,7 @@ export default async function MembershipRequestsPage({
                     />
                     <Button
                       variant="outline"
-                      className="w-full rounded-full border-red-200 text-red-700 hover:bg-red-50 dark:border-red-500/30 dark:text-red-200 dark:hover:bg-red-500/10"
+                      className="w-full rounded-lg border-red-200 text-red-700 shadow-none hover:bg-red-50 dark:border-red-500/30 dark:text-red-200 dark:hover:bg-red-500/10"
                     >
                       <X className="h-4 w-4" aria-hidden />
                       Refuser

@@ -16,6 +16,8 @@ import {
 } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { AnnouncementFormDialog } from "@/components/admin/announcement-form-dialog"
 import { DeleteSubmitButton } from "@/components/admin/delete-submit-button"
 import { StatusBadge } from "@/components/admin/status-badge"
@@ -151,21 +153,12 @@ export default async function AnnouncementsPage({
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-orange-700 dark:text-orange-200">
-            Administration
-          </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight">
-            Annonces
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-500 dark:text-zinc-400">
-            Recherchez, filtrez, publiez et archivez les annonces visibles dans
-            l&apos;application.
-          </p>
-        </div>
-        <AnnouncementFormDialog />
-      </div>
+      <AdminPageHero
+        eyebrow="Contenus"
+        title="Annonces"
+        description="Recherchez, filtrez, publiez et archivez les annonces visibles dans l'application."
+        action={<AnnouncementFormDialog />}
+      />
 
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => {
@@ -173,17 +166,17 @@ export default async function AnnouncementsPage({
           return (
             <div
               key={metric.label}
-              className={`rounded-2xl border p-4 shadow-sm ${metric.tone}`}
+              className="rounded-xl border border-zinc-200/90 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114]"
             >
               <div className="flex items-center justify-between gap-3">
-                <span className="text-sm font-medium opacity-80">
+                <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">
                   {metric.label}
                 </span>
-                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 shadow-sm dark:bg-white/10">
+                <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${metric.tone}`}>
                   <Icon className="h-4 w-4" aria-hidden />
                 </span>
               </div>
-              <p className="mt-4 text-3xl font-semibold">
+              <p className="mt-4 text-3xl font-bold tracking-tight">
                 {compactNumber(metric.value)}
               </p>
             </div>
@@ -191,7 +184,7 @@ export default async function AnnouncementsPage({
         })}
       </section>
 
-      <AdminCard className="p-4 sm:p-5">
+      <AdminFilterBar description="Recherchez par texte, statut, audience ou catégorie.">
         <form className="grid gap-3 lg:grid-cols-[minmax(220px,1fr),170px,190px,190px,auto] lg:items-end">
           <div className="space-y-2">
             <label htmlFor="announcement-search" className={labelClass}>
@@ -270,18 +263,18 @@ export default async function AnnouncementsPage({
           </div>
 
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-1">
-            <Button variant="outline" className="h-10 rounded-full">
+            <Button className="h-10">
               <Filter className="h-4 w-4" aria-hidden />
               Filtrer
             </Button>
             {hasFilters ? (
-              <Button asChild variant="ghost" className="h-10 rounded-full">
-                <Link href="/admin/annonces">Reset</Link>
+              <Button asChild variant="ghost" className="h-10 rounded-lg">
+                <Link href="/admin/annonces">Réinitialiser</Link>
               </Button>
             ) : null}
           </div>
         </form>
-      </AdminCard>
+      </AdminFilterBar>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>

@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard } from "@/components/admin/admin-card"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -89,25 +90,18 @@ export default async function DirectDonationDetailPage({
 
   return (
     <div className="mx-auto max-w-5xl space-y-4">
-      <Button asChild variant="outline" className="rounded-full">
+      <Button asChild variant="outline" className="rounded-lg shadow-none">
         <Link href="/admin/dons/directs">
           <ArrowLeft className="h-4 w-4" aria-hidden />
           Retour aux dons directs
         </Link>
       </Button>
 
-      <section className="rounded-[1.35rem] bg-gradient-to-br from-zinc-950 via-amber-950 to-emerald-950 p-5 text-white shadow-xl sm:p-7">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-200">
-              Don direct
-            </p>
-            <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-              {donation.donorNameSnapshot ??
-                donation.collectionLabel ??
-                "Collecte anonyme"}
-            </h1>
-            <div className="mt-3 flex flex-wrap gap-2">
+      <AdminPageHero
+        eyebrow="Don direct"
+        title={donation.donorNameSnapshot ?? donation.collectionLabel ?? "Collecte anonyme"}
+        description={
+          <div className="flex flex-wrap gap-2">
               <StatusBadge
                 value={donation.directStatus ?? "RECORDED"}
                 label={statusLabels[donation.directStatus ?? ""] ?? "A verifier"}
@@ -116,18 +110,19 @@ export default async function DirectDonationDetailPage({
                 value="GENERAL"
                 label={kindLabels[donation.directKind ?? ""] ?? "Direct"}
               />
-            </div>
           </div>
-          <div className="rounded-3xl bg-white/10 p-4 ring-1 ring-white/15 lg:text-right">
-            <p className="text-xs uppercase tracking-[0.18em] text-zinc-300">
+        }
+        action={
+          <div className="rounded-xl bg-white/10 p-4 text-white ring-1 ring-white/15 lg:text-right">
+            <p className="text-xs uppercase tracking-[0.12em] text-white/60">
               Montant
             </p>
-            <p className="mt-2 text-4xl font-semibold">
+            <p className="mt-1 text-3xl font-bold tracking-tight text-white">
               {formatCurrencyFromCents(donation.amountCents, donation.currency)}
             </p>
           </div>
-        </div>
-      </section>
+        }
+      />
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr),22rem]">
         <div className="space-y-4">

@@ -73,7 +73,7 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em]",
+        "inline-flex items-center rounded-md border px-2 py-1 text-[0.68rem] font-bold uppercase tracking-[0.08em]",
         toneByValue[value] ?? toneByValue.MEMBER,
         className,
       )}

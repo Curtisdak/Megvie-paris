@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  ArrowUpRight,
   CalendarDays,
   Camera,
   FileText,
@@ -10,6 +11,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { AdminCard, EmptyState } from "@/components/admin/admin-card";
+import { AdminPageHero } from "@/components/admin/admin-page-hero";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { Button } from "@/components/ui/button";
 import { getAdminDashboardData } from "@/lib/admin/data";
@@ -80,22 +82,20 @@ export default async function AdminPage() {
 
   if (role === "FINANCE") {
     return (
-      <div className="space-y-6">
-        <AdminCard className="bg-gradient-to-br from-amber-50 to-white dark:from-amber-500/10 dark:to-zinc-900">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
-            Finance
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold">
-            Tableau de bord finance disponible.
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-            Consultez les dons confirmes par Stripe, les dons mensuels,
-            statistiques et exports autorises pour votre role.
-          </p>
-          <Button asChild className="mt-5 rounded-full">
-            <Link href="/admin/finance">Ouvrir la finance</Link>
-          </Button>
-        </AdminCard>
+      <div className="space-y-5">
+        <AdminPageHero
+          eyebrow="Espace finance"
+          title="Suivi des dons"
+          description="Consultez les transactions confirmées, les dons mensuels et les exports autorisés."
+          action={
+            <Button asChild className="rounded-xl">
+              <Link href="/admin/finance">
+                Ouvrir la finance{" "}
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </Button>
+          }
+        />
       </div>
     );
   }
@@ -116,91 +116,104 @@ export default async function AdminPage() {
   });
 
   return (
-    <div className="space-y-5">
-      <section className="overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+    <div className="space-y-6">
+      <AdminPageHero
+        eyebrow="Vue d'ensemble"
+        title="Tableau de bord"
+        description="Les informations utiles pour gérer la communauté et les contenus MegVie Paris."
+        action={
+          <div className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 ring-1 ring-white/15">
+            <span className="hidden text-xs text-white/70 sm:inline">
+              {new Intl.DateTimeFormat("fr-FR", { dateStyle: "long" }).format(
+                new Date(),
+              )}
+            </span>
+            <StatusBadge
+              value={role}
+              className="border-white/20 bg-white/10 text-white"
+            />
+          </div>
+        }
+      />
+
+      <section aria-labelledby="admin-indicators">
+        <div className="mb-3 flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
-              Administration
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-              Piloter la vie de l&apos;eglise
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-              Gere les membres, demandes, contenus, messages et annonces selon
-              les permissions de votre role.
+            <h3 id="admin-indicators" className="text-sm font-bold">
+              Indicateurs clés
+            </h3>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              Accès direct aux tâches en cours.
             </p>
           </div>
-          <StatusBadge
-            value={role}
-            className="w-fit border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100"
-          />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {visibleCards.map((item) => {
+            const Icon = item.icon;
+            const value = data.counts[item.key];
+
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                className="group rounded-xl border border-zinc-200/90 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] outline-none transition hover:border-orange-300 hover:shadow-[0_8px_24px_rgba(15,23,42,0.07)] focus-visible:ring-2 focus-visible:ring-orange-500 dark:border-white/10 dark:bg-[#111114] dark:hover:border-orange-500/40"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <span className="grid h-9 w-9 place-items-center rounded-lg bg-zinc-100 text-zinc-600 transition-colors group-hover:bg-orange-50 group-hover:text-orange-700 dark:bg-white/5 dark:text-zinc-300 dark:group-hover:bg-orange-500/10 dark:group-hover:text-orange-300">
+                    <Icon className="h-[1.1rem] w-[1.1rem]" aria-hidden />
+                  </span>
+                  <ArrowUpRight
+                    className="h-4 w-4 text-zinc-300 transition group-hover:text-orange-600 dark:text-zinc-700 dark:group-hover:text-orange-400"
+                    aria-hidden
+                  />
+                </div>
+                <p className="mt-4 text-3xl font-bold tracking-tight">
+                  {value}
+                </p>
+                <p className="mt-1 text-sm font-semibold text-zinc-700 dark:text-zinc-200">
+                  {item.label}
+                </p>
+                <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
+                  {item.description}
+                </p>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {visibleCards.map((item) => {
-          const Icon = item.icon;
-          const value = data.counts[item.key];
-
-          return (
-            <Link
-              key={item.key}
-              href={item.href}
-              className="group rounded-[1.35rem] border border-zinc-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/80 dark:hover:border-amber-400/30"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300">
-                    {item.label}
-                  </p>
-                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">
-                    {item.description}
-                  </p>
-                </div>
-                <span className="rounded-2xl bg-amber-50 p-2.5 text-amber-700 ring-1 ring-amber-100 transition group-hover:bg-amber-600 group-hover:text-white dark:bg-amber-400/10 dark:text-amber-200 dark:ring-amber-400/10">
-                  <Icon className="h-5 w-5" aria-hidden />
-                </span>
-              </div>
-              <div className="mt-5 flex items-end justify-between gap-3">
-                <p className="text-4xl font-semibold tracking-tight">{value}</p>
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-amber-700 dark:text-amber-200">
-                  Ouvrir
-                  <ArrowRight
-                    className="h-4 w-4 transition group-hover:translate-x-0.5"
-                    aria-hidden
-                  />
-                </span>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-
-      <AdminCard>
-        <div className="flex items-center justify-between gap-3">
+      <AdminCard className="p-0 sm:p-0">
+        <div className="flex items-center justify-between gap-3 border-b border-zinc-200 px-4 py-4 dark:border-white/10 sm:px-5">
           <div>
-            <h2 className="text-lg font-semibold">Activite recente</h2>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              Les actions sensibles restent dans l&apos;audit.
+            <h2 className="text-base font-bold">Activité récente</h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              Dernières opérations enregistrées dans l&apos;audit.
             </p>
           </div>
           {hasPermission(role, "audit.read") ? (
-            <Button asChild variant="outline">
-              <Link href="/admin/audit">Voir tout</Link>
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="rounded-lg shadow-none"
+            >
+              <Link href="/admin/audit">
+                Voir le journal <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
             </Button>
           ) : null}
         </div>
-
-        <div className="mt-4 space-y-3">
+        <div className="divide-y divide-zinc-100 px-4 dark:divide-white/5 sm:px-5">
           {data.recentAudit.length > 0 ? (
             data.recentAudit.map((entry) => (
               <div
                 key={entry.id}
-                className="flex flex-col gap-1 rounded-2xl border border-zinc-100 bg-zinc-50 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950/40 sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col gap-1 py-3.5 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div>
-                  <p className="font-medium">{entry.summary ?? entry.action}</p>
+                  <p className="text-sm font-semibold">
+                    {entry.summary ?? entry.action}
+                  </p>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400">
                     {entry.entityType} - {entry.action}
                   </p>
@@ -211,10 +224,12 @@ export default async function AdminPage() {
               </div>
             ))
           ) : (
-            <EmptyState
-              title="Aucune activite visible"
-              description="Les actions recentes apparaitront ici selon vos permissions."
-            />
+            <div className="py-4">
+              <EmptyState
+                title="Aucune activité visible"
+                description="Les actions récentes apparaîtront ici selon vos permissions."
+              />
+            </div>
           )}
         </div>
       </AdminCard>

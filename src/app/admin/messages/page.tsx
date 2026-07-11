@@ -2,6 +2,8 @@ import Link from "next/link"
 import { Search } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { DeleteSubmitButton } from "@/components/admin/delete-submit-button"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
@@ -23,19 +25,14 @@ export default async function MessagesPage({
 
   return (
     <div className="space-y-5">
-      <AdminCard>
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
-              Messages
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold">Boite de reception</h2>
-            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-              Les reponses email restent en brouillon tant qu&apos;aucun provider
-              email n&apos;est configure.
-            </p>
-          </div>
-          <form className="grid gap-2 md:grid-cols-[1fr,150px,180px,auto] lg:min-w-[720px]">
+      <AdminPageHero
+        eyebrow="Communication"
+        title="Boîte de réception"
+        description="Consultez, classez et traitez les messages reçus depuis l'application."
+      />
+
+      <AdminFilterBar description="Recherchez un expéditeur, un sujet, un statut ou un niveau de confidentialité.">
+          <form className="grid gap-2 md:grid-cols-[1fr,150px,180px,auto]">
             <Input
               name="q"
               placeholder="Nom, email, sujet..."
@@ -62,13 +59,12 @@ export default async function MessagesPage({
               <option value="GENERAL">General</option>
               <option value="PASTORAL_CONFIDENTIAL">Pastoral confidentiel</option>
             </select>
-            <Button variant="outline" className="h-10 rounded-full">
+            <Button className="h-10">
               <Search className="h-4 w-4" aria-hidden />
               Filtrer
             </Button>
           </form>
-        </div>
-      </AdminCard>
+      </AdminFilterBar>
 
       {messages.length === 0 ? (
         <EmptyState
@@ -95,7 +91,7 @@ export default async function MessagesPage({
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full rounded-full"
+                    className="w-full rounded-lg shadow-none"
                   >
                     <Link href={`/admin/messages/${message.id}`}>Ouvrir</Link>
                   </Button>

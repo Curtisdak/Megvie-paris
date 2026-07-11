@@ -11,6 +11,8 @@ import {
   XCircle,
 } from "lucide-react"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -83,31 +85,22 @@ export default async function DirectDonationsPage({
 
   return (
     <div className="space-y-4">
-      <section className="rounded-[1.35rem] bg-gradient-to-br from-zinc-950 via-amber-950 to-emerald-950 p-5 text-white shadow-xl sm:p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-200">
-              Finance
-            </p>
-            <h1 className="mt-3 text-3xl font-semibold tracking-tight">
-              Dons directs
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-200">
-              Saisie, verification et correction des dons en especes ou
-              collectes. Seuls les dons verifies comptent officiellement.
-            </p>
-          </div>
+      <AdminPageHero
+        eyebrow="Finance"
+        title="Dons directs"
+        description="Saisie, vérification et correction des dons en espèces ou collectes. Seuls les dons vérifiés comptent officiellement."
+        action={
           <Button
             asChild
-            className="h-11 rounded-2xl bg-white text-zinc-950 hover:bg-zinc-100"
+            className="h-10 rounded-xl"
           >
             <Link href="/admin/dons/directs/nouveau">
               <Plus className="h-4 w-4" aria-hidden />
               Ajouter un don
             </Link>
           </Button>
-        </div>
-      </section>
+        }
+      />
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {[
@@ -124,7 +117,7 @@ export default async function DirectDonationsPage({
           return (
             <section
               key={item.label}
-              className="rounded-2xl border border-zinc-200 bg-white p-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80"
+              className="rounded-xl border border-zinc-200 bg-white p-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114]"
             >
               <div className="flex items-start justify-between gap-2">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">
@@ -140,7 +133,7 @@ export default async function DirectDonationsPage({
         })}
       </div>
 
-      <AdminCard>
+      <AdminFilterBar description="Filtrez les dons saisis par identité, statut, type, catégorie ou période.">
         <form className="grid gap-2 lg:grid-cols-[1.2fr,0.85fr,0.85fr,0.85fr,0.7fr,0.7fr,auto]">
           <label className="relative">
             <span className="sr-only">Rechercher</span>
@@ -152,13 +145,13 @@ export default async function DirectDonationsPage({
               name="q"
               defaultValue={params.q ?? ""}
               placeholder="Nom, email, ID, collecte..."
-              className="h-11 rounded-2xl pl-10"
+              className="h-11 rounded-xl pl-10"
             />
           </label>
           <select
             name="directStatus"
             defaultValue={params.directStatus ?? ""}
-            className="h-11 rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            className="h-11 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
           >
             {statusOptions.map(([value, label]) => (
               <option key={value} value={value}>
@@ -169,7 +162,7 @@ export default async function DirectDonationsPage({
           <select
             name="kind"
             defaultValue={params.kind ?? ""}
-            className="h-11 rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            className="h-11 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
           >
             {kindOptions.map(([value, label]) => (
               <option key={value} value={value}>
@@ -180,7 +173,7 @@ export default async function DirectDonationsPage({
           <select
             name="category"
             defaultValue={params.category ?? ""}
-            className="h-11 rounded-2xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
+            className="h-11 rounded-xl border border-zinc-200 bg-white px-3 text-sm dark:border-zinc-800 dark:bg-zinc-950"
           >
             <option value="">Toutes categories</option>
             {data.categories.map((category) => (
@@ -193,20 +186,20 @@ export default async function DirectDonationsPage({
             name="from"
             type="date"
             defaultValue={params.from ?? ""}
-            className="h-11 rounded-2xl"
+            className="h-11 rounded-xl"
           />
           <Input
             name="to"
             type="date"
             defaultValue={params.to ?? ""}
-            className="h-11 rounded-2xl"
+            className="h-11 rounded-xl"
           />
-          <Button className="h-11 rounded-2xl">
+          <Button className="h-11">
             <Filter className="h-4 w-4" aria-hidden />
             Filtrer
           </Button>
         </form>
-      </AdminCard>
+      </AdminFilterBar>
 
       <AdminCard>
         <div className="flex items-center justify-between gap-3">

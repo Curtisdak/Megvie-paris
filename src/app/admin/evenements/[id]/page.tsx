@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { EventForm } from "../event-form"
+import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { getEventForEdit } from "@/lib/admin/data"
 
 export default async function EditEventPage({
@@ -14,12 +15,11 @@ export default async function EditEventPage({
 
   return (
     <div className="space-y-5">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-200">
-          Evenements
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold">Modifier l&apos;evenement</h2>
-      </div>
+      <AdminPageHero
+        eyebrow="Événements"
+        title="Modifier l'événement"
+        description="Mettez à jour les informations publiques et le statut de publication."
+      />
       <EventForm event={event} />
     </div>
   )

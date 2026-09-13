@@ -6,6 +6,7 @@ import {
   CalendarDays,
   CircleDollarSign,
   HandCoins,
+  ReceiptText,
   FileText,
   GalleryHorizontalEnd,
   History,
@@ -40,6 +41,7 @@ export function getAdminNavItems(role: ChurchRole): AdminNavItem[] {
         href: "/admin/dons/directs",
         icon: HandCoins,
       },
+      { label: "Dépenses", href: "/admin/depenses", icon: ReceiptText },
     ]
   }
 
@@ -126,6 +128,10 @@ export function getAdminNavItems(role: ChurchRole): AdminNavItem[] {
       href: "/admin/dons/directs",
       icon: HandCoins,
     })
+  }
+
+  if (hasPermission(role, "expenses.manage")) {
+    items.push({ label: "Dépenses", href: "/admin/depenses", icon: ReceiptText })
   }
 
   if (hasPermission(role, "audit.read")) {

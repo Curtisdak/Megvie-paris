@@ -410,6 +410,7 @@ export const ModelName = {
   DonationCategory: 'DonationCategory',
   DonationCheckout: 'DonationCheckout',
   Donation: 'Donation',
+  FinanceExpense: 'FinanceExpense',
   RecurringDonation: 'RecurringDonation',
   DonationRefund: 'DonationRefund',
   StripeWebhookEvent: 'StripeWebhookEvent'
@@ -428,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "appUser" | "memberProfile" | "memberPrivateDetails" | "notificationPreference" | "pushSubscription" | "dailyBibleVerse" | "bibleFavorite" | "bibleNote" | "dailyVerseSchedule" | "notificationLog" | "notificationCampaign" | "notificationRecipient" | "pushDeliveryAttempt" | "adminAuditLog" | "churchSetting" | "churchEvent" | "galleryAlbum" | "galleryItem" | "contactMessage" | "messageReply" | "messageInternalNote" | "announcement" | "announcementRead" | "donationCategory" | "donationCheckout" | "donation" | "recurringDonation" | "donationRefund" | "stripeWebhookEvent"
+    modelProps: "appUser" | "memberProfile" | "memberPrivateDetails" | "notificationPreference" | "pushSubscription" | "dailyBibleVerse" | "bibleFavorite" | "bibleNote" | "dailyVerseSchedule" | "notificationLog" | "notificationCampaign" | "notificationRecipient" | "pushDeliveryAttempt" | "adminAuditLog" | "churchSetting" | "churchEvent" | "galleryAlbum" | "galleryItem" | "contactMessage" | "messageReply" | "messageInternalNote" | "announcement" | "announcementRead" | "donationCategory" | "donationCheckout" | "donation" | "financeExpense" | "recurringDonation" | "donationRefund" | "stripeWebhookEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2356,6 +2357,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FinanceExpense: {
+      payload: Prisma.$FinanceExpensePayload<ExtArgs>
+      fields: Prisma.FinanceExpenseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FinanceExpenseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FinanceExpenseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>
+        }
+        findFirst: {
+          args: Prisma.FinanceExpenseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FinanceExpenseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>
+        }
+        findMany: {
+          args: Prisma.FinanceExpenseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>[]
+        }
+        create: {
+          args: Prisma.FinanceExpenseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>
+        }
+        createMany: {
+          args: Prisma.FinanceExpenseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FinanceExpenseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>[]
+        }
+        delete: {
+          args: Prisma.FinanceExpenseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>
+        }
+        update: {
+          args: Prisma.FinanceExpenseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>
+        }
+        deleteMany: {
+          args: Prisma.FinanceExpenseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FinanceExpenseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FinanceExpenseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>[]
+        }
+        upsert: {
+          args: Prisma.FinanceExpenseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinanceExpensePayload>
+        }
+        aggregate: {
+          args: Prisma.FinanceExpenseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFinanceExpense>
+        }
+        groupBy: {
+          args: Prisma.FinanceExpenseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FinanceExpenseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FinanceExpenseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FinanceExpenseCountAggregateOutputType> | number
+        }
+      }
+    }
     RecurringDonation: {
       payload: Prisma.$RecurringDonationPayload<ExtArgs>
       fields: Prisma.RecurringDonationFieldRefs
@@ -3141,6 +3216,29 @@ export const DonationScalarFieldEnum = {
 export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
 
 
+export const FinanceExpenseScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  category: 'category',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  occurredAt: 'occurredAt',
+  payee: 'payee',
+  reference: 'reference',
+  note: 'note',
+  status: 'status',
+  entryRequestId: 'entryRequestId',
+  createdByUserId: 'createdByUserId',
+  cancellationReason: 'cancellationReason',
+  cancelledAt: 'cancelledAt',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FinanceExpenseScalarFieldEnum = (typeof FinanceExpenseScalarFieldEnum)[keyof typeof FinanceExpenseScalarFieldEnum]
+
+
 export const RecurringDonationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -3635,6 +3733,20 @@ export type ListEnumDirectDonationStatusFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'ExpenseStatus'
+ */
+export type EnumExpenseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExpenseStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ExpenseStatus[]'
+ */
+export type ListEnumExpenseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExpenseStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'RecurringDonationStatus'
  */
 export type EnumRecurringDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RecurringDonationStatus'>
@@ -3825,6 +3937,7 @@ export type GlobalOmitConfig = {
   donationCategory?: Prisma.DonationCategoryOmit
   donationCheckout?: Prisma.DonationCheckoutOmit
   donation?: Prisma.DonationOmit
+  financeExpense?: Prisma.FinanceExpenseOmit
   recurringDonation?: Prisma.RecurringDonationOmit
   donationRefund?: Prisma.DonationRefundOmit
   stripeWebhookEvent?: Prisma.StripeWebhookEventOmit

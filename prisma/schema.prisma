@@ -180,6 +180,13 @@ enum DonationSource {
   @@map("donation_source")
 }
 
+enum ExpenseStatus {
+  RECORDED
+  CANCELLED
+
+  @@map("expense_status")
+}
+
 enum DirectDonationKind {
   IDENTIFIED
   ANONYMOUS_COLLECTION
@@ -297,6 +304,7 @@ model AppUser {
   notificationRecipients        NotificationRecipient[]
   donationCheckouts             DonationCheckout[]      @relation("DonationCheckoutUser")
   donations                     Donation[]              @relation("DonationUser")
+  recordedExpenses              FinanceExpense[]        @relation("ExpenseCreator")
   recurringDonations            RecurringDonation[]     @relation("RecurringDonationUser")
   enteredDirectDonations        Donation[]              @relation("DonationEnteredBy")
   verifiedDirectDonations       Donation[]              @relation("DonationVerifiedBy")
@@ -963,6 +971,33 @@ model Donation {
   @@index([stripeCheckoutSessionId])
   @@index([createdAt])
   @@map("donations")
+}
+
+model FinanceExpense {
+  id                 String        @id @default(cuid())
+  title              String
+  category           String
+  amountCents        Int           @map("amount_cents")
+  currency           String        @default("eur")
+  occurredAt         DateTime      @map("occurred_at") @db.Date
+  payee              String?
+  reference          String?
+  note               String?
+  status             ExpenseStatus @default(RECORDED)
+  entryRequestId     String        @unique @map("entry_request_id")
+  createdByUserId    String        @map("created_by_user_id")
+  cancellationReason String?       @map("cancellation_reason")
+  cancelledAt        DateTime?     @map("cancelled_at")
+  version            Int           @default(1)
+  createdAt          DateTime      @default(now()) @map("created_at")
+  updatedAt          DateTime      @updatedAt @map("updated_at")
+
+  createdBy AppUser @relation("ExpenseCreator", fields: [createdByUserId], references: [id], onDelete: Restrict)
+
+  @@index([status, occurredAt])
+  @@index([category, occurredAt])
+  @@index([createdByUserId])
+  @@map("finance_expenses")
 }
 
 model RecurringDonation {

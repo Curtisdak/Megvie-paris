@@ -83,7 +83,7 @@ export function AdminShell({
     <div className="admin-workspace min-h-dvh bg-[linear-gradient(135deg,#f4f5f7_0%,#fff7ed_48%,#ecfdf5_100%)] text-zinc-950 dark:bg-[linear-gradient(135deg,#09090b_0%,#18110d_52%,#07140f_100%)] dark:text-zinc-50">
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 hidden h-dvh overflow-hidden border-r border-zinc-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(255,247,237,0.96)_48%,rgba(236,253,245,0.96)_100%)] shadow-[18px_0_60px_rgba(15,23,42,0.06)] transition-[width] duration-300 dark:border-white/10 dark:bg-[linear-gradient(180deg,#0d0d0f_0%,#17100c_50%,#07120e_100%)] lg:flex lg:flex-col",
+          "fixed inset-y-0 left-0 z-50 hidden h-dvh overflow-hidden border-r border-zinc-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(255,247,237,0.96)_48%,rgba(236,253,245,0.96)_100%)] shadow-[18px_0_60px_rgba(15,23,42,0.06)] transition-[width] duration-300 dark:border-white/10 dark:bg-[linear-gradient(180deg,#0d0d0f_0%,#17100c_50%,#07120e_100%)] min-[1025px]:flex min-[1025px]:flex-col",
           collapsed ? "w-[5.25rem]" : "w-[17rem]",
         )}
       >
@@ -229,10 +229,10 @@ export function AdminShell({
       <div
         className={cn(
           "min-h-dvh transition-[padding] duration-300",
-          collapsed ? "lg:pl-[5.25rem]" : "lg:pl-[17rem]",
+          collapsed ? "min-[1025px]:pl-[5.25rem]" : "min-[1025px]:pl-[17rem]",
         )}
       >
-        <header className="sticky top-0 z-40 h-[4.25rem] border-b border-zinc-200/80 bg-[linear-gradient(90deg,rgba(255,255,255,0.96),rgba(255,247,237,0.94),rgba(236,253,245,0.94))] px-3 shadow-[0_8px_30px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:border-white/10 dark:bg-[linear-gradient(90deg,rgba(13,13,15,0.97),rgba(30,17,10,0.95),rgba(7,25,18,0.95))] sm:px-5 lg:h-[4.75rem]">
+        <header className="sticky top-0 z-40 h-[4.25rem] border-b border-zinc-200/80 bg-[linear-gradient(90deg,rgba(255,255,255,0.96),rgba(255,247,237,0.94),rgba(236,253,245,0.94))] px-3 shadow-[0_8px_30px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:border-white/10 dark:bg-[linear-gradient(90deg,rgba(13,13,15,0.97),rgba(30,17,10,0.95),rgba(7,25,18,0.95))] sm:px-5 min-[1025px]:h-[4.75rem]">
           <div className="mx-auto flex h-full w-full max-w-[1480px] items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2.5">
               <Button
@@ -294,13 +294,13 @@ export function AdminShell({
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-[1480px] px-3 py-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:px-5 sm:py-5 lg:px-6 lg:pb-8">
+        <main className="mx-auto w-full max-w-[1480px] px-3 py-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:px-5 sm:py-5 min-[1025px]:px-6 min-[1025px]:pb-8">
           <AdminRouteTransition>{children}</AdminRouteTransition>
         </main>
       </div>
 
       <nav
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200/80 bg-[linear-gradient(90deg,rgba(255,255,255,0.96),rgba(255,247,237,0.96),rgba(236,253,245,0.96))] px-2 pb-[calc(0.4rem+env(safe-area-inset-bottom))] pt-1.5 shadow-[0_-14px_38px_rgba(15,23,42,0.1)] backdrop-blur-xl dark:border-white/10 dark:bg-[linear-gradient(90deg,rgba(13,13,15,0.97),rgba(30,17,10,0.96),rgba(7,25,18,0.96))] lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200/40 bg-white/55 px-2 pb-[env(safe-area-inset-bottom)] pt-1.5 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/55 min-[1025px]:hidden"
         aria-label="Navigation administration mobile"
       >
         <div
@@ -516,7 +516,7 @@ function groupForHref(href: string) {
     ].includes(href)
   )
     return "Contenus";
-  if (["/admin/finance", "/admin/dons/directs"].includes(href))
+  if (["/admin/finance", "/admin/dons/directs", "/admin/depenses"].includes(href))
     return "Finances";
   return "Système";
 }
@@ -538,6 +538,7 @@ function currentTitle(pathname: string) {
   if (pathname.startsWith("/admin/versets-du-jour")) return "Versets du jour";
   if (pathname.startsWith("/admin/dons/directs")) return "Dons directs";
   if (pathname.startsWith("/admin/finance")) return "Finance";
+  if (pathname.startsWith("/admin/depenses")) return "Dépenses";
   if (pathname.startsWith("/admin/webhooks-stripe")) return "Webhooks Stripe";
   if (pathname.startsWith("/admin/audit")) return "Journal d'audit";
   return "Tableau de bord";

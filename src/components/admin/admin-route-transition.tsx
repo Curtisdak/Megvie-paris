@@ -1,24 +1,23 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
 
 export function AdminRouteTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const reduceMotion = useReducedMotion()
-
-  if (reduceMotion) return children
+  const reduceMotion = usePrefersReducedMotion()
 
   return (
     <AnimatePresence mode="sync" initial={false}>
       <motion.div
         key={pathname}
         className="admin-page-motion"
-        initial={{ opacity: 0.72, y: 6 }}
+        initial={reduceMotion ? false : { opacity: 0.72, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -3 }}
+        exit={reduceMotion ? undefined : { opacity: 0, y: -3 }}
         transition={{
-          duration: 0.16,
+          duration: reduceMotion ? 0 : 0.16,
           ease: [0.2, 0.8, 0.2, 1],
         }}
       >

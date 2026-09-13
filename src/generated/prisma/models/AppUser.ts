@@ -268,6 +268,7 @@ export type AppUserWhereInput = {
   notificationRecipients?: Prisma.NotificationRecipientListRelationFilter
   donationCheckouts?: Prisma.DonationCheckoutListRelationFilter
   donations?: Prisma.DonationListRelationFilter
+  recordedExpenses?: Prisma.FinanceExpenseListRelationFilter
   recurringDonations?: Prisma.RecurringDonationListRelationFilter
   enteredDirectDonations?: Prisma.DonationListRelationFilter
   verifiedDirectDonations?: Prisma.DonationListRelationFilter
@@ -316,6 +317,7 @@ export type AppUserOrderByWithRelationInput = {
   notificationRecipients?: Prisma.NotificationRecipientOrderByRelationAggregateInput
   donationCheckouts?: Prisma.DonationCheckoutOrderByRelationAggregateInput
   donations?: Prisma.DonationOrderByRelationAggregateInput
+  recordedExpenses?: Prisma.FinanceExpenseOrderByRelationAggregateInput
   recurringDonations?: Prisma.RecurringDonationOrderByRelationAggregateInput
   enteredDirectDonations?: Prisma.DonationOrderByRelationAggregateInput
   verifiedDirectDonations?: Prisma.DonationOrderByRelationAggregateInput
@@ -367,6 +369,7 @@ export type AppUserWhereUniqueInput = Prisma.AtLeast<{
   notificationRecipients?: Prisma.NotificationRecipientListRelationFilter
   donationCheckouts?: Prisma.DonationCheckoutListRelationFilter
   donations?: Prisma.DonationListRelationFilter
+  recordedExpenses?: Prisma.FinanceExpenseListRelationFilter
   recurringDonations?: Prisma.RecurringDonationListRelationFilter
   enteredDirectDonations?: Prisma.DonationListRelationFilter
   verifiedDirectDonations?: Prisma.DonationListRelationFilter
@@ -453,6 +456,7 @@ export type AppUserCreateInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -501,6 +505,7 @@ export type AppUserUncheckedCreateInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -549,6 +554,7 @@ export type AppUserUpdateInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -597,6 +603,7 @@ export type AppUserUncheckedUpdateInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -1211,6 +1218,20 @@ export type AppUserUpdateOneWithoutCancelledDirectDonationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutCancelledDirectDonationsInput, Prisma.AppUserUpdateWithoutCancelledDirectDonationsInput>, Prisma.AppUserUncheckedUpdateWithoutCancelledDirectDonationsInput>
 }
 
+export type AppUserCreateNestedOneWithoutRecordedExpensesInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutRecordedExpensesInput, Prisma.AppUserUncheckedCreateWithoutRecordedExpensesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutRecordedExpensesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+}
+
+export type AppUserUpdateOneRequiredWithoutRecordedExpensesNestedInput = {
+  create?: Prisma.XOR<Prisma.AppUserCreateWithoutRecordedExpensesInput, Prisma.AppUserUncheckedCreateWithoutRecordedExpensesInput>
+  connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutRecordedExpensesInput
+  upsert?: Prisma.AppUserUpsertWithoutRecordedExpensesInput
+  connect?: Prisma.AppUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AppUserUpdateToOneWithWhereWithoutRecordedExpensesInput, Prisma.AppUserUpdateWithoutRecordedExpensesInput>, Prisma.AppUserUncheckedUpdateWithoutRecordedExpensesInput>
+}
+
 export type AppUserCreateNestedOneWithoutRecurringDonationsInput = {
   create?: Prisma.XOR<Prisma.AppUserCreateWithoutRecurringDonationsInput, Prisma.AppUserUncheckedCreateWithoutRecurringDonationsInput>
   connectOrCreate?: Prisma.AppUserCreateOrConnectWithoutRecurringDonationsInput
@@ -1260,6 +1281,7 @@ export type AppUserCreateWithoutProfileInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -1307,6 +1329,7 @@ export type AppUserUncheckedCreateWithoutProfileInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -1359,6 +1382,7 @@ export type AppUserCreateWithoutApprovedProfilesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -1406,6 +1430,7 @@ export type AppUserUncheckedCreateWithoutApprovedProfilesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -1469,6 +1494,7 @@ export type AppUserUpdateWithoutProfileInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -1516,6 +1542,7 @@ export type AppUserUncheckedUpdateWithoutProfileInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -1574,6 +1601,7 @@ export type AppUserUpdateWithoutApprovedProfilesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -1621,6 +1649,7 @@ export type AppUserUncheckedUpdateWithoutApprovedProfilesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -1668,6 +1697,7 @@ export type AppUserCreateWithoutPrivateDetailsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -1715,6 +1745,7 @@ export type AppUserUncheckedCreateWithoutPrivateDetailsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -1778,6 +1809,7 @@ export type AppUserUpdateWithoutPrivateDetailsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -1825,6 +1857,7 @@ export type AppUserUncheckedUpdateWithoutPrivateDetailsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -1872,6 +1905,7 @@ export type AppUserCreateWithoutNotificationPreferenceInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -1919,6 +1953,7 @@ export type AppUserUncheckedCreateWithoutNotificationPreferenceInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -1982,6 +2017,7 @@ export type AppUserUpdateWithoutNotificationPreferenceInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -2029,6 +2065,7 @@ export type AppUserUncheckedUpdateWithoutNotificationPreferenceInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -2076,6 +2113,7 @@ export type AppUserCreateWithoutPushSubscriptionsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -2123,6 +2161,7 @@ export type AppUserUncheckedCreateWithoutPushSubscriptionsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -2186,6 +2225,7 @@ export type AppUserUpdateWithoutPushSubscriptionsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -2233,6 +2273,7 @@ export type AppUserUncheckedUpdateWithoutPushSubscriptionsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -2281,6 +2322,7 @@ export type AppUserCreateWithoutBibleFavoritesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -2328,6 +2370,7 @@ export type AppUserUncheckedCreateWithoutBibleFavoritesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -2391,6 +2434,7 @@ export type AppUserUpdateWithoutBibleFavoritesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -2438,6 +2482,7 @@ export type AppUserUncheckedUpdateWithoutBibleFavoritesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -2485,6 +2530,7 @@ export type AppUserCreateWithoutBibleNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -2532,6 +2578,7 @@ export type AppUserUncheckedCreateWithoutBibleNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -2595,6 +2642,7 @@ export type AppUserUpdateWithoutBibleNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -2642,6 +2690,7 @@ export type AppUserUncheckedUpdateWithoutBibleNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -2689,6 +2738,7 @@ export type AppUserCreateWithoutCreatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -2736,6 +2786,7 @@ export type AppUserUncheckedCreateWithoutCreatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -2788,6 +2839,7 @@ export type AppUserCreateWithoutUpdatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -2835,6 +2887,7 @@ export type AppUserUncheckedCreateWithoutUpdatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -2887,6 +2940,7 @@ export type AppUserCreateWithoutCancelledDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -2934,6 +2988,7 @@ export type AppUserUncheckedCreateWithoutCancelledDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -2986,6 +3041,7 @@ export type AppUserCreateWithoutSentDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -3033,6 +3089,7 @@ export type AppUserUncheckedCreateWithoutSentDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -3096,6 +3153,7 @@ export type AppUserUpdateWithoutCreatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -3143,6 +3201,7 @@ export type AppUserUncheckedUpdateWithoutCreatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -3201,6 +3260,7 @@ export type AppUserUpdateWithoutUpdatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -3248,6 +3308,7 @@ export type AppUserUncheckedUpdateWithoutUpdatedDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -3306,6 +3367,7 @@ export type AppUserUpdateWithoutCancelledDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -3353,6 +3415,7 @@ export type AppUserUncheckedUpdateWithoutCancelledDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -3411,6 +3474,7 @@ export type AppUserUpdateWithoutSentDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -3458,6 +3522,7 @@ export type AppUserUncheckedUpdateWithoutSentDailyVerseSchedulesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -3504,6 +3569,7 @@ export type AppUserCreateWithoutCreatedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -3551,6 +3617,7 @@ export type AppUserUncheckedCreateWithoutCreatedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -3603,6 +3670,7 @@ export type AppUserCreateWithoutTargetedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -3650,6 +3718,7 @@ export type AppUserUncheckedCreateWithoutTargetedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -3713,6 +3782,7 @@ export type AppUserUpdateWithoutCreatedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -3760,6 +3830,7 @@ export type AppUserUncheckedUpdateWithoutCreatedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -3818,6 +3889,7 @@ export type AppUserUpdateWithoutTargetedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -3865,6 +3937,7 @@ export type AppUserUncheckedUpdateWithoutTargetedNotificationCampaignsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -3912,6 +3985,7 @@ export type AppUserCreateWithoutNotificationRecipientsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -3959,6 +4033,7 @@ export type AppUserUncheckedCreateWithoutNotificationRecipientsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -4022,6 +4097,7 @@ export type AppUserUpdateWithoutNotificationRecipientsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -4069,6 +4145,7 @@ export type AppUserUncheckedUpdateWithoutNotificationRecipientsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -4116,6 +4193,7 @@ export type AppUserCreateWithoutAdminAuditLogsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -4163,6 +4241,7 @@ export type AppUserUncheckedCreateWithoutAdminAuditLogsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -4226,6 +4305,7 @@ export type AppUserUpdateWithoutAdminAuditLogsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -4273,6 +4353,7 @@ export type AppUserUncheckedUpdateWithoutAdminAuditLogsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -4320,6 +4401,7 @@ export type AppUserCreateWithoutCreatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -4367,6 +4449,7 @@ export type AppUserUncheckedCreateWithoutCreatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -4419,6 +4502,7 @@ export type AppUserCreateWithoutUpdatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -4466,6 +4550,7 @@ export type AppUserUncheckedCreateWithoutUpdatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -4529,6 +4614,7 @@ export type AppUserUpdateWithoutCreatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -4576,6 +4662,7 @@ export type AppUserUncheckedUpdateWithoutCreatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -4634,6 +4721,7 @@ export type AppUserUpdateWithoutUpdatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -4681,6 +4769,7 @@ export type AppUserUncheckedUpdateWithoutUpdatedEventsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -4728,6 +4817,7 @@ export type AppUserCreateWithoutCreatedGalleryAlbumsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -4775,6 +4865,7 @@ export type AppUserUncheckedCreateWithoutCreatedGalleryAlbumsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -4838,6 +4929,7 @@ export type AppUserUpdateWithoutCreatedGalleryAlbumsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -4885,6 +4977,7 @@ export type AppUserUncheckedUpdateWithoutCreatedGalleryAlbumsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -4932,6 +5025,7 @@ export type AppUserCreateWithoutUploadedGalleryItemsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -4979,6 +5073,7 @@ export type AppUserUncheckedCreateWithoutUploadedGalleryItemsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -5042,6 +5137,7 @@ export type AppUserUpdateWithoutUploadedGalleryItemsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -5089,6 +5185,7 @@ export type AppUserUncheckedUpdateWithoutUploadedGalleryItemsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -5136,6 +5233,7 @@ export type AppUserCreateWithoutSentContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -5183,6 +5281,7 @@ export type AppUserUncheckedCreateWithoutSentContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -5235,6 +5334,7 @@ export type AppUserCreateWithoutAssignedContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -5282,6 +5382,7 @@ export type AppUserUncheckedCreateWithoutAssignedContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -5345,6 +5446,7 @@ export type AppUserUpdateWithoutSentContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -5392,6 +5494,7 @@ export type AppUserUncheckedUpdateWithoutSentContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -5450,6 +5553,7 @@ export type AppUserUpdateWithoutAssignedContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -5497,6 +5601,7 @@ export type AppUserUncheckedUpdateWithoutAssignedContactMessagesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -5544,6 +5649,7 @@ export type AppUserCreateWithoutMessageRepliesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -5591,6 +5697,7 @@ export type AppUserUncheckedCreateWithoutMessageRepliesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -5654,6 +5761,7 @@ export type AppUserUpdateWithoutMessageRepliesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -5701,6 +5809,7 @@ export type AppUserUncheckedUpdateWithoutMessageRepliesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -5748,6 +5857,7 @@ export type AppUserCreateWithoutMessageInternalNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -5795,6 +5905,7 @@ export type AppUserUncheckedCreateWithoutMessageInternalNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -5858,6 +5969,7 @@ export type AppUserUpdateWithoutMessageInternalNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -5905,6 +6017,7 @@ export type AppUserUncheckedUpdateWithoutMessageInternalNotesInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -5952,6 +6065,7 @@ export type AppUserCreateWithoutAuthoredAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -5999,6 +6113,7 @@ export type AppUserUncheckedCreateWithoutAuthoredAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -6051,6 +6166,7 @@ export type AppUserCreateWithoutUpdatedAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -6098,6 +6214,7 @@ export type AppUserUncheckedCreateWithoutUpdatedAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -6161,6 +6278,7 @@ export type AppUserUpdateWithoutAuthoredAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -6208,6 +6326,7 @@ export type AppUserUncheckedUpdateWithoutAuthoredAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -6266,6 +6385,7 @@ export type AppUserUpdateWithoutUpdatedAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -6313,6 +6433,7 @@ export type AppUserUncheckedUpdateWithoutUpdatedAnnouncementsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -6360,6 +6481,7 @@ export type AppUserCreateWithoutAnnouncementReadsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -6407,6 +6529,7 @@ export type AppUserUncheckedCreateWithoutAnnouncementReadsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -6470,6 +6593,7 @@ export type AppUserUpdateWithoutAnnouncementReadsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -6517,6 +6641,7 @@ export type AppUserUncheckedUpdateWithoutAnnouncementReadsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -6564,6 +6689,7 @@ export type AppUserCreateWithoutDonationCheckoutsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -6611,6 +6737,7 @@ export type AppUserUncheckedCreateWithoutDonationCheckoutsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -6674,6 +6801,7 @@ export type AppUserUpdateWithoutDonationCheckoutsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -6721,6 +6849,7 @@ export type AppUserUncheckedUpdateWithoutDonationCheckoutsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -6768,6 +6897,7 @@ export type AppUserCreateWithoutDonationsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -6815,6 +6945,7 @@ export type AppUserUncheckedCreateWithoutDonationsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -6868,6 +6999,7 @@ export type AppUserCreateWithoutEnteredDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
   cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
@@ -6915,6 +7047,7 @@ export type AppUserUncheckedCreateWithoutEnteredDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
   cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
@@ -6967,6 +7100,7 @@ export type AppUserCreateWithoutVerifiedDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
@@ -7014,6 +7148,7 @@ export type AppUserUncheckedCreateWithoutVerifiedDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
@@ -7066,6 +7201,7 @@ export type AppUserCreateWithoutCancelledDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
@@ -7113,6 +7249,7 @@ export type AppUserUncheckedCreateWithoutCancelledDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
@@ -7175,6 +7312,7 @@ export type AppUserUpdateWithoutDonationsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -7222,6 +7360,7 @@ export type AppUserUncheckedUpdateWithoutDonationsInput = {
   targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
@@ -7281,6 +7420,7 @@ export type AppUserUpdateWithoutEnteredDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
   cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
@@ -7328,6 +7468,7 @@ export type AppUserUncheckedUpdateWithoutEnteredDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
   cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
@@ -7386,6 +7527,7 @@ export type AppUserUpdateWithoutVerifiedDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
@@ -7433,6 +7575,7 @@ export type AppUserUncheckedUpdateWithoutVerifiedDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
@@ -7491,6 +7634,7 @@ export type AppUserUpdateWithoutCancelledDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
@@ -7538,9 +7682,218 @@ export type AppUserUncheckedUpdateWithoutCancelledDirectDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserCreateWithoutRecordedExpensesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserUncheckedCreateWithoutRecordedExpensesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  imageUrl?: string | null
+  stripeCustomerId?: string | null
+  role?: $Enums.ChurchRole
+  membershipStatus?: $Enums.MembershipStatus
+  onboardingComplete?: boolean
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.MemberProfileUncheckedCreateNestedOneWithoutUserInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedCreateNestedOneWithoutUserInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedCreateNestedManyWithoutApprovedByInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutActorInput
+  createdEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.ChurchEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedCreateNestedManyWithoutUploadedByInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutSenderInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedCreateNestedManyWithoutAssignedToInput
+  messageReplies?: Prisma.MessageReplyUncheckedCreateNestedManyWithoutAuthorInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedCreateNestedManyWithoutAuthorInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutAuthorInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutUpdatedByInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedCreateNestedManyWithoutUserInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedCreateNestedManyWithoutTargetUserInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedCreateNestedManyWithoutUserInput
+  enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
+  bibleFavorites?: Prisma.BibleFavoriteUncheckedCreateNestedManyWithoutUserInput
+  bibleNotes?: Prisma.BibleNoteUncheckedCreateNestedManyWithoutUserInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutUpdatedByInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutCancelledByInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type AppUserCreateOrConnectWithoutRecordedExpensesInput = {
+  where: Prisma.AppUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutRecordedExpensesInput, Prisma.AppUserUncheckedCreateWithoutRecordedExpensesInput>
+}
+
+export type AppUserUpsertWithoutRecordedExpensesInput = {
+  update: Prisma.XOR<Prisma.AppUserUpdateWithoutRecordedExpensesInput, Prisma.AppUserUncheckedUpdateWithoutRecordedExpensesInput>
+  create: Prisma.XOR<Prisma.AppUserCreateWithoutRecordedExpensesInput, Prisma.AppUserUncheckedCreateWithoutRecordedExpensesInput>
+  where?: Prisma.AppUserWhereInput
+}
+
+export type AppUserUpdateToOneWithWhereWithoutRecordedExpensesInput = {
+  where?: Prisma.AppUserWhereInput
+  data: Prisma.XOR<Prisma.AppUserUpdateWithoutRecordedExpensesInput, Prisma.AppUserUncheckedUpdateWithoutRecordedExpensesInput>
+}
+
+export type AppUserUpdateWithoutRecordedExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
+  bibleFavorites?: Prisma.BibleFavoriteUpdateManyWithoutUserNestedInput
+  bibleNotes?: Prisma.BibleNoteUpdateManyWithoutUserNestedInput
+  createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCreatedByNestedInput
+  updatedDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutUpdatedByNestedInput
+  cancelledDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutCancelledByNestedInput
+  sentDailyVerseSchedules?: Prisma.DailyVerseScheduleUpdateManyWithoutSentByNestedInput
+}
+
+export type AppUserUncheckedUpdateWithoutRecordedExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumChurchRoleFieldUpdateOperationsInput | $Enums.ChurchRole
+  membershipStatus?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.MemberProfileUncheckedUpdateOneWithoutUserNestedInput
+  privateDetails?: Prisma.MemberPrivateDetailsUncheckedUpdateOneWithoutUserNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  approvedProfiles?: Prisma.MemberProfileUncheckedUpdateManyWithoutApprovedByNestedInput
+  adminAuditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  createdEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.ChurchEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdGalleryAlbums?: Prisma.GalleryAlbumUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedGalleryItems?: Prisma.GalleryItemUncheckedUpdateManyWithoutUploadedByNestedInput
+  sentContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutSenderNestedInput
+  assignedContactMessages?: Prisma.ContactMessageUncheckedUpdateManyWithoutAssignedToNestedInput
+  messageReplies?: Prisma.MessageReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  messageInternalNotes?: Prisma.MessageInternalNoteUncheckedUpdateManyWithoutAuthorNestedInput
+  authoredAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutAuthorNestedInput
+  updatedAnnouncements?: Prisma.AnnouncementUncheckedUpdateManyWithoutUpdatedByNestedInput
+  announcementReads?: Prisma.AnnouncementReadUncheckedUpdateManyWithoutUserNestedInput
+  createdNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  targetedNotificationCampaigns?: Prisma.NotificationCampaignUncheckedUpdateManyWithoutTargetUserNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recurringDonations?: Prisma.RecurringDonationUncheckedUpdateManyWithoutUserNestedInput
+  enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
+  verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
+  cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
   bibleFavorites?: Prisma.BibleFavoriteUncheckedUpdateManyWithoutUserNestedInput
   bibleNotes?: Prisma.BibleNoteUncheckedUpdateManyWithoutUserNestedInput
   createdDailyVerseSchedules?: Prisma.DailyVerseScheduleUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7585,6 +7938,7 @@ export type AppUserCreateWithoutRecurringDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseCreateNestedManyWithoutCreatedByInput
   enteredDirectDonations?: Prisma.DonationCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationCreateNestedManyWithoutVerifiedByInput
   cancelledDirectDonations?: Prisma.DonationCreateNestedManyWithoutCancelledByInput
@@ -7632,6 +7986,7 @@ export type AppUserUncheckedCreateWithoutRecurringDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedCreateNestedManyWithoutUserInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutUserInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   enteredDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutEnteredByInput
   verifiedDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutVerifiedByInput
   cancelledDirectDonations?: Prisma.DonationUncheckedCreateNestedManyWithoutCancelledByInput
@@ -7695,6 +8050,7 @@ export type AppUserUpdateWithoutRecurringDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUpdateManyWithoutCreatedByNestedInput
   enteredDirectDonations?: Prisma.DonationUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUpdateManyWithoutVerifiedByNestedInput
   cancelledDirectDonations?: Prisma.DonationUpdateManyWithoutCancelledByNestedInput
@@ -7742,6 +8098,7 @@ export type AppUserUncheckedUpdateWithoutRecurringDonationsInput = {
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
   donationCheckouts?: Prisma.DonationCheckoutUncheckedUpdateManyWithoutUserNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutUserNestedInput
+  recordedExpenses?: Prisma.FinanceExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   enteredDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutEnteredByNestedInput
   verifiedDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutVerifiedByNestedInput
   cancelledDirectDonations?: Prisma.DonationUncheckedUpdateManyWithoutCancelledByNestedInput
@@ -7778,6 +8135,7 @@ export type AppUserCountOutputType = {
   notificationRecipients: number
   donationCheckouts: number
   donations: number
+  recordedExpenses: number
   recurringDonations: number
   enteredDirectDonations: number
   verifiedDirectDonations: number
@@ -7810,6 +8168,7 @@ export type AppUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   notificationRecipients?: boolean | AppUserCountOutputTypeCountNotificationRecipientsArgs
   donationCheckouts?: boolean | AppUserCountOutputTypeCountDonationCheckoutsArgs
   donations?: boolean | AppUserCountOutputTypeCountDonationsArgs
+  recordedExpenses?: boolean | AppUserCountOutputTypeCountRecordedExpensesArgs
   recurringDonations?: boolean | AppUserCountOutputTypeCountRecurringDonationsArgs
   enteredDirectDonations?: boolean | AppUserCountOutputTypeCountEnteredDirectDonationsArgs
   verifiedDirectDonations?: boolean | AppUserCountOutputTypeCountVerifiedDirectDonationsArgs
@@ -7968,6 +8327,13 @@ export type AppUserCountOutputTypeCountDonationsArgs<ExtArgs extends runtime.Typ
 /**
  * AppUserCountOutputType without action
  */
+export type AppUserCountOutputTypeCountRecordedExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FinanceExpenseWhereInput
+}
+
+/**
+ * AppUserCountOutputType without action
+ */
 export type AppUserCountOutputTypeCountRecurringDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.RecurringDonationWhereInput
 }
@@ -8072,6 +8438,7 @@ export type AppUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   notificationRecipients?: boolean | Prisma.AppUser$notificationRecipientsArgs<ExtArgs>
   donationCheckouts?: boolean | Prisma.AppUser$donationCheckoutsArgs<ExtArgs>
   donations?: boolean | Prisma.AppUser$donationsArgs<ExtArgs>
+  recordedExpenses?: boolean | Prisma.AppUser$recordedExpensesArgs<ExtArgs>
   recurringDonations?: boolean | Prisma.AppUser$recurringDonationsArgs<ExtArgs>
   enteredDirectDonations?: boolean | Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs>
   verifiedDirectDonations?: boolean | Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs>
@@ -8157,6 +8524,7 @@ export type AppUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   notificationRecipients?: boolean | Prisma.AppUser$notificationRecipientsArgs<ExtArgs>
   donationCheckouts?: boolean | Prisma.AppUser$donationCheckoutsArgs<ExtArgs>
   donations?: boolean | Prisma.AppUser$donationsArgs<ExtArgs>
+  recordedExpenses?: boolean | Prisma.AppUser$recordedExpensesArgs<ExtArgs>
   recurringDonations?: boolean | Prisma.AppUser$recurringDonationsArgs<ExtArgs>
   enteredDirectDonations?: boolean | Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs>
   verifiedDirectDonations?: boolean | Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs>
@@ -8197,6 +8565,7 @@ export type $AppUserPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     notificationRecipients: Prisma.$NotificationRecipientPayload<ExtArgs>[]
     donationCheckouts: Prisma.$DonationCheckoutPayload<ExtArgs>[]
     donations: Prisma.$DonationPayload<ExtArgs>[]
+    recordedExpenses: Prisma.$FinanceExpensePayload<ExtArgs>[]
     recurringDonations: Prisma.$RecurringDonationPayload<ExtArgs>[]
     enteredDirectDonations: Prisma.$DonationPayload<ExtArgs>[]
     verifiedDirectDonations: Prisma.$DonationPayload<ExtArgs>[]
@@ -8638,6 +9007,7 @@ export interface Prisma__AppUserClient<T, Null = never, ExtArgs extends runtime.
   notificationRecipients<T extends Prisma.AppUser$notificationRecipientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$notificationRecipientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   donationCheckouts<T extends Prisma.AppUser$donationCheckoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$donationCheckoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationCheckoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   donations<T extends Prisma.AppUser$donationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  recordedExpenses<T extends Prisma.AppUser$recordedExpensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$recordedExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FinanceExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recurringDonations<T extends Prisma.AppUser$recurringDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$recurringDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecurringDonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   enteredDirectDonations<T extends Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$enteredDirectDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   verifiedDirectDonations<T extends Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppUser$verifiedDirectDonationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -9593,6 +9963,30 @@ export type AppUser$donationsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.DonationScalarFieldEnum | Prisma.DonationScalarFieldEnum[]
+}
+
+/**
+ * AppUser.recordedExpenses
+ */
+export type AppUser$recordedExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FinanceExpense
+   */
+  select?: Prisma.FinanceExpenseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FinanceExpense
+   */
+  omit?: Prisma.FinanceExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FinanceExpenseInclude<ExtArgs> | null
+  where?: Prisma.FinanceExpenseWhereInput
+  orderBy?: Prisma.FinanceExpenseOrderByWithRelationInput | Prisma.FinanceExpenseOrderByWithRelationInput[]
+  cursor?: Prisma.FinanceExpenseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FinanceExpenseScalarFieldEnum | Prisma.FinanceExpenseScalarFieldEnum[]
 }
 
 /**

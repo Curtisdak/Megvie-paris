@@ -2,20 +2,19 @@ import Link from "next/link"
 import {
   ArrowDownToLine,
   Banknote,
-  CalendarClock,
   Filter,
-  HandCoins,
   Plus,
-  ReceiptText,
   Repeat,
   Search,
   SlidersHorizontal,
-  UsersRound,
 } from "lucide-react"
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
 import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
 import { AdminPageHero } from "@/components/admin/admin-page-hero"
+import { FinanceOverview } from "@/components/admin/finance-overview"
+import { ExpenseDialog } from "@/components/admin/expense-dialog"
+import { getFinanceAnalytics } from "@/lib/finance/analytics"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -133,8 +132,9 @@ export default async function FinancePage({
   }>
 }) {
   const params = (await searchParams) ?? {}
-  const data = await getFinanceDashboardData(params)
-  const recurring = await getRecurringDonationAdminData(params)
+  const [data, recurring, analytics] = await Promise.all([
+    getFinanceDashboardData(params), getRecurringDonationAdminData(params), getFinanceAnalytics(),
+  ])
   const exportHref = buildHref("/api/admin/finance/export", params)
   const canManageCategories = data.user.role === "CREATOR"
   const hasActiveFilters = Boolean(
@@ -149,49 +149,16 @@ export default async function FinancePage({
       params.to,
   )
 
-  const statCards = [
-    {
-      label: "Stripe",
-      value: data.stats.format(data.stats.onlineTotals.netCents),
-      helper: `${data.stats.onlineTotals.count} paiement(s) confirme(s)`,
-      icon: CalendarClock,
-      className:
-        "bg-emerald-50 text-emerald-950 dark:bg-emerald-500/10 dark:text-emerald-50",
-    },
-    {
-      label: "Direct verifies",
-      value: data.stats.format(data.stats.directVerifiedTotals.netCents),
-      helper: `${data.stats.directVerifiedTotals.count} don(s) officiel(s)`,
-      icon: HandCoins,
-      className:
-        "bg-amber-50 text-amber-950 dark:bg-amber-500/10 dark:text-amber-50",
-    },
-    {
-      label: "A verifier",
-      value: data.stats.format(data.stats.directRecorded.grossCents),
-      helper: `${data.stats.directRecorded.count} direct(s) en attente`,
-      icon: ReceiptText,
-      className:
-        "bg-sky-50 text-sky-950 dark:bg-sky-500/10 dark:text-sky-50",
-    },
-    {
-      label: "Total officiel",
-      value: data.stats.format(data.stats.totals.netCents),
-      helper: "Stripe net + directs verifies",
-      icon: UsersRound,
-      className:
-        "bg-zinc-100 text-zinc-950 dark:bg-white/10 dark:text-zinc-50",
-    },
-  ]
 
   return (
     <div className="space-y-3 pb-4 sm:space-y-4">
       <AdminPageHero
         eyebrow="Finance"
-        title="Finance des dons"
-        description={`${data.pagination.filtered} don(s) affiché(s). Les paiements confirmés sont rapprochés avec les événements Stripe vérifiés.`}
+        title="Finances de l'église"
+        description="Dons, dépenses et solde : une vue complète des finances de l'église."
         action={
-          <div className="grid gap-2 sm:grid-flow-col sm:justify-end">
+          <div className="flex flex-wrap gap-2">
+            <ExpenseDialog />
             <Button
               asChild
               className="h-10 w-full rounded-xl sm:w-fit"
@@ -215,33 +182,7 @@ export default async function FinancePage({
         }
       />
 
-      <div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
-        {statCards.map((item) => {
-          const Icon = item.icon
-
-          return (
-            <section
-              key={item.label}
-              className="rounded-xl border border-zinc-200/90 bg-white p-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114] sm:p-4"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0">
-                  <p className="truncate text-xs font-bold uppercase tracking-[0.08em] text-zinc-500 dark:text-zinc-400">
-                    {item.label}
-                  </p>
-                  <p className="mt-2 truncate text-xl font-semibold tracking-tight sm:text-2xl">
-                    {item.value}
-                  </p>
-                </div>
-                <span className={`rounded-lg p-2 ${item.className}`}>
-                  <Icon className="h-4 w-4" aria-hidden />
-                </span>
-              </div>
-              <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">{item.helper}</p>
-            </section>
-          )
-        })}
-      </div>
+      <FinanceOverview data={analytics} />
 
       <AdminFilterBar description="Recherchez une transaction puis ouvrez les critères avancés si nécessaire.">
         <form className="space-y-3">
@@ -574,7 +515,7 @@ export default async function FinancePage({
           <AdminCard className="p-3 sm:p-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <h3 className="text-lg font-semibold">Net total</h3>
+                <h3 className="text-lg font-semibold">Entrées nettes</h3>
                 <p className="text-sm text-zinc-500 dark:text-zinc-400">
                   Depuis le debut
                 </p>
@@ -582,13 +523,13 @@ export default async function FinancePage({
               <Banknote className="h-5 w-5 text-amber-600" aria-hidden />
             </div>
             <p className="mt-4 text-3xl font-semibold">
-              {data.stats.format(data.stats.totals.netCents)}
+              {formatCurrencyFromCents(analytics.totals.incomeCents, "eur")}
             </p>
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-              <span>Brut: {data.stats.format(data.stats.totals.grossCents)}</span>
+              <span>Brut: {formatCurrencyFromCents(analytics.totals.incomeCents + analytics.totals.refundedCents, "eur")}</span>
               <span>
                 Rembourse:{" "}
-                {data.stats.format(data.stats.totals.refundedCents)}
+                {formatCurrencyFromCents(analytics.totals.refundedCents, "eur")}
               </span>
             </div>
           </AdminCard>

@@ -1,11 +1,12 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { motion, useReducedMotion } from "framer-motion"
+import { motion } from "framer-motion"
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = usePrefersReducedMotion()
 
   // AdminShell owns its viewport-level fixed navigation. A transformed parent
   // would make that sidebar scroll with the document instead of the viewport.

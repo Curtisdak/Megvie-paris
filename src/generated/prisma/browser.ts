@@ -148,6 +148,11 @@ export type DonationCheckout = Prisma.DonationCheckoutModel
  */
 export type Donation = Prisma.DonationModel
 /**
+ * Model FinanceExpense
+ * 
+ */
+export type FinanceExpense = Prisma.FinanceExpenseModel
+/**
  * Model RecurringDonation
  * 
  */

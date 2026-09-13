@@ -12,12 +12,23 @@ import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  Minus,
+  Plus,
   Loader2,
   Search,
   Sparkles,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import {
   BibleVerseActions,
   type VerseActionState,
@@ -130,6 +141,7 @@ export function BiblePageClient({
   translationName,
 }: BiblePageClientProps) {
   const [activeTab, setActiveTab] = useState<BibleTab>("old")
+  const [bookQuery, setBookQuery] = useState("")
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null)
   const [selectedChapter, setSelectedChapter] = useState(1)
   const [highlightVerse, setHighlightVerse] = useState<number | null>(null)
@@ -226,6 +238,24 @@ export function BiblePageClient({
 
     return () => window.cancelAnimationFrame(frameId)
   }, [openBook])
+
+  useEffect(() => {
+    const restoreReadingPosition = () => {
+      const params = new URLSearchParams(window.location.search)
+      const book = allBooks.find((item) => item.id === params.get("book")?.toUpperCase())
+      const chapter = Number(params.get("chapter") ?? "1")
+      const verse = Number(params.get("verse"))
+      if (!book || !isValidChapterNumber(chapter) || chapter > book.chapter_count) {
+        setSelectedBookId(null)
+        setHighlightVerse(null)
+        setChapterState(initialChapterState)
+        return
+      }
+      openBook(book.id, chapter, Number.isInteger(verse) && verse > 0 ? verse : null, false)
+    }
+    window.addEventListener("popstate", restoreReadingPosition)
+    return () => window.removeEventListener("popstate", restoreReadingPosition)
+  }, [allBooks, openBook])
 
   useEffect(() => {
     if (!selectedBookId) {
@@ -422,9 +452,9 @@ export function BiblePageClient({
   }
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-5">
       <div
-        className="sticky top-[4.5rem] z-20 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.25rem] gap-1 rounded-[1.35rem] border border-zinc-200/80 bg-white/90 p-1.5 shadow-sm backdrop-blur-xl dark:border-zinc-800/80 dark:bg-zinc-950/85 sm:grid-cols-3 sm:gap-2 sm:rounded-full"
+        className="sticky top-[4.5rem] z-20 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.25rem] gap-1 rounded-lg bg-zinc-100/95 p-1 backdrop-blur-xl dark:bg-zinc-900/95 sm:grid-cols-3"
         role="tablist"
         aria-label="Sections de la Bible"
       >
@@ -436,16 +466,36 @@ export function BiblePageClient({
               key={tab.id}
               type="button"
               role="tab"
+              id={`bible-tab-${tab.id}`}
+              aria-controls="bible-library-panel"
+              tabIndex={isActive ? 0 : -1}
               aria-selected={isActive}
               aria-label={tab.label}
               className={cn(
-                "flex min-h-11 min-w-0 items-center justify-center rounded-full px-2 py-2 text-center text-[0.72rem] font-semibold leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 sm:px-4 sm:text-sm",
+                "flex min-h-11 min-w-0 items-center justify-center rounded-md px-2 py-2 text-center text-xs font-semibold leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 sm:px-4 sm:text-sm",
                 tab.id === "search" && "px-0 sm:px-0",
                 isActive
                   ? "bg-zinc-950 text-white shadow-sm dark:bg-white dark:text-zinc-950"
                   : "text-zinc-600 hover:bg-amber-50 dark:text-zinc-300 dark:hover:bg-amber-400/10",
               )}
               onClick={() => setActiveTab(tab.id)}
+              onKeyDown={(event) => {
+                const index = tabs.findIndex((item) => item.id === tab.id)
+                const next =
+                  event.key === "ArrowRight"
+                    ? (index + 1) % tabs.length
+                    : event.key === "ArrowLeft"
+                      ? (index + tabs.length - 1) % tabs.length
+                      : event.key === "Home"
+                        ? 0
+                        : event.key === "End"
+                          ? tabs.length - 1
+                          : null
+                if (next === null) return
+                event.preventDefault()
+                setActiveTab(tabs[next].id)
+                document.getElementById(`bible-tab-${tabs[next].id}`)?.focus()
+              }}
             >
               {tab.id === "search" ? (
                 <>
@@ -460,20 +510,54 @@ export function BiblePageClient({
         })}
       </div>
 
-      {activeTab === "search" ? (
-        <SearchPanel
-          searchQuery={searchQuery}
-          searchState={searchState}
-          onQueryChange={setSearchQuery}
-          onResultClick={handleSearchResultClick}
-          onSubmit={handleSearchSubmit}
-        />
-      ) : (
-        <BookGrid
-          books={visibleBooks}
-          onBookSelect={(book) => openBook(book.id, 1)}
-        />
-      )}
+      <div
+        id="bible-library-panel"
+        role="tabpanel"
+        aria-labelledby={`bible-tab-${activeTab}`}
+        tabIndex={0}
+      >
+        {activeTab === "search" ? (
+          <SearchPanel
+            searchQuery={searchQuery}
+            searchState={searchState}
+            onQueryChange={setSearchQuery}
+            onResultClick={handleSearchResultClick}
+            onSubmit={handleSearchSubmit}
+          />
+        ) : (
+          <div className="space-y-4">
+            <label className="relative block">
+              <span className="sr-only">Trouver un livre</span>
+              <Search
+                className="pointer-events-none absolute left-3 top-3.5 size-4 text-zinc-400"
+                aria-hidden
+              />
+              <Input
+                value={bookQuery}
+                onChange={(event) => setBookQuery(event.target.value)}
+                placeholder="Trouver un livre..."
+                className="h-11 rounded-lg pl-10"
+              />
+            </label>
+            <BookGrid
+              books={visibleBooks.filter((book) =>
+                book.name
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")
+                  .toLowerCase()
+                  .includes(
+                    bookQuery
+                      .normalize("NFD")
+                      .replace(/[\u0300-\u036f]/g, "")
+                      .toLowerCase()
+                      .trim(),
+                  ),
+              )}
+              onBookSelect={(book) => openBook(book.id, 1)}
+            />
+          </div>
+        )}
+      </div>
     </section>
   )
 }
@@ -486,25 +570,32 @@ function BookGrid({
   onBookSelect: (book: BibleBook) => void
 }) {
   return (
-    <div className="grid gap-x-8 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-x-6 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
+      {!books.length && (
+        <p className="py-8 text-sm text-muted-foreground">
+          Aucun livre trouvé.
+        </p>
+      )}
       {books.map((book) => (
         <button
           key={book.id}
           type="button"
-          className="group flex min-h-20 items-center justify-between gap-4 border-b border-zinc-200/80 py-4 text-left transition hover:border-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:border-zinc-800/80"
+          className="group flex min-h-20 items-center justify-between gap-3 border-b border-zinc-100 px-2 py-3 text-left transition-colors hover:bg-emerald-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-zinc-800 dark:hover:bg-emerald-400/5"
           onClick={() => onBookSelect(book)}
         >
           <span className="min-w-0">
-            <span className="block text-lg font-semibold text-zinc-900 transition group-hover:text-amber-700 dark:text-white dark:group-hover:text-amber-200">
+            <span className="block text-base font-medium text-zinc-900 transition group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-200">
               {book.name}
             </span>
-            <span className="mt-1 block text-sm text-zinc-500 dark:text-zinc-400">
-              {book.chapter_count} chapitres - {book.verse_count} versets
+            <span className="mt-1 block text-xs text-zinc-500 dark:text-zinc-400">
+              {book.chapter_count} chapitres
             </span>
           </span>
-          <span className="flex shrink-0 items-center gap-2 text-sm font-semibold text-amber-700 dark:text-amber-200">
-            {String(book.book_number).padStart(2, "0")}
-            <BookOpen className="h-4 w-4 transition group-hover:translate-x-0.5" />
+          <span className="flex shrink-0 items-center gap-2 text-zinc-400">
+            <ChevronRight
+              className="h-4 w-4 transition group-hover:translate-x-0.5"
+              aria-hidden
+            />
           </span>
         </button>
       ))}
@@ -527,17 +618,14 @@ function SearchPanel({
 }) {
   return (
     <div>
-      <form
-        className="w-full"
-        onSubmit={onSubmit}
-        role="search"
-      >
+      <form className="w-full" onSubmit={onSubmit} role="search">
         <div className="relative flex-1">
           <Input
             value={searchQuery}
             onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Rechercher un verset ou un mot-cle"
-            className="h-12 rounded-full border-zinc-200 bg-white pl-5 pr-14 text-base shadow-sm dark:border-zinc-700 dark:bg-zinc-950/50"
+            placeholder="Un mot, un thème ou Jean 3:16..."
+            aria-label="Rechercher un verset ou un mot"
+            className="h-12 rounded-lg border-zinc-200 bg-white pl-4 pr-14 text-base shadow-none dark:border-zinc-700 dark:bg-zinc-950/50"
           />
           <button
             type="submit"
@@ -634,7 +722,8 @@ function BookDetailView({
   onChapterSelect: (chapterNumber: number) => void
   onVerseReferenceClick: (verse: BibleVerse) => void
 }) {
-  const chapters = chapterState.data?.chapters ?? []
+  const [chapterPickerOpen, setChapterPickerOpen] = useState(false)
+  const [fontSize, setFontSize] = useState(18)
   const previousChapter = selectedChapter > 1 ? selectedChapter - 1 : null
   const nextChapter =
     selectedChapter < selectedBook.chapter_count ? selectedChapter + 1 : null
@@ -645,12 +734,21 @@ function BookDetailView({
     window.requestAnimationFrame(() => {
       document
         .getElementById("bible-chapter-reader")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" })
+        ?.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
+            ? "instant"
+            : "smooth",
+          block: "start",
+        })
     })
   }
 
   return (
-    <section id="bible-chapter-reader" className="scroll-mt-24 space-y-6">
+    <section
+      id="bible-chapter-reader"
+      className="mx-auto max-w-3xl scroll-mt-24 space-y-5"
+    >
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <Button
@@ -662,21 +760,16 @@ function BookDetailView({
             <ChevronLeft className="h-4 w-4" />
             Retour aux livres
           </Button>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-600">
+          <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
             {translationName}
           </p>
-          <h2 className="mt-2 text-3xl font-semibold text-zinc-900 dark:text-white sm:text-4xl">
+          <h2 className="mt-2 text-2xl font-semibold text-zinc-900 dark:text-white">
             {selectedBook.name}
           </h2>
           <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
             {selectedBook.chapter_count} chapitres - {selectedBook.verse_count}{" "}
             versets
           </p>
-        </div>
-
-        <div className="border-l-4 border-amber-500 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:bg-amber-400/10 dark:text-amber-100">
-          Chapitre selectionne:{" "}
-          <span className="font-semibold">{selectedChapter}</span>
         </div>
       </div>
 
@@ -690,37 +783,116 @@ function BookDetailView({
 
       {chapterState.status === "success" ? (
         <>
-          <div className="border-y border-zinc-200 py-5 dark:border-zinc-800">
-            <p className="text-sm font-semibold text-zinc-900 dark:text-white">
-              Choisir un chapitre
-            </p>
-            <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
-              {chapters.map((chapter) => {
-                const isActive = chapter.chapter === selectedChapter
-
-                return (
-                  <button
-                    key={chapter.id}
-                    type="button"
-                    className={cn(
-                      "min-h-10 min-w-10 rounded-full border px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
-                      isActive
-                        ? "border-amber-500 bg-amber-600 text-white shadow-sm"
-                        : "border-zinc-200 bg-white text-zinc-700 hover:border-amber-200 hover:bg-amber-50 dark:border-zinc-800 dark:bg-zinc-950/70 dark:text-zinc-200 dark:hover:border-amber-300/30 dark:hover:bg-amber-300/10",
-                    )}
-                    onClick={() => onChapterSelect(chapter.chapter)}
-                    aria-current={isActive ? "true" : undefined}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-y border-zinc-200 py-3 dark:border-zinc-800">
+            <nav
+              className="flex min-w-0 items-center gap-1"
+              aria-label="Choisir un chapitre"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-11"
+                disabled={!previousChapter}
+                onClick={() => navigateFromBottom(previousChapter)}
+                aria-label="Chapitre précédent"
+                title="Chapitre précédent"
+              >
+                <ChevronLeft className="size-4" />
+              </Button>
+              <Dialog
+                open={chapterPickerOpen}
+                onOpenChange={setChapterPickerOpen}
+              >
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="min-h-11 gap-2 rounded-lg"
                   >
-                    {chapter.chapter}
-                  </button>
-                )
-              })}
+                    <BookOpen className="size-4" />
+                    Chapitre {selectedChapter}
+                    <ChevronDown className="size-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-h-[80dvh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>{selectedBook.name}</DialogTitle>
+                    <DialogDescription>Choisir un chapitre</DialogDescription>
+                  </DialogHeader>
+                  <div className="grid grid-cols-5 gap-2 sm:grid-cols-7">
+                    {Array.from(
+                      { length: selectedBook.chapter_count },
+                      (_, i) => i + 1,
+                    ).map((chapter) => (
+                      <Button
+                        key={chapter}
+                        variant={
+                          selectedChapter === chapter ? "default" : "outline"
+                        }
+                        className="h-11 w-full rounded-lg px-0"
+                        aria-current={
+                          selectedChapter === chapter ? "true" : undefined
+                        }
+                        aria-label={`Chapitre ${chapter}`}
+                        onClick={() => {
+                          setChapterPickerOpen(false)
+                          navigateFromBottom(chapter)
+                        }}
+                      >
+                        {chapter}
+                      </Button>
+                    ))}
+                  </div>
+                </DialogContent>
+              </Dialog>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-11"
+                disabled={!nextChapter}
+                onClick={() => navigateFromBottom(nextChapter)}
+                aria-label="Chapitre suivant"
+                title="Chapitre suivant"
+              >
+                <ChevronRight className="size-4" />
+              </Button>
+            </nav>
+            <div
+              className="flex items-center gap-1"
+              role="group"
+              aria-label="Taille du texte"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-11"
+                disabled={fontSize <= 16}
+                onClick={() => setFontSize((size) => size - 2)}
+                aria-label="Réduire le texte"
+                title="Réduire le texte"
+              >
+                <Minus className="size-4" />
+              </Button>
+              <span className="w-7 text-center font-serif text-lg" aria-hidden>
+                Aa
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-11"
+                disabled={fontSize >= 24}
+                onClick={() => setFontSize((size) => size + 2)}
+                aria-label="Agrandir le texte"
+                title="Agrandir le texte"
+              >
+                <Plus className="size-4" />
+              </Button>
             </div>
           </div>
 
           <IntroductionsPanel introductions={chapterState.data.introductions} />
 
           <VerseList
+            fontSize={fontSize}
             highlightVerse={highlightVerse}
             memberBibleState={memberBibleState}
             onReferenceClick={onVerseReferenceClick}
@@ -780,9 +952,7 @@ function IntroductionsPanel({
   }
 
   return (
-    <details
-      className="border-l-4 border-amber-500 bg-amber-50/70 px-5 py-4 dark:bg-amber-400/10"
-    >
+    <details className="border-l-4 border-amber-500 bg-amber-50/70 px-5 py-4 dark:bg-amber-400/10">
       <summary className="cursor-pointer text-sm font-semibold text-amber-900 dark:text-amber-100">
         Introduction
       </summary>
@@ -796,12 +966,14 @@ function IntroductionsPanel({
 }
 
 function VerseList({
+  fontSize,
   highlightVerse,
   memberBibleState,
   onReferenceClick,
   translationName,
   verses,
 }: {
+  fontSize: number
   highlightVerse: number | null
   memberBibleState: MemberBibleChapterState
   onReferenceClick: (verse: BibleVerse) => void
@@ -814,10 +986,12 @@ function VerseList({
 
     for (const verse of verses) {
       const favorite = memberBibleState.favorites.find(
-        (item) => item.verseStart <= verse.verse && item.verseEnd >= verse.verse,
+        (item) =>
+          item.verseStart <= verse.verse && item.verseEnd >= verse.verse,
       )
       const note = memberBibleState.notes.find(
-        (item) => item.verseStart <= verse.verse && item.verseEnd >= verse.verse,
+        (item) =>
+          item.verseStart <= verse.verse && item.verseEnd >= verse.verse,
       )
 
       state.set(verse.verse, {
@@ -863,18 +1037,21 @@ function VerseList({
             <article
               id={`bible-verse-${verse.verse}`}
               className={cn(
-                "border-b border-zinc-200 py-5 transition dark:border-zinc-800",
+                "scroll-mt-32 border-b border-zinc-100 py-5 transition-colors dark:border-zinc-800/60",
                 isHighlighted
                   ? "bg-amber-50/80 px-4 dark:bg-amber-400/10"
                   : "bg-transparent",
               )}
             >
-              <div className="flex gap-4">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-100 text-sm font-semibold text-amber-800 dark:bg-amber-400/15 dark:text-amber-100">
+              <div className="flex gap-3 sm:gap-4">
+                <span className="w-6 shrink-0 pt-1.5 text-center text-xs font-medium tabular-nums text-zinc-400">
                   {verse.verse}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-base leading-8 text-zinc-800 dark:text-zinc-100 sm:text-lg">
+                  <p
+                    className="font-serif leading-[1.85] text-zinc-800 dark:text-zinc-100"
+                    style={{ fontSize }}
+                  >
                     {verse.text}
                   </p>
                   <button
@@ -884,10 +1061,6 @@ function VerseList({
                   >
                     {verse.reference}
                   </button>
-                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-zinc-400 dark:text-zinc-500">
-                    {verse.book_id} - Chapitre {verse.chapter}, verset{" "}
-                    {verse.verse}
-                  </p>
 
                   <VerseMetadata
                     crossReferences={crossReferences}

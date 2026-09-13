@@ -77,6 +77,7 @@ export const ModelName = {
   DonationCategory: 'DonationCategory',
   DonationCheckout: 'DonationCheckout',
   Donation: 'Donation',
+  FinanceExpense: 'FinanceExpense',
   RecurringDonation: 'RecurringDonation',
   DonationRefund: 'DonationRefund',
   StripeWebhookEvent: 'StripeWebhookEvent'
@@ -620,6 +621,29 @@ export const DonationScalarFieldEnum = {
 } as const
 
 export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
+
+
+export const FinanceExpenseScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  category: 'category',
+  amountCents: 'amountCents',
+  currency: 'currency',
+  occurredAt: 'occurredAt',
+  payee: 'payee',
+  reference: 'reference',
+  note: 'note',
+  status: 'status',
+  entryRequestId: 'entryRequestId',
+  createdByUserId: 'createdByUserId',
+  cancellationReason: 'cancellationReason',
+  cancelledAt: 'cancelledAt',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FinanceExpenseScalarFieldEnum = (typeof FinanceExpenseScalarFieldEnum)[keyof typeof FinanceExpenseScalarFieldEnum]
 
 
 export const RecurringDonationScalarFieldEnum = {

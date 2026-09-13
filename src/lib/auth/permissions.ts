@@ -19,6 +19,7 @@ export type AppPermission =
   | "donations.read_all"
   | "donations.stats"
   | "donations.export"
+  | "expenses.manage"
   | "roles.manage"
   | "audit.read"
   | "settings.manage"
@@ -45,6 +46,7 @@ const financePermissions = [
   "donations.read_all",
   "donations.stats",
   "donations.export",
+  "expenses.manage",
 ] satisfies AppPermission[]
 
 const masterPermissions = [
@@ -58,6 +60,7 @@ const masterPermissions = [
   "donations.read_all",
   "donations.stats",
   "donations.export",
+  "expenses.manage",
   "audit.read",
 ] satisfies AppPermission[]
 

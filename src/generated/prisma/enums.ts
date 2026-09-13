@@ -200,6 +200,14 @@ export const DonationSource = {
 export type DonationSource = (typeof DonationSource)[keyof typeof DonationSource]
 
 
+export const ExpenseStatus = {
+  RECORDED: 'RECORDED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ExpenseStatus = (typeof ExpenseStatus)[keyof typeof ExpenseStatus]
+
+
 export const DirectDonationKind = {
   IDENTIFIED: 'IDENTIFIED',
   ANONYMOUS_COLLECTION: 'ANONYMOUS_COLLECTION'

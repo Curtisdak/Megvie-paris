@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 import {
   Archive,
   BadgeCheck,
@@ -12,16 +12,16 @@ import {
   ShieldCheck,
   UserCheck,
   Users,
-} from "lucide-react"
-import { AdminActionForm } from "@/components/admin/admin-action-form"
-import { EmptyState } from "@/components/admin/admin-card"
-import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
-import { AdminPageHero } from "@/components/admin/admin-page-hero"
-import { MemberProfileDisclosure } from "@/components/admin/member-profile-disclosure"
-import { StatusBadge } from "@/components/admin/status-badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+} from "lucide-react";
+import { AdminActionForm } from "@/components/admin/admin-action-form";
+import { EmptyState } from "@/components/admin/admin-card";
+import { AdminFilterBar } from "@/components/admin/admin-filter-bar";
+import { AdminPageHero } from "@/components/admin/admin-page-hero";
+import { MemberProfileDisclosure } from "@/components/admin/member-profile-disclosure";
+import { StatusBadge } from "@/components/admin/status-badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogClose,
@@ -30,10 +30,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { updateMemberStatusAction, updateRoleAction } from "@/lib/admin/actions"
-import { listMembers, pageSize } from "@/lib/admin/data"
-import { hasPermission } from "@/lib/auth/permissions"
+} from "@/components/ui/dialog";
+import {
+  updateMemberStatusAction,
+  updateRoleAction,
+} from "@/lib/admin/actions";
+import { listMembers, pageSize } from "@/lib/admin/data";
+import { hasPermission } from "@/lib/auth/permissions";
 
 const statusOptions = [
   { value: "", label: "Tous" },
@@ -42,7 +45,7 @@ const statusOptions = [
   { value: "SUSPENDED", label: "Suspendus" },
   { value: "ARCHIVED", label: "Archives" },
   { value: "REJECTED", label: "Refuses" },
-]
+];
 
 const roleOptions = [
   { value: "", label: "Tous roles" },
@@ -51,7 +54,7 @@ const roleOptions = [
   { value: "FINANCE", label: "Finance" },
   { value: "MASTER", label: "Master" },
   { value: "CREATOR", label: "Creator" },
-]
+];
 
 const statusLabels: Record<string, string> = {
   ACTIVE: "Actif",
@@ -59,7 +62,7 @@ const statusLabels: Record<string, string> = {
   SUSPENDED: "Suspendu",
   ARCHIVED: "Archive",
   REJECTED: "Refuse",
-}
+};
 
 const roleLabels: Record<string, string> = {
   MEMBER: "Membre",
@@ -67,42 +70,42 @@ const roleLabels: Record<string, string> = {
   FINANCE: "Finance",
   MASTER: "Master",
   CREATOR: "Creator",
-}
+};
 
 function buildMembersHref({
   q,
   status,
   role,
 }: {
-  q?: string
-  status?: string
-  role?: string
+  q?: string;
+  status?: string;
+  role?: string;
 }) {
-  const params = new URLSearchParams()
-  if (q) params.set("q", q)
-  if (status) params.set("status", status)
-  if (role) params.set("role", role)
-  const query = params.toString()
+  const params = new URLSearchParams();
+  if (q) params.set("q", q);
+  if (status) params.set("status", status);
+  if (role) params.set("role", role);
+  const query = params.toString();
 
-  return query ? `/admin/membres?${query}` : "/admin/membres"
+  return query ? `/admin/membres?${query}` : "/admin/membres";
 }
 
 function formatDate(value?: Date | null) {
-  return value ? value.toLocaleDateString("fr-FR") : null
+  return value ? value.toLocaleDateString("fr-FR") : null;
 }
 
 function getMemberName(member: {
-  firstName: string | null
-  lastName: string | null
-  email?: string | boolean | null
-  profile: { displayName: string | null } | null
+  firstName: string | null;
+  lastName: string | null;
+  email?: string | boolean | null;
+  profile: { displayName: string | null } | null;
 }) {
   return (
     member.profile?.displayName ||
     [member.firstName, member.lastName].filter(Boolean).join(" ") ||
     (typeof member.email === "string" ? member.email : null) ||
     "Membre"
-  )
+  );
 }
 
 function getInitials(name: string) {
@@ -112,20 +115,18 @@ function getInitials(name: string) {
     .filter(Boolean)
     .slice(0, 2)
     .join("")
-    .toUpperCase()
+    .toUpperCase();
 
-  return letters || "M"
+  return letters || "M";
 }
 
 function getAddress(member: {
-  privateDetails:
-    | {
-        addressLine1?: string | null
-        postalCode?: string | null
-        city?: string | null
-        countryCode?: string | null
-      }
-    | null
+  privateDetails: {
+    addressLine1?: string | null;
+    postalCode?: string | null;
+    city?: string | null;
+    countryCode?: string | null;
+  } | null;
 }) {
   return (
     [
@@ -136,7 +137,7 @@ function getAddress(member: {
     ]
       .filter(Boolean)
       .join(" ") || "Non renseignee"
-  )
+  );
 }
 
 function DetailItem({
@@ -145,10 +146,10 @@ function DetailItem({
   value,
   href,
 }: {
-  icon: React.ComponentType<{ className?: string }>
-  label: string
-  value: string
-  href?: string
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  href?: string;
 }) {
   const content = href ? (
     <Link href={href} className="break-words hover:text-amber-600">
@@ -156,7 +157,7 @@ function DetailItem({
     </Link>
   ) : (
     <span className="break-words">{value}</span>
-  )
+  );
 
   return (
     <div className="flex min-h-[5.25rem] min-w-0 gap-3 bg-white p-4 dark:bg-[#111114]">
@@ -172,7 +173,7 @@ function DetailItem({
         </dd>
       </div>
     </div>
-  )
+  );
 }
 
 function MemberStatusDialog({
@@ -180,9 +181,9 @@ function MemberStatusDialog({
   memberName,
   currentStatus,
 }: {
-  userId: string
-  memberName: string
-  currentStatus: string
+  userId: string;
+  memberName: string;
+  currentStatus: string;
 }) {
   return (
     <Dialog>
@@ -196,24 +197,40 @@ function MemberStatusDialog({
               <BadgeCheck className="h-4 w-4" aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-semibold">Modifier le statut</span>
-              <span className="block text-xs text-zinc-500 dark:text-zinc-400">Activer, suspendre ou archiver</span>
+              <span className="block text-sm font-semibold">
+                Modifier le statut
+              </span>
+              <span className="block text-xs text-zinc-500 dark:text-zinc-400">
+                Activer, suspendre ou archiver
+              </span>
             </span>
           </span>
-          <ChevronRight className="h-4 w-4 shrink-0 text-zinc-400" aria-hidden />
+          <ChevronRight
+            className="h-4 w-4 shrink-0 text-zinc-400"
+            aria-hidden
+          />
         </button>
       </DialogTrigger>
       <DialogContent className="w-[calc(100%_-_1.5rem)] rounded-2xl p-0 sm:max-w-lg">
         <DialogHeader className="border-b border-zinc-200 bg-gradient-to-r from-emerald-50 via-white to-orange-50 px-5 py-5 text-left dark:border-white/10 dark:from-emerald-500/10 dark:via-zinc-950 dark:to-orange-500/10">
           <DialogTitle>Modifier le statut</DialogTitle>
           <DialogDescription>
-            Mettez à jour l&apos;accès de {memberName}. Les changements sensibles sont enregistrés dans l&apos;audit.
+            Mettez à jour l&apos;accès de {memberName}. Les changements
+            sensibles sont enregistrés dans l&apos;audit.
           </DialogDescription>
         </DialogHeader>
-        <AdminActionForm action={updateMemberStatusAction} className="space-y-4 p-5">
+        <AdminActionForm
+          action={updateMemberStatusAction}
+          className="space-y-4 p-5"
+        >
           <input type="hidden" name="userId" value={userId} />
           <div className="space-y-2">
-            <label htmlFor={`status-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Nouveau statut</label>
+            <label
+              htmlFor={`status-${userId}`}
+              className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500"
+            >
+              Nouveau statut
+            </label>
             <select
               id={`status-${userId}`}
               name="status"
@@ -226,19 +243,37 @@ function MemberStatusDialog({
             </select>
           </div>
           <div className="space-y-2">
-            <label htmlFor={`status-reason-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Motif</label>
-            <Textarea id={`status-reason-${userId}`} name="reason" placeholder="Obligatoire pour une suspension ou un archivage" className="min-h-24 rounded-xl" />
+            <label
+              htmlFor={`status-reason-${userId}`}
+              className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500"
+            >
+              Motif
+            </label>
+            <Textarea
+              id={`status-reason-${userId}`}
+              name="reason"
+              placeholder="Obligatoire pour une suspension ou un archivage"
+              className="min-h-24 rounded-xl"
+            />
           </div>
           <div className="grid grid-cols-2 gap-2">
             <DialogClose asChild>
-              <Button type="button" variant="outline" className="rounded-xl shadow-none">Annuler</Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-xl shadow-none"
+              >
+                Annuler
+              </Button>
             </DialogClose>
-            <Button className="rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-none hover:from-orange-700 hover:to-amber-600">Confirmer</Button>
+            <Button className="rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-none hover:from-orange-700 hover:to-amber-600">
+              Confirmer
+            </Button>
           </div>
         </AdminActionForm>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 function MemberRoleDialog({
@@ -246,9 +281,9 @@ function MemberRoleDialog({
   memberName,
   currentRole,
 }: {
-  userId: string
-  memberName: string
-  currentRole: string
+  userId: string;
+  memberName: string;
+  currentRole: string;
 }) {
   return (
     <Dialog>
@@ -262,24 +297,37 @@ function MemberRoleDialog({
               <ShieldCheck className="h-4 w-4" aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-semibold">Modifier le rôle</span>
-              <span className="block text-xs text-zinc-500 dark:text-zinc-400">Changer les autorisations</span>
+              <span className="block text-sm font-semibold">
+                Modifier le rôle
+              </span>
+              <span className="block text-xs text-zinc-500 dark:text-zinc-400">
+                Changer les autorisations
+              </span>
             </span>
           </span>
-          <ChevronRight className="h-4 w-4 shrink-0 text-zinc-400" aria-hidden />
+          <ChevronRight
+            className="h-4 w-4 shrink-0 text-zinc-400"
+            aria-hidden
+          />
         </button>
       </DialogTrigger>
       <DialogContent className="w-[calc(100%_-_1.5rem)] rounded-2xl p-0 sm:max-w-lg">
         <DialogHeader className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-5 py-5 text-left dark:border-white/10 dark:from-orange-500/10 dark:via-zinc-950 dark:to-amber-500/10">
           <DialogTitle>Modifier le rôle</DialogTitle>
           <DialogDescription>
-            Attribuez de nouvelles responsabilités à {memberName}. Cette action sera enregistrée dans l&apos;audit.
+            Attribuez de nouvelles responsabilités à {memberName}. Cette action
+            sera enregistrée dans l&apos;audit.
           </DialogDescription>
         </DialogHeader>
         <AdminActionForm action={updateRoleAction} className="space-y-4 p-5">
           <input type="hidden" name="userId" value={userId} />
           <div className="space-y-2">
-            <label htmlFor={`role-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Nouveau rôle</label>
+            <label
+              htmlFor={`role-${userId}`}
+              className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500"
+            >
+              Nouveau rôle
+            </label>
             <select
               id={`role-${userId}`}
               name="role"
@@ -293,38 +341,57 @@ function MemberRoleDialog({
             </select>
           </div>
           <div className="space-y-2">
-            <label htmlFor={`role-reason-${userId}`} className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500">Motif</label>
-            <Textarea id={`role-reason-${userId}`} name="reason" placeholder="Expliquez la raison du changement" className="min-h-24 rounded-xl" required />
+            <label
+              htmlFor={`role-reason-${userId}`}
+              className="text-xs font-bold uppercase tracking-[0.1em] text-zinc-500"
+            >
+              Motif
+            </label>
+            <Textarea
+              id={`role-reason-${userId}`}
+              name="reason"
+              placeholder="Expliquez la raison du changement"
+              className="min-h-24 rounded-xl"
+              required
+            />
           </div>
           <div className="grid grid-cols-2 gap-2">
             <DialogClose asChild>
-              <Button type="button" variant="outline" className="rounded-xl shadow-none">Annuler</Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-xl shadow-none"
+              >
+                Annuler
+              </Button>
             </DialogClose>
-            <Button className="rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-none hover:from-orange-700 hover:to-amber-600">Confirmer</Button>
+            <Button className="rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-none hover:from-orange-700 hover:to-amber-600">
+              Confirmer
+            </Button>
           </div>
         </AdminActionForm>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 export default async function MembersPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ q?: string; status?: string; role?: string }>
+  searchParams?: Promise<{ q?: string; status?: string; role?: string }>;
 }) {
-  const params = await searchParams
-  const activeSearch = params?.q?.trim() ?? ""
-  const activeStatus = params?.status ?? ""
-  const activeRole = params?.role ?? ""
+  const params = await searchParams;
+  const activeSearch = params?.q?.trim() ?? "";
+  const activeStatus = params?.status ?? "";
+  const activeRole = params?.role ?? "";
   const data = await listMembers({
     search: activeSearch,
     status: activeStatus,
     role: activeRole,
-  })
-  const canSuspend = hasPermission(data.actorRole, "members.suspend")
-  const canManageRoles = hasPermission(data.actorRole, "roles.manage")
-  const hasActiveFilters = Boolean(activeSearch || activeStatus || activeRole)
+  });
+  const canSuspend = hasPermission(data.actorRole, "members.suspend");
+  const canManageRoles = hasPermission(data.actorRole, "roles.manage");
+  const hasActiveFilters = Boolean(activeSearch || activeStatus || activeRole);
   const statCards = [
     {
       label: "Total",
@@ -354,7 +421,7 @@ export default async function MembersPage({
       icon: ShieldCheck,
       tone: "from-indigo-600 to-sky-500 text-white",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-4 sm:space-y-5">
@@ -364,33 +431,45 @@ export default async function MembersPage({
         description="Retrouvez les membres, leurs statuts et les informations autorisées pour votre rôle."
         action={
           <div className="flex items-baseline gap-2 rounded-xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
-            <span className="text-3xl font-bold text-white">{data.counts.filtered}</span>
+            <span className="text-3xl font-bold text-white">
+              {data.counts.filtered}
+            </span>
             <span className="text-xs text-white/65">résultat(s)</span>
           </div>
         }
       />
 
-      <section className="grid grid-cols-2 gap-3 xl:grid-cols-4" aria-label="Statistiques membres">
+      <section
+        className="grid grid-cols-2 gap-3 xl:grid-cols-4"
+        aria-label="Statistiques membres"
+      >
         {statCards.map((item) => {
-          const Icon = item.icon
+          const Icon = item.icon;
           return (
-            <div key={item.label} className="rounded-xl border border-zinc-200/90 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114]">
+            <div
+              key={item.label}
+              className="rounded-xl border border-zinc-200/90 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-[#111114]"
+            >
               <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">{item.label}</p>
+                <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">
+                  {item.label}
+                </p>
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300">
                   <Icon className="h-4 w-4" aria-hidden />
                 </span>
               </div>
-              <p className="mt-3 text-2xl font-bold tracking-tight">{item.value}</p>
+              <p className="mt-3 text-2xl font-bold tracking-tight">
+                {item.value}
+              </p>
             </div>
-          )
+          );
         })}
       </section>
 
       <AdminFilterBar description="Recherchez une personne et filtrez par statut ou rôle.">
         <div className="flex snap-x gap-2 overflow-x-auto pb-2">
           {statusOptions.map((item) => {
-            const active = activeStatus === item.value
+            const active = activeStatus === item.value;
 
             return (
               <Button
@@ -419,7 +498,7 @@ export default async function MembersPage({
                   ) : null}
                 </Link>
               </Button>
-            )
+            );
           })}
         </div>
 
@@ -507,18 +586,19 @@ export default async function MembersPage({
         ) : (
           <div className="grid gap-3">
             {data.members.map((member) => {
-              const memberName = getMemberName(member)
+              const memberName = getMemberName(member);
               const email =
-                typeof member.email === "string" ? member.email : "Restreint"
-              const phone = member.privateDetails?.phone ?? "Restreint"
-              const memberId = member.profile?.memberId ?? "En attente"
+                typeof member.email === "string" ? member.email : "Restreint";
+              const phone = member.privateDetails?.phone ?? "Restreint";
+              const memberId = member.profile?.memberId ?? "En attente";
               const approvedAt =
-                formatDate(member.profile?.approvedAt) ?? "Non approuve"
+                formatDate(member.profile?.approvedAt) ?? "Non approuve";
               const dateOfBirth =
-                data.canSensitive && "dateOfBirth" in (member.privateDetails ?? {})
-                  ? formatDate(member.privateDetails?.dateOfBirth) ??
-                    "Non renseignee"
-                  : null
+                data.canSensitive &&
+                "dateOfBirth" in (member.privateDetails ?? {})
+                  ? (formatDate(member.privateDetails?.dateOfBirth) ??
+                    "Non renseignee")
+                  : null;
 
               return (
                 <article
@@ -533,7 +613,11 @@ export default async function MembersPage({
                             {member.profile?.avatarUrl || member.imageUrl ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
-                                src={member.profile?.avatarUrl ?? member.imageUrl ?? ""}
+                                src={
+                                  member.profile?.avatarUrl ??
+                                  member.imageUrl ??
+                                  ""
+                                }
                                 alt=""
                                 className="h-full w-full object-cover"
                               />
@@ -552,7 +636,9 @@ export default async function MembersPage({
                             />
                           </div>
                           <div className="min-w-0">
-                            <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-orange-600 dark:text-orange-400">Profil membre</p>
+                            <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-orange-600 dark:text-orange-400">
+                              Profil membre
+                            </p>
                             <h4 className="mt-1 truncate text-xl font-bold text-zinc-950 dark:text-white">
                               {memberName}
                             </h4>
@@ -573,119 +659,131 @@ export default async function MembersPage({
                         </div>
                         <div className="flex items-center gap-2 self-start">
                           <div className="flex items-center gap-2 rounded-xl bg-zinc-950 px-3 py-2 text-sm font-bold text-white shadow-sm dark:bg-white dark:text-zinc-950">
-                            <BadgeCheck className="h-4 w-4 text-amber-400 dark:text-orange-600" aria-hidden />
+                            <BadgeCheck
+                              className="h-4 w-4 text-amber-400 dark:text-orange-600"
+                              aria-hidden
+                            />
                             <span>{memberId}</span>
                           </div>
                         </div>
                       </div>
                     }
                   >
-
                     <div className="divide-y divide-zinc-200/80 dark:divide-white/10">
                       <div className="p-4 sm:p-5">
-                      <dl className="grid gap-px overflow-hidden rounded-xl bg-zinc-200/80 ring-1 ring-zinc-200/80 dark:bg-white/10 dark:ring-white/10 sm:grid-cols-2 xl:grid-cols-3">
-                        <DetailItem
-                          icon={Mail}
-                          label="Email"
-                          value={email}
-                          href={email !== "Restreint" ? `mailto:${email}` : undefined}
-                        />
-                        <DetailItem
-                          icon={Phone}
-                          label="Telephone"
-                          value={phone}
-                          href={phone !== "Restreint" ? `tel:${phone}` : undefined}
-                        />
-                        <DetailItem
-                          icon={CalendarCheck}
-                          label="Approbation"
-                          value={approvedAt}
-                        />
-                        <DetailItem
-                          icon={MapPin}
-                          label="Ville"
-                          value={member.privateDetails?.city ?? "Non renseignee"}
-                        />
-                        {data.canSensitive ? (
-                          <>
-                            <DetailItem
-                              icon={Cake}
-                              label="Naissance"
-                              value={dateOfBirth ?? "Non renseignee"}
-                            />
-                            <DetailItem
-                              icon={MapPin}
-                              label="Adresse"
-                              value={getAddress(member)}
-                            />
-                          </>
-                        ) : null}
-                      </dl>
-                      </div>
-
-                    <div className="bg-zinc-50/80 p-4 dark:bg-black/15 sm:p-5">
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="text-sm font-bold text-zinc-950 dark:text-white">
-                            Gestion du compte
-                          </p>
-                          <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                            Modifiez le statut ou les responsabilités de ce membre.
-                          </p>
-                        </div>
-                        {member.membershipStatus === "ACTIVE" ? (
-                          <BadgeCheck className="h-5 w-5 text-emerald-500" />
-                        ) : member.membershipStatus === "ARCHIVED" ? (
-                          <Archive className="h-5 w-5 text-zinc-400" />
-                        ) : (
-                          <ShieldCheck className="h-5 w-5 text-amber-500" />
-                        )}
-                      </div>
-
-                      <div className="mt-4 grid gap-3 lg:grid-cols-2">
-                        {canSuspend ? (
-                          <MemberStatusDialog
-                            userId={member.id}
-                            memberName={memberName}
-                            currentStatus={member.membershipStatus}
+                        <dl className="grid gap-px overflow-hidden rounded-xl bg-zinc-200/80 ring-1 ring-zinc-200/80 dark:bg-white/10 dark:ring-white/10 sm:grid-cols-2 xl:grid-cols-3">
+                          <DetailItem
+                            icon={Mail}
+                            label="Email"
+                            value={email}
+                            href={
+                              email !== "Restreint"
+                                ? `mailto:${email}`
+                                : undefined
+                            }
                           />
-                        ) : (
-                          <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
-                            Votre role ne permet pas de modifier les statuts.
-                          </p>
-                        )}
-                        {canManageRoles ? (
-                          member.id === data.actorId ? (
-                            <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
-                              Votre propre role n&apos;est pas modifiable ici.
+                          <DetailItem
+                            icon={Phone}
+                            label="Telephone"
+                            value={phone}
+                            href={
+                              phone !== "Restreint" ? `tel:${phone}` : undefined
+                            }
+                          />
+                          <DetailItem
+                            icon={CalendarCheck}
+                            label="Approbation"
+                            value={approvedAt}
+                          />
+                          <DetailItem
+                            icon={MapPin}
+                            label="Ville"
+                            value={
+                              member.privateDetails?.city ?? "Non renseignee"
+                            }
+                          />
+                          {data.canSensitive ? (
+                            <>
+                              <DetailItem
+                                icon={Cake}
+                                label="Naissance"
+                                value={dateOfBirth ?? "Non renseignee"}
+                              />
+                              <DetailItem
+                                icon={MapPin}
+                                label="Adresse"
+                                value={getAddress(member)}
+                              />
+                            </>
+                          ) : null}
+                        </dl>
+                      </div>
+
+                      <div className="bg-zinc-50/80 p-4 dark:bg-black/15 sm:p-5">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="text-sm font-bold text-zinc-950 dark:text-white">
+                              Gestion du compte
                             </p>
-                          ) : member.role === "CREATOR" ? (
-                            <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-100">
-                              Le role Creator est protege et ne se modifie pas
-                              depuis cette interface.
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                              Modifiez le statut ou les responsabilités de ce
+                              membre.
                             </p>
-                          ) : member.membershipStatus !== "ACTIVE" ? (
-                            <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
-                              Activez ce membre avant de lui attribuer un role.
-                            </p>
+                          </div>
+                          {member.membershipStatus === "ACTIVE" ? (
+                            <BadgeCheck className="h-5 w-5 text-emerald-500" />
+                          ) : member.membershipStatus === "ARCHIVED" ? (
+                            <Archive className="h-5 w-5 text-zinc-400" />
                           ) : (
-                            <MemberRoleDialog
+                            <ShieldCheck className="h-5 w-5 text-amber-500" />
+                          )}
+                        </div>
+
+                        <div className="mt-4 grid gap-3 lg:grid-cols-2">
+                          {canSuspend ? (
+                            <MemberStatusDialog
                               userId={member.id}
                               memberName={memberName}
-                              currentRole={member.role}
+                              currentStatus={member.membershipStatus}
                             />
-                          )
-                        ) : null}
+                          ) : (
+                            <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
+                              Votre role ne permet pas de modifier les statuts.
+                            </p>
+                          )}
+                          {canManageRoles ? (
+                            member.id === data.actorId ? (
+                              <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
+                                Votre propre role n&apos;est pas modifiable ici.
+                              </p>
+                            ) : member.role === "CREATOR" ? (
+                              <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-100">
+                                Le role Creator est protege et ne se modifie pas
+                                depuis cette interface.
+                              </p>
+                            ) : member.membershipStatus !== "ACTIVE" ? (
+                              <p className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-500 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
+                                Activez ce membre avant de lui attribuer un
+                                role.
+                              </p>
+                            ) : (
+                              <MemberRoleDialog
+                                userId={member.id}
+                                memberName={memberName}
+                                currentRole={member.role}
+                              />
+                            )
+                          ) : null}
+                        </div>
                       </div>
-                    </div>
                     </div>
                   </MemberProfileDisclosure>
                 </article>
-              )
+              );
             })}
           </div>
         )}
       </section>
     </div>
-  )
+  );
 }

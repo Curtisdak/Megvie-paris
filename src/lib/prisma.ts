@@ -33,6 +33,7 @@ function hasCurrentPrismaDelegates(
       delegates.notificationRecipient &&
       delegates.pushDeliveryAttempt &&
       delegates.donation &&
+      delegates.financeExpense &&
       delegates.stripeWebhookEvent &&
       delegates.bibleFavorite &&
       delegates.bibleNote &&

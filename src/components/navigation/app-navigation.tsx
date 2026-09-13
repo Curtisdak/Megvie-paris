@@ -219,10 +219,10 @@ export function AppNavigation() {
       </aside>
 
       <nav
-        className="app-bottom-nav pointer-events-none fixed inset-x-0 bottom-0 z-50 px-4 pb-[max(env(safe-area-inset-bottom),0.65rem)] pt-2"
+        className="app-bottom-nav fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200/40 bg-white/55 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/55"
         aria-label="Navigation principale mobile"
       >
-        <div className="pointer-events-auto mx-auto max-w-sm rounded-[1.75rem] border border-white/70 bg-white/95 p-1.5 shadow-[0_18px_44px_rgba(15,23,42,0.2)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/95 dark:shadow-[0_18px_44px_rgba(0,0,0,0.45)]">
+        <div className="mx-auto w-full max-w-xl px-2 pt-1">
           <div className="grid grid-cols-5 gap-1">
             {mobileNavItems.map((item, index) => (
               <NavigationLink
@@ -349,7 +349,7 @@ function NavigationLink({
         {isActive ? (
           <motion.span
             layoutId="bottom-active-pill"
-            className="absolute inset-0 rounded-[1.35rem] bg-gradient-to-b from-amber-100 via-white to-white shadow-inner dark:from-amber-400/20 dark:via-white/10 dark:to-white/5"
+            className="absolute inset-1 rounded-xl bg-amber-500/10 dark:bg-amber-300/10"
             transition={{ type: "spring", stiffness: 430, damping: 30 }}
           />
         ) : null}
@@ -357,8 +357,8 @@ function NavigationLink({
           className={cn(
             "relative flex h-11 w-11 items-center justify-center rounded-2xl transition group-hover:-translate-y-0.5 group-hover:scale-105",
             isActive
-              ? "bg-zinc-950 text-white shadow-lg shadow-zinc-950/20 dark:bg-white dark:text-zinc-950"
-              : "bg-zinc-100 text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400",
+              ? "text-amber-700 dark:text-amber-300"
+              : "text-zinc-700 dark:text-zinc-300",
           )}
         >
           <Icon className="h-5 w-5" aria-hidden />

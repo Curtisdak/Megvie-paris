@@ -33,18 +33,18 @@ export default async function MemberAnnouncementsPage() {
   const announcements = await listMemberAnnouncements()
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-3 py-5 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:px-5 sm:py-10">
+    <main className="app-page">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-5">
-        <section className="overflow-hidden rounded-[28px] bg-gradient-to-br from-zinc-950 via-amber-900 to-emerald-800 p-6 text-white shadow-2xl sm:p-8">
+        <section className="overflow-hidden rounded-lg bg-[linear-gradient(110deg,#18181b,#193d38)] p-6 text-white shadow-none sm:p-8">
           <div className="flex items-start gap-4">
-            <span className="rounded-2xl bg-white/15 p-3">
+            <span className="rounded-lg bg-white/15 p-3">
               <Bell className="h-6 w-6" aria-hidden />
             </span>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100">
+              <p className="text-xs font-semibold uppercase tracking-normal text-amber-100">
                 Espace membre
               </p>
-              <h1 className="mt-3 text-3xl font-semibold sm:text-5xl">
+              <h1 className="mt-3 text-3xl font-semibold sm:text-3xl">
                 Annonces MegVie.
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-white/80">
@@ -56,7 +56,7 @@ export default async function MemberAnnouncementsPage() {
         </section>
 
         {announcements.length === 0 ? (
-          <section className="rounded-[28px] border border-zinc-200 bg-white/95 p-6 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-300">
+          <section className="rounded-lg border border-zinc-200 bg-white/95 p-6 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-300">
             Aucune annonce publiee pour le moment.
           </section>
         ) : (
@@ -67,7 +67,7 @@ export default async function MemberAnnouncementsPage() {
               return (
                 <article
                   key={announcement.id}
-                  className="overflow-hidden rounded-[28px] border border-zinc-200 bg-white/95 shadow-sm transition hover:-translate-y-1 hover:border-amber-200 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80"
+                  className="overflow-hidden rounded-lg border border-zinc-200 bg-white/95 shadow-sm transition hover:-translate-y-1 hover:border-amber-200 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80"
                 >
                   {announcement.coverImageUrl ? (
                     <div className="aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-800">
@@ -82,11 +82,11 @@ export default async function MemberAnnouncementsPage() {
                   ) : null}
                   <div className="p-5">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-amber-800 dark:bg-amber-400/15 dark:text-amber-100">
+                      <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-amber-800 dark:bg-amber-400/15 dark:text-amber-100">
                         {categoryLabels[announcement.category] ?? announcement.category}
                       </span>
                       {announcement.visibility === "MEMBERS_ONLY" ? (
-                        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-100">
+                        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-100">
                           Membres
                         </span>
                       ) : null}

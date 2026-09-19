@@ -13,7 +13,7 @@ export default async function MemberSecurityPage() {
   await getRequiredMemberDashboardData("/espace-membre/securite")
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-3 py-5 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 sm:px-4 sm:py-12">
+    <div className="app-page">
       <main className="mx-auto max-w-4xl">
         <Link href="/espace-membre" className="text-sm text-amber-700">
           Retour espace membre

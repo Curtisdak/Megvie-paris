@@ -25,7 +25,7 @@ export default async function StripeWebhooksPage({
       />
 
       <AdminFilterBar description="Retrouvez un événement Stripe par type ou état de traitement.">
-        <form className="grid gap-2 sm:grid-cols-[1fr,180px,auto]">
+        <form className="grid gap-2 sm:grid-cols-[1fr_180px_auto]">
           <input
             name="type"
             defaultValue={params.type ?? ""}

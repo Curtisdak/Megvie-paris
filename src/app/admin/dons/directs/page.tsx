@@ -134,7 +134,7 @@ export default async function DirectDonationsPage({
       </div>
 
       <AdminFilterBar description="Filtrez les dons saisis par identité, statut, type, catégorie ou période.">
-        <form className="grid gap-2 lg:grid-cols-[1.2fr,0.85fr,0.85fr,0.85fr,0.7fr,0.7fr,auto]">
+        <form className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <label className="relative">
             <span className="sr-only">Rechercher</span>
             <Search

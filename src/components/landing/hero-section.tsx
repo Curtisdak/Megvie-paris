@@ -31,7 +31,7 @@ export function HeroSection({
       animate="show"
       variants={fadeInUp}
       transition={{ duration: 0.6 }}
-      className="overflow-hidden border-y border-orange-200/60 bg-white/90 p-4 text-zinc-950 shadow-lg shadow-orange-950/5 dark:border-white/10 dark:bg-zinc-950/80 dark:text-white sm:rounded-[1.5rem] sm:border sm:p-5"
+      className="py-2 text-foreground"
     >
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(320px,380px)] lg:items-center">
         <div className="space-y-4">
@@ -49,24 +49,24 @@ export function HeroSection({
             transition={{ duration: 0.5, delay: 0.22 }}
             className="space-y-3"
           >
-            <h2 className="max-w-3xl text-2xl font-black leading-tight sm:text-4xl">
-              Prier, servir et soutenir la mission MegVie Paris.
+            <h2 className="max-w-3xl text-2xl font-semibold leading-tight">
+              Ensemble, soutenons la mission.
             </h2>
             <p className="max-w-3xl text-sm leading-6 text-zinc-600 dark:text-zinc-300 sm:text-base">
               Choisissez librement votre participation, soutenez les projets de
               l&apos;eglise ou retrouvez les informations du culte.
             </p>
           </motion.div>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-3 gap-3 border-t border-border pt-4">
             {heroStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-zinc-200 bg-zinc-50 p-3 text-center dark:border-white/10 dark:bg-white/5"
+                className="min-w-0 py-2"
               >
-                <p className="text-xl font-black text-orange-600 dark:text-amber-200">
+                <p className="text-xl font-semibold text-foreground">
                   {stat.value}
                 </p>
-                <p className="text-[0.68rem] font-bold uppercase text-zinc-500 dark:text-zinc-400">
+                <p className="mt-1 text-[10px] font-medium text-muted-foreground">
                   {stat.label}
                 </p>
               </div>
@@ -74,7 +74,7 @@ export function HeroSection({
           </div>
         </div>
 
-        <div className="rounded-[1.25rem] border border-zinc-200 bg-white p-3 shadow-xl shadow-orange-950/5 dark:border-white/10 dark:bg-zinc-900/90">
+        <div className="rounded-lg border border-border bg-card p-4">
           <DonationControls
             amount={amount}
             formattedAmount={formattedAmount}
@@ -84,7 +84,7 @@ export function HeroSection({
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
             <Button
               size="lg"
-              className="h-12 w-full rounded-full bg-orange-500 px-6 text-sm font-black text-white shadow-md transition hover:bg-orange-600"
+              className="min-h-12 w-full bg-teal-700 px-4 text-sm text-white hover:bg-teal-800"
               onClick={onDonate}
               disabled={isProcessing}
               aria-busy={isProcessing}

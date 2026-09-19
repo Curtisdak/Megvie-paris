@@ -30,15 +30,15 @@ export default async function MemberNotificationsPage({
   ])
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-2.5 py-4 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:px-4 sm:py-8">
+    <main className="app-page">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-5">
-        <section className="overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-zinc-950 via-amber-900 to-emerald-800 p-5 text-white shadow-2xl sm:p-7">
+        <section className="overflow-hidden rounded-lg bg-[linear-gradient(110deg,#18181b,#193d38)] p-5 text-white shadow-none sm:p-7">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-100">
+              <p className="text-xs font-semibold uppercase tracking-normal text-amber-100">
                 Espace membre
               </p>
-              <h1 className="mt-3 text-3xl font-semibold leading-tight sm:text-5xl">
+              <h1 className="mt-3 text-3xl font-semibold leading-tight sm:text-3xl">
                 Notifications
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-white/80">
@@ -47,13 +47,13 @@ export default async function MemberNotificationsPage({
               </p>
             </div>
             <div className="grid grid-cols-2 gap-2 sm:min-w-64">
-              <div className="rounded-2xl bg-white/10 p-3">
+              <div className="rounded-lg bg-white/10 p-3">
                 <p className="text-xs text-white/70">Non lues</p>
                 <p className="mt-1 text-3xl font-semibold">
                   {notificationData.unread}
                 </p>
               </div>
-              <div className="rounded-2xl bg-white/10 p-3">
+              <div className="rounded-lg bg-white/10 p-3">
                 <p className="text-xs text-white/70">Total</p>
                 <p className="mt-1 text-3xl font-semibold">
                   {notificationData.total}
@@ -65,7 +65,7 @@ export default async function MemberNotificationsPage({
 
         <MemberPushManager activeDevices={notificationData.activeDevices} />
 
-        <section className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr),minmax(320px,0.9fr)]">
+        <section className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <MemberNotificationInbox
             notifications={notificationData.notifications}
             pagination={notificationData.pagination}
@@ -73,10 +73,10 @@ export default async function MemberNotificationsPage({
           />
 
           <aside>
-            <details className="group rounded-[1.35rem] border border-zinc-200 bg-white/95 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/85">
+            <details className="group rounded-lg border border-zinc-200 bg-white/95 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/85">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 marker:hidden sm:px-5">
                 <div className="flex min-w-0 items-center gap-3">
-                  <span className="rounded-2xl bg-amber-100 p-2.5 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
+                  <span className="rounded-lg bg-amber-100 p-2.5 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
                     <Settings2 className="h-5 w-5" aria-hidden />
                   </span>
                   <div className="min-w-0">

@@ -2,8 +2,6 @@
 
 import { useEffect } from "react"
 import { usePathname } from "next/navigation"
-import { InstallAppDialog } from "@/components/pwa/install-app-dialog"
-import { FloatingInstallButton } from "@/components/pwa/floating-install-button"
 import { AppHeader } from "@/components/navigation/app-header"
 import { AppNavigation } from "@/components/navigation/app-navigation"
 
@@ -23,10 +21,8 @@ export function AppChrome() {
 
   return (
     <>
-      <InstallAppDialog autoOpen />
       <AppHeader />
       <AppNavigation />
-      <FloatingInstallButton />
     </>
   )
 }

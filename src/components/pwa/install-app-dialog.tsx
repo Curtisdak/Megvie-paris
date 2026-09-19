@@ -38,6 +38,7 @@ type InstallAppDialogProps = {
   autoOpenDelayMs?: number
   triggerClassName?: string
   triggerLabel?: string
+  iconOnly?: boolean
 }
 
 function isIosDevice() {
@@ -67,6 +68,7 @@ export function InstallAppDialog({
   autoOpenDelayMs = 1800,
   triggerClassName,
   triggerLabel = "Installer",
+  iconOnly = false,
 }: InstallAppDialogProps) {
   const [installPrompt, setInstallPrompt] =
     useState<InstallPromptEvent | null>(null)
@@ -194,15 +196,17 @@ export function InstallAppDialog({
       {!autoOpen && (
         <DialogTrigger asChild>
           <Button
-            variant="outline"
-            size="sm"
+            variant={iconOnly ? "ghost" : "outline"}
+            size={iconOnly ? "icon" : "sm"}
+            aria-label={iconOnly ? "Installer MegVie Paris" : undefined}
+            title={iconOnly ? "Installer MegVie Paris" : undefined}
             className={cn(
-              "rounded-full border-amber-200 bg-amber-50 text-amber-800 hover:bg-amber-100 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-100 dark:hover:bg-amber-400/20",
+              iconOnly ? "size-11 rounded-lg text-muted-foreground hover:bg-muted" : "rounded-lg border-border",
               triggerClassName,
             )}
           >
-            <Download className="mr-2 h-4 w-4" />
-            {triggerLabel}
+            <Download className="size-4" aria-hidden />
+            {!iconOnly && triggerLabel}
           </Button>
         </DialogTrigger>
       )}

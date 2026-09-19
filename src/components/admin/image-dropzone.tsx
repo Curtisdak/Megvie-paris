@@ -154,7 +154,7 @@ export function ImageDropzone({
         onDrop={onDrop}
       >
         {previewUrl ? (
-          <div className="grid gap-3 sm:grid-cols-[120px,minmax(0,1fr)]">
+          <div className="grid gap-3 sm:grid-cols-[120px_minmax(0,1fr)]">
             <div
               className="aspect-[4/3] rounded-xl bg-cover bg-center ring-1 ring-zinc-200 dark:ring-zinc-800"
               style={{ backgroundImage: `url("${previewUrl}")` }}

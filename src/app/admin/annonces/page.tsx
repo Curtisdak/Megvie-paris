@@ -185,7 +185,7 @@ export default async function AnnouncementsPage({
       </section>
 
       <AdminFilterBar description="Recherchez par texte, statut, audience ou catégorie.">
-        <form className="grid gap-3 lg:grid-cols-[minmax(220px,1fr),170px,190px,190px,auto] lg:items-end">
+        <form className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 xl:items-end">
           <div className="space-y-2">
             <label htmlFor="announcement-search" className={labelClass}>
               Rechercher
@@ -302,7 +302,7 @@ export default async function AnnouncementsPage({
             const expiresAt = formatDateTime(announcement.expiresAt)
             return (
               <AdminCard key={announcement.id} className="p-0">
-                <div className="grid overflow-hidden rounded-2xl lg:grid-cols-[150px,minmax(0,1fr),230px]">
+                <div className="grid overflow-hidden rounded-2xl lg:grid-cols-[150px_minmax(0,1fr)_230px]">
                   <div className="min-h-36 bg-zinc-100 dark:bg-zinc-950 lg:min-h-full">
                     {announcement.coverImageUrl ? (
                       <div

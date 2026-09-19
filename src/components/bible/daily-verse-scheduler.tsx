@@ -58,7 +58,7 @@ export function DailyVerseScheduler({
   schedules: ScheduleItem[]
 }) {
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr),minmax(0,1.1fr)]">
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
       <DailyVerseScheduleForm books={books} />
       <section className="space-y-3">
         {schedules.length === 0 ? (

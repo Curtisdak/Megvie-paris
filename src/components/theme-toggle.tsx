@@ -39,9 +39,9 @@ export function ThemeToggle() {
         <Button
           variant="ghost"
           size="icon"
-          className="relative h-9 w-9 overflow-hidden rounded-full text-zinc-800 transition hover:-translate-y-0.5 hover:bg-amber-50 hover:text-amber-700 dark:text-zinc-100 dark:hover:bg-amber-300/10 dark:hover:text-amber-100"
+          className="relative size-11 overflow-hidden rounded-lg text-muted-foreground hover:bg-muted"
+          title="Changer de thème"
         >
-          <span className="absolute inset-1 rounded-full bg-gradient-to-br from-amber-100 via-white to-orange-50 opacity-100 transition dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-950" />
           <Sun
             className={cn(
               "relative h-4 w-4 text-amber-600 transition-all",
@@ -59,7 +59,7 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-48 rounded-2xl border-zinc-200 p-2 shadow-xl dark:border-zinc-800"
+        className="w-44 rounded-lg border-border p-1 shadow-lg"
       >
         {themeOptions.map((option) => {
           const Icon = option.icon
@@ -69,7 +69,7 @@ export function ThemeToggle() {
             <DropdownMenuItem
               key={option.value}
               onClick={() => setTheme(option.value)}
-              className="flex cursor-pointer items-center justify-between rounded-xl px-3 py-2"
+              className="flex min-h-11 cursor-pointer items-center justify-between rounded-md px-3 py-2"
             >
               <span className="flex items-center gap-2">
                 <Icon className="h-4 w-4" />

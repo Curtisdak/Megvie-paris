@@ -28,9 +28,9 @@ const leaderCopyContainer = {
 }
 
 const leaderCopyItem = {
-  hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)" },
-  exit: { opacity: 0, y: -10, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -4 },
 }
 
 export function LeadersSection() {
@@ -89,18 +89,18 @@ export function LeadersSection() {
       viewport={{ once: true, amount: 0.25 }}
       variants={fadeInUp}
       transition={{ duration: 0.6 }}
-      className="overflow-hidden rounded-3xl border border-zinc-200 bg-white/95 p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-8"
+      className="border-t border-border pt-8"
       aria-label="Leaders de MegVie Paris"
     >
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-600">
+          <p className="text-xs font-semibold text-teal-700 dark:text-teal-300">
             Nos leaders
           </p>
-          <h3 className="mt-3 text-2xl font-semibold text-zinc-900 dark:text-white sm:text-3xl">
+          <h3 className="mt-2 text-2xl font-semibold text-foreground">
             Une equipe au service de la communaute.
           </h3>
-          <p className="mt-3 text-base leading-7 text-zinc-600 dark:text-zinc-300">
+          <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
             Rencontrez les responsables qui accompagnent MegVie Paris dans la
             priere, l&apos;accueil et l&apos;enseignement.
           </p>
@@ -140,7 +140,7 @@ export function LeadersSection() {
       </div>
 
       <div
-        className="mt-6 overflow-hidden rounded-[28px] border border-zinc-200 bg-zinc-950 shadow-xl dark:border-zinc-800 sm:mt-8"
+        className="mt-5 overflow-hidden rounded-lg bg-zinc-950"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         role="region"
@@ -154,10 +154,10 @@ export function LeadersSection() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -32 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="relative isolate grid min-h-[500px] overflow-hidden bg-zinc-950 text-white lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]"
+            className="relative isolate grid overflow-hidden bg-zinc-950 text-white lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]"
             aria-live="polite"
           >
-            <div className="relative z-10 min-h-[330px] overflow-hidden bg-zinc-900 sm:min-h-[420px] lg:min-h-[500px]">
+            <div className="relative z-10 h-[300px] overflow-hidden bg-zinc-900 sm:h-[380px] lg:h-[420px]">
               <Image
                 src={activeLeader.image}
                 alt={activeLeader.name}
@@ -169,7 +169,7 @@ export function LeadersSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/10 to-transparent lg:bg-[linear-gradient(90deg,rgba(9,9,11,0)_0%,rgba(9,9,11,0)_74%,rgba(9,9,11,0.18)_100%)]" />
             </div>
 
-            <div className="relative z-20 flex min-h-[330px] flex-col justify-center bg-zinc-950 p-5 sm:p-8 lg:-ml-24 lg:min-h-[500px] lg:p-10 lg:pl-32">
+            <div className="relative z-20 flex min-h-[240px] flex-col justify-center bg-zinc-950 p-5 sm:p-7 lg:-ml-12 lg:min-h-[420px] lg:p-8 lg:pl-16">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-y-0 -left-32 hidden w-32 bg-gradient-to-r from-transparent via-zinc-950/68 to-zinc-950 lg:block"
@@ -192,10 +192,10 @@ export function LeadersSection() {
                   variants={leaderCopyItem}
                   transition={{ duration: 0.48, ease: "easeOut" }}
                 >
-                  <h4 className="text-4xl font-black leading-tight text-white sm:text-5xl">
+                  <h4 className="text-2xl font-semibold leading-tight text-white sm:text-3xl">
                     {activeLeader.name}
                   </h4>
-                  <p className="mt-4 max-w-lg text-base leading-7 text-zinc-200 sm:text-lg">
+                  <p className="mt-3 max-w-lg text-sm leading-6 text-zinc-300">
                     Disponible pour accueillir, prier et accompagner la
                     communaute avec attention et fidelite.
                   </p>
@@ -204,7 +204,7 @@ export function LeadersSection() {
                 <motion.div
                   variants={leaderCopyItem}
                   transition={{ duration: 0.42, ease: "easeOut" }}
-                  className="grid gap-3 pt-2 sm:grid-cols-3"
+                  className="flex flex-wrap gap-x-4 gap-y-2 border-t border-white/15 pt-4"
                 >
                   {leaderCommitments.map((item, index) => (
                     <motion.div
@@ -217,7 +217,7 @@ export function LeadersSection() {
                         delay: 0.24 + index * 0.06,
                         ease: "easeOut",
                       }}
-                      className="flex min-h-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.08] px-4 py-3 text-center text-sm font-semibold text-zinc-100 shadow-lg shadow-black/10 backdrop-blur"
+                      className="text-xs font-medium text-zinc-300"
                     >
                       {item}
                     </motion.div>

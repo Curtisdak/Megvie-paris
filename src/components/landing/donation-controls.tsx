@@ -17,14 +17,11 @@ export function DonationControls({
   onManualChange,
 }: DonationControlsProps) {
   return (
-    <div className="rounded-3xl border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-900/60 sm:p-5">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
+    <div>
+      <div className="flex items-baseline justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-zinc-500 sm:tracking-[0.35em]">
+          <p className="text-sm font-medium text-muted-foreground">
             Montant du don
-          </p>
-          <p className="text-sm text-zinc-500">
-            Ajustez le curseur ou saisissez un montant
           </p>
         </div>
         <p className="text-2xl font-semibold text-amber-600 dark:text-amber-300 sm:text-3xl">
@@ -47,7 +44,7 @@ export function DonationControls({
           max={MAX_DONATION}
           value={amount}
           onChange={onManualChange}
-          className="min-w-0 flex-1 rounded-2xl border border-zinc-300 bg-transparent px-4 py-2 text-lg font-medium dark:border-zinc-700"
+          className="min-h-11 min-w-0 flex-1 rounded-lg border border-input bg-transparent px-3 py-2 text-base font-medium"
           aria-label="Montant du don en euros"
         />
         <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">

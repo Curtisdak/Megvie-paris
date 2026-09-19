@@ -52,7 +52,7 @@ export default async function MembershipRequestsPage({
         <div className="grid gap-4">
           {applications.map((member) => (
             <AdminCard key={member.id}>
-              <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr),340px]">
+              <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-lg font-semibold">

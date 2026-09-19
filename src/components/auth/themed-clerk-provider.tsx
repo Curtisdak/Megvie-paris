@@ -12,7 +12,7 @@ export function ThemedClerkProvider({ children }: { children: ReactNode }) {
     () => ({
       theme: resolvedTheme === "dark" ? dark : undefined,
       variables: {
-        colorPrimary: resolvedTheme === "dark" ? "#fbbf24" : "#b45309",
+        colorPrimary: resolvedTheme === "dark" ? "#5eead4" : "#0f766e",
         colorPrimaryForeground:
           resolvedTheme === "dark" ? "#18181b" : "#ffffff",
         colorBackground: resolvedTheme === "dark" ? "#18181b" : "#ffffff",
@@ -21,11 +21,11 @@ export function ThemedClerkProvider({ children }: { children: ReactNode }) {
         colorInput: resolvedTheme === "dark" ? "#27272a" : "#ffffff",
         colorInputForeground: resolvedTheme === "dark" ? "#fafafa" : "#18181b",
         colorNeutral: resolvedTheme === "dark" ? "#ffffff" : "#18181b",
-        borderRadius: "0.75rem",
+        borderRadius: "0.5rem",
         fontFamily: "var(--font-geist-sans)",
       },
       elements: {
-        cardBox: "border border-zinc-200 shadow-lg dark:border-zinc-700",
+        cardBox: "border border-zinc-200 shadow-sm dark:border-zinc-700",
         formButtonPrimary: "min-h-11",
         formFieldInput: "min-h-11",
         userButtonPopoverCard: "border border-zinc-200 dark:border-zinc-700",

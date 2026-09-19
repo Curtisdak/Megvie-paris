@@ -214,15 +214,12 @@ export function PushNotificationCard() {
   const canUnsubscribe = isSubscribed && !isBusy
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-3xl border border-zinc-200 bg-white/90 p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-6">
+    <div className="flex h-full min-w-0 flex-col justify-between">
       <div>
-        <span className="inline-flex rounded-full bg-amber-100 p-3 text-amber-700 dark:bg-amber-400/15 dark:text-amber-200">
+        <span className="inline-flex text-teal-700 dark:text-teal-300">
           <Bell className="h-5 w-5" />
         </span>
-        <p className="mt-4 text-sm font-semibold uppercase tracking-[0.25em] text-amber-600">
-          Verset du jour
-        </p>
-        <h3 className="mt-2 text-xl font-semibold text-zinc-900 dark:text-white sm:text-2xl">
+        <h3 className="mt-3 text-lg font-semibold text-foreground">
           Recevoir le verset du jour
         </h3>
         <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
@@ -252,7 +249,7 @@ export function PushNotificationCard() {
         ) : (
           <Button
             type="button"
-            className="rounded-full bg-amber-600 px-6 text-white hover:bg-amber-500"
+            className="bg-teal-700 px-4 text-white hover:bg-teal-800"
             onClick={handleSubscribe}
             disabled={!canSubscribe}
           >

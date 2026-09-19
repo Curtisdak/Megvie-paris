@@ -26,7 +26,7 @@ export default async function AuditPage({
       />
 
       <AdminFilterBar description="Filtrez le journal par type d'action ou type d'entité.">
-          <form className="grid gap-2 md:grid-cols-[1fr,1fr,auto]">
+          <form className="grid gap-2 md:grid-cols-[1fr_1fr_auto]">
             <Input
               name="action"
               placeholder="Action"
@@ -55,7 +55,7 @@ export default async function AuditPage({
         <AdminCard>
           <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
             {logs.map((log) => (
-              <div key={log.id} className="grid gap-2 py-4 xl:grid-cols-[220px,1fr,180px]">
+              <div key={log.id} className="grid gap-2 py-4 xl:grid-cols-[220px_1fr_180px]">
                 <div>
                   <p className="font-semibold">{log.action}</p>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400">

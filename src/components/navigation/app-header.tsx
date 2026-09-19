@@ -1,10 +1,12 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { Bell, ChevronLeft } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NotificationCountBadge } from "@/components/navigation/notification-count-badge"
+import { InstallAppDialog } from "@/components/pwa/install-app-dialog"
 
 function getPageTitle(pathname: string) {
   if (pathname === "/") return "Accueil"
@@ -20,10 +22,12 @@ function getPageTitle(pathname: string) {
   if (pathname.startsWith("/espace-membre/profil")) return "Profil"
   if (pathname.startsWith("/espace-membre/carte")) return "Carte membre"
   if (pathname.startsWith("/espace-membre/securite")) return "Securite"
-  if (pathname.startsWith("/espace-membre/notifications")) return "Notifications"
+  if (pathname.startsWith("/espace-membre/notifications"))
+    return "Notifications"
   if (pathname.startsWith("/espace-membre/dons")) return "Mes dons"
   if (pathname.startsWith("/espace-membre/versets-favoris")) return "Favoris"
-  if (pathname.startsWith("/espace-membre/notes-bibliques")) return "Notes bibliques"
+  if (pathname.startsWith("/espace-membre/notes-bibliques"))
+    return "Notes bibliques"
   if (pathname.startsWith("/espace-membre")) return "Espace membre"
   if (pathname.startsWith("/admin")) return "Administration"
   return "MegVie Paris"
@@ -39,29 +43,43 @@ export function AppHeader() {
     : "/notifications"
 
   return (
-    <header className="sticky top-0 z-30 border-b border-zinc-200/60 bg-white/80 px-3 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/80 sm:px-4">
+    <header className="sticky top-0 z-30 border-b border-border bg-background/85 px-3 py-2 backdrop-blur-xl sm:px-6">
       <div className="mx-auto flex min-h-12 w-full max-w-6xl items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
-          <button
-            type="button"
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-200/80 bg-white/90 text-zinc-700 shadow-sm transition hover:-translate-x-0.5 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 disabled:cursor-not-allowed disabled:opacity-35 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200 dark:hover:border-amber-300/40 dark:hover:bg-amber-300/10 dark:hover:text-amber-100"
-            onClick={() => router.back()}
-            disabled={isHomePage}
-            aria-label="Retour"
-          >
-            <ChevronLeft className="h-4 w-4" aria-hidden />
-          </button>
+          {isHomePage ? (
+            <Image
+              src="/icons/icon-192x192.png"
+              alt=""
+              width={36}
+              height={36}
+              className="rounded-lg min-[1025px]:hidden"
+            />
+          ) : (
+            <button
+              type="button"
+              className="grid size-11 shrink-0 place-items-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
+              onClick={() =>
+                window.history.length > 1 ? router.back() : router.push("/")
+              }
+              disabled={isHomePage}
+              aria-label="Retour"
+            >
+              <ChevronLeft className="h-4 w-4" aria-hidden />
+            </button>
+          )}
           <span className="min-w-0 truncate text-base font-semibold text-zinc-950 dark:text-white sm:text-lg">
-            {pageTitle}
+            {isHomePage ? "MegVie Paris" : pageTitle}
           </span>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1 rounded-full border border-zinc-200/80 bg-white/75 p-1 shadow-sm ring-1 ring-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:ring-white/5">
+        <div className="flex shrink-0 items-center gap-1">
+          <InstallAppDialog iconOnly />
           <ThemeToggle />
           <Link
             href={notificationHref}
-            className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-zinc-950 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:bg-white dark:text-zinc-950 dark:hover:bg-amber-300"
+            className="relative grid size-11 place-items-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
             aria-label="Ouvrir les notifications"
+            title="Notifications"
           >
             <Bell className="h-4 w-4" aria-hidden />
             <NotificationCountBadge />

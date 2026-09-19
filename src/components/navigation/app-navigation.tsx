@@ -1,378 +1,240 @@
 "use client"
 
-import type { ComponentType } from "react"
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useSyncExternalStore } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import {
+  ArrowUpRight,
   Bell,
   BookOpen,
   HeartHandshake,
   Home,
   Mail,
   PanelLeftClose,
-  Search,
+  PanelLeftOpen,
+  Sun,
   UserRound,
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { NotificationCountBadge } from "@/components/navigation/notification-count-badge"
+import { usePathname } from "next/navigation"
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
 import { cn } from "@/lib/utils"
 
-const desktopNavItems = [
-  {
-    label: "Accueil",
-    href: "/",
-    icon: Home,
-    description: "Page principale",
-  },
-  {
-    label: "Don",
-    href: "/donate",
-    icon: HeartHandshake,
-    description: "Soutenir la mission",
-  },
-  {
-    label: "Bible",
-    href: "/bible",
-    icon: Search,
-    description: "Lire et rechercher",
-  },
+const navItems = [
+  { label: "Accueil", mobile: "Accueil", href: "/", icon: Home },
+  { label: "La Bible", mobile: "Bible", href: "/bible", icon: BookOpen },
   {
     label: "Verset du jour",
+    mobile: "Verset",
     href: "/verset-du-jour",
-    icon: BookOpen,
-    description: "Encouragement quotidien",
+    icon: Sun,
+  },
+  {
+    label: "Faire un don",
+    mobile: "Donner",
+    href: "/donate",
+    icon: HeartHandshake,
   },
   {
     label: "Notifications",
+    mobile: "Actualités",
     href: "/notifications",
     icon: Bell,
-    description: "Versets et messages",
   },
-  {
-    label: "Contact",
-    href: "/contact",
-    icon: Mail,
-    description: "Nous joindre",
-  },
+  { label: "Contact", mobile: "Contact", href: "/contact", icon: Mail },
   {
     label: "Espace membre",
+    mobile: "Mon espace",
     href: "/espace-membre",
     icon: UserRound,
-    description: "Profil et carte",
   },
 ]
-
-const mobileNavItems = desktopNavItems.filter(
-  (item) =>
-    item.href !== "/verset-du-jour" &&
-    item.href !== "/notifications",
+const mobileItems = navItems.filter(
+  (item) => !["/verset-du-jour", "/notifications"].includes(item.href),
 )
+const storageKey = "megvie-sidebar-collapsed"
+const changeEvent = "megvie-sidebar-collapsed-change"
 
-const SIDEBAR_STORAGE_KEY = "megvie-sidebar-collapsed"
-const SIDEBAR_CHANGE_EVENT = "megvie-sidebar-collapsed-change"
-
-function getSidebarCollapsedSnapshot() {
-  if (typeof window === "undefined") return false
-
-  return window.localStorage.getItem(SIDEBAR_STORAGE_KEY) === "true"
+function getSnapshot() {
+  try {
+    return window.localStorage.getItem(storageKey) === "true"
+  } catch {
+    return false
+  }
 }
-
-function subscribeToSidebarCollapsed(callback: () => void) {
+function subscribe(callback: () => void) {
   window.addEventListener("storage", callback)
-  window.addEventListener(SIDEBAR_CHANGE_EVENT, callback)
-
+  window.addEventListener(changeEvent, callback)
   return () => {
     window.removeEventListener("storage", callback)
-    window.removeEventListener(SIDEBAR_CHANGE_EVENT, callback)
+    window.removeEventListener(changeEvent, callback)
   }
 }
-
-function isNavItemActive(pathname: string, hash: string, href: string) {
-  if (href === "/") {
-    return pathname === "/" && hash !== "#don"
-  }
-
-  return pathname === href || pathname.startsWith(`${href}/`)
+function isActive(path: string, href: string) {
+  return href === "/"
+    ? path === href
+    : path === href || path.startsWith(href + "/")
 }
 
 export function AppNavigation() {
   const pathname = usePathname()
-  const [hash, setHash] = useState("")
-  const isCollapsed = useSyncExternalStore(
-    subscribeToSidebarCollapsed,
-    getSidebarCollapsedSnapshot,
-    () => false,
-  )
-
+  const reducedMotion = usePrefersReducedMotion()
+  const collapsed = useSyncExternalStore(subscribe, getSnapshot, () => false)
   useEffect(() => {
-    const updateHash = () => setHash(window.location.hash)
-
-    updateHash()
-    window.addEventListener("hashchange", updateHash)
-    window.addEventListener("popstate", updateHash)
-
-    return () => {
-      window.removeEventListener("hashchange", updateHash)
-      window.removeEventListener("popstate", updateHash)
+    document.documentElement.classList.toggle("sidebar-collapsed", collapsed)
+    return () => document.documentElement.classList.remove("sidebar-collapsed")
+  }, [collapsed])
+  function toggle() {
+    try {
+      localStorage.setItem(storageKey, String(!collapsed))
+      window.dispatchEvent(new Event(changeEvent))
+    } catch {
+      /* Navigation remains available when browser storage is disabled. */
     }
-  }, [])
-
-  useEffect(() => {
-    document.documentElement.classList.toggle(
-      "sidebar-collapsed",
-      isCollapsed,
-    )
-
-    return () => {
-      document.documentElement.classList.remove("sidebar-collapsed")
-    }
-  }, [isCollapsed])
-
-  const toggleSidebar = () => {
-    window.localStorage.setItem(SIDEBAR_STORAGE_KEY, String(!isCollapsed))
-    window.dispatchEvent(new Event(SIDEBAR_CHANGE_EVENT))
   }
 
   return (
     <>
       <aside
         className={cn(
-          "app-sidebar-nav fixed inset-y-0 left-0 z-40 flex-col border-r border-zinc-200/80 bg-white/90 px-4 py-5 shadow-[12px_0_40px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-[width,padding] duration-300 dark:border-zinc-800/80 dark:bg-zinc-950/90",
-          isCollapsed ? "w-[4.75rem] px-2" : "w-72",
+          "app-sidebar-nav fixed inset-y-0 left-0 z-40 flex-col border-r border-border bg-card p-3 transition-[width] duration-200",
+          collapsed ? "w-[4.75rem]" : "w-[15.5rem]",
         )}
         aria-label="Navigation principale"
       >
-        <div
-          className={cn(
-            "flex items-center",
-            isCollapsed ? "justify-center" : "justify-between gap-3",
-          )}
-        >
-          {isCollapsed ? (
+        <div className="flex h-14 shrink-0 items-center gap-2 px-1">
+          <Link
+            href="/"
+            className="flex min-w-0 flex-1 items-center gap-2.5 rounded-lg"
+            aria-label="MegVie Paris, accueil"
+          >
+            <Image
+              src="/icons/icon-192x192.png"
+              alt=""
+              width={38}
+              height={38}
+              className="shrink-0 rounded-lg"
+            />
+            {!collapsed && (
+              <span className="min-w-0">
+                <strong className="block truncate text-sm">MegVie Paris</strong>
+                <span className="block text-xs text-muted-foreground">
+                  Foi & communauté
+                </span>
+              </span>
+            )}
+          </Link>
+          {!collapsed && (
             <button
               type="button"
-              className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-600 text-xs font-black tracking-[0.08em] text-white shadow-md shadow-amber-600/20 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-              onClick={toggleSidebar}
-              aria-label="Ouvrir le menu lateral"
-              aria-expanded={false}
+              onClick={toggle}
+              className="grid size-9 shrink-0 place-items-center rounded-lg text-muted-foreground hover:bg-muted"
+              aria-label="Réduire le menu"
+              title="Réduire le menu"
             >
-              MVP
+              <PanelLeftClose className="size-4" />
             </button>
-          ) : (
-            <>
-              <Link
-                href="/"
-                className="group flex min-w-0 items-center gap-3 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-              >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-600 text-sm font-black tracking-[0.08em] text-white shadow-md shadow-amber-600/20 transition group-hover:scale-105">
-                  MVP
-                </span>
-                <span className="min-w-0 truncate text-sm font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">
-                  MegVie Paris
-                </span>
-              </Link>
-              <button
-                type="button"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200 hover:text-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-amber-300/40 dark:hover:text-amber-100"
-                onClick={toggleSidebar}
-                aria-label="Fermer le menu lateral"
-                aria-expanded
-              >
-                <PanelLeftClose className="h-5 w-5" />
-              </button>
-            </>
           )}
         </div>
-
-        <ScrollArea className="mt-6 min-h-0 flex-1 pr-1">
-          <nav className="flex flex-col gap-2">
-            {desktopNavItems.map((item, index) => (
-              <NavigationLink
-                key={item.href}
-                collapsed={isCollapsed}
-                description={item.description}
-                hash={hash}
-                href={item.href}
-                icon={item.icon}
-                index={index}
-                label={item.label}
-                pathname={pathname}
-                variant="sidebar"
-              />
-            ))}
+        {collapsed && (
+          <button
+            type="button"
+            onClick={toggle}
+            className="mx-auto mt-3 grid size-11 place-items-center rounded-lg text-muted-foreground hover:bg-muted"
+            aria-label="Ouvrir le menu"
+            title="Ouvrir le menu"
+          >
+            <PanelLeftOpen className="size-4" />
+          </button>
+        )}
+        <ScrollArea className="mt-7 min-h-0 flex-1">
+          <nav className="space-y-1">
+            {navItems.map((item) => {
+              const active = isActive(pathname, item.href)
+              const Icon = item.icon
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  title={collapsed ? item.label : undefined}
+                  aria-label={item.label}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "relative flex min-h-12 items-center gap-3 rounded-lg px-3 text-sm transition-colors",
+                    collapsed && "justify-center px-0",
+                    active
+                      ? "bg-teal-50 font-semibold text-teal-800 dark:bg-teal-400/10 dark:text-teal-200"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  )}
+                >
+                  {active && (
+                    <span className="absolute left-0 h-5 w-0.5 rounded-full bg-teal-600 dark:bg-teal-300" />
+                  )}
+                  <Icon className="size-[19px] shrink-0" aria-hidden />
+                  {!collapsed && <span>{item.label}</span>}
+                  {item.href === "/notifications" && (
+                    <NotificationCountBadge className="right-2 top-2" />
+                  )}
+                </Link>
+              )
+            })}
           </nav>
         </ScrollArea>
-
-        {!isCollapsed ? (
-          <div className="rounded-3xl border border-zinc-200 bg-white/75 p-4 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-300">
-            <p className="font-semibold text-zinc-900 dark:text-white">
-              Notifications
-            </p>
-            <p className="mt-1 leading-6">
-              Bientot: versets, messages, anniversaires et nouvelles de
-              l&apos;eglise.
-            </p>
-          </div>
-        ) : null}
+        <Link
+          href="/contact"
+          title={collapsed ? "Nous retrouver" : undefined}
+          className="mt-5 flex items-center gap-3 border-t border-border px-2 pt-4 text-xs text-muted-foreground hover:text-foreground"
+        >
+          <ArrowUpRight className="size-5 shrink-0" aria-hidden />
+          {!collapsed && (
+            <span>
+              <span className="block font-semibold text-foreground">
+                On se retrouve dimanche
+              </span>
+              <span className="mt-1 block">14:30 · Le Perreux-sur-Marne</span>
+            </span>
+          )}
+        </Link>
       </aside>
-
       <nav
-        className="app-bottom-nav fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200/40 bg-white/55 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/55"
+        className="app-bottom-nav fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200/50 bg-white/55 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/55"
         aria-label="Navigation principale mobile"
       >
-        <div className="mx-auto w-full max-w-xl px-2 pt-1">
-          <div className="grid grid-cols-5 gap-1">
-            {mobileNavItems.map((item, index) => (
-              <NavigationLink
+        <div className="mx-auto grid h-16 max-w-xl grid-cols-5 gap-1 px-2">
+          {mobileItems.map((item) => {
+            const active = isActive(pathname, item.href)
+            const Icon = item.icon
+            return (
+              <Link
                 key={item.href}
-                hash={hash}
                 href={item.href}
-                icon={item.icon}
-                index={index}
-                label={item.label}
-                pathname={pathname}
-                variant="bottom"
-              />
-            ))}
-          </div>
+                aria-label={item.label}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "relative flex min-w-0 flex-col items-center justify-center gap-1 rounded-lg text-[10px] font-medium transition-colors",
+                  active
+                    ? "text-teal-800 dark:text-teal-200"
+                    : "text-zinc-600 dark:text-zinc-400",
+                )}
+              >
+                <span className="relative grid h-7 w-12 place-items-center">
+                  {active && (
+                    <motion.span
+                      layoutId="mobile-nav-active"
+                      className="absolute inset-0 rounded-full bg-teal-100 dark:bg-teal-400/15"
+                      transition={{ duration: reducedMotion ? 0 : 0.2 }}
+                    />
+                  )}
+                  <Icon className="relative size-5" aria-hidden />
+                </span>
+                <span className="max-w-full truncate">{item.mobile}</span>
+              </Link>
+            )
+          })}
         </div>
       </nav>
     </>
-  )
-}
-
-function NavigationLink({
-  collapsed = false,
-  description,
-  hash,
-  href,
-  icon: Icon,
-  index,
-  label,
-  pathname,
-  variant,
-}: {
-  collapsed?: boolean
-  description?: string
-  hash: string
-  href: string
-  icon: ComponentType<{ className?: string; "aria-hidden"?: boolean }>
-  index: number
-  label: string
-  pathname: string
-  variant: "sidebar" | "bottom"
-}) {
-  const isActive = isNavItemActive(pathname, hash, href)
-
-  if (variant === "sidebar") {
-    return (
-      <motion.div
-        initial={{ opacity: 0, x: -14 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.28, delay: index * 0.035 }}
-      >
-        <Link
-          href={href}
-          aria-current={isActive ? "page" : undefined}
-          title={collapsed ? label : undefined}
-          className={cn(
-            "group relative flex min-h-16 items-center gap-3 overflow-hidden rounded-3xl px-3 py-3 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
-            collapsed && "justify-center px-1.5",
-            isActive
-              ? "bg-zinc-950 text-white shadow-lg shadow-zinc-950/15 dark:bg-white dark:text-zinc-950"
-              : "text-zinc-600 hover:bg-amber-50 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-amber-400/10 dark:hover:text-white",
-          )}
-        >
-          {isActive ? (
-            <motion.span
-              layoutId="sidebar-active-pill"
-              className="absolute inset-0 rounded-3xl bg-zinc-950 dark:bg-white"
-              transition={{ type: "spring", stiffness: 420, damping: 32 }}
-            />
-          ) : null}
-          <span
-            className={cn(
-              "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl transition group-hover:scale-105",
-              collapsed && "h-9 w-9 rounded-[1.15rem]",
-              isActive
-                ? "bg-amber-500 text-white"
-                : "bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-300",
-            )}
-          >
-            <Icon className="h-5 w-5" aria-hidden />
-          </span>
-          {!collapsed ? (
-            <span className="relative min-w-0">
-              <span className="block truncate font-semibold">{label}</span>
-              {description ? (
-                <span
-                  className={cn(
-                    "mt-0.5 block truncate text-xs",
-                    isActive
-                      ? "text-white/70 dark:text-zinc-600"
-                      : "text-zinc-400 dark:text-zinc-500",
-                  )}
-                >
-                  {description}
-                </span>
-              ) : null}
-            </span>
-          ) : null}
-          {collapsed && href === "/notifications" ? (
-            <NotificationCountBadge className="right-2 top-2" />
-          ) : null}
-        </Link>
-      </motion.div>
-    )
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.22, delay: index * 0.025 }}
-      className="min-w-0"
-    >
-      <Link
-        href={href}
-        aria-current={isActive ? "page" : undefined}
-        aria-label={label}
-        className={cn(
-          "group relative flex min-h-14 min-w-0 items-center justify-center overflow-hidden rounded-[1.35rem] px-1 py-1 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
-          isActive
-            ? "text-zinc-950 dark:text-white"
-            : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white",
-        )}
-      >
-        {isActive ? (
-          <motion.span
-            layoutId="bottom-active-pill"
-            className="absolute inset-1 rounded-xl bg-amber-500/10 dark:bg-amber-300/10"
-            transition={{ type: "spring", stiffness: 430, damping: 30 }}
-          />
-        ) : null}
-        <span
-          className={cn(
-            "relative flex h-11 w-11 items-center justify-center rounded-2xl transition group-hover:-translate-y-0.5 group-hover:scale-105",
-            isActive
-              ? "text-amber-700 dark:text-amber-300"
-              : "text-zinc-700 dark:text-zinc-300",
-          )}
-        >
-          <Icon className="h-5 w-5" aria-hidden />
-          {href === "/notifications" ? (
-            <NotificationCountBadge />
-          ) : null}
-        </span>
-        {isActive ? (
-          <span className="absolute bottom-1.5 h-1 w-5 rounded-full bg-amber-500 shadow-sm" />
-        ) : null}
-        <span className="sr-only">
-          {label}
-        </span>
-      </Link>
-    </motion.div>
   )
 }

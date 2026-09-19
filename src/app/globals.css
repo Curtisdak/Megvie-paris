@@ -44,8 +44,8 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --radius: 0.5rem;
+  --background: #f6f7f9;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -62,7 +62,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: #0d9488;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -121,7 +121,91 @@
     overflow-x: clip;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+  :where(h1, h2, h3, h4, p, label) {
+    overflow-wrap: anywhere;
+  }
+  :where(button, a, input, select, textarea):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  :where(button:not(:disabled), summary, select) {
+    cursor: pointer;
+  }
+  ::selection {
+    background: #ccfbf1;
+    color: #134e4a;
+  }
+}
+
+.app-page {
+  min-height: calc(100svh - 4rem);
+  padding: 1.5rem 1rem 2.5rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.page-heading {
+  padding-block: 0.5rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-route-content {
+  min-width: 0;
+  animation: page-arrive 220ms ease-out both;
+}
+
+.app-skeleton {
+  background: var(--muted);
+  border-radius: 0.5rem;
+  animation: skeleton-breathe 1.5s ease-in-out infinite;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 200;
+  transform: translateY(-150%);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@keyframes page-arrive {
+  from {
+    opacity: 0.55;
+    translate: 0 5px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes skeleton-breathe {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (min-width: 640px) {
+  .app-page {
+    padding: 2rem 1.5rem 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .app-page {
+    padding-inline: 2.5rem;
   }
 }
 
@@ -136,7 +220,8 @@
   }
 }
 
-.admin-route body {
+.admin-route body,
+body:has(.admin-workspace) {
   padding-left: 0 !important;
   padding-bottom: 0;
 }
@@ -176,8 +261,8 @@
   }
 
   body {
-    padding-left: 18rem;
-    transition: padding-left 300ms ease;
+    padding-left: 15.5rem;
+    transition: padding-left 200ms ease;
   }
 
   .sidebar-collapsed body {
@@ -250,7 +335,7 @@
 }
 
 .admin-workspace {
-  --admin-accent: #ea580c;
+  --admin-accent: #0d9488;
   isolation: isolate;
 }
 
@@ -264,39 +349,18 @@
   background-position: 50% 50%;
 }
 
-.admin-page-hero button {
-  border: 0 !important;
-  border-radius: 0.8rem !important;
-  background: white !important;
-  color: #18181b !important;
-  box-shadow: 0 12px 30px rgb(0 0 0 / 0.18) !important;
-  transition: transform 180ms ease, box-shadow 180ms ease !important;
-}
-
-.admin-page-hero button:hover {
-  transform: translateY(-2px);
-  background: #fafafa !important;
-  box-shadow: 0 16px 36px rgb(0 0 0 / 0.24) !important;
-}
-
-.admin-page-hero + :is(section, div).grid > :is(section, div, a) {
-  background-image: linear-gradient(145deg, #fff 0%, #fffaf5 58%, #f1fff9 100%);
-}
-
-.dark .admin-page-hero + :is(section, div).grid > :is(section, div, a) {
-  background-image: linear-gradient(145deg, #111114 0%, #19110d 58%, #0b1712 100%);
-}
-
 .admin-workspace main section,
 .admin-workspace main article {
   scroll-margin-top: 6rem;
 }
 
 .admin-workspace main :is(input, select, textarea) {
-  border-radius: 0.65rem;
+  border-radius: 0.5rem;
   border-color: rgb(212 212 216 / 0.9);
   background-color: rgb(255 255 255 / 0.88);
-  transition: border-color 180ms ease, box-shadow 180ms ease,
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
     background-color 180ms ease;
 }
 
@@ -307,7 +371,8 @@
 
 .admin-filter-bar :is(input, select) {
   min-height: 2.75rem;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8),
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.8),
     0 1px 2px rgb(15 23 42 / 0.04);
 }
 
@@ -317,19 +382,14 @@
 
 .admin-filter-bar button[type="submit"] {
   min-height: 2.75rem;
-  border-radius: 0.75rem;
-  background-image: linear-gradient(110deg, #ea580c, #f59e0b 55%, #059669);
-  background-size: 180% 180%;
+  border-radius: 0.5rem;
+  background: #0f766e;
   color: white;
-  box-shadow: 0 8px 20px rgb(234 88 12 / 0.18);
-  transition: transform 180ms ease, box-shadow 180ms ease,
-    background-position 300ms ease;
+  transition: background-color 180ms ease;
 }
 
 .admin-filter-bar button[type="submit"]:hover {
-  transform: translateY(-1px);
-  background-position: 100% 50%;
-  box-shadow: 0 12px 26px rgb(234 88 12 / 0.24);
+  background: #115e59;
 }
 
 .admin-filter-bar button[type="submit"]:active {
@@ -340,8 +400,7 @@
   color: rgb(82 82 91);
   font-size: 0.68rem;
   font-weight: 750;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
 .dark .admin-filter-bar label {
@@ -398,10 +457,6 @@
 }
 
 @media (max-width: 639px) {
-  .admin-page-hero {
-    border-radius: 1.25rem;
-  }
-
   .admin-page-hero > div {
     align-items: stretch;
   }

@@ -1,14 +1,14 @@
 "use client"
 
-import { Suspense, useEffect, useState } from "react"
+import { Suspense, useState } from "react"
+import Link from "next/link"
+import { ArrowUpRight, BookOpen, Sun, UserRound } from "lucide-react"
 import { toast } from "sonner"
 import { CheckoutStatusListener } from "@/components/checkout-status-listener"
 import { Footer } from "@/components/footer"
-import { ClosingCta } from "@/components/landing/closing-cta"
 import { HeroSection } from "@/components/landing/hero-section"
 import { LeadersSection } from "@/components/landing/leaders-section"
 import { PwaEngagementSection } from "@/components/pwa/pwa-engagement-section"
-import { WelcomeOverlay } from "@/components/welcome-overlay"
 import { useDonationAmount } from "@/hooks/use-donation-amount"
 import { createDonationSession } from "@/lib/donation-client"
 
@@ -19,15 +19,9 @@ export function HomePageClient({
   featuredContent?: React.ReactNode
   children?: React.ReactNode
 }) {
-  const [showWelcome, setShowWelcome] = useState(true)
   const [isProcessing, setIsProcessing] = useState(false)
   const { amount, formattedAmount, updateAmount, handleManualChange } =
     useDonationAmount()
-
-  useEffect(() => {
-    const timeoutId = window.setTimeout(() => setShowWelcome(false), 1000)
-    return () => window.clearTimeout(timeoutId)
-  }, [])
 
   const handleDonationClick = async () => {
     setIsProcessing(true)
@@ -55,30 +49,49 @@ export function HomePageClient({
   }
 
   return (
-    <div className="app-edge-to-edge relative min-h-screen bg-[linear-gradient(180deg,#fff7ed_0%,#ecfeff_32%,#fff_58%,#fafafa_100%)] py-5 font-sans text-zinc-900 dark:bg-[linear-gradient(180deg,#09090b_0%,#172554_34%,#111827_62%,#09090b_100%)] dark:text-zinc-50 sm:py-10">
+    <div className="min-h-screen bg-background text-foreground">
       <Suspense fallback={null}>
         <CheckoutStatusListener />
       </Suspense>
-      <WelcomeOverlay visible={showWelcome} />
-      <main className="relative z-0 mx-auto flex w-full max-w-6xl flex-col gap-6 sm:gap-10">
+      <main className="relative z-0 mx-auto flex w-full max-w-[1440px] flex-col">
         {featuredContent}
-        <HeroSection
-          amount={amount}
-          formattedAmount={formattedAmount}
-          isProcessing={isProcessing}
-          onSliderChange={updateAmount}
-          onManualChange={handleManualChange}
-          onDonate={handleDonationClick}
-        />
-        {children}
-        <PwaEngagementSection />
-        <LeadersSection />
-        <ClosingCta
-          isProcessing={isProcessing}
-          formattedAmount={formattedAmount}
-          onDonate={handleDonationClick}
-        />
-        <Footer />
+        <div className="grid grid-cols-3 divide-x divide-border border-b border-border bg-card">
+          {[
+            { href: "/bible", label: "Lire la Bible", icon: BookOpen },
+            { href: "/verset-du-jour", label: "Verset du jour", icon: Sun },
+            { href: "/espace-membre", label: "Mon espace", icon: UserRound },
+          ].map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className="group flex min-w-0 flex-col items-center gap-2 px-2 py-5 text-center text-xs font-medium transition hover:bg-muted sm:flex-row sm:justify-center sm:gap-3 sm:text-sm"
+            >
+              <Icon
+                className="size-5 shrink-0 text-teal-700 dark:text-teal-300"
+                aria-hidden
+              />
+              <span>{label}</span>
+              <ArrowUpRight
+                className="hidden size-4 text-muted-foreground sm:block"
+                aria-hidden
+              />
+            </Link>
+          ))}
+        </div>
+        <div className="space-y-10 px-4 py-8 sm:space-y-12 sm:px-8">
+          <HeroSection
+            amount={amount}
+            formattedAmount={formattedAmount}
+            isProcessing={isProcessing}
+            onSliderChange={updateAmount}
+            onManualChange={handleManualChange}
+            onDonate={handleDonationClick}
+          />
+          {children}
+          <PwaEngagementSection />
+          <LeadersSection />
+          <Footer />
+        </div>
       </main>
     </div>
   )

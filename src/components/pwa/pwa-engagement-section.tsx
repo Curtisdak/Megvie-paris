@@ -13,7 +13,7 @@ export function PwaEngagementSection() {
       viewport={{ once: true, amount: 0.25 }}
       variants={fadeInUp}
       transition={{ duration: 0.6 }}
-      className="grid gap-5 lg:grid-cols-2"
+      className="grid gap-6 border-t border-border pt-8 md:grid-cols-2 [&>*:only-child]:col-span-full"
     >
       <InstallAppCard />
       <PushNotificationCard />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { BadgeCheck, Clock3 } from "lucide-react"
 import { getRequiredMemberDashboardData } from "@/lib/auth/dashboard"
 import { getDisplayName } from "@/lib/auth/member"
 
@@ -15,14 +16,14 @@ export default async function MemberCardPage() {
   const isActive = profile?.membership_status === "active"
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-3 py-5 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 sm:px-4 sm:py-12">
+    <div className="app-page">
       <main className="mx-auto max-w-4xl">
         <Link href="/espace-membre" className="text-sm text-amber-700">
           Retour espace membre
         </Link>
-        <section className="mt-5 overflow-hidden rounded-[32px] bg-zinc-950 text-white shadow-2xl">
+        <section className="mt-5 overflow-hidden rounded-lg bg-zinc-950 text-white shadow-none">
           <div className="bg-gradient-to-br from-amber-700 via-amber-600 to-emerald-700 p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/75">
+            <p className="text-xs font-semibold uppercase tracking-normal text-white/75">
               Carte membre MegVie Paris
             </p>
             <h1 className="mt-8 text-3xl font-semibold">
@@ -40,16 +41,9 @@ export default async function MemberCardPage() {
               <p className="mt-1 text-xl font-semibold">
                 {isActive ? "Actif" : "En attente"}
               </p>
-              <p className="mt-4 max-w-md text-xs leading-5 text-zinc-400">
-                TODO Phase future: remplacer ce bloc par un jeton de carte signe,
-                revocable et verifiable. Aucune donnee sensible n&apos;est placee
-                dans le QR code pour cette phase.
-              </p>
             </div>
-            <div className="grid h-28 w-28 place-items-center rounded-3xl bg-white text-center text-xs font-semibold text-zinc-950">
-              QR
-              <br />
-              Phase 2
+            <div className="grid size-14 place-items-center rounded-lg bg-white/10 text-teal-200">
+              {isActive ? <BadgeCheck className="size-7" aria-label="Membre actif" /> : <Clock3 className="size-7" aria-label="En attente" />}
             </div>
           </div>
         </section>

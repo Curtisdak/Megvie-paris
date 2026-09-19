@@ -32,7 +32,7 @@ export default async function MessagesPage({
       />
 
       <AdminFilterBar description="Recherchez un expéditeur, un sujet, un statut ou un niveau de confidentialité.">
-          <form className="grid gap-2 md:grid-cols-[1fr,150px,180px,auto]">
+          <form className="grid gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_150px_180px_auto]">
             <Input
               name="q"
               placeholder="Nom, email, sujet..."

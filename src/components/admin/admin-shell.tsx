@@ -80,14 +80,14 @@ export function AdminShell({
   );
 
   return (
-    <div className="admin-workspace min-h-dvh bg-[linear-gradient(135deg,#f4f5f7_0%,#fff7ed_48%,#ecfdf5_100%)] text-zinc-950 dark:bg-[linear-gradient(135deg,#09090b_0%,#18110d_52%,#07140f_100%)] dark:text-zinc-50">
+    <div className="admin-workspace min-h-dvh bg-background text-foreground">
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 hidden h-dvh overflow-hidden border-r border-zinc-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(255,247,237,0.96)_48%,rgba(236,253,245,0.96)_100%)] shadow-[18px_0_60px_rgba(15,23,42,0.06)] transition-[width] duration-300 dark:border-white/10 dark:bg-[linear-gradient(180deg,#0d0d0f_0%,#17100c_50%,#07120e_100%)] min-[1025px]:flex min-[1025px]:flex-col",
-          collapsed ? "w-[5.25rem]" : "w-[17rem]",
+          "fixed inset-y-0 left-0 z-50 hidden h-dvh overflow-hidden border-r border-border bg-card transition-[width] duration-200 min-[1025px]:flex min-[1025px]:flex-col",
+          collapsed ? "w-[5.25rem]" : "w-[15.5rem]",
         )}
       >
-        <div className="flex h-[4.75rem] shrink-0 items-center border-b border-zinc-200/80 px-3 dark:border-white/10">
+        <div className="flex h-16 shrink-0 items-center border-b border-border px-3">
           <button
             type="button"
             onClick={() => setCollapsed((value) => !value)}
@@ -137,7 +137,7 @@ export function AdminShell({
                 <div key={group}>
                   <p
                     className={cn(
-                      "mb-1.5 h-5 overflow-hidden px-3 text-[0.64rem] font-bold uppercase tracking-[0.16em] text-zinc-400 transition-opacity",
+                      "mb-1.5 h-5 overflow-hidden px-3 text-[11px] font-medium text-muted-foreground transition-opacity",
                       collapsed ? "opacity-0" : "opacity-100",
                     )}
                     aria-hidden={collapsed}
@@ -156,9 +156,9 @@ export function AdminShell({
                           aria-current={active ? "page" : undefined}
                           title={collapsed ? item.label : undefined}
                           className={cn(
-                            "group relative flex h-11 items-center gap-3 rounded-xl px-2.5 text-sm font-semibold outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-orange-500",
+                            "group relative flex h-11 items-center gap-3 rounded-lg px-2.5 text-sm font-medium outline-none transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-teal-500",
                             active
-                              ? "bg-gradient-to-r from-orange-600 via-amber-500 to-emerald-600 text-white shadow-lg shadow-orange-600/15"
+                              ? "bg-teal-50 font-semibold text-teal-800 dark:bg-teal-400/10 dark:text-teal-200"
                               : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-white",
                           )}
                         >
@@ -166,7 +166,7 @@ export function AdminShell({
                             className={cn(
                               "grid h-7 w-7 shrink-0 place-items-center rounded-lg transition-colors",
                               active
-                                ? "bg-white/20 text-white ring-1 ring-white/20"
+                                ? "text-teal-700 dark:text-teal-300"
                                 : "text-zinc-500 group-hover:text-orange-600 dark:text-zinc-400 dark:group-hover:text-orange-400",
                             )}
                           >
@@ -229,17 +229,17 @@ export function AdminShell({
       <div
         className={cn(
           "min-h-dvh transition-[padding] duration-300",
-          collapsed ? "min-[1025px]:pl-[5.25rem]" : "min-[1025px]:pl-[17rem]",
+          collapsed ? "min-[1025px]:pl-[5.25rem]" : "min-[1025px]:pl-[15.5rem]",
         )}
       >
-        <header className="sticky top-0 z-40 h-[4.25rem] border-b border-zinc-200/80 bg-[linear-gradient(90deg,rgba(255,255,255,0.96),rgba(255,247,237,0.94),rgba(236,253,245,0.94))] px-3 shadow-[0_8px_30px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:border-white/10 dark:bg-[linear-gradient(90deg,rgba(13,13,15,0.97),rgba(30,17,10,0.95),rgba(7,25,18,0.95))] sm:px-5 min-[1025px]:h-[4.75rem]">
+        <header className="sticky top-0 z-40 h-16 border-b border-border bg-background/85 px-3 backdrop-blur-xl sm:px-5">
           <div className="mx-auto flex h-full w-full max-w-[1480px] items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2.5">
               <Button
                 asChild
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 rounded-xl"
+                className="size-11 rounded-lg"
                 aria-label="Retour à l'espace membre"
               >
                 <Link href="/espace-membre">
@@ -247,7 +247,7 @@ export function AdminShell({
                 </Link>
               </Button>
               <div className="min-w-0">
-                <p className="hidden text-[0.64rem] font-bold uppercase tracking-[0.16em] text-orange-600 sm:block dark:text-orange-400">
+                <p className="hidden text-[11px] font-medium text-muted-foreground sm:block">
                   Administration
                 </p>
                 <h1 className="truncate text-base font-bold sm:text-lg">
@@ -257,14 +257,14 @@ export function AdminShell({
             </div>
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-              <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-0.5 dark:border-white/10 dark:bg-white/5">
+              <div>
                 <ThemeToggle />
               </div>
               <Button
                 asChild
                 variant="ghost"
                 size="icon"
-                className="relative h-9 w-9 rounded-xl"
+                className="relative size-11 rounded-lg"
                 aria-label="Notifications"
               >
                 <Link href="/admin/notifications">
@@ -276,7 +276,8 @@ export function AdminShell({
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
-                    className="h-9 rounded-xl px-2.5 shadow-none sm:px-3"
+                    className="h-11 rounded-lg px-2.5 shadow-none sm:px-3"
+                    aria-label="Menu du compte"
                   >
                     <UserRound className="h-4 w-4" aria-hidden />
                     <span className="hidden max-w-28 truncate sm:inline">
@@ -294,7 +295,7 @@ export function AdminShell({
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-[1480px] px-3 py-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:px-5 sm:py-5 min-[1025px]:px-6 min-[1025px]:pb-8">
+        <main id="app-content" tabIndex={-1} className="mx-auto w-full max-w-[1480px] px-3 py-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] outline-none sm:px-5 sm:py-6 min-[1025px]:px-7 min-[1025px]:pb-8">
           <AdminRouteTransition>{children}</AdminRouteTransition>
         </main>
       </div>
@@ -378,7 +379,7 @@ function MobileNavItem({
         className={cn(
           "grid h-8 w-10 place-items-center rounded-xl transition-all duration-300",
           active &&
-            "bg-gradient-to-br from-orange-600 to-amber-500 text-white shadow-lg shadow-orange-500/25",
+            "bg-teal-100 text-teal-800 dark:bg-teal-400/15 dark:text-teal-200",
         )}
       >
         <Icon className="h-[1.15rem] w-[1.15rem]" aria-hidden />
@@ -400,7 +401,7 @@ function AdminMobileMenu({
   role: ChurchRole;
 }) {
   return (
-    <DialogContent className="bottom-0 left-0 top-auto max-h-[82dvh] w-full max-w-full translate-x-0 translate-y-0 gap-0 overflow-hidden rounded-b-none rounded-t-2xl border-x-0 border-b-0 p-0 sm:max-w-full">
+    <DialogContent showCloseButton={false} className="bottom-0 left-0 top-auto max-h-[82dvh] w-full max-w-full translate-x-0 translate-y-0 gap-0 overflow-hidden rounded-b-none rounded-t-2xl border-x-0 border-b-0 p-0 sm:max-w-full">
       <DialogHeader className="border-b border-zinc-200 px-5 py-4 text-left dark:border-white/10">
         <div className="flex items-center justify-between gap-3">
           <div>

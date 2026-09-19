@@ -63,20 +63,19 @@ export function MemberHome({
   const displayName = profile ? getDisplayName(profile) : "Membre MegVie"
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-3 py-5 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:px-4 sm:py-12">
+    <div className="app-page">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <section className="overflow-hidden rounded-[28px] bg-gradient-to-br from-zinc-950 via-amber-900 to-emerald-800 p-6 text-white shadow-2xl sm:p-8">
+        <section className="border-b border-border pb-6">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-100">
+              <p className="text-xs font-semibold text-teal-700 dark:text-teal-300">
                 Espace membre
               </p>
-              <h1 className="mt-4 text-3xl font-semibold leading-tight sm:text-5xl">
+              <h1 className="mt-3 text-3xl font-semibold leading-tight">
                 Bienvenue, {displayName}.
               </h1>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/80">
-                Gerer votre profil, votre securite, vos preferences et votre
-                carte membre MegVie Paris.
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+                Heureux de vous retrouver dans la communauté MegVie Paris.
               </p>
             </div>
             <StatusBadge status={profile?.membership_status ?? "pending"} />
@@ -95,17 +94,18 @@ export function MemberHome({
             </p>
           </section>
         ) : (
-          <section className="rounded-[28px] border border-zinc-200 bg-white/95 p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-600">
+          <section className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-5">
+            <p className="text-sm text-muted-foreground">
               Identifiant membre
             </p>
-            <p className="mt-3 text-4xl font-black text-zinc-950 dark:text-white">
+            <Link href="/espace-membre/carte" className="inline-flex items-center gap-2 rounded-lg bg-teal-50 px-3 py-2 font-mono text-sm font-semibold text-teal-800 dark:bg-teal-400/10 dark:text-teal-200">
+              <CreditCard className="size-4" aria-hidden />
               {profile?.member_id}
-            </p>
+            </Link>
           </section>
         )}
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid grid-cols-2 gap-3 xl:grid-cols-4">
           {[
             {
               href: "/espace-membre/profil",
@@ -168,13 +168,13 @@ export function MemberHome({
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-3xl border border-zinc-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:border-amber-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/80"
+                className="group min-w-0 rounded-lg border border-border bg-card p-4 transition-colors hover:border-teal-400 hover:bg-teal-50/50 dark:hover:bg-teal-400/5"
               >
-                <span className="inline-flex rounded-2xl bg-amber-100 p-3 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
+                <span className="inline-flex text-teal-700 dark:text-teal-300">
                   <Icon className="h-5 w-5" />
                 </span>
-                <h2 className="mt-4 text-lg font-semibold">{item.label}</h2>
-                <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                <h2 className="mt-3 text-sm font-semibold">{item.label}</h2>
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">
                   {item.description}
                 </p>
               </Link>
@@ -183,7 +183,7 @@ export function MemberHome({
         </section>
 
         <section className="grid gap-4 lg:grid-cols-2">
-          <div className="rounded-[28px] border border-zinc-200 bg-white/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/80">
+          <div className="min-w-0 border-t border-border py-5">
             <h2 className="text-lg font-semibold">Evenements a venir</h2>
             <div className="mt-4 space-y-3">
               {content?.events.length ? (
@@ -211,7 +211,7 @@ export function MemberHome({
               )}
             </div>
           </div>
-          <div className="rounded-[28px] border border-zinc-200 bg-white/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/80">
+          <div className="min-w-0 border-t border-border py-5">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <span className="rounded-2xl bg-amber-100 p-2 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
@@ -254,13 +254,12 @@ export function MemberHome({
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-zinc-200 bg-white/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/80">
+        <section className="border-t border-border py-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="font-semibold">Fonctions a venir</p>
+              <p className="font-semibold">Votre compte</p>
               <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-                Dons recurrents, ressources et notifications push de contenu
-                seront ajoutes dans les prochaines phases.
+                MegVie Paris · Espace personnel
               </p>
             </div>
             <SignOutControl />

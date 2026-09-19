@@ -147,7 +147,7 @@ export default async function AdminPage() {
             </p>
           </div>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
           {visibleCards.map((item) => {
             const Icon = item.icon;
             const value = data.counts[item.key];
@@ -156,7 +156,7 @@ export default async function AdminPage() {
               <Link
                 key={item.key}
                 href={item.href}
-                className="group rounded-xl border border-zinc-200/90 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] outline-none transition hover:border-orange-300 hover:shadow-[0_8px_24px_rgba(15,23,42,0.07)] focus-visible:ring-2 focus-visible:ring-orange-500 dark:border-white/10 dark:bg-[#111114] dark:hover:border-orange-500/40"
+                className="group min-w-0 rounded-lg border border-border bg-card p-4 outline-none transition-colors hover:border-teal-400 focus-visible:ring-2 focus-visible:ring-teal-500"
               >
                 <div className="flex items-start justify-between gap-3">
                   <span className="grid h-9 w-9 place-items-center rounded-lg bg-zinc-100 text-zinc-600 transition-colors group-hover:bg-orange-50 group-hover:text-orange-700 dark:bg-white/5 dark:text-zinc-300 dark:group-hover:bg-orange-500/10 dark:group-hover:text-orange-300">
@@ -167,7 +167,7 @@ export default async function AdminPage() {
                     aria-hidden
                   />
                 </div>
-                <p className="mt-4 text-3xl font-bold tracking-tight">
+                <p className="mt-4 text-3xl font-semibold tabular-nums">
                   {value}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-zinc-700 dark:text-zinc-200">

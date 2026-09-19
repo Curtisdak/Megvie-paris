@@ -72,7 +72,7 @@ export function EventFormDialog() {
         <div className="max-h-[calc(100dvh-9rem)] overflow-y-auto">
           <AdminActionForm
             action={saveEventAction}
-            className="grid gap-5 p-4 sm:p-6 lg:grid-cols-[minmax(0,1fr),340px]"
+            className="grid gap-5 p-4 sm:p-6 lg:grid-cols-[minmax(0,1fr)_340px]"
             onSuccess={closeDialog}
             resetOnSuccess
           >

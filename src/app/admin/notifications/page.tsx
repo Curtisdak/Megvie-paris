@@ -184,7 +184,7 @@ export default async function AdminNotificationsPage({
       </section>
 
       <AdminFilterBar description="Analysez les campagnes par type, statut, source ou période.">
-        <form className="grid gap-3 lg:grid-cols-[160px,160px,minmax(180px,1fr),150px,150px,auto] lg:items-end">
+        <form className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 xl:items-end">
           <div className="space-y-2">
             <label htmlFor="type" className={labelClass}>
               Type
@@ -286,7 +286,7 @@ export default async function AdminNotificationsPage({
         <div className="grid gap-3">
           {data.campaigns.map((campaign) => (
             <AdminCard key={campaign.id} className="p-0">
-              <div className="grid gap-0 overflow-hidden rounded-2xl lg:grid-cols-[minmax(0,1fr),280px]">
+              <div className="grid gap-0 overflow-hidden rounded-2xl lg:grid-cols-[minmax(0,1fr)_280px]">
                 <div className="space-y-4 p-4 sm:p-5">
                   <div className="flex flex-wrap items-center gap-2">
                     <StatusBadge

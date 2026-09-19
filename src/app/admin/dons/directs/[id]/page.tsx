@@ -124,7 +124,7 @@ export default async function DirectDonationDetailPage({
         }
       />
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr),22rem]">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="space-y-4">
           <AdminCard>
             <div className="grid gap-3 sm:grid-cols-2">

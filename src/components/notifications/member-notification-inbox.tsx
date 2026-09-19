@@ -206,10 +206,10 @@ export function MemberNotificationInbox({
   }
 
   return (
-    <div className="rounded-[1.5rem] border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/85 sm:p-5">
+    <div className="rounded-lg border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/85 sm:p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <span className="rounded-2xl bg-amber-100 p-3 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
+          <span className="rounded-lg bg-amber-100 p-3 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
             <Inbox className="h-5 w-5" aria-hidden />
           </span>
           <div>
@@ -237,7 +237,7 @@ export function MemberNotificationInbox({
 
       <div className="mt-4 space-y-3">
         {optimisticState.notifications.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-6 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-950/50 dark:text-zinc-400">
+          <div className="rounded-lg border border-dashed border-zinc-300 bg-zinc-50 p-6 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-950/50 dark:text-zinc-400">
             Aucune nouvelle notification.
           </div>
         ) : (
@@ -248,15 +248,15 @@ export function MemberNotificationInbox({
             return (
               <article
                 key={item.id}
-                className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-950/50"
+                className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-950/50"
               >
                 <div className="flex items-start gap-3">
-                  <span className="mt-1 rounded-2xl bg-amber-100 p-2.5 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
+                  <span className="mt-1 rounded-lg bg-amber-100 p-2.5 text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">
                     <Bell className="h-4 w-4" aria-hidden />
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-normal text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
                         {typeLabel(item.campaign.type)}
                       </span>
                       {isUnread ? (

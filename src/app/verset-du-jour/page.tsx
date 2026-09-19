@@ -5,6 +5,7 @@ import { Bell, BookOpen, ChevronLeft, ChevronRight, Sparkles } from "lucide-reac
 import { BibleVerseActions, type VerseActionState } from "@/components/bible/verse-actions"
 import { VerseShareDialog } from "@/components/bible/verse-share-dialog"
 import { Button } from "@/components/ui/button"
+import { PageHeading } from "@/components/ui/page-heading"
 import { getBibleReferenceHref, getBibleVerseHref } from "@/lib/bible-reference"
 import { searchVerses } from "@/lib/bible-data"
 import {
@@ -154,43 +155,17 @@ export default async function DailyVersePage() {
   const shareHref = structured?.href ?? getBibleReferenceHref(verse.reference)
 
   return (
-    <div className="app-edge-to-edge min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 py-4 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:py-8">
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-2.5 sm:gap-6 sm:px-4">
-        <section className="overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-zinc-950 via-amber-900 to-emerald-800 p-5 text-white shadow-2xl sm:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <span className="inline-flex rounded-full bg-white/15 p-3">
-                <BookOpen className="h-6 w-6" aria-hidden />
-              </span>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.35em] text-amber-100">
-                MegVie Paris
-              </p>
-              <h1 className="mt-3 text-4xl font-semibold leading-tight sm:text-6xl">
-                Verset du jour
-              </h1>
-              <p className="mt-4 max-w-xl text-sm leading-7 text-white/80">
-                Un passage biblique pour nourrir la foi, la priere et la
-                journee.
-              </p>
-            </div>
-            <div className="rounded-2xl bg-white/10 p-4">
-              <p className="text-xs text-white/70">Notifications</p>
-              <p className="mt-1 text-2xl font-semibold">
-                {memberState.activeDevices > 0
-                  ? `${memberState.activeDevices} appareil`
-                  : "A configurer"}
-              </p>
-            </div>
-          </div>
-        </section>
+    <div className="app-page">
+      <main className="mx-auto flex w-full max-w-4xl flex-col gap-6">
+        <PageHeading eyebrow="Un moment dans la Parole" title="Verset du jour" description="Une parole pour nourrir votre foi et accompagner votre journée." />
 
-        <section className="rounded-[1.75rem] border border-zinc-200 bg-white/95 p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/85 sm:p-7">
+        <section className="border-b border-border py-6 sm:py-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-800 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100">
             <Sparkles className="h-4 w-4" aria-hidden />
             {verse.theme ?? "Encouragement"}
           </div>
 
-          <blockquote className="mt-6 text-2xl font-semibold leading-relaxed text-zinc-950 dark:text-white sm:text-4xl">
+          <blockquote className="mt-6 font-serif text-2xl leading-relaxed text-foreground sm:text-3xl sm:leading-relaxed">
             &quot;{verse.text}&quot;
           </blockquote>
 

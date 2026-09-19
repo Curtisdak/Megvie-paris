@@ -475,8 +475,8 @@ export function BiblePageClient({
                 "flex min-h-11 min-w-0 items-center justify-center rounded-md px-2 py-2 text-center text-xs font-semibold leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 sm:px-4 sm:text-sm",
                 tab.id === "search" && "px-0 sm:px-0",
                 isActive
-                  ? "bg-zinc-950 text-white shadow-sm dark:bg-white dark:text-zinc-950"
-                  : "text-zinc-600 hover:bg-amber-50 dark:text-zinc-300 dark:hover:bg-amber-400/10",
+                  ? "bg-card text-teal-800 shadow-sm dark:text-teal-200"
+                  : "text-muted-foreground hover:bg-card/60 hover:text-foreground",
               )}
               onClick={() => setActiveTab(tab.id)}
               onKeyDown={(event) => {
@@ -570,7 +570,7 @@ function BookGrid({
   onBookSelect: (book: BibleBook) => void
 }) {
   return (
-    <div className="grid gap-x-6 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
       {!books.length && (
         <p className="py-8 text-sm text-muted-foreground">
           Aucun livre trouvé.
@@ -580,7 +580,7 @@ function BookGrid({
         <button
           key={book.id}
           type="button"
-          className="group flex min-h-20 items-center justify-between gap-3 border-b border-zinc-100 px-2 py-3 text-left transition-colors hover:bg-emerald-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-zinc-800 dark:hover:bg-emerald-400/5"
+          className="group flex min-h-[72px] items-center justify-between gap-3 rounded-lg border border-border bg-card px-4 py-3 text-left transition-colors hover:border-teal-400 hover:bg-teal-50/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 dark:hover:bg-teal-400/5"
           onClick={() => onBookSelect(book)}
         >
           <span className="min-w-0">

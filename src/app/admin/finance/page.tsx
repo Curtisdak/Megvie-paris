@@ -311,7 +311,7 @@ export default async function FinancePage({
         </form>
       </AdminFilterBar>
 
-      <section className="grid gap-3 xl:grid-cols-[minmax(0,1fr),22rem]">
+      <section className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <AdminCard className="p-3 sm:p-4">
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -557,7 +557,7 @@ export default async function FinancePage({
                 className="space-y-2 rounded-2xl border border-zinc-200 p-3 dark:border-white/10"
               >
                 <input type="hidden" name="id" value={category.id} />
-                <div className="grid gap-2 sm:grid-cols-[1fr,90px]">
+                <div className="grid gap-2 sm:grid-cols-[1fr_90px]">
                   <Input
                     name="label"
                     defaultValue={category.label}

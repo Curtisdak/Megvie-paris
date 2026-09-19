@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,342 +9,294 @@ import {
   Clock3,
   ExternalLink,
   MapPin,
-  Navigation,
-  Sparkles,
+  Pause,
+  Play,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
 import type { HomeEventSlide } from "@/lib/home-event-slide-types"
 import { cn } from "@/lib/utils"
 
-type EventImageSliderClientProps = {
+export function EventImageSliderClient({
+  slides,
+}: {
   slides: HomeEventSlide[]
-}
-
-function twoDigits(value: number) {
-  return String(value).padStart(2, "0")
-}
-
-export function EventImageSliderClient({ slides }: EventImageSliderClientProps) {
+}) {
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [failedImageIds, setFailedImageIds] = useState<Set<string>>(
-    () => new Set(),
-  )
-  const [loadedImageIds, setLoadedImageIds] = useState<Set<string>>(
-    () => new Set(),
-  )
-  const shouldReduceMotion = useReducedMotion()
-  const slideCount = slides.length
-  const activeIndex = slideCount
-    ? Math.min(selectedIndex, slideCount - 1)
-    : 0
-  const activeSlide = slides[activeIndex] ?? slides[0]
+  const [paused, setPaused] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set())
+  const reduceMotion = usePrefersReducedMotion()
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const copyRef = useRef<HTMLDivElement>(null)
+  const activeIndex = Math.min(selectedIndex, Math.max(0, slides.length - 1))
+  const active = slides[activeIndex]
+  const playing =
+    !paused && !hovered && !focused && !reduceMotion && slides.length > 1
 
   useEffect(() => {
-    if (slides.length <= 1) return
+    if (!playing) return
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible")
+        setSelectedIndex((value) => (value + 1) % slides.length)
+    }, 8000)
+    return () => window.clearInterval(timer)
+  }, [playing, slides.length, activeIndex])
 
-    const intervalId = window.setInterval(() => {
-      setSelectedIndex((current) => {
-        const safeCurrent = Math.min(current, slides.length - 1)
-        return (safeCurrent + 1) % slides.length
-      })
-    }, 7000)
+  useEffect(() => {
+    copyRef.current?.scrollTo({ top: 0 })
+  }, [activeIndex])
+  if (!active) return null
 
-    return () => window.clearInterval(intervalId)
-  }, [slides.length])
-
-  if (!activeSlide) return null
-
-  const markImageLoaded = (slideId: string) => {
-    setLoadedImageIds((current) => {
-      if (current.has(slideId)) return current
-
-      const next = new Set(current)
-      next.add(slideId)
-      return next
-    })
+  function move(direction: number) {
+    setPaused(true)
+    setSelectedIndex((activeIndex + direction + slides.length) % slides.length)
   }
-
-  const markImageFailed = (slideId: string) => {
-    setFailedImageIds((current) => {
-      if (current.has(slideId)) return current
-
-      const next = new Set(current)
-      next.add(slideId)
-      return next
-    })
-  }
-
-  const showPrevious = () => {
-    setSelectedIndex((current) => {
-      const safeCurrent = Math.min(current, slides.length - 1)
-      return safeCurrent === 0 ? slides.length - 1 : safeCurrent - 1
-    })
-  }
-
-  const showNext = () => {
-    setSelectedIndex((current) => {
-      const safeCurrent = Math.min(current, slides.length - 1)
-      return (safeCurrent + 1) % slides.length
-    })
-  }
-
-  const locationText = [activeSlide.locationLabel, activeSlide.address]
+  const location = [active.locationLabel, active.address]
     .filter(Boolean)
-    .join(" - ")
-  const actionGridClass =
-    activeSlide.actions.length === 1 ? "sm:grid-cols-1" : "sm:grid-cols-2"
+    .join(" · ")
 
   return (
     <section
-      aria-label="Evenements MegVie Paris"
-      className="relative isolate h-[760px] overflow-hidden border-y border-white/35 bg-zinc-950 text-white shadow-2xl shadow-orange-950/20 sm:h-[680px] sm:rounded-[2rem] sm:border lg:h-[620px]"
-    >
-      {slides.map((slide, index) => {
-        const isActive = index === activeIndex
-        const canShowImage = Boolean(slide.imageUrl && !failedImageIds.has(slide.id))
-        const isLoaded = loadedImageIds.has(slide.id)
-
-        return (
-          <motion.div
-            key={`background-${slide.id}`}
-            className="absolute inset-0 overflow-hidden"
-            style={{ backgroundImage: slide.gradient }}
-            initial={false}
-            animate={{ opacity: isActive ? 1 : 0 }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.72,
-              ease: "easeOut",
-            }}
-            aria-hidden={!isActive}
-          >
-            {canShowImage ? (
-              <motion.img
-                src={slide.imageUrl ?? ""}
-                alt=""
-                className="h-full w-full object-cover object-center"
-                loading={index <= 1 ? "eager" : "lazy"}
-                decoding="async"
-                draggable={false}
-                onLoad={() => markImageLoaded(slide.id)}
-                onError={() => markImageFailed(slide.id)}
-                initial={false}
-                animate={{
-                  opacity: isLoaded || isActive ? 1 : 0,
-                  scale:
-                    isActive && !shouldReduceMotion ? [1.02, 1.12] : 1.04,
-                }}
-                transition={{
-                  opacity: {
-                    duration: shouldReduceMotion ? 0 : 0.35,
-                    ease: "easeOut",
-                  },
-                  scale: {
-                    duration: shouldReduceMotion ? 0 : 7.4,
-                    ease: "linear",
-                  },
-                }}
-              />
-            ) : null}
-          </motion.div>
+      aria-label="Événements MegVie Paris"
+      aria-roledescription="carrousel"
+      className="relative isolate flex h-[min(620px,calc(100svh-10rem))] min-h-[440px] flex-col overflow-hidden bg-zinc-950 text-white"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setFocused(false)
+      }}
+      onKeyDown={(event) => {
+        if (
+          event.target instanceof HTMLInputElement ||
+          event.target instanceof HTMLSelectElement
         )
-      })}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(250,204,21,0.24),transparent_30%),linear-gradient(180deg,rgba(3,7,18,0.16),rgba(3,7,18,0.82))]" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/75 to-transparent" />
-
-      <div className="relative flex h-full min-h-0 flex-col justify-between gap-5 px-4 py-5 sm:gap-7 sm:px-8 sm:py-8 lg:px-10">
-        <div className="grid min-h-0 flex-1 items-end">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={`copy-${activeSlide.id}`}
-              aria-live="polite"
-              className="max-w-2xl self-end"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: {
-                    staggerChildren: shouldReduceMotion ? 0 : 0.08,
-                    delayChildren: shouldReduceMotion ? 0 : 0.1,
-                  },
-                },
-                exit: {
-                  transition: { staggerChildren: 0.03, staggerDirection: -1 },
-                },
+          return
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+          event.preventDefault()
+          move(event.key === "ArrowRight" ? 1 : -1)
+        }
+      }}
+      onTouchStart={(event) => {
+        const touch = event.touches[0]
+        touchStart.current = touch
+          ? { x: touch.clientX, y: touch.clientY }
+          : null
+      }}
+      onTouchEnd={(event) => {
+        const touch = event.changedTouches[0],
+          start = touchStart.current
+        touchStart.current = null
+        if (!start || !touch) return
+        const dx = touch.clientX - start.x,
+          dy = touch.clientY - start.y
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5)
+          move(dx < 0 ? 1 : -1)
+      }}
+    >
+      {slides.map((slide, index) => (
+        <motion.div
+          key={slide.id}
+          aria-hidden
+          className="absolute inset-0 -z-20"
+          style={{ backgroundImage: slide.gradient }}
+          initial={false}
+          animate={{ opacity: index === activeIndex ? 1 : 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.65 }}
+        >
+          {slide.imageUrl && !failedImages.has(slide.imageUrl) && (
+            <motion.img
+              src={slide.imageUrl}
+              alt=""
+              className="h-full w-full object-cover object-center"
+              loading="eager"
+              fetchPriority={index === 0 ? "high" : "auto"}
+              decoding="async"
+              draggable={false}
+              onError={() =>
+                setFailedImages((current) =>
+                  new Set(current).add(slide.imageUrl!),
+                )
+              }
+              initial={false}
+              animate={{
+                scale: index === activeIndex && !reduceMotion ? 1.06 : 1,
               }}
-            >
-              <motion.div
-                className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/12 px-3 py-1.5 text-xs font-bold uppercase text-amber-100 shadow-lg backdrop-blur"
-                variants={{
-                  hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 18 },
-                  visible: { opacity: 1, y: 0 },
-                  exit: { opacity: 0, y: shouldReduceMotion ? 0 : -10 },
-                }}
-                transition={{ duration: shouldReduceMotion ? 0 : 0.45 }}
-              >
-                <Sparkles className="size-4" aria-hidden="true" />
-                {activeSlide.eyebrow}
-              </motion.div>
-
-              <motion.h2
-                className="text-4xl font-black leading-none text-white drop-shadow-xl sm:text-6xl lg:text-7xl"
-                variants={{
-                  hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 26 },
-                  visible: { opacity: 1, y: 0 },
-                  exit: { opacity: 0, y: shouldReduceMotion ? 0 : -14 },
-                }}
-                transition={{
-                  duration: shouldReduceMotion ? 0 : 0.55,
-                  ease: "easeOut",
-                }}
-              >
-                {activeSlide.title}
-              </motion.h2>
-
-              <motion.p
-                className="mt-5 max-w-xl text-base leading-8 text-white/88 sm:text-lg"
-                style={{
-                  display: "-webkit-box",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3,
-                  overflow: "hidden",
-                }}
-                variants={{
-                  hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 18 },
-                  visible: { opacity: 1, y: 0 },
-                  exit: { opacity: 0, y: shouldReduceMotion ? 0 : -10 },
-                }}
-                transition={{
-                  duration: shouldReduceMotion ? 0 : 0.5,
-                  ease: "easeOut",
-                }}
-              >
-                {activeSlide.description}
-              </motion.p>
-
-              <motion.dl
-                className="mt-6 grid gap-3 text-sm text-white/86 sm:grid-cols-3"
-                variants={{
-                  hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16 },
-                  visible: { opacity: 1, y: 0 },
-                  exit: { opacity: 0, y: shouldReduceMotion ? 0 : -8 },
-                }}
-                transition={{
-                  duration: shouldReduceMotion ? 0 : 0.48,
-                  ease: "easeOut",
-                }}
-              >
-                {activeSlide.dateLabel ? (
-                  <div className="flex items-start gap-2 rounded-2xl border border-white/15 bg-white/10 p-3 shadow-lg shadow-black/10 backdrop-blur-md">
-                    <CalendarDays className="mt-0.5 size-4 text-amber-200" />
-                    <div>
-                      <dt className="font-bold text-white">Date</dt>
-                      <dd>{activeSlide.dateLabel}</dd>
-                    </div>
-                  </div>
-                ) : null}
-
-                {activeSlide.timeLabel ? (
-                  <div className="flex items-start gap-2 rounded-2xl border border-white/15 bg-white/10 p-3 shadow-lg shadow-black/10 backdrop-blur-md">
-                    <Clock3 className="mt-0.5 size-4 text-amber-200" />
-                    <div>
-                      <dt className="font-bold text-white">Horaire</dt>
-                      <dd>{activeSlide.timeLabel}</dd>
-                    </div>
-                  </div>
-                ) : null}
-
-                {locationText ? (
-                  <div className="flex items-start gap-2 rounded-2xl border border-white/15 bg-white/10 p-3 shadow-lg shadow-black/10 backdrop-blur-md">
-                    <MapPin className="mt-0.5 size-4 text-amber-200" />
-                    <div>
-                      <dt className="font-bold text-white">Lieu</dt>
-                      <dd>{locationText}</dd>
-                    </div>
-                  </div>
-                ) : null}
-              </motion.dl>
-
-              {activeSlide.actions.length ? (
-                <motion.div
-                  className={cn(
-                    "mt-7 grid w-full max-w-xl grid-cols-1 gap-3",
-                    actionGridClass,
-                  )}
-                  variants={{
-                    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 14 },
-                    visible: { opacity: 1, y: 0 },
-                    exit: { opacity: 0, y: shouldReduceMotion ? 0 : -8 },
-                  }}
-                  transition={{
-                    duration: shouldReduceMotion ? 0 : 0.45,
-                    ease: "easeOut",
-                  }}
-                >
-                  {activeSlide.actions.map((action) => (
-                    <Button
-                      key={`${activeSlide.id}-${action.href}-${action.label}`}
-                      asChild
-                      className={cn(
-                        "h-12 w-full rounded-full px-5 text-sm font-extrabold shadow-xl transition-transform duration-300 hover:-translate-y-0.5",
-                        action.variant === "secondary"
-                          ? "border border-white/30 bg-white/10 text-white hover:bg-white/20"
-                          : "bg-orange-500 text-white hover:bg-orange-600",
-                      )}
-                      variant="default"
+              transition={{ duration: reduceMotion ? 0 : 8.5, ease: "linear" }}
+            />
+          )}
+        </motion.div>
+      ))}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(9,9,11,0.8),rgba(9,9,11,0.15)),linear-gradient(0deg,rgba(9,9,11,0.8),transparent_75%)]"
+      />
+      <div className="flex items-center justify-between gap-3 px-5 pt-5 sm:px-9 sm:pt-7">
+        <span className="text-xs font-medium text-white/85">MegVie Paris</span>
+        <span className="text-xs tabular-nums text-white/65">
+          {String(activeIndex + 1).padStart(2, "0")} /{" "}
+          {String(slides.length).padStart(2, "0")}
+        </span>
+      </div>
+      <div
+        ref={copyRef}
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pt-8 sm:px-9"
+      >
+        <div className="flex min-h-full items-end">
+          <motion.div
+            key={active.id}
+            className="max-w-2xl pb-5"
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            aria-live={playing ? "off" : "polite"}
+          >
+            <p className="mb-3 flex items-center gap-2 text-xs font-semibold text-amber-200">
+              <span className="size-1.5 rounded-full bg-amber-300" />
+              {active.eyebrow}
+            </p>
+            <h1 className="text-3xl font-semibold leading-[1.12] sm:text-5xl">
+              {active.title}
+            </h1>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-white/85">
+              {active.description}
+            </p>
+            <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-xs text-white/85">
+              {active.dateLabel && (
+                <div className="flex items-center gap-2">
+                  <CalendarDays
+                    className="size-4 shrink-0 text-amber-200"
+                    aria-hidden
+                  />
+                  <dt className="sr-only">Date</dt>
+                  <dd>{active.dateLabel}</dd>
+                </div>
+              )}
+              {active.timeLabel && (
+                <div className="flex items-center gap-2">
+                  <Clock3
+                    className="size-4 shrink-0 text-amber-200"
+                    aria-hidden
+                  />
+                  <dt className="sr-only">Horaire</dt>
+                  <dd>{active.timeLabel}</dd>
+                </div>
+              )}
+              {location && (
+                <div className="flex min-w-0 items-start gap-2">
+                  <MapPin
+                    className="size-4 shrink-0 text-amber-200"
+                    aria-hidden
+                  />
+                  <dt className="sr-only">Lieu</dt>
+                  <dd className="break-words">{location}</dd>
+                </div>
+              )}
+            </dl>
+            {active.actions.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {active.actions.map((action) => (
+                  <Button
+                    key={action.href + action.label}
+                    asChild
+                    className={cn(
+                      "min-h-11 rounded-lg px-4 text-sm",
+                      action.variant === "secondary"
+                        ? "border border-white/30 bg-white/10 text-white hover:bg-white/20"
+                        : "bg-white text-zinc-950 hover:bg-zinc-100",
+                    )}
+                  >
+                    <a
+                      href={action.href}
+                      target={action.external ? "_blank" : undefined}
+                      rel={action.external ? "noreferrer" : undefined}
                     >
-                      <a
-                        href={action.href}
-                        rel={action.external ? "noreferrer" : undefined}
-                        target={action.external ? "_blank" : undefined}
-                      >
-                        {action.label}
-                        {action.external ? (
-                          <ExternalLink
-                            className="size-4"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <Navigation className="size-4" aria-hidden="true" />
-                        )}
-                      </a>
-                    </Button>
-                  ))}
-                </motion.div>
-              ) : null}
-            </motion.div>
-          </AnimatePresence>
-
+                      {action.label}
+                      {action.external ? (
+                        <ExternalLink className="size-4" aria-hidden />
+                      ) : (
+                        <ArrowRight className="size-4" aria-hidden />
+                      )}
+                    </a>
+                  </Button>
+                ))}
+              </div>
+            )}
+          </motion.div>
         </div>
-
-        <div className="flex h-14 shrink-0 items-center justify-between gap-4 border-t border-white/15 pt-3">
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              className="grid size-11 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/70"
-              onClick={showPrevious}
-              aria-label="Afficher l'evenement precedent"
-            >
-              <ArrowLeft className="size-5" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="grid size-11 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/70"
-              onClick={showNext}
-              aria-label="Afficher l'evenement suivant"
-            >
-              <ArrowRight className="size-5" aria-hidden="true" />
-            </button>
-          </div>
-
-          <div className="font-mono text-3xl font-black text-white drop-shadow">
-            {twoDigits(activeIndex + 1)}
-            <span className="text-base text-white/45">
-              /{twoDigits(slides.length)}
-            </span>
-          </div>
+      </div>
+      <div className="mx-5 flex min-h-16 shrink-0 items-center justify-between gap-3 border-t border-white/20 sm:mx-9">
+        <div className="flex gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            disabled={slides.length < 2}
+            onClick={() => move(-1)}
+            aria-label="Afficher l'événement précédent"
+            title="Événement précédent"
+            className="text-white hover:bg-white/15 hover:text-white"
+          >
+            <ArrowLeft />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            disabled={slides.length < 2}
+            onClick={() => move(1)}
+            aria-label="Afficher l'événement suivant"
+            title="Événement suivant"
+            className="text-white hover:bg-white/15 hover:text-white"
+          >
+            <ArrowRight />
+          </Button>
         </div>
+        <div className="flex min-w-0 items-center gap-0.5 overflow-x-auto">
+          {slides.map((slide, index) => (
+            <button
+              key={slide.id}
+              type="button"
+              aria-label={`Afficher : ${slide.title}`}
+              aria-current={activeIndex === index ? "true" : undefined}
+              onClick={() => {
+                setPaused(true)
+                setSelectedIndex(index)
+              }}
+              className="grid h-11 w-7 shrink-0 place-items-center"
+            >
+              <span
+                className={cn(
+                  "h-1 rounded-full transition-[width,background-color]",
+                  activeIndex === index ? "w-6 bg-white" : "w-2 bg-white/40",
+                )}
+              />
+            </button>
+          ))}
+        </div>
+        {!reduceMotion && slides.length > 1 && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              setPaused((value) => !value)
+              if (paused) {
+                setHovered(false)
+                setFocused(false)
+              }
+            }}
+            aria-label={
+              paused
+                ? "Reprendre le défilement"
+                : "Mettre le défilement en pause"
+            }
+            title={paused ? "Reprendre" : "Pause"}
+            className="text-white hover:bg-white/15 hover:text-white"
+          >
+            {paused ? <Play /> : <Pause />}
+          </Button>
+        )}
       </div>
     </section>
   )

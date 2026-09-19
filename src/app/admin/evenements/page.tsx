@@ -155,7 +155,7 @@ export default async function EventsPage({
       </section>
 
       <AdminFilterBar description="Trouvez rapidement un événement par titre, lieu ou statut.">
-        <form className="grid gap-3 lg:grid-cols-[minmax(220px,1fr),180px,auto] lg:items-end">
+        <form className="grid gap-3 lg:grid-cols-[minmax(220px,1fr)_180px_auto] lg:items-end">
           <div className="space-y-2">
             <label htmlFor="event-search" className={labelClass}>
               Rechercher
@@ -234,7 +234,7 @@ export default async function EventsPage({
             const publishedAt = formatDateTime(event.publishedAt)
             return (
               <AdminCard key={event.id} className="p-0">
-                <div className="grid overflow-hidden rounded-2xl lg:grid-cols-[150px,minmax(0,1fr),180px]">
+                <div className="grid overflow-hidden rounded-2xl lg:grid-cols-[150px_minmax(0,1fr)_180px]">
                   <div className="min-h-36 bg-zinc-100 dark:bg-zinc-950 lg:min-h-full">
                     {event.coverImageUrl ? (
                       <div

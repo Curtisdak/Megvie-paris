@@ -120,17 +120,17 @@ export function FavoriteVersesLibrary({
       {visibleItems.map((item) => (
         <article
           key={item.id}
-          className="rounded-[1.35rem] border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80"
+          className="rounded-lg border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">
+              <p className="text-sm font-semibold uppercase tracking-normal text-amber-700 dark:text-amber-200">
                 {item.reference}
               </p>
               <p className="mt-3 text-base leading-7 text-zinc-800 dark:text-zinc-100">
                 {item.verseTextSnapshot}
               </p>
-              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
+              <p className="mt-3 text-xs font-semibold uppercase tracking-normal text-zinc-400">
                 {item.translation}
               </p>
             </div>
@@ -231,17 +231,17 @@ export function BibleNotesLibrary({ items }: { items: NoteItem[] }) {
       {visibleItems.map((item) => (
         <article
           key={item.id}
-          className="rounded-[1.35rem] border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80"
+          className="rounded-lg border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">
+              <p className="text-sm font-semibold uppercase tracking-normal text-amber-700 dark:text-amber-200">
                 {item.reference}
               </p>
               <p className="mt-3 whitespace-pre-wrap text-base leading-7 text-zinc-800 dark:text-zinc-100">
                 {item.content}
               </p>
-              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
+              <p className="mt-3 text-xs font-semibold uppercase tracking-normal text-zinc-400">
                 {item.translation}
               </p>
             </div>
@@ -303,7 +303,7 @@ function BibleLibraryShell({
 }) {
   return (
     <section className="space-y-4">
-      <div className="rounded-[1.5rem] border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">
+      <div className="rounded-lg border border-zinc-200 bg-white/95 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-lg font-semibold">{title}</h2>
@@ -339,7 +339,7 @@ function BibleLibraryShell({
       </div>
 
       {count === 0 ? (
-        <div className="rounded-[1.35rem] border border-dashed border-zinc-300 bg-white/70 p-8 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900/50 dark:text-zinc-400">
+        <div className="rounded-lg border border-dashed border-zinc-300 bg-white/70 p-8 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900/50 dark:text-zinc-400">
           {emptyLabel}
         </div>
       ) : (

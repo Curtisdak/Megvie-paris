@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { PwaProvider } from "@/components/pwa/pwa-provider"
 import { AppChrome } from "@/components/navigation/app-chrome"
 import { PageTransition } from "@/components/navigation/page-transition"
+import { MotionProvider } from "@/components/ui/motion-provider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,16 +60,15 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fff7ed" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f7f9" },
     { media: "(prefers-color-scheme: dark)", color: "#09090b" },
   ],
 }
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
@@ -77,10 +77,15 @@ export default function RootLayout({
       >
         <ThemeProvider defaultTheme="system">
           <ThemedClerkProvider>
-            <PwaProvider />
-            <AppChrome />
-            <PageTransition>{children}</PageTransition>
-            <Toaster position="top-center" expand richColors />
+            <MotionProvider>
+              <a className="skip-link" href="#app-content">
+                Aller au contenu
+              </a>
+              <PwaProvider />
+              <AppChrome />
+              <PageTransition>{children}</PageTransition>
+              <Toaster position="top-center" expand richColors />
+            </MotionProvider>
           </ThemedClerkProvider>
         </ThemeProvider>
       </body>

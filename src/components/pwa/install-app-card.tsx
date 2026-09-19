@@ -114,24 +114,21 @@ export function InstallAppCard() {
   if (isDismissed || isInstalled) return null
 
   return (
-    <div className="relative flex h-full flex-col justify-between rounded-3xl border border-zinc-200 bg-white/90 p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900/80 sm:p-6">
+    <div className="relative flex h-full min-w-0 flex-col justify-between">
       <button
         type="button"
         onClick={handleDismiss}
-        className="absolute right-4 top-4 rounded-full p-1 text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+        className="absolute right-0 top-0 grid size-11 place-items-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
         aria-label="Masquer cette invitation"
       >
         <X className="h-4 w-4" />
       </button>
 
       <div className="pr-8">
-        <span className="inline-flex rounded-full bg-amber-100 p-3 text-amber-700 dark:bg-amber-400/15 dark:text-amber-200">
+        <span className="inline-flex text-teal-700 dark:text-teal-300">
           <Download className="h-5 w-5" />
         </span>
-        <p className="mt-4 text-sm font-semibold uppercase tracking-[0.25em] text-amber-600">
-          Application
-        </p>
-        <h3 className="mt-2 text-xl font-semibold text-zinc-900 dark:text-white sm:text-2xl">
+        <h3 className="mt-3 text-lg font-semibold text-foreground">
           Installer MegVie Paris
         </h3>
         <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-300">

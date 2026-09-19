@@ -16,24 +16,24 @@ export function AdminPageHero({
   return (
     <section
       className={cn(
-        "admin-page-hero relative isolate overflow-hidden rounded-[1.65rem] bg-[linear-gradient(112deg,#0b0909_0%,#4a1905_47%,#063b2d_100%)] px-5 py-6 text-white shadow-[0_22px_55px_rgba(28,15,8,0.18)] sm:px-8 sm:py-7",
+        "admin-page-hero relative isolate overflow-hidden rounded-lg bg-[linear-gradient(110deg,#18181b_20%,#193d38_100%)] px-5 py-6 text-white sm:px-6",
         className,
       )}
     >
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
-          <p className="text-[0.68rem] font-black uppercase tracking-[0.22em] text-amber-300">
+          <p className="text-xs font-medium text-teal-200">
             {eyebrow}
           </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          <h2 className="mt-2 text-2xl font-semibold text-white">
             {title}
           </h2>
-          <div className="mt-2 max-w-3xl text-sm leading-6 text-white/75">
+          <div className="mt-2 max-w-2xl text-sm leading-6 text-white/75">
             {description}
           </div>
         </div>
         {action ? (
-          <div className="shrink-0 [&_button]:shadow-none">{action}</div>
+          <div className="flex shrink-0 flex-wrap gap-2 [&_button]:rounded-lg [&_button]:border-0 [&_button]:bg-white [&_button]:text-zinc-900 [&_button]:shadow-none">{action}</div>
         ) : null}
       </div>
     </section>

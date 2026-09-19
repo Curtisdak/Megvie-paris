@@ -53,8 +53,8 @@ export default async function MemberAnnouncementDetailPage({
       .join(" ") || "MegVie Paris"
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-zinc-50 px-3 py-5 text-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 dark:text-zinc-50 sm:px-5 sm:py-10">
-      <article className="mx-auto w-full max-w-4xl overflow-hidden rounded-[30px] border border-zinc-200 bg-white/95 shadow-xl dark:border-zinc-800 dark:bg-zinc-900/85">
+    <main className="app-page">
+      <article className="mx-auto w-full max-w-4xl overflow-hidden rounded-lg border border-zinc-200 bg-white/95 shadow-none dark:border-zinc-800 dark:bg-zinc-900/85">
         {announcement.coverImageUrl ? (
           <div className="aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-800">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -76,17 +76,17 @@ export default async function MemberAnnouncementDetailPage({
           </Button>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-amber-800 dark:bg-amber-400/15 dark:text-amber-100">
+            <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-amber-800 dark:bg-amber-400/15 dark:text-amber-100">
               {categoryLabels[announcement.category] ?? announcement.category}
             </span>
             {announcement.visibility === "MEMBERS_ONLY" ? (
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-100">
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-100">
                 Membres
               </span>
             ) : null}
           </div>
 
-          <h1 className="mt-5 text-3xl font-semibold leading-tight sm:text-5xl">
+          <h1 className="mt-5 text-3xl font-semibold leading-tight sm:text-3xl">
             {announcement.title}
           </h1>
           {announcement.summary ? (

@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  BibleAssistantRateLimit: 'BibleAssistantRateLimit',
   AppUser: 'AppUser',
   MemberProfile: 'MemberProfile',
   MemberPrivateDetails: 'MemberPrivateDetails',
@@ -97,6 +98,15 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const BibleAssistantRateLimitScalarFieldEnum = {
+  key: 'key',
+  count: 'count',
+  expiresAt: 'expiresAt'
+} as const
+
+export type BibleAssistantRateLimitScalarFieldEnum = (typeof BibleAssistantRateLimitScalarFieldEnum)[keyof typeof BibleAssistantRateLimitScalarFieldEnum]
 
 
 export const AppUserScalarFieldEnum = {

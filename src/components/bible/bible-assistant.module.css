@@ -1,0 +1,84 @@
+.arrive {
+  animation: assistant-arrive 240ms ease-out both;
+}
+
+.dock {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.dock[data-keyboard="true"] {
+  padding-bottom: 0.25rem;
+}
+
+.composerActive :global(.floating-install-button) {
+  display: none;
+}
+
+.suggestion {
+  animation: assistant-arrive 320ms ease-out both;
+  animation-delay: var(--suggestion-delay, 0ms);
+}
+
+.cursor::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: assistant-cursor 800ms steps(2, end) infinite;
+}
+
+.loadingDot {
+  animation: assistant-dot 1200ms ease-in-out infinite;
+}
+
+.loadingDot:nth-child(2) {
+  animation-delay: 160ms;
+}
+.loadingDot:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+@keyframes assistant-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes assistant-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes assistant-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrive,
+  .suggestion,
+  .cursor::after,
+  .loadingDot {
+    animation: none;
+  }
+  .cursor::after {
+    display: none;
+  }
+}

@@ -384,6 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  BibleAssistantRateLimit: 'BibleAssistantRateLimit',
   AppUser: 'AppUser',
   MemberProfile: 'MemberProfile',
   MemberPrivateDetails: 'MemberPrivateDetails',
@@ -429,10 +430,84 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "appUser" | "memberProfile" | "memberPrivateDetails" | "notificationPreference" | "pushSubscription" | "dailyBibleVerse" | "bibleFavorite" | "bibleNote" | "dailyVerseSchedule" | "notificationLog" | "notificationCampaign" | "notificationRecipient" | "pushDeliveryAttempt" | "adminAuditLog" | "churchSetting" | "churchEvent" | "galleryAlbum" | "galleryItem" | "contactMessage" | "messageReply" | "messageInternalNote" | "announcement" | "announcementRead" | "donationCategory" | "donationCheckout" | "donation" | "financeExpense" | "recurringDonation" | "donationRefund" | "stripeWebhookEvent"
+    modelProps: "bibleAssistantRateLimit" | "appUser" | "memberProfile" | "memberPrivateDetails" | "notificationPreference" | "pushSubscription" | "dailyBibleVerse" | "bibleFavorite" | "bibleNote" | "dailyVerseSchedule" | "notificationLog" | "notificationCampaign" | "notificationRecipient" | "pushDeliveryAttempt" | "adminAuditLog" | "churchSetting" | "churchEvent" | "galleryAlbum" | "galleryItem" | "contactMessage" | "messageReply" | "messageInternalNote" | "announcement" | "announcementRead" | "donationCategory" | "donationCheckout" | "donation" | "financeExpense" | "recurringDonation" | "donationRefund" | "stripeWebhookEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    BibleAssistantRateLimit: {
+      payload: Prisma.$BibleAssistantRateLimitPayload<ExtArgs>
+      fields: Prisma.BibleAssistantRateLimitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BibleAssistantRateLimitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BibleAssistantRateLimitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>
+        }
+        findFirst: {
+          args: Prisma.BibleAssistantRateLimitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BibleAssistantRateLimitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>
+        }
+        findMany: {
+          args: Prisma.BibleAssistantRateLimitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>[]
+        }
+        create: {
+          args: Prisma.BibleAssistantRateLimitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>
+        }
+        createMany: {
+          args: Prisma.BibleAssistantRateLimitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BibleAssistantRateLimitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>[]
+        }
+        delete: {
+          args: Prisma.BibleAssistantRateLimitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>
+        }
+        update: {
+          args: Prisma.BibleAssistantRateLimitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>
+        }
+        deleteMany: {
+          args: Prisma.BibleAssistantRateLimitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BibleAssistantRateLimitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BibleAssistantRateLimitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>[]
+        }
+        upsert: {
+          args: Prisma.BibleAssistantRateLimitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BibleAssistantRateLimitPayload>
+        }
+        aggregate: {
+          args: Prisma.BibleAssistantRateLimitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBibleAssistantRateLimit>
+        }
+        groupBy: {
+          args: Prisma.BibleAssistantRateLimitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BibleAssistantRateLimitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BibleAssistantRateLimitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BibleAssistantRateLimitCountAggregateOutputType> | number
+        }
+      }
+    }
     AppUser: {
       payload: Prisma.$AppUserPayload<ExtArgs>
       fields: Prisma.AppUserFieldRefs
@@ -2692,6 +2767,15 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const BibleAssistantRateLimitScalarFieldEnum = {
+  key: 'key',
+  count: 'count',
+  expiresAt: 'expiresAt'
+} as const
+
+export type BibleAssistantRateLimitScalarFieldEnum = (typeof BibleAssistantRateLimitScalarFieldEnum)[keyof typeof BibleAssistantRateLimitScalarFieldEnum]
+
+
 export const AppUserScalarFieldEnum = {
   id: 'id',
   clerkUserId: 'clerkUserId',
@@ -3362,6 +3446,34 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
  * Reference to a field of type 'ChurchRole'
  */
 export type EnumChurchRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChurchRole'>
@@ -3393,34 +3505,6 @@ export type ListEnumMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInputT
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -3911,6 +3995,7 @@ export type PrismaClientOptions = ({
   queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
+  bibleAssistantRateLimit?: Prisma.BibleAssistantRateLimitOmit
   appUser?: Prisma.AppUserOmit
   memberProfile?: Prisma.MemberProfileOmit
   memberPrivateDetails?: Prisma.MemberPrivateDetailsOmit

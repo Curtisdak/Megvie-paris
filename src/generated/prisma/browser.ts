@@ -18,6 +18,11 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model BibleAssistantRateLimit
+ *
+ */
+export type BibleAssistantRateLimit = Prisma.BibleAssistantRateLimitModel
+/**
  * Model AppUser
  * 
  */

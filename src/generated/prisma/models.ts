@@ -8,6 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/BibleAssistantRateLimit'
 export type * from './models/AppUser'
 export type * from './models/MemberProfile'
 export type * from './models/MemberPrivateDetails'

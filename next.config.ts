@@ -26,7 +26,21 @@ const nextConfig: NextConfig = {
     ],
   },
   outputFileTracingIncludes: {
+    "/api/bible/assistant": [
+      "./bible/books.json",
+      "./bible/translation.json",
+      "./bible/verses.search-index.json",
+      "./bible/verses.chapter-index.json",
+      "./bible/verses.ndjson",
+    ],
     "/api/bible/chapter": ["./bible/*.json"],
+    "/api/bible/assistant/audio": [
+      "./bible/books.json",
+      "./bible/translation.json",
+      "./bible/verses.search-index.json",
+      "./bible/verses.chapter-index.json",
+      "./bible/verses.ndjson",
+    ],
     "/api/bible/search": ["./bible/*.json"],
     "/bible": [
       "./bible/books.json",

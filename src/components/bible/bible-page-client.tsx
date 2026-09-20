@@ -1,5 +1,7 @@
 "use client"
 
+import dynamic from "next/dynamic"
+
 import {
   useCallback,
   useDeferredValue,
@@ -33,7 +35,10 @@ import {
   BibleVerseActions,
   type VerseActionState,
 } from "@/components/bible/verse-actions"
-import { getBibleVerseHref } from "@/lib/bible-reference"
+import {
+  getBibleHighlightedVerses,
+  getBibleVerseHref,
+} from "@/lib/bible-reference"
 import { cn } from "@/lib/utils"
 import type {
   BibleBook,
@@ -46,7 +51,18 @@ import type {
   BibleVerse,
 } from "@/lib/bible-data"
 
-type BibleTab = "old" | "new" | "search"
+const BibleAssistant = dynamic(
+  () => import("./bible-assistant").then((module) => module.BibleAssistant),
+  {
+    loading: () => (
+      <div role="status" className="py-8 text-sm text-muted-foreground">
+        Chargement de l&apos;assistant…
+      </div>
+    ),
+  },
+)
+
+type BibleTab = "old" | "new" | "search" | "assistant"
 
 type BiblePageClientProps = {
   oldTestamentBooks: BibleBook[]
@@ -91,6 +107,7 @@ const tabs: { id: BibleTab; label: string }[] = [
   { id: "old", label: "Ancien Testament" },
   { id: "new", label: "Nouveau Testament" },
   { id: "search", label: "Recherche" },
+  { id: "assistant", label: "Assistant IA" },
 ]
 
 const initialChapterState: ChapterState = {
@@ -119,6 +136,7 @@ function updateBibleUrl(
   bookId: string,
   chapterNumber: number,
   verseNumber: number | null,
+  verses: number[] = [],
 ) {
   if (typeof window === "undefined") {
     return
@@ -131,6 +149,7 @@ function updateBibleUrl(
       book_id: bookId,
       chapter: chapterNumber,
       verse: verseNumber,
+      verses,
     }),
   )
 }
@@ -145,6 +164,7 @@ export function BiblePageClient({
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null)
   const [selectedChapter, setSelectedChapter] = useState(1)
   const [highlightVerse, setHighlightVerse] = useState<number | null>(null)
+  const [highlightVerses, setHighlightVerses] = useState<number[]>([])
   const [chapterState, setChapterState] =
     useState<ChapterState>(initialChapterState)
   const [searchQuery, setSearchQuery] = useState("")
@@ -172,13 +192,15 @@ export function BiblePageClient({
       chapterNumber = 1,
       verseNumber: number | null = null,
       shouldUpdateUrl = true,
+      verses: number[] = [],
     ) => {
       setSelectedBookId(bookId)
       setSelectedChapter(chapterNumber)
       setHighlightVerse(verseNumber)
+      setHighlightVerses(verses)
 
       if (shouldUpdateUrl) {
-        updateBibleUrl(bookId, chapterNumber, verseNumber)
+        updateBibleUrl(bookId, chapterNumber, verseNumber, verses)
       }
     },
     [],
@@ -188,16 +210,22 @@ export function BiblePageClient({
     setSelectedBookId(null)
     setSelectedChapter(1)
     setHighlightVerse(null)
+    setHighlightVerses([])
     setChapterState(initialChapterState)
 
     if (typeof window !== "undefined") {
-      window.history.pushState(null, "", "/bible")
+      window.history.pushState(
+        null,
+        "",
+        activeTab === "assistant" ? "/bible?tab=assistant" : "/bible",
+      )
     }
   }
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
       const params = new URLSearchParams(window.location.search)
+      if (params.get("tab") === "assistant") setActiveTab("assistant")
       const bookId = params.get("book")
       const chapterParam = Number(params.get("chapter") ?? "1")
       const verseParam = Number(params.get("verse"))
@@ -209,6 +237,7 @@ export function BiblePageClient({
           chapterParam,
           Number.isInteger(verseParam) && verseParam > 0 ? verseParam : null,
           false,
+          getBibleHighlightedVerses(params),
         )
         return
       }
@@ -242,16 +271,30 @@ export function BiblePageClient({
   useEffect(() => {
     const restoreReadingPosition = () => {
       const params = new URLSearchParams(window.location.search)
-      const book = allBooks.find((item) => item.id === params.get("book")?.toUpperCase())
+      const book = allBooks.find(
+        (item) => item.id === params.get("book")?.toUpperCase(),
+      )
       const chapter = Number(params.get("chapter") ?? "1")
       const verse = Number(params.get("verse"))
-      if (!book || !isValidChapterNumber(chapter) || chapter > book.chapter_count) {
+      if (
+        !book ||
+        !isValidChapterNumber(chapter) ||
+        chapter > book.chapter_count
+      ) {
+        if (params.get("tab") === "assistant") setActiveTab("assistant")
         setSelectedBookId(null)
         setHighlightVerse(null)
+        setHighlightVerses([])
         setChapterState(initialChapterState)
         return
       }
-      openBook(book.id, chapter, Number.isInteger(verse) && verse > 0 ? verse : null, false)
+      openBook(
+        book.id,
+        chapter,
+        Number.isInteger(verse) && verse > 0 ? verse : null,
+        false,
+        getBibleHighlightedVerses(params),
+      )
     }
     window.addEventListener("popstate", restoreReadingPosition)
     return () => window.removeEventListener("popstate", restoreReadingPosition)
@@ -312,9 +355,12 @@ export function BiblePageClient({
     }
 
     const timeoutId = window.setTimeout(() => {
-      document
-        .getElementById(`bible-verse-${highlightVerse}`)
-        ?.scrollIntoView({ block: "center", behavior: "smooth" })
+      document.getElementById(`bible-verse-${highlightVerse}`)?.scrollIntoView({
+        block: "center",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      })
     }, 120)
 
     return () => window.clearTimeout(timeoutId)
@@ -434,8 +480,14 @@ export function BiblePageClient({
   if (selectedBook) {
     return (
       <BookDetailView
+        backLabel={
+          activeTab === "assistant"
+            ? "Retour à la conversation"
+            : "Retour aux livres"
+        }
         chapterState={chapterState}
         highlightVerse={highlightVerse}
+        highlightVerses={highlightVerses}
         selectedBook={selectedBook}
         selectedChapter={selectedChapter}
         memberBibleState={memberBibleState}
@@ -454,7 +506,7 @@ export function BiblePageClient({
   return (
     <section className="space-y-5">
       <div
-        className="sticky top-[4.5rem] z-20 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.25rem] gap-1 rounded-lg bg-zinc-100/95 p-1 backdrop-blur-xl dark:bg-zinc-900/95 sm:grid-cols-3"
+        className="sticky top-[4.5rem] z-20 grid grid-cols-2 gap-1 rounded-lg bg-zinc-100/95 p-1 backdrop-blur-xl dark:bg-zinc-900/95 sm:grid-cols-4"
         role="tablist"
         aria-label="Sections de la Bible"
       >
@@ -478,7 +530,14 @@ export function BiblePageClient({
                   ? "bg-card text-teal-800 shadow-sm dark:text-teal-200"
                   : "text-muted-foreground hover:bg-card/60 hover:text-foreground",
               )}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                setActiveTab(tab.id)
+                window.history.replaceState(
+                  null,
+                  "",
+                  tab.id === "assistant" ? "/bible?tab=assistant" : "/bible",
+                )
+              }}
               onKeyDown={(event) => {
                 const index = tabs.findIndex((item) => item.id === tab.id)
                 const next =
@@ -500,7 +559,7 @@ export function BiblePageClient({
               {tab.id === "search" ? (
                 <>
                   <Search className="h-5 w-5" aria-hidden />
-                  <span className="sr-only">{tab.label}</span>
+                  <span className="ml-2">{tab.label}</span>
                 </>
               ) : (
                 <span>{tab.label}</span>
@@ -516,7 +575,26 @@ export function BiblePageClient({
         aria-labelledby={`bible-tab-${activeTab}`}
         tabIndex={0}
       >
-        {activeTab === "search" ? (
+        {activeTab === "assistant" ? (
+          <BibleAssistant
+            onReferenceOpen={(citation) => {
+              if (citation.bookId && citation.chapter)
+                openBook(
+                  citation.bookId,
+                  citation.chapter,
+                  citation.verses?.[0] ?? null,
+                  true,
+                  citation.verses ?? [],
+                )
+              if (!citation.verses?.length)
+                window.requestAnimationFrame(() =>
+                  document
+                    .getElementById("bible-chapter-reader")
+                    ?.scrollIntoView({ block: "start" }),
+                )
+            }}
+          />
+        ) : activeTab === "search" ? (
           <SearchPanel
             searchQuery={searchQuery}
             searchState={searchState}
@@ -702,8 +780,10 @@ function SearchPanel({
 }
 
 function BookDetailView({
+  backLabel,
   chapterState,
   highlightVerse,
+  highlightVerses,
   memberBibleState,
   selectedBook,
   selectedChapter,
@@ -712,8 +792,10 @@ function BookDetailView({
   onChapterSelect,
   onVerseReferenceClick,
 }: {
+  backLabel: string
   chapterState: ChapterState
   highlightVerse: number | null
+  highlightVerses: number[]
   memberBibleState: MemberBibleChapterState
   selectedBook: BibleBook
   selectedChapter: number
@@ -732,15 +814,12 @@ function BookDetailView({
     if (!chapterNumber) return
     onChapterSelect(chapterNumber)
     window.requestAnimationFrame(() => {
-      document
-        .getElementById("bible-chapter-reader")
-        ?.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
-            .matches
-            ? "instant"
-            : "smooth",
-          block: "start",
-        })
+      document.getElementById("bible-chapter-reader")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+        block: "start",
+      })
     })
   }
 
@@ -758,7 +837,7 @@ function BookDetailView({
             onClick={onBack}
           >
             <ChevronLeft className="h-4 w-4" />
-            Retour aux livres
+            {backLabel}
           </Button>
           <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
             {translationName}
@@ -894,6 +973,7 @@ function BookDetailView({
           <VerseList
             fontSize={fontSize}
             highlightVerse={highlightVerse}
+            highlightVerses={highlightVerses}
             memberBibleState={memberBibleState}
             onReferenceClick={onVerseReferenceClick}
             translationName={translationName}
@@ -968,6 +1048,7 @@ function IntroductionsPanel({
 function VerseList({
   fontSize,
   highlightVerse,
+  highlightVerses,
   memberBibleState,
   onReferenceClick,
   translationName,
@@ -975,6 +1056,7 @@ function VerseList({
 }: {
   fontSize: number
   highlightVerse: number | null
+  highlightVerses: number[]
   memberBibleState: MemberBibleChapterState
   onReferenceClick: (verse: BibleVerse) => void
   translationName: string
@@ -1011,7 +1093,9 @@ function VerseList({
           ...(verse.cross_references ?? []),
         ]
         const footnotes = verse.footnotes ?? []
-        const isHighlighted = highlightVerse === verse.verse
+        const isHighlighted =
+          highlightVerse === verse.verse ||
+          highlightVerses.includes(verse.verse)
         const actionState = actionStateByVerse.get(verse.verse) ?? {
           favoriteId: null,
           note: null,
@@ -1036,6 +1120,7 @@ function VerseList({
 
             <article
               id={`bible-verse-${verse.verse}`}
+              data-highlighted={isHighlighted || undefined}
               className={cn(
                 "scroll-mt-32 border-b border-zinc-100 py-5 transition-colors dark:border-zinc-800/60",
                 isHighlighted

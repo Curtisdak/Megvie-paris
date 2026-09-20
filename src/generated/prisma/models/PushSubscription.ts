@@ -713,14 +713,6 @@ export type PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.PushSubscriptionScalarWhereInput | Prisma.PushSubscriptionScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type PushSubscriptionCreateNestedOneWithoutLogsInput = {
   create?: Prisma.XOR<Prisma.PushSubscriptionCreateWithoutLogsInput, Prisma.PushSubscriptionUncheckedCreateWithoutLogsInput>
   connectOrCreate?: Prisma.PushSubscriptionCreateOrConnectWithoutLogsInput

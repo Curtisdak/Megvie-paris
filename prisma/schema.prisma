@@ -7,6 +7,15 @@ datasource db {
   provider = "postgresql"
 }
 
+model BibleAssistantRateLimit {
+  key       String   @id
+  count     Int      @default(0)
+  expiresAt DateTime @map("expires_at")
+
+  @@index([expiresAt])
+  @@map("bible_assistant_rate_limits")
+}
+
 enum ChurchRole {
   MEMBER
   RESPO

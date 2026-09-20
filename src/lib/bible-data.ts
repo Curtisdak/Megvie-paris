@@ -201,8 +201,14 @@ function toArray<T>(value: unknown): T[] {
   return Array.isArray(value) ? (value as T[]) : []
 }
 
-function normalizeBook(rawBook: Record<string, unknown>, index: number): BibleBook {
-  const id = toText(rawBook.id ?? rawBook.book_id ?? rawBook.code, `BOOK-${index + 1}`)
+function normalizeBook(
+  rawBook: Record<string, unknown>,
+  index: number,
+): BibleBook {
+  const id = toText(
+    rawBook.id ?? rawBook.book_id ?? rawBook.code,
+    `BOOK-${index + 1}`,
+  )
   const bookNumber = toNumber(rawBook.book_number ?? rawBook.number, index + 1)
 
   return {
@@ -323,7 +329,9 @@ function toSearchResult(verse: BibleVerse): BibleSearchResult {
   }
 }
 
-function searchRecordToResult(record: BibleSearchIndexRecord): BibleSearchResult {
+function searchRecordToResult(
+  record: BibleSearchIndexRecord,
+): BibleSearchResult {
   return {
     id: record[0],
     book_id: record[1],
@@ -353,6 +361,64 @@ function readVerseSearchIndex() {
   })
 
   return Array.isArray(index.records) && index.records.length > 0 ? index : null
+}
+
+let assistantPostings: Map<string, number[]> | null = null
+
+// Reuse the compact index; tokenize once per server instance, not once per question.
+export function rankBibleVerses(
+  groups: string[][],
+  limit = 36,
+): BibleSearchResult[] {
+  const records = readVerseSearchIndex()?.records
+  if (!records?.length || !groups.length) return []
+  if (!assistantPostings) {
+    assistantPostings = new Map()
+    records.forEach((record, index) => {
+      const words = new Set(
+        normalizeSearchText(record[8]).match(/[a-z]+/g) ?? [],
+      )
+      for (const word of words) {
+        const posting = assistantPostings!.get(word) ?? []
+        posting.push(index)
+        assistantPostings!.set(word, posting)
+      }
+    })
+  }
+  const scores = new Map<number, { score: number; matches: number }>()
+  for (const terms of groups.slice(0, 8)) {
+    const matching = new Map<number, number>()
+    for (const [termIndex, term] of terms.entries()) {
+      for (const index of assistantPostings.get(term) ?? []) {
+        matching.set(
+          index,
+          Math.max(matching.get(index) ?? 0, termIndex === 0 ? 1.4 : 1),
+        )
+      }
+    }
+    const weight = Math.log(1 + records.length / (1 + matching.size))
+    for (const [index, relevance] of matching) {
+      const previous = scores.get(index) ?? { score: 0, matches: 0 }
+      // Tiny headings/speech introductions are weak evidence without a complete statement.
+      const lengthPenalty = 1 + Math.abs(160 - records[index][8].length) / 600
+      scores.set(index, {
+        score: previous.score + (weight * relevance) / lengthPenalty,
+        matches: previous.matches + 1,
+      })
+    }
+  }
+  const bestCoverage = Math.max(
+    0,
+    ...[...scores.values()].map((value) => value.matches),
+  )
+  return [...scores]
+    .filter(([, value]) => value.matches >= bestCoverage)
+    .sort(
+      (a, b) =>
+        b[1].matches - a[1].matches || b[1].score - a[1].score || a[0] - b[0],
+    )
+    .slice(0, Math.min(limit, 60))
+    .map(([index]) => searchRecordToResult(records[index]))
 }
 
 function parseVerseLine(line: string) {
@@ -411,13 +477,18 @@ function forEachBibleVerse(callback: (verse: BibleVerse) => void) {
     return
   }
 
-  for (const rawVerse of readJsonFile<Record<string, unknown>[]>("verses.json", [])) {
+  for (const rawVerse of readJsonFile<Record<string, unknown>[]>(
+    "verses.json",
+    [],
+  )) {
     callback(normalizeVerse(rawVerse))
   }
 }
 
 function searchReferenceVerses(normalizedQuery: string) {
-  const referenceMatch = normalizedQuery.match(/^(.+?)\s+(\d{1,3})(?::(\d{1,3}))?$/)
+  const referenceMatch = normalizedQuery.match(
+    /^(.+?)\s+(\d{1,3})(?::(\d{1,3}))?$/,
+  )
 
   if (!referenceMatch) {
     return null
@@ -508,12 +579,17 @@ export function getNewTestamentBooks() {
 
 export function getBookById(bookId: string) {
   const normalizedBookId = bookId.toUpperCase()
-  return getBibleBooks().find((book) => book.id.toUpperCase() === normalizedBookId)
+  return getBibleBooks().find(
+    (book) => book.id.toUpperCase() === normalizedBookId,
+  )
 }
 
 export function getChaptersForBook(bookId: string) {
   const normalizedBookId = bookId.toUpperCase()
-  const rawChapters = readJsonFile<Record<string, unknown>[]>("chapters.json", [])
+  const rawChapters = readJsonFile<Record<string, unknown>[]>(
+    "chapters.json",
+    [],
+  )
 
   return rawChapters
     .map(normalizeChapter)

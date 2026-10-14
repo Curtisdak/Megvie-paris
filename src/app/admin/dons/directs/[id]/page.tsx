@@ -13,6 +13,7 @@ import {
 import { AdminActionForm } from "@/components/admin/admin-action-form"
 import { AdminCard } from "@/components/admin/admin-card"
 import { AdminPageHero } from "@/components/admin/admin-page-hero"
+import { DeleteDirectDonationDialog } from "@/components/admin/delete-direct-donation-dialog"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -67,7 +68,9 @@ function displayDate(value: Date | null | undefined) {
 
 function toDateTimeLocal(date: Date | null | undefined) {
   const value = date ?? new Date()
-  const localDate = new Date(value.getTime() - value.getTimezoneOffset() * 60000)
+  const localDate = new Date(
+    value.getTime() - value.getTimezoneOffset() * 60000,
+  )
   return localDate.toISOString().slice(0, 16)
 }
 
@@ -81,8 +84,13 @@ export default async function DirectDonationDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const [{ actor, donation, auditLogs, canCancelVerified, canCorrect }, formData] =
-    await Promise.all([getDirectDonationDetail(id), getDirectDonationFormData()])
+  const [
+    { actor, donation, auditLogs, canCancelVerified, canCorrect, canDelete },
+    formData,
+  ] = await Promise.all([
+    getDirectDonationDetail(id),
+    getDirectDonationFormData(),
+  ])
   const isRecorded = donation.directStatus === "RECORDED"
   const isVerified = donation.directStatus === "VERIFIED"
   const isCancelled = donation.directStatus === "CANCELLED"
@@ -99,17 +107,21 @@ export default async function DirectDonationDetailPage({
 
       <AdminPageHero
         eyebrow="Don direct"
-        title={donation.donorNameSnapshot ?? donation.collectionLabel ?? "Collecte anonyme"}
+        title={
+          donation.donorNameSnapshot ??
+          donation.collectionLabel ??
+          "Collecte anonyme"
+        }
         description={
           <div className="flex flex-wrap gap-2">
-              <StatusBadge
-                value={donation.directStatus ?? "RECORDED"}
-                label={statusLabels[donation.directStatus ?? ""] ?? "A verifier"}
-              />
-              <StatusBadge
-                value="GENERAL"
-                label={kindLabels[donation.directKind ?? ""] ?? "Direct"}
-              />
+            <StatusBadge
+              value={donation.directStatus ?? "RECORDED"}
+              label={statusLabels[donation.directStatus ?? ""] ?? "A verifier"}
+            />
+            <StatusBadge
+              value="GENERAL"
+              label={kindLabels[donation.directKind ?? ""] ?? "Direct"}
+            />
           </div>
         }
         action={
@@ -197,7 +209,8 @@ export default async function DirectDonationDetailPage({
                       </p>
                     </div>
                     <p className="mt-1 text-xs text-zinc-500">
-                      {log.actor ? fullName(log.actor) : "Systeme"} - {log.action}
+                      {log.actor ? fullName(log.actor) : "Systeme"} -{" "}
+                      {log.action}
                     </p>
                   </article>
                 ))
@@ -263,6 +276,21 @@ export default async function DirectDonationDetailPage({
                   Ce don direct est annule et ne compte pas dans les totaux.
                 </div>
               ) : null}
+              {canDelete && (
+                <DeleteDirectDonationDialog
+                  donation={{
+                    id: donation.id,
+                    label:
+                      donation.collectionLabel ??
+                      donation.donorNameSnapshot ??
+                      "Don direct",
+                    amountCents: donation.amountCents,
+                    currency: donation.currency,
+                  }}
+                  showLabel
+                  redirectOnSuccess
+                />
+              )}
             </div>
           </AdminCard>
 

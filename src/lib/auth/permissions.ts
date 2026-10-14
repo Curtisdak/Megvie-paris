@@ -19,6 +19,8 @@ export type AppPermission =
   | "donations.read_all"
   | "donations.stats"
   | "donations.export"
+  | "donations.create_direct"
+  | "donations.delete_direct"
   | "expenses.manage"
   | "roles.manage"
   | "audit.read"
@@ -46,6 +48,7 @@ const financePermissions = [
   "donations.read_all",
   "donations.stats",
   "donations.export",
+  "donations.create_direct",
   "expenses.manage",
 ] satisfies AppPermission[]
 
@@ -60,6 +63,8 @@ const masterPermissions = [
   "donations.read_all",
   "donations.stats",
   "donations.export",
+  "donations.create_direct",
+  "donations.delete_direct",
   "expenses.manage",
   "audit.read",
 ] satisfies AppPermission[]
@@ -92,7 +97,12 @@ export function hasPermission(
 }
 
 export function isAdminRole(role: ChurchRole | null | undefined) {
-  return role === "RESPO" || role === "FINANCE" || role === "MASTER" || role === "CREATOR"
+  return (
+    role === "RESPO" ||
+    role === "FINANCE" ||
+    role === "MASTER" ||
+    role === "CREATOR"
+  )
 }
 
 export function isPrivilegedRole(role: ChurchRole | null | undefined) {

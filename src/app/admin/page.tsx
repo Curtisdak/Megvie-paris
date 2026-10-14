@@ -6,6 +6,7 @@ import {
   Camera,
   FileText,
   Mail,
+  Plus,
   ShieldAlert,
   UserCheck,
   UsersRound,
@@ -16,6 +17,8 @@ import { StatusBadge } from "@/components/admin/status-badge";
 import { Button } from "@/components/ui/button";
 import { getAdminDashboardData } from "@/lib/admin/data";
 import { hasPermission } from "@/lib/auth/permissions";
+import { FinanceOverview } from "@/components/admin/finance-overview";
+import { getFinanceAnalytics } from "@/lib/finance/analytics";
 
 const cardConfig = [
   {
@@ -79,6 +82,9 @@ const cardConfig = [
 export default async function AdminPage() {
   const data = await getAdminDashboardData();
   const role = data.user.role;
+  const analytics = hasPermission(role, "donations.stats")
+    ? await getFinanceAnalytics()
+    : null;
 
   if (role === "FINANCE") {
     return (
@@ -96,6 +102,7 @@ export default async function AdminPage() {
             </Button>
           }
         />
+        {analytics && <FinanceOverview data={analytics} />}
       </div>
     );
   }
@@ -181,6 +188,33 @@ export default async function AdminPage() {
           })}
         </div>
       </section>
+
+      {analytics && (
+        <section className="space-y-4" aria-labelledby="admin-finance-title">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 id="admin-finance-title" className="text-base font-semibold">
+              Finances de l&apos;église
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {hasPermission(role, "donations.create_direct") && (
+                <Button asChild className="min-h-11">
+                  <Link href="/admin/dons/directs/nouveau">
+                    <Plus className="size-4" aria-hidden />
+                    Ajouter un don
+                  </Link>
+                </Button>
+              )}
+              <Button asChild variant="outline" className="min-h-11">
+                <Link href="/admin/finance">
+                  Ouvrir la finance
+                  <ArrowUpRight className="size-4" aria-hidden />
+                </Link>
+              </Button>
+            </div>
+          </div>
+          <FinanceOverview data={analytics} />
+        </section>
+      )}
 
       <AdminCard className="p-0 sm:p-0">
         <div className="flex items-center justify-between gap-3 border-b border-zinc-200 px-4 py-4 dark:border-white/10 sm:px-5">

@@ -14,6 +14,8 @@ import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
 import { AdminPageHero } from "@/components/admin/admin-page-hero"
 import { FinanceOverview } from "@/components/admin/finance-overview"
 import { ExpenseDialog } from "@/components/admin/expense-dialog"
+import { DeleteDirectDonationDialog } from "@/components/admin/delete-direct-donation-dialog"
+import { hasPermission } from "@/lib/auth/permissions"
 import { getFinanceAnalytics } from "@/lib/finance/analytics"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
@@ -112,7 +114,9 @@ function stripeReference(donation: {
 }
 
 function shortReference(value: string) {
-  return value.length > 22 ? `${value.slice(0, 11)}...${value.slice(-6)}` : value
+  return value.length > 22
+    ? `${value.slice(0, 11)}...${value.slice(-6)}`
+    : value
 }
 
 export default async function FinancePage({
@@ -133,22 +137,27 @@ export default async function FinancePage({
 }) {
   const params = (await searchParams) ?? {}
   const [data, recurring, analytics] = await Promise.all([
-    getFinanceDashboardData(params), getRecurringDonationAdminData(params), getFinanceAnalytics(),
+    getFinanceDashboardData(params),
+    getRecurringDonationAdminData(params),
+    getFinanceAnalytics(),
   ])
   const exportHref = buildHref("/api/admin/finance/export", params)
   const canManageCategories = data.user.role === "CREATOR"
-  const hasActiveFilters = Boolean(
-      params.q ||
-      params.source ||
-      params.status ||
-      params.frequency ||
-      params.directStatus ||
-      params.directKind ||
-      params.category ||
-      params.from ||
-      params.to,
+  const canDeleteDirect = hasPermission(
+    data.user.role,
+    "donations.delete_direct",
   )
-
+  const hasActiveFilters = Boolean(
+    params.q ||
+    params.source ||
+    params.status ||
+    params.frequency ||
+    params.directStatus ||
+    params.directKind ||
+    params.category ||
+    params.from ||
+    params.to,
+  )
 
   return (
     <div className="space-y-3 pb-4 sm:space-y-4">
@@ -159,10 +168,7 @@ export default async function FinancePage({
         action={
           <div className="flex flex-wrap gap-2">
             <ExpenseDialog />
-            <Button
-              asChild
-              className="h-10 w-full rounded-xl sm:w-fit"
-            >
+            <Button asChild className="h-10 w-full rounded-xl sm:w-fit">
               <Link href="/admin/dons/directs/nouveau">
                 <Plus className="h-4 w-4" aria-hidden />
                 Ajouter un don direct
@@ -414,7 +420,7 @@ export default async function FinancePage({
                       </div>
                     </div>
 
-                    {(reference || detailHref) ? (
+                    {reference || detailHref ? (
                       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-zinc-200 pt-3 text-xs dark:border-white/10">
                         <span className="font-mono text-zinc-500 dark:text-zinc-400">
                           {isDirect
@@ -425,16 +431,30 @@ export default async function FinancePage({
                               ? shortReference(reference)
                               : "Stripe"}
                         </span>
-                        {detailHref ? (
-                          <Link
-                            href={detailHref}
-                            target={isDirect ? undefined : "_blank"}
-                            rel={isDirect ? undefined : "noreferrer"}
-                            className="font-semibold text-amber-700 dark:text-amber-200"
-                          >
-                            {isDirect ? "Verifier le don" : "Ouvrir le recu"}
-                          </Link>
-                        ) : null}
+                        <div className="flex items-center gap-3">
+                          {detailHref ? (
+                            <Link
+                              href={detailHref}
+                              target={isDirect ? undefined : "_blank"}
+                              rel={isDirect ? undefined : "noreferrer"}
+                              className="font-semibold text-amber-700 dark:text-amber-200"
+                            >
+                              {isDirect ? "Verifier le don" : "Ouvrir le recu"}
+                            </Link>
+                          ) : null}
+                          {isDirect && canDeleteDirect && (
+                            <DeleteDirectDonationDialog
+                              donation={{
+                                id: donation.id,
+                                label:
+                                  donation.collectionLabel ??
+                                  donorName(donation),
+                                amountCents: donation.amountCents,
+                                currency: donation.currency,
+                              }}
+                            />
+                          )}
+                        </div>
                       </div>
                     ) : null}
                   </article>
@@ -526,7 +546,13 @@ export default async function FinancePage({
               {formatCurrencyFromCents(analytics.totals.incomeCents, "eur")}
             </p>
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-              <span>Brut: {formatCurrencyFromCents(analytics.totals.incomeCents + analytics.totals.refundedCents, "eur")}</span>
+              <span>
+                Brut:{" "}
+                {formatCurrencyFromCents(
+                  analytics.totals.incomeCents + analytics.totals.refundedCents,
+                  "eur",
+                )}
+              </span>
               <span>
                 Rembourse:{" "}
                 {formatCurrencyFromCents(analytics.totals.refundedCents, "eur")}

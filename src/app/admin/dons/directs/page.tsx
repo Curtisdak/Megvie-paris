@@ -13,6 +13,7 @@ import {
 import { AdminCard, EmptyState } from "@/components/admin/admin-card"
 import { AdminFilterBar } from "@/components/admin/admin-filter-bar"
 import { AdminPageHero } from "@/components/admin/admin-page-hero"
+import { DeleteDirectDonationDialog } from "@/components/admin/delete-direct-donation-dialog"
 import { StatusBadge } from "@/components/admin/status-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -90,10 +91,7 @@ export default async function DirectDonationsPage({
         title="Dons directs"
         description="Saisie, vérification et correction des dons en espèces ou collectes. Seuls les dons vérifiés comptent officiellement."
         action={
-          <Button
-            asChild
-            className="h-10 rounded-xl"
-          >
+          <Button asChild className="h-10 rounded-xl">
             <Link href="/admin/dons/directs/nouveau">
               <Plus className="h-4 w-4" aria-hidden />
               Ajouter un don
@@ -109,9 +107,21 @@ export default async function DirectDonationsPage({
             value: data.pagination.total,
             icon: BadgeEuro,
           },
-          { label: "A verifier", value: data.statusCounts.recorded, icon: Clock3 },
-          { label: "Verifies", value: data.statusCounts.verified, icon: CheckCircle2 },
-          { label: "Annules", value: data.statusCounts.cancelled, icon: XCircle },
+          {
+            label: "A verifier",
+            value: data.statusCounts.recorded,
+            icon: Clock3,
+          },
+          {
+            label: "Verifies",
+            value: data.statusCounts.verified,
+            icon: CheckCircle2,
+          },
+          {
+            label: "Annules",
+            value: data.statusCounts.cancelled,
+            icon: XCircle,
+          },
         ].map((item) => {
           const Icon = item.icon
           return (
@@ -217,63 +227,85 @@ export default async function DirectDonationsPage({
         <div className="mt-4 space-y-2.5">
           {data.donations.length ? (
             data.donations.map((donation) => (
-              <Link
+              <article
                 key={donation.id}
-                href={`/admin/dons/directs/${donation.id}`}
                 className="group block rounded-[1.2rem] border border-zinc-200 bg-zinc-50 p-3 transition hover:border-amber-400 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/50 dark:hover:bg-zinc-900 sm:p-4"
               >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <StatusBadge
-                        value={donation.directStatus ?? "RECORDED"}
-                        label={
-                          statusLabels[donation.directStatus ?? ""] ??
-                          "A verifier"
-                        }
-                        className="px-2 py-0.5 text-[0.65rem]"
-                      />
-                      <span className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
-                        {kindLabels[donation.directKind ?? ""] ?? "Direct"}
-                      </span>
-                    </div>
-                    <h3 className="mt-3 truncate text-lg font-semibold">
-                      {donation.donorNameSnapshot ??
-                        donation.collectionLabel ??
-                        "Collecte anonyme"}
-                    </h3>
-                    <div className="mt-2 flex flex-wrap gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
-                      <span className="rounded-full bg-white px-2.5 py-1 dark:bg-white/10">
-                        {donation.memberIdSnapshot ?? "Sans membre"}
-                      </span>
-                      <span className="rounded-full bg-white px-2.5 py-1 dark:bg-white/10">
-                        {donation.category.label}
-                      </span>
-                      {donation.event ? (
-                        <span className="rounded-full bg-white px-2.5 py-1 dark:bg-white/10">
-                          {donation.event.title}
+                <div className="flex items-start gap-3">
+                  <Link
+                    href={`/admin/dons/directs/${donation.id}`}
+                    className="min-w-0 flex-1 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-500"
+                  >
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <StatusBadge
+                            value={donation.directStatus ?? "RECORDED"}
+                            label={
+                              statusLabels[donation.directStatus ?? ""] ??
+                              "A verifier"
+                            }
+                            className="px-2 py-0.5 text-[0.65rem]"
+                          />
+                          <span className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
+                            {kindLabels[donation.directKind ?? ""] ?? "Direct"}
+                          </span>
+                        </div>
+                        <h3 className="mt-3 truncate text-lg font-semibold">
+                          {donation.donorNameSnapshot ??
+                            donation.collectionLabel ??
+                            "Collecte anonyme"}
+                        </h3>
+                        <div className="mt-2 flex flex-wrap gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                          <span className="rounded-full bg-white px-2.5 py-1 dark:bg-white/10">
+                            {donation.memberIdSnapshot ?? "Sans membre"}
+                          </span>
+                          <span className="rounded-full bg-white px-2.5 py-1 dark:bg-white/10">
+                            {donation.category.label}
+                          </span>
+                          {donation.event ? (
+                            <span className="rounded-full bg-white px-2.5 py-1 dark:bg-white/10">
+                              {donation.event.title}
+                            </span>
+                          ) : null}
+                        </div>
+                        <p className="mt-2 text-xs text-zinc-500">
+                          Recu le{" "}
+                          {displayReceivedDate(
+                            donation.receivedAt,
+                            donation.createdAt,
+                          )}
+                        </p>
+                      </div>
+                      <div className="flex items-end justify-between gap-3 sm:block sm:text-right">
+                        <p className="text-2xl font-semibold">
+                          {formatCurrencyFromCents(
+                            donation.amountCents,
+                            donation.currency,
+                          )}
+                        </p>
+                        <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-amber-700 opacity-100 dark:text-amber-200 sm:opacity-0 sm:transition sm:group-hover:opacity-100">
+                          Ouvrir
+                          <ArrowRight className="h-4 w-4" aria-hidden />
                         </span>
-                      ) : null}
+                      </div>
                     </div>
-                    <p className="mt-2 text-xs text-zinc-500">
-                      Recu le{" "}
-                      {displayReceivedDate(donation.receivedAt, donation.createdAt)}
-                    </p>
-                  </div>
-                  <div className="flex items-end justify-between gap-3 sm:block sm:text-right">
-                    <p className="text-2xl font-semibold">
-                      {formatCurrencyFromCents(
-                        donation.amountCents,
-                        donation.currency,
-                      )}
-                    </p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-amber-700 opacity-100 dark:text-amber-200 sm:opacity-0 sm:transition sm:group-hover:opacity-100">
-                      Ouvrir
-                      <ArrowRight className="h-4 w-4" aria-hidden />
-                    </span>
-                  </div>
+                  </Link>
+                  {data.canDelete && (
+                    <DeleteDirectDonationDialog
+                      donation={{
+                        id: donation.id,
+                        label:
+                          donation.collectionLabel ??
+                          donation.donorNameSnapshot ??
+                          "Don direct",
+                        amountCents: donation.amountCents,
+                        currency: donation.currency,
+                      }}
+                    />
+                  )}
                 </div>
-              </Link>
+              </article>
             ))
           ) : (
             <EmptyState

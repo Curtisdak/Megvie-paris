@@ -43,11 +43,29 @@ Routes ajoutees:
 Roles autorises:
 
 - `FINANCE`: saisir, verifier, annuler un don direct non verifie
-- `MASTER`: memes droits, plus annulation/correction d'un don verifie
+- `MASTER`: memes droits, plus annulation/correction d'un don verifie et suppression d'un don direct
 - `CREATOR`: memes droits que Master
 
 Un don direct identifie doit cibler un membre actif avec un ID MegVie valide.
 Une collecte anonyme ne cible aucun membre et ne cree aucune notification membre.
+
+Les permissions `donations.create_direct` (FINANCE, MASTER, CREATOR) et
+`donations.delete_direct` (MASTER, CREATOR) sont verifiees cote serveur.
+
+## Suppression
+
+Master et Creator peuvent supprimer un don direct depuis la liste, sa fiche ou
+l'historique Finance. Une boite de dialogue affiche le don et son montant ; un
+motif de quatre caracteres minimum est obligatoire. La suppression est definitive.
+
+L'action verrouille la ligne `DIRECT`, refuse tout lien vers Stripe ou un
+remboursement, puis supprime la ligne et enregistre l'audit dans la meme
+transaction. Si l'audit echoue, la suppression est annulee. Les anciens audits
+restent disponibles. Les paiements `ONLINE` ne peuvent pas etre supprimes par
+cette action. Aucun appel Stripe n'est effectue.
+
+Les totaux, graphiques, historique membre et tableau de bord sont revalides.
+Les nouveaux dons restent a verifier avant d'entrer dans les totaux officiels.
 
 ## Corrections
 

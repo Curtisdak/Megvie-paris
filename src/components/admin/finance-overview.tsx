@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { FinanceMonthlyChart } from "@/components/admin/finance-monthly-chart"
 import {
   ArrowUpRight,
   Banknote,
@@ -18,23 +18,8 @@ const money = (value: number) =>
   new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(
     value / 100,
   )
-const monthLabel = (value: string) =>
-  new Intl.DateTimeFormat("fr-FR", {
-    month: "short",
-    year: "2-digit",
-    timeZone: "UTC",
-  }).format(new Date(`${value}-01T12:00:00Z`))
-
 export function FinanceOverview({ data }: { data: Analytics }) {
-  const [range, setRange] = useState(6)
   const { totals } = data
-  const points = data.months.slice(-range)
-  const max = Math.max(
-    1,
-    ...points.map((p) =>
-      Math.max(p.directCents + p.stripeCents, p.expenseCents),
-    ),
-  )
   const cards = [
     {
       label: "Dons directs",
@@ -124,133 +109,7 @@ export function FinanceOverview({ data }: { data: Analytics }) {
         attente et les dépenses annulées sont exclus.
       </p>
       <div className="grid gap-6 border-y border-zinc-200 py-5 dark:border-white/10 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h3 className="text-sm font-semibold">
-              Entrées et dépenses par mois
-            </h3>
-            <div
-              className="flex gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-white/5"
-              role="group"
-              aria-label="Période du graphique"
-            >
-              {[6, 12].map((n) => (
-                <Button
-                  key={n}
-                  size="sm"
-                  variant={range === n ? "default" : "ghost"}
-                  onClick={() => setRange(n)}
-                  aria-pressed={range === n}
-                >
-                  {n} mois
-                </Button>
-              ))}
-            </div>
-          </div>
-          <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-sm bg-emerald-500" />
-              Entrées nettes
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-sm bg-rose-400" />
-              Dépenses
-            </span>
-          </div>
-          <div className="mt-4 overflow-x-auto pb-1">
-            <div
-              className="grid h-44 min-w-[280px] items-end gap-2 border-b border-zinc-200 dark:border-white/10"
-              style={{
-                gridTemplateColumns: `repeat(${range}, minmax(0, 1fr))`,
-              }}
-              aria-hidden="true"
-            >
-              {points.map((point) => (
-                <div
-                  key={point.month}
-                  className="flex h-full items-end justify-center gap-1"
-                  title={`${monthLabel(point.month)} : entrées ${money(point.directCents + point.stripeCents)}, dépenses ${money(point.expenseCents)}`}
-                >
-                  <div
-                    className="w-5 max-w-[40%] rounded-t-sm bg-emerald-500 transition-[height] duration-500 motion-reduce:transition-none"
-                    style={{
-                      height: `${((point.directCents + point.stripeCents) / max) * 100}%`,
-                    }}
-                  />
-                  <div
-                    className="w-5 max-w-[40%] rounded-t-sm bg-rose-400 transition-[height] duration-500 motion-reduce:transition-none"
-                    style={{ height: `${(point.expenseCents / max) * 100}%` }}
-                  />
-                </div>
-              ))}
-            </div>
-            <div
-              className="mt-2 grid min-w-[280px] gap-2 text-center text-[10px] text-muted-foreground"
-              style={{
-                gridTemplateColumns: `repeat(${range}, minmax(0, 1fr))`,
-              }}
-            >
-              {points.map((p) => (
-                <span key={p.month}>{monthLabel(p.month)}</span>
-              ))}
-            </div>
-          </div>
-          <details className="mt-4">
-            <summary className="cursor-pointer py-1 text-xs font-medium">
-              Chiffres mensuels
-            </summary>
-            <div className="mt-2 overflow-x-auto">
-              <table className="w-full text-right text-xs">
-                <caption className="sr-only">
-                  Dons directs, Stripe, dépenses et résultat mensuel en euros
-                </caption>
-                <thead>
-                  <tr>
-                    {["Mois", "Direct", "Stripe", "Dépenses", "Résultat"].map(
-                      (label) => (
-                        <th
-                          key={label}
-                          scope="col"
-                          className="whitespace-nowrap px-2 py-3 font-medium"
-                        >
-                          {label}
-                        </th>
-                      ),
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...points].reverse().map((p) => (
-                    <tr
-                      key={p.month}
-                      className="border-t border-zinc-200 dark:border-white/10"
-                    >
-                      <th
-                        scope="row"
-                        className="whitespace-nowrap px-2 py-3 font-medium"
-                      >
-                        {monthLabel(p.month)}
-                      </th>
-                      {[
-                        p.directCents,
-                        p.stripeCents,
-                        p.expenseCents,
-                        p.netCents,
-                      ].map((value, i) => (
-                        <td
-                          key={i}
-                          className="whitespace-nowrap px-2 py-3 tabular-nums"
-                        >
-                          {money(value)}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </details>
-        </div>
+        <FinanceMonthlyChart months={data.months} />
         <div className="min-w-0">
           <h3 className="text-sm font-semibold">Répartition des dépenses</h3>
           <p className="mt-1 text-xs text-muted-foreground">Depuis le début</p>

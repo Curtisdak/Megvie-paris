@@ -16,6 +16,7 @@ import {
 } from "@/generated/prisma/enums"
 import type { Prisma } from "@/generated/prisma/client"
 import { prisma } from "@/lib/prisma"
+import { hasPermission } from "@/lib/auth/permissions"
 import { requireFinancePermission } from "@/lib/finance/data"
 import {
   createDirectDonationCorrectionNotification,
@@ -35,7 +36,10 @@ const allowedDirectRoles = new Set<ChurchRole>([
   ChurchRole.MASTER,
   ChurchRole.CREATOR,
 ])
-const correctionRoles = new Set<ChurchRole>([ChurchRole.MASTER, ChurchRole.CREATOR])
+const correctionRoles = new Set<ChurchRole>([
+  ChurchRole.MASTER,
+  ChurchRole.CREATOR,
+])
 
 type DirectFilters = {
   q?: string
@@ -114,8 +118,12 @@ function assertDirectRole(role: ChurchRole, path: string) {
   }
 }
 
-async function requireDirectDonationAdmin(path = "/admin/dons/directs") {
-  const actor = await requireFinancePermission("donations.read_all", path)
+async function requireDirectDonationAdmin(
+  path = "/admin/dons/directs",
+  permission:
+    "donations.read_all" | "donations.create_direct" = "donations.read_all",
+) {
+  const actor = await requireFinancePermission(permission, path)
   assertDirectRole(actor.role, path)
   return actor
 }
@@ -219,7 +227,10 @@ function buildDirectWhere(filters: DirectFilters) {
 }
 
 export async function searchFinanceMembers(query: string) {
-  await requireDirectDonationAdmin("/admin/dons/directs/nouveau")
+  await requireDirectDonationAdmin(
+    "/admin/dons/directs/nouveau",
+    "donations.create_direct",
+  )
   const q = query.trim().slice(0, 80)
 
   if (q.length < 2) return []
@@ -266,7 +277,10 @@ export async function searchFinanceMembers(query: string) {
 }
 
 export async function getDirectDonationFormData() {
-  await requireDirectDonationAdmin("/admin/dons/directs/nouveau")
+  await requireDirectDonationAdmin(
+    "/admin/dons/directs/nouveau",
+    "donations.create_direct",
+  )
   const [categories, events] = await Promise.all([
     prisma.donationCategory.findMany({
       where: { isActive: true },
@@ -284,7 +298,7 @@ export async function getDirectDonationFormData() {
 }
 
 export async function listDirectDonations(filters: DirectFilters = {}) {
-  await requireDirectDonationAdmin("/admin/dons/directs")
+  const actor = await requireDirectDonationAdmin("/admin/dons/directs")
   const requestedPage = Math.max(1, Number(filters.page) || 1)
   const where = buildDirectWhere(filters)
 
@@ -331,6 +345,7 @@ export async function listDirectDonations(filters: DirectFilters = {}) {
   return {
     donations,
     categories,
+    canDelete: hasPermission(actor.role, "donations.delete_direct"),
     statusCounts: {
       recorded:
         statusCounts.find(
@@ -368,7 +383,9 @@ export async function getDirectDonationDetail(id: string) {
           firstName: true,
           lastName: true,
           imageUrl: true,
-          profile: { select: { memberId: true, displayName: true, avatarUrl: true } },
+          profile: {
+            select: { memberId: true, displayName: true, avatarUrl: true },
+          },
         },
       },
       enteredBy: {
@@ -399,7 +416,12 @@ export async function getDirectDonationDetail(id: string) {
         select: { id: true, amountCents: true, directStatus: true },
       },
       replacedByDonations: {
-        select: { id: true, amountCents: true, directStatus: true, createdAt: true },
+        select: {
+          id: true,
+          amountCents: true,
+          directStatus: true,
+          createdAt: true,
+        },
         orderBy: { createdAt: "desc" },
       },
     },
@@ -427,6 +449,7 @@ export async function getDirectDonationDetail(id: string) {
     actor,
     donation,
     auditLogs,
+    canDelete: hasPermission(actor.role, "donations.delete_direct"),
     canCancelVerified:
       donation.directStatus === DirectDonationStatus.VERIFIED &&
       correctionRoles.has(actor.role),
@@ -440,8 +463,14 @@ export async function createDirectDonationAction(
   _previous: DirectDonationActionState,
   formData: FormData,
 ): Promise<DirectDonationActionState> {
-  const actor = await requireDirectDonationAdmin("/admin/dons/directs/nouveau")
-  const kind = enumValue(DirectDonationKind, cleanText(formData.get("kind"), 40))
+  const actor = await requireDirectDonationAdmin(
+    "/admin/dons/directs/nouveau",
+    "donations.create_direct",
+  )
+  const kind = enumValue(
+    DirectDonationKind,
+    cleanText(formData.get("kind"), 40),
+  )
   const amountCents = parseAmountCents(formData.get("amount"))
   const categoryId = cleanText(formData.get("categoryId"), 100)
   const receivedAt = parseDateTime(formData.get("receivedAt"))
@@ -478,7 +507,9 @@ export async function createDirectDonationAction(
 
   const selectedMember =
     kind === DirectDonationKind.IDENTIFIED
-      ? await getTrustedActiveMember(cleanText(formData.get("memberUserId"), 100))
+      ? await getTrustedActiveMember(
+          cleanText(formData.get("memberUserId"), 100),
+        )
       : null
 
   if (kind === DirectDonationKind.IDENTIFIED && !selectedMember) {
@@ -560,7 +591,11 @@ export async function createDirectDonationAction(
   }
 
   revalidateDirectPaths()
-  return { ok: true, message: "Don direct enregistre.", donationId: donation.id }
+  return {
+    ok: true,
+    message: "Don direct enregistre.",
+    donationId: donation.id,
+  }
 }
 
 export async function verifyDirectDonationAction(
@@ -696,7 +731,13 @@ export async function correctVerifiedDirectDonationAction(
   const requestId = cleanText(formData.get("directEntryRequestId"), 120)
   const receivedAt = parseDateTime(formData.get("receivedAt"))
 
-  if (!reason || reason.length < 4 || !amountCents || !requestId || !receivedAt) {
+  if (
+    !reason ||
+    reason.length < 4 ||
+    !amountCents ||
+    !requestId ||
+    !receivedAt
+  ) {
     return { ok: false, message: "Correction invalide ou motif manquant." }
   }
 
@@ -709,7 +750,10 @@ export async function correctVerifiedDirectDonationAction(
     original.source !== DonationSource.DIRECT ||
     original.directStatus !== DirectDonationStatus.VERIFIED
   ) {
-    return { ok: false, message: "Seul un don direct verifie peut etre corrige." }
+    return {
+      ok: false,
+      message: "Seul un don direct verifie peut etre corrige.",
+    }
   }
 
   const category = await getActiveCategory(categoryId || original.categoryId)
@@ -810,7 +854,107 @@ export async function correctVerifiedDirectDonationAction(
   }
 }
 
+export async function deleteDirectDonationAction(
+  _previous: DirectDonationActionState,
+  formData: FormData,
+): Promise<DirectDonationActionState> {
+  const actor = await requireFinancePermission(
+    "donations.delete_direct",
+    "/admin/dons/directs",
+  )
+  const id = cleanText(formData.get("id"), 100)
+  const reason = cleanText(formData.get("reason"), 500)
+  if (!id || reason.length < 4) {
+    return {
+      ok: false,
+      message: "Indiquez un motif de suppression (4 caractères minimum).",
+    }
+  }
+
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      // Lock the selected manual record before checking links or deleting it.
+      const locked = await tx.$queryRaw<Array<{ id: string }>>`
+        SELECT id FROM donations WHERE id = ${id} AND source = 'DIRECT' FOR UPDATE
+      `
+      if (!locked.length)
+        return {
+          ok: false,
+          message: "Don direct introuvable ou déjà supprimé.",
+        }
+      const donation = await tx.donation.findFirst({
+        where: { id, source: DonationSource.DIRECT },
+      })
+      if (!donation) return { ok: false, message: "Don direct introuvable." }
+      const hasStripeLink = Object.entries(donation).some(
+        ([field, value]) => field.startsWith("stripe") && value !== null,
+      )
+      const [refundCount, replacements] = await Promise.all([
+        tx.donationRefund.count({ where: { donationId: id } }),
+        tx.donation.findMany({
+          where: { replacesDonationId: id },
+          select: { id: true, source: true },
+        }),
+      ])
+      if (
+        hasStripeLink ||
+        donation.checkoutId ||
+        donation.recurringDonationId ||
+        donation.refundedAmountCents > 0 ||
+        refundCount > 0 ||
+        replacements.some((row) => row.source !== DonationSource.DIRECT)
+      ) {
+        return {
+          ok: false,
+          message:
+            "Ce don est lié à un paiement en ligne et ne peut pas être supprimé ici.",
+        }
+      }
+      const deleted = await tx.donation.deleteMany({
+        where: { id, source: DonationSource.DIRECT },
+      })
+      if (deleted.count !== 1)
+        throw new Error("Direct donation deletion conflict")
+      await tx.adminAuditLog.create({
+        data: {
+          actorUserId: actor.id,
+          actorMemberId: actor.profile?.memberId ?? null,
+          action: "direct_donation.deleted",
+          entityType: "donation",
+          entityId: id,
+          summary: "Don direct supprimé du registre.",
+          metadata: {
+            reason,
+            source: DonationSource.DIRECT,
+            previousStatus: donation.directStatus,
+            amountCents: donation.amountCents,
+            currency: donation.currency,
+            categoryId: donation.categoryId,
+            memberIdSnapshot: donation.memberIdSnapshot,
+            receivedAt: donation.receivedAt?.toISOString() ?? null,
+            replacesDonationId: donation.replacesDonationId,
+            replacementDonationIds: replacements.map((row) => row.id),
+          },
+        },
+      })
+      return {
+        ok: true,
+        message: "Don direct supprimé. Les statistiques ont été mises à jour.",
+      }
+    })
+    if (result.ok) revalidateDirectPaths(id)
+    return result
+  } catch {
+    return {
+      ok: false,
+      message:
+        "La suppression n'a pas pu être effectuée. Réessayez dans un instant.",
+    }
+  }
+}
+
 function revalidateDirectPaths(id?: string) {
+  revalidatePath("/admin")
   revalidatePath("/admin/finance")
   revalidatePath("/admin/dons/directs")
   revalidatePath("/espace-membre/dons")
